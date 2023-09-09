@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+    th:replace="~{/common/layout/common_layout_V2 :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+
+    <th:block th:fragment="head">
+        <meta name="author" content="VJCommando">
+        <meta name="description" content="LETS - 고객지원">
+        <title>LETS - 고객지원</title>
+    </th:block>
+
+    <th:block th:fragment="content">
+        <!-- main -->
+        <main>
+            <section class="hero_in general">
+                <div class="wrapper">
+                    <div class="container">
+                        <h1 class="fadeInUp"><span></span>How we can help?</h1>
+                        <form class="fadeInUp">
+                            <div id="custom-search-input">
+                                <div class="input-group">
+                                    <input type="text" class=" search-query" placeholder="Ask a question...">
+                                    <input type="submit" class="btn_search" value="Search">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <!--/hero_in-->
+            <div class="container margin_60_35">
+                <div class="main_title_2">
+                    <span><em></em></span>
+                    <h2>Select a topic</h2>
+                    <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+                </div>
+
+                <!--스터디 그룹 상자-->
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <a class="box_topic" href="faq copy.html">
+                            <span><i class="pe-7s-study"></i></span>
+                            <h3>스터디 그룹</h3>
+                            <hr>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <a class="box_topic" href="faq copy.html">
+                            <i class="pe-7s-users"></i>
+                            <h3>게시판</h3>
+                            <hr>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <a class="box_topic" href="faq copy.html">
+                            <i class="pe-7s-user"></i>
+                            <h3>스터디 카페 등록</h3>
+                            <hr>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <a class="box_topic" href="faq copy.html">
+                            <i class="pe-7s-wallet"></i>
+                            <h3>예약 및 결제</h3>
+                            <hr>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <a class="box_topic" href="faq copy.html">
+                            <i class="pe-7s-note2"></i>
+                            <h3>예약 취소</h3>
+                            <hr>
+                        </a>
+                    </div>
+                </div>
+                <!--/row-->
+            </div>
+            <!-- /container -->
+            <div class="bg_color_1">
+                <div class="container margin_60_35">
+                    <div class="main_title_3">
+                        <span><em></em></span>
+                        <h2>Popular articles</h2>
+                        <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+                    </div>
+                    <div class="list_articles add_bottom_30 clearfix">
+                        <ul>
+                            <li><a href="#0"><i class="icon_documents_alt"></i>Et dicit vidisse epicurei pri</a></li>
+                            <li><a href="#0"><i class="icon_documents_alt"></i>Ad sit virtute rationibus efficiantur</a>
+                            </li>
+                            <li><a href="#0"><i class="icon_documents_alt"></i>Partem vocibus omittam pri ne</a></li>
+                            <li><a href="#0"><i class="icon_documents_alt"></i>Case debet appareat duo cu</a></li>
+                            <li><a href="#0"><i class="icon_documents_alt"></i>Impedit torquatos quo in</a></li>
+                            <li><a href="#0"><i class="icon_documents_alt"></i>Nec omnis alienum no</a></li>
+                            <li><a href="#0"><i class="icon_documents_alt"></i>Quo eu soleat facilisi menandri</a></li>
+                            <li><a href="#0"><i class="icon_documents_alt"></i>Et dicit vidisse epicurei pri</a></li>
+                        </ul>
+                    </div>
+                    <!-- /list_articles -->
+                </div>
+                <!-- /container -->
+            </div>
+            <!-- /bg_color_1 -->
+        </main>
+        <!--/main-->
+    </th:block>
+
+    <th:block th:fragment="scripts">
+    </th:block>
+
+</th:block>
+
+</html>

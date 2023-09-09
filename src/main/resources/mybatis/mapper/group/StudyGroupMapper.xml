@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vj.lets.domain.group.mapper.StudyGroupMapper">
+
+    <insert id="create" parameterType="StudyGroup">
+        INSERT INTO STUDY_GROUP(ID, NAME, HEAD_COUNT, SUBJECT, SI_GUN_GU_ID)
+        VALUES (STUDY_GROUP_ID_SEQ.NEXTVAL, #{name}, #{headCount}, #{subject}, #{siGunGuId})
+    </insert>
+
+</mapper>

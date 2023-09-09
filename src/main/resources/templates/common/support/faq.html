@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+    th:replace="~{/common/layout/common_layout_V2 :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+
+    <th:block th:fragment="head">
+        <meta name="author" content="VJCommando">
+        <meta name="description" content="LETS - FAQ">
+        <title>LETS - FAQ</title>
+    </th:block>
+
+    <th:block th:fragment="content">
+        <!-- main -->
+        <main>
+            <section class="hero_in general">
+                <div class="wrapper">
+                    <div class="container">
+                        <h1 class="fadeInUp"><span></span>Faq Section</h1>
+                    </div>
+                </div>
+            </section>
+            <!--/hero_in-->
+
+
+            <div class="container margin_60_35">
+                <div class="row">
+                    <aside class="col-lg-3" id="sidebar">
+                        <div class="box_style_cat" id="faq_box">
+                            <ul id="cat_nav">
+                                <li><a href="#studygroup" class="active"><i class="icon_document_alt"></i>스터디그룹 이용안내</a>
+                                </li>
+                                <li><a href="#board"><i class="icon_document_alt"></i>게시판 이용안내</a></li>
+                                <li><a href="#register"><i class="icon_document_alt"></i>스터디 카페 등록</a></li>
+                                <li><a href="#book_payment"><i class="icon_document_alt"></i>예약과 결제</a></li>
+                                <li><a href="#cancel"><i class="icon_document_alt"></i>예약 취소</a></li>
+                            </ul>
+                        </div>
+                        <!--/sticky -->
+                    </aside>
+                    <!--/aside -->
+                    <!--스터디 그룹 아코디언-->
+                    <div class="col-lg-8" id="faq">
+                        <h4 class="nomargin_top">스터디 그룹</h4><span id="location123"></span>
+                        <div role="tablist" class="add_bottom_45 accordion_2" id="studygroup">
+                            <div class="card">
+                                <div class="card-header" role="tab">
+                                    <h5 class="mb-0">
+                                        <a data-bs-toggle="collapse" href="#collapseOne_payment" aria-expanded="true"><i
+                                            class="indicator ti-minus"></i>스터디 그룹안내</a>
+                                    </h5>
+                                </div>
+                                <div id="collapseOne_payment" class="collapse show" role="tabpanel"
+                                     data-bs-parent="#studygroup">
+                                    <div class="card-body">
+                                        <p>스터디 그룹 기능은 블라블라블라</p>
+                                        <p>사용하는 방법 블라블라블라</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--  -->
+                            <div class="card">
+                                <div class="card-header" role="tab">
+                                    <h5 class="mb-0">
+                                        <a class="collapsed" data-bs-toggle="collapse" href="#collapseTwo_payment"
+                                           aria-expanded="false">
+                                            <i class="indicator ti-plus"></i>스터디 그룹 생성방법
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapseTwo_payment" class="collapse" role="tabpanel"
+                                     data-bs-parent="#studygroup">
+                                    <div class="card-body">
+                                        <p>그룹 생성 방법 블라블라블라</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--스터디 그룹 아코디언 끝-->
+
+                        <!-- 게시판 아코디언 -->
+
+                        <h4 class="nomargin_top">게시판</h4>
+                        <div role="tablist" class="add_bottom_45 accordion_2" id="board">
+                            <div class="card">
+                                <div class="card-header" role="tab">
+                                    <h5 class="mb-0">
+                                        <a data-bs-toggle="collapse" href="#collapseOne_tips" aria-expanded="true"><i
+                                            class="indicator ti-plus"></i>게시판 안내?</a>
+                                    </h5>
+                                </div>
+
+                                <div id="collapseOne_tips" class="collapse" role="tabpanel" data-bs-parent="#board">
+                                    <div class="card-body">
+                                        <p>게시판 이용방법</p>
+                                        <p>게시판 주의사항</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /card -->
+                            <div class="card">
+                                <div class="card-header" role="tab">
+                                    <h5 class="mb-0">
+                                        <a class="collapsed" data-bs-toggle="collapse" href="#collapseTwo_tips"
+                                           aria-expanded="false">
+                                            <i class="indicator ti-plus"></i>게시판 글쓰기
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapseTwo_tips" class="collapse" role="tabpanel" data-bs-parent="#board">
+                                    <div class="card-body">
+                                        <p>글쓰기 이용 안내</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--게시판 아코디언 끝-->
+
+                        <!-- 스터디카페등록 아코디언 -->
+
+                        <h4 class="nomargin_top">스터디 카페 등록</h4>
+                        <div role="tablist" class="add_bottom_45 accordion_2" id="register" name="register">
+                            <div class="card">
+                                <div class="card-header" role="tab">
+                                    <h5 class="mb-0">
+                                        <a data-bs-toggle="collapse" href="#collapseOne_reccomendations"
+                                           aria-expanded="true"><i class="indicator ti-plus"></i>스터디 카페 등록안내</a>
+                                    </h5>
+                                </div>
+
+                                <div id="collapseOne_reccomendations" class="collapse" role="tabpanel"
+                                     data-bs-parent="#register">
+                                    <div class="card-body">
+                                        <p>호스트 대상으로 스터디 카페등록 방법 안내</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /card -->
+                            <div class="card">
+                                <div class="card-header" role="tab">
+                                    <h5 class="mb-0">
+                                        <a class="collapsed" data-bs-toggle="collapse"
+                                           href="#collapseTwo_reccomendations"
+                                           aria-expanded="false">
+                                            <i class="indicator ti-plus"></i>비용
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapseTwo_reccomendations" class="collapse" role="tabpanel"
+                                     data-bs-parent="#register">
+                                    <div class="card-body">
+                                        <p>수수료 및 광고료 안내</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /스터디 카페 등록 아코디언 끝 -->
+
+                        <!--예약 및 결제 아코디언-->
+                        <h4 class="nomargin_top">예약 및 결제</h4>
+                        <div role="tablist" class="add_bottom_45 accordion_2" id="book_payment" name="book_payment">
+                            <div class="card">
+                                <div class="card-header" role="tab">
+                                    <h5 class="mb-0">
+                                        <a data-bs-toggle="collapse" href="#collapseOne_terms" aria-expanded="true"><i
+                                            class="indicator ti-plus"></i>예약</a>
+                                    </h5>
+                                </div>
+
+                                <div id="collapseOne_terms" class="collapse" role="tabpanel"
+                                     data-bs-parent="#book_payment">
+                                    <div class="card-body">
+                                        <p>Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                                            sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+                                            occaecat
+                                            craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably
+                                            haven't heard of them accusamus labore sustainable VHS.</p>
+                                        <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                            richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard
+                                            dolor
+                                            brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
+                                            tempor,
+                                            sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                                            shoreditch et.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /card -->
+                            <div class="card">
+                                <div class="card-header" role="tab">
+                                    <h5 class="mb-0">
+                                        <a class="collapsed" data-bs-toggle="collapse" href="#collapseTwo_terms"
+                                           aria-expanded="false">
+                                            <i class="indicator ti-plus"></i>결제
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapseTwo_terms" class="collapse" role="tabpanel"
+                                     data-bs-parent="#book_payment">
+                                    <div class="card-body">
+                                        <p>Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                                            sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+                                            occaecat
+                                            craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably
+                                            haven't heard of them accusamus labore sustainable VHS.</p>
+                                        <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                            richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard
+                                            dolor
+                                            brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
+                                            tempor,
+                                            sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                                            shoreditch et.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /card -->
+                            <div class="card">
+                                <div class="card-header" role="tab">
+                                    <h5 class="mb-0">
+                                        <a class="collapsed" data-bs-toggle="collapse" href="#collapseThree_terms"
+                                           aria-expanded="false">
+                                            <i class="indicator ti-plus"></i>결제 방법
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapseThree_terms" class="collapse" role="tabpanel"
+                                     data-bs-parent="#book_payment">
+                                    <div class="card-body">
+                                        <p>Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                                            sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+                                            occaecat
+                                            craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably
+                                            haven't heard of them accusamus labore sustainable VHS.</p>
+                                        <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                            richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard
+                                            dolor
+                                            brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
+                                            tempor,
+                                            sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                                            shoreditch et.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /card -->
+                        </div>
+
+                        <!--예약 취소 아코디언 -->
+                        <h4 class="nomargin_top">예약 취소</h4>
+                        <div role="tablist" class="add_bottom_45 accordion_2" id="cancel" name="cancel"><a
+                            name="cancel"></a>
+                            <div class="card">
+                                <div class="card-header" role="tab">
+                                    <h5 class="mb-0">
+                                        <a data-bs-toggle="collapse" href="#collapseOne_booking" aria-expanded="true"><i
+                                            class="indicator ti-plus"></i>취소 규정</a>
+                                    </h5>
+                                </div>
+
+                                <div id="collapseOne_booking" class="collapse" role="tabpanel" data-bs-parent="#cancel">
+                                    <div class="card-body">
+                                        <p>Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                                            sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+                                            occaecat
+                                            craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably
+                                            haven't heard of them accusamus labore sustainable VHS.</p>
+                                        <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                            richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard
+                                            dolor
+                                            brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
+                                            tempor,
+                                            sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                                            shoreditch et.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /card -->
+                            <div class="card">
+                                <div class="card-header" role="tab">
+                                    <h5 class="mb-0">
+                                        <a class="collapsed" data-bs-toggle="collapse" href="#collapseTwo_booking"
+                                           aria-expanded="false">
+                                            <i class="indicator ti-plus"></i>취소 가능 시간
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapseTwo_booking" class="collapse" role="tabpanel" data-bs-parent="#cancel">
+                                    <div class="card-body">
+                                        <p>Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                                            sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+                                            occaecat
+                                            craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably
+                                            haven't heard of them accusamus labore sustainable VHS.</p>
+                                        <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                            richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard
+                                            dolor
+                                            brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
+                                            tempor,
+                                            sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                                            shoreditch et.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /col -->
+                </div>
+                <!-- /row -->
+            </div>
+            <!--/container-->
+        </main>
+        <!--/main-->
+    </th:block>
+
+    <th:block th:fragment="scripts">
+    </th:block>
+
+</th:block>
+
+</html>

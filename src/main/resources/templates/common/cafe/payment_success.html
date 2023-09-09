@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+    th:replace="~{/common/layout/common_layout_V2 :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+
+    <th:block th:fragment="head">
+        <meta name="author" content="VJCommando">
+        <meta name="description" content="LETS - 결제 완료">
+        <title>LETS - 결제 완료</title>
+    </th:block>
+
+    <th:block th:fragment="content">
+        <!-- main -->
+        <main>
+            <div class="hero_in cart_section last">
+                <div class="wrapper">
+                    <div class="container">
+                        <div class="bs-wizard clearfix">
+                            <div class="bs-wizard-step">
+                                <div class="text-center bs-wizard-stepnum">Your cart</div>
+                                <div class="progress">
+                                    <div class="progress-bar"></div>
+                                </div>
+                                <a href="reservation.html" class="bs-wizard-dot"></a>
+                            </div>
+
+                            <div class="bs-wizard-step">
+                                <div class="text-center bs-wizard-stepnum">Payment</div>
+                                <div class="progress">
+                                    <div class="progress-bar"></div>
+                                </div>
+                                <a href="payment.html" class="bs-wizard-dot"></a>
+                            </div>
+
+                            <div class="bs-wizard-step active">
+                                <div class="text-center bs-wizard-stepnum">Finish!</div>
+                                <div class="progress">
+                                    <div class="progress-bar"></div>
+                                </div>
+                                <a href="#0" class="bs-wizard-dot"></a>
+                            </div>
+                        </div>
+                        <!-- End bs-wizard -->
+                        <div id="confirm">
+                            <h4>Reservation completed!</h4>
+                            <p>You can check the reservation completion on My Page.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/hero_in-->
+        </main>
+        <!--/main-->
+    </th:block>
+
+    <th:block th:fragment="scripts">
+    </th:block>
+
+</th:block>
+
+</html>

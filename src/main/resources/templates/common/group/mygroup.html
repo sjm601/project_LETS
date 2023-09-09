@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+    th:replace="~{/common/layout/common_layout_V2 :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+
+    <th:block th:fragment="head">
+        <meta name="author" content="VJCommando">
+        <meta name="description" content="LETS | 페이지 설명">
+        <title>LETS | 페이지 타이틀</title>
+        <!-- custom link -->
+        <link href="/css/blog.css" rel="stylesheet">
+    </th:block>
+
+    <th:block th:fragment="content">
+        <!-- main -->
+        <main>
+            <section class="hero_in general">
+                <div class="wrapper">
+                    <div class="container">
+                        <h1 class="fadeInUp"><span></span>주식 스터디</h1>
+                    </div>
+                </div>
+            </section>
+            <!-- /hero_in -->
+            <div class="container margin_60_35 mt-5">
+                <div class="isotope-wrapper">
+                    <div class="row">
+                        <!-- aside -->
+                        <aside class="col-lg-3" id="sidebar">
+                            <div class="widget">
+                                <div class="bloglist singlepost pb-4">
+                                    <div class="d-flex">
+                                        <h1 class="my-3 me-2">주식 스터디</h1>
+                                        <!-- 스터디 팀장만 노출 -->
+                                        <button class="btn btn-secondary my-auto" data-bs-toggle="modal"
+                                                data-bs-target="#settingModal" id="setting" style="font-size: 14px;"><i
+                                            class="fa-solid fa-wrench"></i></button>
+                                    </div>
+                                    <div class="postmeta">
+                                        <ul class="d-flex justify-content-between">
+                                            <!-- 스터디 팀원이나 가입 전 회원은 팀장, 팀장은 멤버 초대 노출 -->
+                                            <li>
+                                                <div class="text-secondary">멤버수 <strong
+                                                    class="ms-2 text-success fw-bold">40</strong> / 50명
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div>팀장 : <span>이희영</span></div>
+                                            </li>
+                                            <!-- <li>
+                                                <div><span>멤버 초대</span></div>
+                                            </li> -->
+                                        </ul>
+                                    </div>
+                                    <div class="mb-2">
+                                        <!-- 가입 전 가입하기 버튼, 가입 후 글 작성 버튼 노출 -->
+                                        <button class="btn btn-success my-auto" data-bs-toggle="modal"
+                                                data-bs-target="#registerModal" id="register"
+                                                style="font-size: 14px;">가입하기
+                                        </button>
+                                        <button class="btn btn-success my-auto" data-bs-toggle="modal"
+                                                data-bs-target="#writeModal" id="write" style="font-size: 14px;">글
+                                            작성
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget">
+                                <div class="widget-title">
+                                    <h4>게시글 검색</h4>
+                                </div>
+                                <form>
+                                    <div class="form-group">
+                                        <input type="text" name="search" id="search" class="form-control"
+                                               placeholder="검색어를 입력해주세요">
+                                    </div>
+                                    <button type="submit" id="submit" class="btn_1 rounded"> 검색</button>
+                                </form>
+                            </div>
+                            <!-- /widget -->
+                            <div class="widget">
+                                <div class="widget-title">
+                                    <h4>최근 게시글</h4>
+                                </div>
+                                <ul class="comments-list">
+                                    <li>
+                                        <div class="alignleft">
+                                            <a href="#0"><img src="img/blog-5.jpg" alt=""></a>
+                                        </div>
+                                        <small>11.08.2016</small>
+                                        <h3><a href="#" title="">Verear qualisque ex minimum...</a></h3>
+                                    </li>
+                                    <li>
+                                        <div class="alignleft">
+                                            <a href="#0"><img src="img/blog-6.jpg" alt=""></a>
+                                        </div>
+                                        <small>11.08.2016</small>
+                                        <h3><a href="#" title="">Verear qualisque ex minimum...</a></h3>
+                                    </li>
+                                    <li>
+                                        <div class="alignleft">
+                                            <a href="#0"><img src="img/blog-4.jpg" alt=""></a>
+                                        </div>
+                                        <small>11.08.2016</small>
+                                        <h3><a href="#" title="">Verear qualisque ex minimum...</a></h3>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- /widget -->
+                        </aside>
+                        <!-- /aside -->
+                        <div class="col-lg-9">
+                            <div class="bloglist singlepost isotope-item">
+                                <div class="d-flex mb-5 justify-content-between">
+                                    <div class="d-flex">
+                                        <div>
+                                            <img class="rounded-5" src="img/avatar1.jpg" alt="">
+                                        </div>
+                                        <div class="ms-3 my-auto">
+                                            <h6>이희영</h6>
+                                            <span class="mb-0">2023-09-06</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <button class="btn btn-warning my-auto mx-2" data-bs-toggle="modal"
+                                                data-bs-target="#modifyModal"
+                                                style="font-size: 14px; height: 30px;">수정
+                                        </button>
+                                        <a class="btn btn-danger my-auto mx-2" href="#"
+                                           style="font-size: 14px; height: 30px;">삭제</a>
+                                    </div>
+                                </div>
+                                <h1 class="mb-3">주식 스터디</h1>
+                                <div class="postmeta">
+                                    <p><img alt="" class="img-fluid" src="img/blog-single.jpg"></p>
+                                </div>
+                                <!-- /post meta -->
+                                <div class="post-content">
+                                    <p>Aorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                                        Ipsum has been the
+                                        industry's standard dummy text ever since the 1500s, when an unknown printer
+                                        took a galley of type
+                                        and scrambled it to make a type specimen book. It has survived not only five
+                                        centuries, but also the
+                                        leap into electronic typesetting, remaining essentially unchanged. It was
+                                        popularised in the 1960s
+                                        with the release of Letraset sheets containing Lorem Ipsum passages, and more
+                                        recently with desktop
+                                        publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                    <div id="comments">
+                                        <hr/>
+                                        <h5>댓글</h5>
+                                        <ul>
+                                            <li>
+                                                <div class="avatar">
+                                                    <a href="#"><img src="img/avatar1.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="comment_right clearfix">
+                                                    <div class="comment_info">
+                                                        <span>Anna Smith</span><span>|</span>2023-09-06
+                                                    </div>
+                                                    <p>
+                                                        Nam cursus tellus quis magna porta adipiscing. Donec et eros
+                                                        leo, non pellentesque arcu.
+                                                        Curabitur
+                                                        vitae mi enim, at vestibulum magna.
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="avatar">
+                                                    <a href="#"><img src="img/avatar3.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="comment_right clearfix">
+                                                    <div class="comment_info">
+                                                        <span>Anna Smith</span><span>|</span>2023-09-06
+                                                    </div>
+                                                    <p>
+                                                        Cursus tellus quis magna porta adipiscin
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <hr/>
+                                    <h5>댓글 작성</h5>
+                                    <form>
+                                        <div class="form-group">
+											<textarea class="form-control" name="comments" id="comments2" rows="6"
+                                                      placeholder="댓글을 작성해주세요" style="height: 100px;"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" id="submit2"
+                                                    class="btn_1 rounded add_bottom_30">작성
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /col -->
+                            </div>
+                            <!-- /post -->
+                            <!-- /single-post -->
+                            <div class="bloglist singlepost isotope-item">
+                                <div class="d-flex mb-5 justify-content-between">
+                                    <div class="d-flex">
+                                        <div>
+                                            <img class="rounded-5" src="img/avatar1.jpg" alt="">
+                                        </div>
+                                        <div class="ms-3 my-auto">
+                                            <h6>이희영</h6>
+                                            <span class="mb-0">2023-09-06</span>
+                                        </div>
+                                    </div>
+                                    <a class="btn btn-danger my-auto" href="#"
+                                       style="font-size: 14px; height: 30px;">삭제</a>
+                                </div>
+                                <h1 class="mb-3">주식 스터디</h1>
+                                <div class="postmeta">
+                                    <p><img alt="" class="img-fluid" src="img/blog-single.jpg"></p>
+                                </div>
+                                <!-- /post meta -->
+                                <div class="post-content">
+                                    <p>Aorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                                        Ipsum has been the
+                                        industry's standard dummy text ever since the 1500s, when an unknown printer
+                                        took a galley of type
+                                        and scrambled it to make a type specimen book. It has survived not only five
+                                        centuries, but also the
+                                        leap into electronic typesetting, remaining essentially unchanged. It was
+                                        popularised in the 1960s
+                                        with the release of Letraset sheets containing Lorem Ipsum passages, and more
+                                        recently with desktop
+                                        publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                    <div id="comments">
+                                        <hr/>
+                                        <h5>댓글</h5>
+                                        <ul>
+                                            <li>
+                                                <div class="avatar">
+                                                    <a href="#"><img src="img/avatar1.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="comment_right clearfix">
+                                                    <div class="comment_info">
+                                                        <span>Anna Smith</span><span>|</span>2023-09-06
+                                                    </div>
+                                                    <p>
+                                                        Nam cursus tellus quis magna porta adipiscing. Donec et eros
+                                                        leo, non pellentesque arcu.
+                                                        Curabitur
+                                                        vitae mi enim, at vestibulum magna.
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="avatar">
+                                                    <a href="#"><img src="img/avatar3.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="comment_right clearfix">
+                                                    <div class="comment_info">
+                                                        <span>Anna Smith</span><span>|</span>2023-09-06
+                                                    </div>
+                                                    <p>
+                                                        Cursus tellus quis magna porta adipiscin
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <hr/>
+                                    <h5>댓글 작성</h5>
+                                    <form>
+                                        <div class="form-group">
+											<textarea class="form-control" name="comments" id="comments2" rows="6"
+                                                      placeholder="댓글을 작성해주세요" style="height: 100px;"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" id="submit2"
+                                                    class="btn_1 rounded add_bottom_30">작성
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /col -->
+                            </div>
+                            <!-- /post -->
+                            <!-- /single-post -->
+                            <div class="bloglist singlepost isotope-item">
+                                <div class="d-flex mb-5 justify-content-between">
+                                    <div class="d-flex">
+                                        <div>
+                                            <img class="rounded-5" src="img/avatar1.jpg" alt="">
+                                        </div>
+                                        <div class="ms-3 my-auto">
+                                            <h6>이희영</h6>
+                                            <span class="mb-0">2023-09-06</span>
+                                        </div>
+                                    </div>
+                                    <a class="btn btn-danger my-auto" href="#"
+                                       style="font-size: 14px; height: 30px;">삭제</a>
+                                </div>
+                                <h1 class="mb-3">주식 스터디</h1>
+                                <div class="postmeta">
+                                    <p><img alt="" class="img-fluid" src="img/blog-single.jpg"></p>
+                                </div>
+                                <!-- /post meta -->
+                                <div class="post-content">
+                                    <p>Aorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                                        Ipsum has been the
+                                        industry's standard dummy text ever since the 1500s, when an unknown printer
+                                        took a galley of type
+                                        and scrambled it to make a type specimen book. It has survived not only five
+                                        centuries, but also the
+                                        leap into electronic typesetting, remaining essentially unchanged. It was
+                                        popularised in the 1960s
+                                        with the release of Letraset sheets containing Lorem Ipsum passages, and more
+                                        recently with desktop
+                                        publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                    <div id="comments">
+                                        <hr/>
+                                        <h5>댓글</h5>
+                                        <ul>
+                                            <li>
+                                                <div class="avatar">
+                                                    <a href="#"><img src="img/avatar1.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="comment_right clearfix">
+                                                    <div class="comment_info">
+                                                        <span>Anna Smith</span><span>|</span>2023-09-06
+                                                    </div>
+                                                    <p>
+                                                        Nam cursus tellus quis magna porta adipiscing. Donec et eros
+                                                        leo, non pellentesque arcu.
+                                                        Curabitur
+                                                        vitae mi enim, at vestibulum magna.
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="avatar">
+                                                    <a href="#"><img src="img/avatar3.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="comment_right clearfix">
+                                                    <div class="comment_info">
+                                                        <span>Anna Smith</span><span>|</span>2023-09-06
+                                                    </div>
+                                                    <p>
+                                                        Cursus tellus quis magna porta adipiscin
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <hr/>
+                                    <h5>댓글 작성</h5>
+                                    <form>
+                                        <div class="form-group">
+											<textarea class="form-control" name="comments" id="comments2" rows="6"
+                                                      placeholder="댓글을 작성해주세요" style="height: 100px;"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" id="submit2"
+                                                    class="btn_1 rounded add_bottom_30">작성
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /col -->
+                            </div>
+                            <!-- /post -->
+                            <!-- /single-post -->
+                            <div class="bloglist singlepost isotope-item">
+                                <div class="d-flex mb-5 justify-content-between">
+                                    <div class="d-flex">
+                                        <div>
+                                            <img class="rounded-5" src="img/avatar1.jpg" alt="">
+                                        </div>
+                                        <div class="ms-3 my-auto">
+                                            <h6>이희영</h6>
+                                            <span class="mb-0">2023-09-06</span>
+                                        </div>
+                                    </div>
+                                    <a class="btn btn-danger my-auto" href="#"
+                                       style="font-size: 14px; height: 30px;">삭제</a>
+                                </div>
+                                <h1 class="mb-3">주식 스터디</h1>
+                                <div class="postmeta">
+                                    <p><img alt="" class="img-fluid" src="img/blog-single.jpg"></p>
+                                </div>
+                                <!-- /post meta -->
+                                <div class="post-content">
+                                    <p>Aorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                                        Ipsum has been the
+                                        industry's standard dummy text ever since the 1500s, when an unknown printer
+                                        took a galley of type
+                                        and scrambled it to make a type specimen book. It has survived not only five
+                                        centuries, but also the
+                                        leap into electronic typesetting, remaining essentially unchanged. It was
+                                        popularised in the 1960s
+                                        with the release of Letraset sheets containing Lorem Ipsum passages, and more
+                                        recently with desktop
+                                        publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                    <div id="comments">
+                                        <hr/>
+                                        <h5>댓글</h5>
+                                        <ul>
+                                            <li>
+                                                <div class="avatar">
+                                                    <a href="#"><img src="img/avatar1.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="comment_right clearfix">
+                                                    <div class="comment_info">
+                                                        <span>Anna Smith</span><span>|</span>2023-09-06
+                                                    </div>
+                                                    <p>
+                                                        Nam cursus tellus quis magna porta adipiscing. Donec et eros
+                                                        leo, non pellentesque arcu.
+                                                        Curabitur
+                                                        vitae mi enim, at vestibulum magna.
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="avatar">
+                                                    <a href="#"><img src="img/avatar3.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="comment_right clearfix">
+                                                    <div class="comment_info">
+                                                        <span>Anna Smith</span><span>|</span>2023-09-06
+                                                    </div>
+                                                    <p>
+                                                        Cursus tellus quis magna porta adipiscin
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <hr/>
+                                    <h5>댓글 작성</h5>
+                                    <form>
+                                        <div class="form-group">
+											<textarea class="form-control" name="comments" id="comments2" rows="6"
+                                                      placeholder="댓글을 작성해주세요" style="height: 100px;"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" id="submit2"
+                                                    class="btn_1 rounded add_bottom_30">작성
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /col -->
+                            </div>
+                            <!-- /post -->
+                            <!-- /single-post -->
+                            <div class="bloglist singlepost isotope-item">
+                                <div class="d-flex mb-5 justify-content-between">
+                                    <div class="d-flex">
+                                        <div>
+                                            <img class="rounded-5" src="img/avatar1.jpg" alt="">
+                                        </div>
+                                        <div class="ms-3 my-auto">
+                                            <h6>이희영</h6>
+                                            <span class="mb-0">2023-09-06</span>
+                                        </div>
+                                    </div>
+                                    <a class="btn btn-danger my-auto" href="#"
+                                       style="font-size: 14px; height: 30px;">삭제</a>
+                                </div>
+                                <h1 class="mb-3">주식 스터디</h1>
+                                <div class="postmeta">
+                                    <p><img alt="" class="img-fluid" src="img/blog-single.jpg"></p>
+                                </div>
+                                <!-- /post meta -->
+                                <div class="post-content">
+                                    <p>Aorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                                        Ipsum has been the
+                                        industry's standard dummy text ever since the 1500s, when an unknown printer
+                                        took a galley of type
+                                        and scrambled it to make a type specimen book. It has survived not only five
+                                        centuries, but also the
+                                        leap into electronic typesetting, remaining essentially unchanged. It was
+                                        popularised in the 1960s
+                                        with the release of Letraset sheets containing Lorem Ipsum passages, and more
+                                        recently with desktop
+                                        publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                    <div id="comments">
+                                        <hr/>
+                                        <h5>댓글</h5>
+                                        <ul>
+                                            <li>
+                                                <div class="avatar">
+                                                    <a href="#"><img src="img/avatar1.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="comment_right clearfix">
+                                                    <div class="comment_info">
+                                                        <span>Anna Smith</span><span>|</span>2023-09-06
+                                                    </div>
+                                                    <p>
+                                                        Nam cursus tellus quis magna porta adipiscing. Donec et eros
+                                                        leo, non pellentesque arcu.
+                                                        Curabitur
+                                                        vitae mi enim, at vestibulum magna.
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="avatar">
+                                                    <a href="#"><img src="img/avatar3.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="comment_right clearfix">
+                                                    <div class="comment_info">
+                                                        <span>Anna Smith</span><span>|</span>2023-09-06
+                                                    </div>
+                                                    <p>
+                                                        Cursus tellus quis magna porta adipiscin
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <hr/>
+                                    <h5>댓글 작성</h5>
+                                    <form>
+                                        <div class="form-group">
+											<textarea class="form-control" name="comments" id="comments2" rows="6"
+                                                      placeholder="댓글을 작성해주세요" style="height: 100px;"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" id="submit2"
+                                                    class="btn_1 rounded add_bottom_30">작성
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /col -->
+                            </div>
+                            <!-- /post -->
+                        </div>
+                        <!-- /single-post -->
+                    </div>
+                    <!-- /row -->
+                </div>
+            </div>
+            <!-- /container -->
+        </main>
+        <!--/main-->
+
+        <!-- Register Modal -->
+        <div class="modal fade modal-dialog-scrollable" id="registerModal" tabindex="-1"
+             aria-labelledby="exampleModalLabel"
+             aria-hidden="true" style="margin-top: 100px;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">스터디 가입</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="">
+                            <label for="name" class="form-label">이름</label>
+                            <input class="form-control mb-2" id="name" name="name" type="text" placeholder="이름"/>
+                            <label for="gender" class="form-label">성별</label>
+                            <input class="form-control mb-2" id="gender" name="gender" type="text" placeholder="성별"/>
+                            <label for="age" class="form-label">나이</label>
+                            <input class="form-control mb-2" id="age" name="age" type="number" placeholder="나이"/>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <button type="submit" class="btn btn-primary">가입</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Register Modal -->
+
+        <!-- Write Modal -->
+        <div class="modal fade modal-dialog-scrollable" id="writeModal" tabindex="-1"
+             aria-labelledby="exampleModalLabel"
+             aria-hidden="true" style="margin-top: 100px;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">게시글 작성</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="">
+                            <label for="title" class="form-label">제목</label>
+                            <input class="form-control mb-2" id="title" name="title" type="text" placeholder="제목"/>
+                            <label for="content" class="form-label">내용</label>
+                            <textarea class="form-control mb-2" name="content" id="content" cols="30" rows="10"
+                                      placeholder="내용" style="height: 100px;"></textarea>
+                            <div class="mb-3">
+                                <ul class="image-preview"></ul>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="writeImage">사진</label>
+                                <input type="file" class="real-upload form-control" accept="image/*" id="writeImage"
+                                       name="writeImage"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <button type="submit" class="btn btn-primary">작성</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Write Modal -->
+
+        <!-- Modify Modal -->
+        <div class="modal fade modal-dialog-scrollable" id="modifyModal" tabindex="-1"
+             aria-labelledby="exampleModalLabel"
+             aria-hidden="true" style="margin-top: 100px;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">게시글 수정</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="">
+                            <label for="title" class="form-label">제목</label>
+                            <input class="form-control mb-2" id="title" name="title" type="text" placeholder="제목"/>
+                            <label for="content" class="form-label">내용</label>
+                            <textarea class="form-control mb-2" name="content" id="content" cols="30" rows="10"
+                                      placeholder="내용" style="height: 100px;"></textarea>
+                            <div class="mb-3">
+                                <ul class="image-preview"></ul>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="modifyImage">사진</label>
+                                <input type="file" class="real-upload form-control" accept="image/*" id="modifyImage"
+                                       name="modifyImage"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <button type="submit" class="btn btn-primary">작성</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Modify Modal -->
+
+        <!-- Setting Modal -->
+        <div class="modal fade modal-dialog-scrollable" id="settingModal" tabindex="-1"
+             aria-labelledby="exampleModalLabel"
+             aria-hidden="true" style="margin-top: 100px;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="mb-3">스터디 설정</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="">
+                            <div class="mb-3">
+                                <ul class="image-preview"></ul>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="settingImage">대표 이미지</label>
+                                <input type="file" class="real-upload form-control" accept="image/*" id="settingImage"
+                                       name="settingImage"/>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="name">스터디 이름</label>
+                                <input class="form-control" id="name" name="name" type="text" value="스터디이름"/>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="head_count">스터디 최대 멤버(명)</label>
+                                <select class="form-select" name="head_count" id="head_count">
+                                    <option value="10">10 (최소 10)</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="40">40</option>
+                                    <option value="50">50</option>
+                                    <option value="60">60</option>
+                                    <option value="70">70</option>
+                                    <option value="80">80</option>
+                                    <option value="90">90</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="subject">스터디 주제</label>
+                                <select class="form-select" name="subject" id="subject">
+                                    <option value="stock">주식 / 코인</option>
+                                    <option value="econo">경제 / 부동산</option>
+                                    <option value="emplo">취업</option>
+                                    <option value="inter">면접</option>
+                                    <option value="essay">논술</option>
+                                    <option value="langu">언어</option>
+                                    <option value="it">IT</option>
+                                    <option value="certi">자격증</option>
+                                    <option value="study">공부</option>
+                                    <option value="all">기타</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="address">스터디 대표 주소</label>
+                                <input class="form-control" id="address" name="address" type="text"
+                                       placeholder="클릭하여 주소 입력하세요"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <button class="btn btn-success" type="submit">설정</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Setting Modal -->
+
+    </th:block>
+
+    <th:block th:fragment="scripts">
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <script src="/js/custom/address.js"></script>
+        <script src="/js/custom/image_upload.js"></script>
+    </th:block>
+
+</th:block>
+
+</html>

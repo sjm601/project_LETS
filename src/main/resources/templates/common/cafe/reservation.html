@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+    th:replace="~{/common/layout/common_layout_V2 :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+
+    <th:block th:fragment="head">
+        <meta name="author" content="VJCommando">
+        <meta name="description" content="LETS - 예약 확인">
+        <title>LETS - 예약 확인</title>
+
+        <link href="/css/custom/reservation_custom.css" rel="stylesheet">
+    </th:block>
+
+    <th:block th:fragment="content">
+        <!-- main -->
+        <main>
+            <div class="hero_in cart_section">
+                <div class="wrapper">
+                    <div class="container">
+                        <div class="bs-wizard clearfix">
+                            <div class="bs-wizard-step active">
+                                <div class="text-center bs-wizard-stepnum">Your cart</div>
+                                <div class="progress">
+                                    <div class="progress-bar"></div>
+                                </div>
+                                <a href="#0" class="bs-wizard-dot"></a>
+                            </div>
+
+                            <div class="bs-wizard-step disabled">
+                                <div class="text-center bs-wizard-stepnum">Payment</div>
+                                <div class="progress">
+                                    <div class="progress-bar"></div>
+                                </div>
+                                <a href="#0" class="bs-wizard-dot"></a>
+                            </div>
+
+                            <div class="bs-wizard-step disabled">
+                                <div class="text-center bs-wizard-stepnum">Finish!</div>
+                                <div class="progress">
+                                    <div class="progress-bar"></div>
+                                </div>
+                                <a href="#0" class="bs-wizard-dot"></a>
+                            </div>
+                        </div>
+                        <!-- End bs-wizard -->
+                    </div>
+                </div>
+            </div>
+            <!--/hero_in-->
+
+            <div class="bg_color_1">
+                <div class="container margin_60_35">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="box_cart">
+                                <table class="table cart-list">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            place
+                                        </th>
+                                        <th class="cart_align">
+                                            room
+                                        </th>
+                                        <th class="cart_align">
+                                            date
+                                        </th>
+                                        <th class="cart_align">
+                                            headcount
+                                        </th>
+                                        <th class="cart_align">
+                                            Price/hour
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="thumb_cart">
+                                                <img src="img/thumb_cart_1.jpg" alt="Image">
+                                            </div>
+                                            <span class="item_cart">Persius delenit has cu</span>
+                                        </td>
+                                        <td class="cart_align">
+                                            A1
+                                        </td>
+                                        <td class="cart_align">
+                                            2022-11-11
+                                        </td>
+                                        <td class="cart_align">
+                                            1
+                                        </td>
+                                        <td class="cart_align">
+                                            <strong>79,000<i class="fa-solid fa-won-sign"></i></strong>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="cart-options clearfix">
+                                    <div class="float-end fix_mobile">
+                                        <button type="button" id="deleteList" class="btn_1 outline">Cancel Booking
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- /cart-options -->
+                            </div>
+                        </div>
+                        <!-- /col -->
+
+                        <aside class="col-lg-4" id="sidebar">
+                            <div class="box_detail">
+                                <div id="total_cart">
+                                    Total <span class="float-end">79,000<i class="fa-solid fa-won-sign"></i></span>
+                                </div>
+                                <a href="payment.html" class="btn_1 full-width purchase">Checkout</a>
+                                <div class="text-center"><small>Click this button to go to the payment page.</small>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                    <!-- /row -->
+                </div>
+                <!-- /container -->
+            </div>
+            <!-- /bg_color_1 -->
+        </main>
+        <!--/main-->
+    </th:block>
+
+    <th:block th:fragment="scripts">
+        <script src="/js/custom/reservation_custom.js"></script>
+    </th:block>
+
+</th:block>
+
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+    th:replace="~{/common/layout/common_layout_V2 :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+
+    <th:block th:fragment="head">
+        <meta name="author" content="VJCommando">
+        <meta name="description" content="LETS | 페이지 설명">
+        <title>LETS | 페이지 타이틀</title>
+
+        <link href="/css/blog.css" rel="stylesheet">
+    </th:block>
+
+    <th:block th:fragment="content">
+        <!-- main -->
+        <main>
+            <section class="hero_in restaurants">
+                <div class="wrapper">
+                    <div class="container">
+                        <h1 class="fadeInUp"><span></span>스터디 그룹</h1>
+                    </div>
+                </div>
+            </section>
+            <!--/hero_in-->
+            <div class="filters_listing">
+                <div class="container">
+                    <ul class="clearfix d-flex justify-content-center my-3">
+                        <li class="mx-2">
+                            <div class="text-center">
+                                <a class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">전체</a>
+                            </div>
+                        </li>
+                        <li class="mx-2">
+                            <div class="text-center">
+                                <a class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">주식 / 코인</a>
+                            </div>
+                        </li>
+                        <li class="mx-2">
+                            <div class="text-center">
+                                <a class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">경제 /
+                                    부동산</a>
+                            </div>
+                        </li>
+                        <li class="mx-2">
+                            <div class="text-center">
+                                <a class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">취업</a>
+                            </div>
+                        </li>
+                        <li class="mx-2">
+                            <div class="text-center">
+                                <a class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">면접</a>
+                            </div>
+                        </li>
+                        <li class="mx-2">
+                            <div class="text-center">
+                                <a class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">논술</a>
+                            </div>
+                        </li>
+                        <li class="mx-2">
+                            <div class="text-center">
+                                <a class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">언어</a>
+                            </div>
+                        </li>
+                        <li class="mx-2">
+                            <div class="text-center">
+                                <a class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">IT</a>
+                            </div>
+                        </li>
+                        <li class="mx-2">
+                            <div class="text-center">
+                                <a class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">자격증</a>
+                            </div>
+                        </li>
+                        <li class="mx-2">
+                            <div class="text-center">
+                                <a class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">공부</a>
+                            </div>
+                        </li>
+                        <li class="mx-2">
+                            <div class="text-center">
+                                <a class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">기타</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /container -->
+            </div>
+            <!-- /filters -->
+
+            <div class="collapse" id="collapseMap">
+                <div id="map" class="map"></div>
+            </div>
+            <!-- End Map -->
+
+            <div class="container margin_60_35">
+                <div class="row">
+                    <aside class="col-lg-3" id="sidebar">
+                        <div class="widget mb-5">
+                            <form>
+                                <div class="form-group">
+                                    <label for="search">스터디 검색</label>
+                                    <input class="form-control" type="text" name="search" id="search" placeholder="검색어">
+                                </div>
+                                <button class="btn_1 rounded" type="submit" id="submit">검색</button>
+                            </form>
+                        </div>
+                        <!-- /widget -->
+                        <div class="widget">
+                            <div class="widget-title">
+                                <h4>인기 스터디</h4>
+                            </div>
+                            <ul class="comments-list">
+                                <li>
+                                    <div class="d-flex">
+                                        <a href="#"><img class="rounded-5 bg-danger" src="" alt="" width="50px"
+                                                         height="50px"></a>
+                                        <h3 class="ms-2 my-auto"><a class="py-4 px-2" href="#" title="">주식스터디</a></h3>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="d-flex">
+                                        <a href="#"><img class="rounded-5 bg-danger" src="" alt="" width="50px"
+                                                         height="50px"></a>
+                                        <h3 class="ms-2 my-auto"><a class="py-4 px-2" href="#" title="">주식스터디</a></h3>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="d-flex">
+                                        <a href="#"><img class="rounded-5 bg-danger" src="" alt="" width="50px"
+                                                         height="50px"></a>
+                                        <h3 class="ms-2 my-auto"><a class="py-4 px-2" href="#" title="">주식스터디</a></h3>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /widget -->
+                    </aside>
+                    <!-- /aside -->
+                    <div class="col-lg-9">
+                        <div class="isotope-wrapper">
+                            <div class="row">
+                                <div class="col-md-6 isotope-item popular">
+                                    <div class="box_grid" data-cue="slideInUp">
+                                        <figure>
+                                            <a href="#"><img src="img/restaurant_1.jpg" class="img-fluid" alt=""
+                                                             width="800" height="533">
+                                                <div class="read_more"><span>열기</span></div>
+                                            </a>
+                                        </figure>
+                                        <div class="wrapper pb-2 text-end">
+                                            <h3 class="mb-3 text-start"><a href="#">주식스터디</a></h3>
+                                            <ul class="d-flex p-0 mb-2 border-0">
+                                                <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
+                                                       style="font-size: 14px;"><i
+                                                    class="fa-solid fa-location-dot me-1"></i>강동구</a></li>
+                                                <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
+                                                       style="font-size: 14px;">주식</a></li>
+                                            </ul>
+                                            <span class="text-secondary">멤버수 <strong class="ms-2 text-success fw-bold">40</strong> /
+												50명</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /box_grid -->
+                                <div class="col-md-6 isotope-item popular">
+                                    <div class="box_grid" data-cue="slideInUp">
+                                        <figure>
+                                            <a href="#"><img src="img/restaurant_1.jpg" class="img-fluid" alt=""
+                                                             width="800" height="533">
+                                                <div class="read_more"><span>열기</span></div>
+                                            </a>
+                                        </figure>
+                                        <div class="wrapper pb-2 text-end">
+                                            <h3 class="mb-3 text-start"><a href="#">주식스터디</a></h3>
+                                            <ul class="d-flex p-0 mb-2 border-0">
+                                                <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
+                                                       style="font-size: 14px;"><i
+                                                    class="fa-solid fa-location-dot me-1"></i>강동구</a></li>
+                                                <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
+                                                       style="font-size: 14px;">주식</a></li>
+                                            </ul>
+                                            <span class="text-secondary">멤버수 <strong class="ms-2 text-success fw-bold">40</strong> /
+												50명</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /box_grid -->
+                                <div class="col-md-6 isotope-item popular">
+                                    <div class="box_grid" data-cue="slideInUp">
+                                        <figure>
+                                            <a href="#"><img src="img/restaurant_1.jpg" class="img-fluid" alt=""
+                                                             width="800" height="533">
+                                                <div class="read_more"><span>열기</span></div>
+                                            </a>
+                                        </figure>
+                                        <div class="wrapper pb-2 text-end">
+                                            <h3 class="mb-3 text-start"><a href="#">주식스터디</a></h3>
+                                            <ul class="d-flex p-0 mb-2 border-0">
+                                                <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
+                                                       style="font-size: 14px;"><i
+                                                    class="fa-solid fa-location-dot me-1"></i>강동구</a></li>
+                                                <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
+                                                       style="font-size: 14px;">주식</a></li>
+                                            </ul>
+                                            <span class="text-secondary">멤버수 <strong class="ms-2 text-success fw-bold">40</strong> /
+												50명</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /box_grid -->
+                                <div class="col-md-6 isotope-item popular">
+                                    <div class="box_grid" data-cue="slideInUp">
+                                        <figure>
+                                            <a href="#"><img src="img/restaurant_1.jpg" class="img-fluid" alt=""
+                                                             width="800" height="533">
+                                                <div class="read_more"><span>열기</span></div>
+                                            </a>
+                                        </figure>
+                                        <div class="wrapper pb-2 text-end">
+                                            <h3 class="mb-3 text-start"><a href="#">주식스터디</a></h3>
+                                            <ul class="d-flex p-0 mb-2 border-0">
+                                                <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
+                                                       style="font-size: 14px;"><i
+                                                    class="fa-solid fa-location-dot me-1"></i>강동구</a></li>
+                                                <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
+                                                       style="font-size: 14px;">주식</a></li>
+                                            </ul>
+                                            <span class="text-secondary">멤버수 <strong class="ms-2 text-success fw-bold">40</strong> /
+												50명</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /box_grid -->
+                            </div>
+                            <!-- /row -->
+                        </div>
+                        <!-- /isotope-wrapper -->
+                        <p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p>
+                    </div>
+                    <!-- /col -->
+                </div>
+            </div>
+            <!-- /container -->
+        </main>
+        <!--/main-->
+    </th:block>
+
+    <th:block th:fragment="scripts">
+        <script src="/js/custom/group_sidebar.js"></script>
+    </th:block>
+
+</th:block>
+
+</html>

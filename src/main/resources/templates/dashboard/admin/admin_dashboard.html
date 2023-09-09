@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+
+    <th:block th:fragment="head">
+        <meta name="author" content="VJCommando">
+        <meta name="description" content="LETS - Admin Dashboard">
+        <title>LETS - Admin Dashboard</title>
+    </th:block>
+
+    <th:block th:fragment="content">
+        <!-- Content -->
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="admin_dashboard.html">대시보드</a>
+                    </li>
+                    <li class="breadcrumb-item active">대시보드</li>
+                </ol>
+                <!-- Icon Cards-->
+                <div class="row">
+                    <div class="col-xl-4 col-sm-12 mb-3">
+                        <div class="card dashboard text-white bg-primary o-hidden h-100">
+                            <div class="card-body">
+                                <div class="card-body-icon">
+                                    <i class="fa fa-fw fa-user"></i>
+                                </div>
+                                <div class="mr-5">
+                                    <h5>26 신규 회원!</h5>
+                                </div>
+                            </div>
+                            <a class="card-footer text-white clearfix small z-1" href="members.html">
+                                <span class="float-left">View Details</span>
+                                <span class="float-right"><i class="fa fa-angle-right"></i></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-12 mb-3">
+                        <div class="card dashboard text-white bg-success o-hidden h-100">
+                            <div class="card-body">
+                                <div class="card-body-icon">
+                                    <i class="fa fa-fw fa-list"></i>
+                                </div>
+                                <div class="mr-5">
+                                    <h5>10 신규 신청!</h5>
+                                </div>
+                            </div>
+                            <a class="card-footer text-white clearfix small z-1" href="contacts.html">
+                                <span class="float-left">View Details</span>
+                                <span class="float-right"><i class="fa fa-angle-right"></i></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-12 mb-3">
+                        <div class="card dashboard text-white bg-danger o-hidden h-100">
+                            <div class="card-body">
+                                <div class="card-body-icon">
+                                    <i class="fa fa-fw fa-building"></i>
+                                </div>
+                                <div class="mr-5">
+                                    <h5>10 신규 입점!</h5>
+                                </div>
+                            </div>
+                            <a class="card-footer text-white clearfix small z-1" href="hosts.html">
+                                <span class="float-left">View Details</span>
+                                <span class="float-right"><i class="fa fa-angle-right"></i></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /cards -->
+                <h2></h2>
+                <div class="box_general padding_bottom">
+                    <div class="header_box version_2">
+                        <h2><i class="fa fa-bar-chart"></i>신규 회원 현황</h2>
+                    </div>
+                    <canvas id="myAreaChart" width="100%" height="30" style="margin:45px 0 15px 0;"></canvas>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.container-wrapper -->
+        <!-- /Content -->
+    </th:block>
+
+    <th:block th:fragment="scripts">
+        <!-- Custom scripts for this page -->
+        <script src="/dashboard/js/admin-charts.js"></script>
+        <!-- /custom scripts -->
+    </th:block>
+
+</th:block>
+
+</html>

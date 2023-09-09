@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="header">
+
+    <!-- header -->
+    <header class="header menu_fixed">
+        <div id="preloader">
+            <div data-loader="circle-side"></div>
+        </div><!-- /Page Preload -->
+        <div id="logo">
+            <a th:href="@{/}" href="/index.html">
+                <img src="/images/title_textwhite.svg" width="110" height="40" alt="" class="logo_normal">
+                <img src="/images/title_textblack.svg" width="110" height="40" alt="" class="logo_sticky">
+            </a>
+        </div>
+        <ul id="top_menu">
+            <li th:if="${session.loginMember} == null">
+                <a type="button" class="btn btn-primary" data-bs-toggle="modal"
+                   data-bs-target="#loginModal" title="LOG IN">LOG IN</a>
+            </li>
+            <li th:if="${session.loginMember} != null">
+                <a th:href="@{/member/logout}" type="button"
+                   class="btn btn-danger" title="LOG OUT">LOG OUT</a>
+            </li>
+        </ul>
+        <!-- /top_menu -->
+        <a href="#menu" class="btn_mobile">
+            <div class="hamburger hamburger--spin" id="hamburger">
+                <div class="hamburger-box">
+                    <div class="hamburger-inner"></div>
+                </div>
+            </div>
+        </a>
+        <nav id="menu" class="main-menu">
+            <ul>
+                <li><span><a th:href="@{/}" href="#">Home</a></span></li>
+                <li><span><a th:href="@{/cafe}" href="/cafe-list.html">StudyCafe</a></span></li>
+                <li><span><a href="#0">StudyGroup</a></span>
+                    <ul>
+                        <li><a th:href="@{/group/mygroup}" href="#">My Group</a></li>
+                        <li><a th:href="@{/group}" href="#">StudyList</a></li>
+                    </ul>
+                </li>
+                <li><span><a th:href="@{/contact}" href="/contact">Contact</a></span></li>
+                <li><span><a th:href="@{/support}" href="/help.html">Support</a></span></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- /header -->
+
+</th:block>
+</html>

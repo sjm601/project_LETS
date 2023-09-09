@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vj.lets.domain.member.mapper.MemberMapper">
+
+    <insert id="create" parameterType="Member">
+        INSERT INTO MEMBER(ID, EMAIL, NAME, PASSWORD, TYPE)
+        VALUES (MEMBER_ID_SEQ.NEXTVAL, #{email}, #{name}, #{password}, 'guest')
+    </insert>
+
+    <select id="findByEmailAndPasswd" resultType="Member">
+        select ID, EMAIL, NAME, TYPE
+        from MEMBER
+        where EMAIL = #{email} AND PASSWORD = #{password} AND STATUS = 'enabled'
+    </select>
+
+    <select id="findByAll" resultType="Member">
+        SELECT ID, EMAIL, NAME, TYPE, TO_CHAR(regdate, 'yyyy-MM-DD') regdate
+        FROM MEMBER
+        ORDER BY regdate DESC
+    </select>
+
+    <select id="findById" parameterType="int" resultType="Member">
+        SELECT ID, EMAIL, NAME, TYPE, TO_CHAR(regdate, 'yyyy-MM-DD HH24:MI:SS') regdate
+        FROM MEMBER
+        WHERE id = #{value}
+    </select>
+
+    <update id="update" parameterType="Member">
+        UPDATE MEMBER
+        <set>
+            <if test="name != null or name != ''">NAME = #{name},</if>
+            <if test="password != null or password == ''">PASSWORD = #{password},</if>
+            <if test="imagePath != null or imagePath == ''">IMAGE_PATH = #{imagePath}</if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <update id="delete" parameterType="Member">
+        UPDATE MEMBER
+        SET status = 'disabled'
+        WHERE ID = #{id}
+    </update>
+
+</mapper>

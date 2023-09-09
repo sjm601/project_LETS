@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+    th:replace="~{/common/layout/common_layout_V2 :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+
+    <th:block th:fragment="head">
+        <meta name="author" content="VJCommando">
+        <meta name="description" content="LETS - 카페 상세 페이지">
+        <title>LETS - 카페 상세 페이지</title>
+
+        <link href="/css/custom/cafe_detail_custom.css" rel="stylesheet">
+    </th:block>
+
+    <th:block th:fragment="content">
+        <!-- main -->
+        <main>
+            <section class="hero_in restaurants_detail">
+                <div class="wrapper">
+                    <div class="container">
+                        <h1 class="fadeInUp"><span></span>EZEN Study Cafe</h1>
+                    </div>
+                </div>
+            </section>
+            <!--/hero_in-->
+
+            <div class="bg_color_1">
+                <nav class="secondary_nav sticky_horizontal">
+                    <div class="container">
+                        <ul class="clearfix">
+                            <li><a href="#description" class="active">Description</a></li>
+                            <li><a href="#reviews">Reviews</a></li>
+                            <li><a href="#sidebar">Booking</a></li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="container margin_60_35">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <section id="description">
+                                <h2>운영시간<strong class="point-blue ms-1 mt-0">영업종료</strong></h2>
+                                <p>12:00 ~ 22:00</p>
+                                <h2>위치</h2>
+                                <p>서울시 노원구 동일로 300 4층</p>
+                                <h2>소개</h2>
+                                <p>Per consequat adolescens ex, cu nibh commune, ad sumo viris
+                                    eloquentiam sed. Mea appareat omittantur eloquentiam ad, nam ei quas oportere
+                                    democritum. Prima causae
+                                    admodum id est, ei timeam inimicus sed. Sit an meis aliquam, cetero inermis vel ut.
+                                    An
+                                    sit illum
+                                    euismod facilisis, tamquam vulputate pertinacia eum at.</p>
+
+                                <ul class="none">
+                                    <div class="row">
+                                        <li class="col-lg-6"><i class="fa-regular fa-eye me-2"></i>보안 CCTV</li>
+                                        <li class="col-lg-6"><i class="fa-regular fa-eye me-2"></i>보안 CCTV</li>
+                                        <li class="col-lg-6"><i class="fa-regular fa-eye me-2"></i>보안 CCTV</li>
+                                        <li class="col-lg-6"><i class="fa-regular fa-eye me-2"></i>보안 CCTV</li>
+                                        <li class="col-lg-6"><i class="fa-regular fa-eye me-2"></i>보안 CCTV</li>
+                                        <li class="col-lg-6"><i class="fa-regular fa-eye me-2"></i>보안 CCTV</li>
+                                        <li class="col-lg-6"><i class="fa-regular fa-eye me-2"></i>보안 CCTV</li>
+                                        <li class="col-lg-6"><i class="fa-regular fa-eye me-2"></i>보안 CCTV</li>
+                                    </div>
+                                </ul>
+                                <!-- /row -->
+                                <hr>
+
+                                <div>
+                                    <h3 class="mb-3">Room Type</h3>
+                                    <div class="pictures_grid magnific-gallery clearfix">
+                                        <div class="d-flex">
+                                            <figure class="mb-2 me-lg-3"><a href="img/detail_gallery/detail_1.jpg"
+                                                                            title="Photo title"
+                                                                            data-effect="mfp-zoom-in"><img
+                                                src="img/detail_gallery/detail_1.jpg" alt=""></a></figure>
+                                            <div class="row mb-3 mt-lg-3">
+                                                <div class="col-lg-12">
+                                                    <ul class="bullets">
+                                                        <li><strong class="line-strong">이름</strong>이젠 101</li>
+                                                        <li><strong class="line-strong">수용인원</strong>10</li>
+                                                        <li><strong class="line-strong">시간당 가격</strong>15,000원</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /row -->
+                                        <p>Per consequat adolescens ex, cu nibh commune , ad sumo viris
+                                            eloquentiam sed. Mea appareat omittantur eloquentiam ad, nam ei quas
+                                            oportere
+                                            democritum. Prima
+                                            causae
+                                            admodum id est, ei timeam inimicus sed. Sit an meis aliquam, cetero inermis
+                                            vel
+                                            ut. An sit illum
+                                            euismod facilisis, tamquam vulputate pertinacia eum at.</p>
+                                    </div>
+                                    <!-- /room-option -->
+                                    <div class="pictures_grid magnific-gallery clearfix">
+                                        <div class="d-flex">
+                                            <figure class="mb-2 me-lg-3"><a href="img/detail_gallery/detail_1.jpg"
+                                                                            title="Photo title"
+                                                                            data-effect="mfp-zoom-in"><img
+                                                src="img/detail_gallery/detail_1.jpg" alt=""></a></figure>
+                                            <div class="row mb-3 mt-lg-3">
+                                                <div class="col-lg-12">
+                                                    <ul class="bullets">
+                                                        <li><strong class="line-strong">이름</strong>이젠 101</li>
+                                                        <li><strong class="line-strong">수용인원</strong>10</li>
+                                                        <li><strong class="line-strong">시간당 가격</strong>15,000원</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /row -->
+                                        <p>Per consequat adolescens ex, cu nibh commune , ad sumo viris
+                                            eloquentiam sed. Mea appareat omittantur eloquentiam ad, nam ei quas
+                                            oportere
+                                            democritum. Prima
+                                            causae
+                                            admodum id est, ei timeam inimicus sed. Sit an meis aliquam, cetero inermis
+                                            vel
+                                            ut. An sit illum
+                                            euismod facilisis, tamquam vulputate pertinacia eum at.</p>
+                                    </div>
+                                    <!-- /room-option -->
+                                    <div class="pictures_grid magnific-gallery clearfix">
+                                        <div class="d-flex">
+                                            <figure class="mb-2 me-lg-3"><a href="img/detail_gallery/detail_1.jpg"
+                                                                            title="Photo title"
+                                                                            data-effect="mfp-zoom-in"><img
+                                                src="img/detail_gallery/detail_1.jpg" alt=""></a></figure>
+                                            <div class="row mb-3 mt-lg-3">
+                                                <div class="col-lg-12">
+                                                    <ul class="bullets">
+                                                        <li><strong class="line-strong">이름</strong>이젠 101</li>
+                                                        <li><strong class="line-strong">수용인원</strong>10</li>
+                                                        <li><strong class="line-strong">시간당 가격</strong>15,000원</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /row -->
+                                        <p>Per consequat adolescens ex, cu nibh commune , ad sumo viris
+                                            eloquentiam sed. Mea appareat omittantur eloquentiam ad, nam ei quas
+                                            oportere
+                                            democritum. Prima
+                                            causae
+                                            admodum id est, ei timeam inimicus sed. Sit an meis aliquam, cetero inermis
+                                            vel
+                                            ut. An sit illum
+                                            euismod facilisis, tamquam vulputate pertinacia eum at.</p>
+                                    </div>
+                                    <!-- /room-option -->
+
+
+                                </div>
+                                <hr>
+                                <h3>Location</h3>
+                                <div id="map" class="map map_single add_bottom_30"></div>
+                                <!-- End Map -->
+                            </section>
+                            <!-- /section -->
+
+                            <section id="reviews">
+                                <h2>Reviews</h2>
+                                <div class="reviews-container">
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div id="review_summary">
+                                                <strong>8.5</strong>
+                                                <em>Superb</em>
+                                                <small>Based on 4 reviews</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <div class="row">
+                                                <div class="col-lg-10 col-9">
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar" style="width: 90%"
+                                                             aria-valuenow="90"
+                                                             aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-3"><small><strong>5 stars</strong></small>
+                                                </div>
+                                            </div>
+                                            <!-- /row -->
+                                            <div class="row">
+                                                <div class="col-lg-10 col-9">
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar" style="width: 95%"
+                                                             aria-valuenow="95"
+                                                             aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-3"><small><strong>4 stars</strong></small>
+                                                </div>
+                                            </div>
+                                            <!-- /row -->
+                                            <div class="row">
+                                                <div class="col-lg-10 col-9">
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar" style="width: 60%"
+                                                             aria-valuenow="60"
+                                                             aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-3"><small><strong>3 stars</strong></small>
+                                                </div>
+                                            </div>
+                                            <!-- /row -->
+                                            <div class="row">
+                                                <div class="col-lg-10 col-9">
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar" style="width: 20%"
+                                                             aria-valuenow="20"
+                                                             aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-3"><small><strong>2 stars</strong></small>
+                                                </div>
+                                            </div>
+                                            <!-- /row -->
+                                            <div class="row">
+                                                <div class="col-lg-10 col-9">
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar" style="width: 0"
+                                                             aria-valuenow="0"
+                                                             aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-3"><small><strong>1 stars</strong></small>
+                                                </div>
+                                            </div>
+                                            <!-- /row -->
+                                        </div>
+                                    </div>
+                                    <!-- /row -->
+                                </div>
+
+                                <hr>
+
+                                <div class="reviews-container">
+                                    <ul>
+                                        <li>
+                                            <div class="review-box clearfix">
+                                                <figure class="rev-thumb"><img src="img/avatar1.jpg" alt="">
+                                                </figure>
+                                                <div class="rev-content">
+                                                    <div class="rating">
+                                                        <i class="icon_star voted"></i><i class="icon_star voted"></i><i
+                                                        class="icon_star voted"></i><i class="icon_star voted"></i><i
+                                                        class="icon_star"></i>
+                                                    </div>
+                                                    <div class="rev-info mb-1">
+                                                        Guest – April 03, 2016:
+                                                    </div>
+                                                    <div class="rev-info">
+                                                        방타입 A1
+                                                    </div>
+                                                    <div class="rev-text">
+                                                        <p>
+                                                            Sed eget turpis a pede tempor malesuada. Vivamus quis mi at
+                                                            leo
+                                                            pulvinar hendrerit. Cum
+                                                            sociis
+                                                            natoque penatibus et magnis dis
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="cafe-reply">
+                                            <div class="review-box clearfix">
+                                                <figure class="rev-thumb"><img src="img/avatar1.jpg" alt="">
+                                                </figure>
+                                                <div class="rev-content">
+                                                    <div class="rev-info">
+                                                        Host – April 03, 2016:
+                                                    </div>
+                                                    <div class="rev-text">
+                                                        <p>
+                                                            이젠 스터디카페를 이용해주셔서 감사합니다.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <!-- /review-box -->
+                                        <li>
+                                            <div class="review-box clearfix">
+                                                <figure class="rev-thumb"><img src="img/avatar2.jpg" alt="">
+                                                </figure>
+                                                <div class="rev-content">
+                                                    <div class="rating">
+                                                        <i class="icon-star voted"></i><i class="icon_star voted"></i><i
+                                                        class="icon_star voted"></i><i class="icon_star voted"></i><i
+                                                        class="icon_star"></i>
+                                                    </div>
+                                                    <div class="rev-info mb-1">
+                                                        Guest – April 03, 2016:
+                                                    </div>
+                                                    <div class="rev-info">
+                                                        방타입 A1
+                                                    </div>
+                                                    <div class="rev-text">
+                                                        <p>
+                                                            Sed eget turpis a pede tempor malesuada. Vivamus quis mi at
+                                                            leo
+                                                            pulvinar hendrerit. Cum
+                                                            sociis
+                                                            natoque penatibus et magnis dis
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="cafe-reply">
+                                            <div class="review-box clearfix">
+                                                <figure class="rev-thumb"><img src="img/avatar1.jpg" alt="">
+                                                </figure>
+                                                <div class="rev-content">
+                                                    <div class="rev-info">
+                                                        Host – April 03, 2016:
+                                                    </div>
+                                                    <div class="rev-text">
+                                                        <p>
+                                                            이젠 스터디카페를 이용해주셔서 감사합니다.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <!-- /review-box -->
+                                        <li>
+                                            <div class="review-box clearfix">
+                                                <figure class="rev-thumb"><img src="img/avatar3.jpg" alt="">
+                                                </figure>
+                                                <div class="rev-content">
+                                                    <div class="rating">
+                                                        <i class="icon-star voted"></i><i class="icon_star voted"></i><i
+                                                        class="icon_star voted"></i><i class="icon_star voted"></i><i
+                                                        class="icon_star"></i>
+                                                    </div>
+                                                    <div class="rev-info mb-1">
+                                                        Guest – April 03, 2016:
+                                                    </div>
+                                                    <div class="rev-info">
+                                                        방타입 A1
+                                                    </div>
+                                                    <div class="rev-text">
+                                                        <p>
+                                                            Sed eget turpis a pede tempor malesuada. Vivamus quis mi at
+                                                            leo
+                                                            pulvinar hendrerit. Cum
+                                                            sociis
+                                                            natoque penatibus et magnis dis
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="cafe-reply">
+                                            <div class="review-box clearfix">
+                                                <figure class="rev-thumb"><img src="img/avatar1.jpg" alt="">
+                                                </figure>
+                                                <div class="rev-content">
+                                                    <div class="rev-info">
+                                                        Host – April 03, 2016:
+                                                    </div>
+                                                    <div class="rev-text">
+                                                        <p>
+                                                            이젠 스터디카페를 이용해주셔서 감사합니다.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <!-- /review-box -->
+                                </div>
+                                <!-- /review-container -->
+                            </section>
+                            <!-- /section -->
+                            <hr>
+                        </div>
+                        <!-- /col -->
+
+                        <aside class="col-lg-4" id="sidebar">
+                            <div class="box_detail booking">
+                                <div class="price">
+                                    <span>20,000<i
+                                        class="fa-solid fa-won-sign ms-1"></i><small> per 1hour</small></span>
+                                    <div class="score"><span>Superb<em>30 Reviews</em></span><strong>5.0</strong></div>
+                                </div>
+
+                                <div class="form-group input-dates scroll-fix">
+                                    <input class="form-control" type="text" name="dates" placeholder="When..">
+                                    <i class="icon_calendar"></i>
+                                </div>
+
+                                <div class="panel-dropdown">
+                                    <a href="#">Guests <span class="qtyTotal">1</span></a>
+                                    <div class="panel-dropdown-content right">
+                                        <div class="qtyButtons">
+                                            <label>Guests</label>
+                                            <input type="text" name="qtyInput" value="1">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group clearfix">
+                                    <div class="custom-select-form">
+                                        <select class="wide">
+                                            <option>룸 타입</option>
+                                            <option>A1</option>
+                                            <option>A2</option>
+                                            <option>A3</option>
+                                            <option>A4</option>
+                                            <option>A5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group clearfix">
+                                    <div class="custom-select-form">
+                                        <select class="wide">
+                                            <option>시작시간</option>
+                                            <option>01:00</option>
+                                            <option>02:00</option>
+                                            <option>03:00</option>
+                                            <option>04:00</option>
+                                            <option>05:00</option>
+                                            <option>06:00</option>
+                                            <option>07:00</option>
+                                            <option>08:00</option>
+                                            <option>09:00</option>
+                                            <option>10:00</option>
+                                            <option>11:00</option>
+                                            <option>12:00</option>
+                                            <option>13:00</option>
+                                            <option>14:00</option>
+                                            <option>15:00</option>
+                                            <option>16:00</option>
+                                            <option>17:00</option>
+                                            <option>18:00</option>
+                                            <option>19:00</option>
+                                            <option>20:00</option>
+                                            <option>21:00</option>
+                                            <option>22:00</option>
+                                            <option>23:00</option>
+                                            <option>24:00</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group clearfix">
+                                    <div class="custom-select-form">
+                                        <select class="wide">
+                                            <option>종료시간</option>
+                                            <option>01:00</option>
+                                            <option>02:00</option>
+                                            <option>03:00</option>
+                                            <option>04:00</option>
+                                            <option>05:00</option>
+                                            <option>06:00</option>
+                                            <option>07:00</option>
+                                            <option>08:00</option>
+                                            <option>09:00</option>
+                                            <option>10:00</option>
+                                            <option>11:00</option>
+                                            <option>12:00</option>
+                                            <option>13:00</option>
+                                            <option>14:00</option>
+                                            <option>15:00</option>
+                                            <option>16:00</option>
+                                            <option>17:00</option>
+                                            <option>18:00</option>
+                                            <option>19:00</option>
+                                            <option>20:00</option>
+                                            <option>21:00</option>
+                                            <option>22:00</option>
+                                            <option>23:00</option>
+                                            <option>24:00</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="price text-end">
+                                    <strong class="me-2">Total</strong><small>20,000<i
+                                    class="fa-solid fa-xmark me-1 ms-1"></i>4시간<i
+                                    class="fa-solid fa-equals me-2 ms-1"></i></small>
+                                    <strong class="price-text">80,000<i class="fa-solid fa-won-sign ms-1"></i></strong>
+                                </div>
+                                <a href="reservation.html" class=" add_top_30 btn_1 full-width purchase">Book now</a>
+                                <div class="text-center"><small>No money charged in this step</small></div>
+                            </div>
+                        </aside>
+                    </div>
+                    <!-- /row -->
+                </div>
+                <!-- /container -->
+            </div>
+            <!-- /bg_color_1 -->
+        </main>
+        <!--/main-->
+    </th:block>
+
+    <th:block th:fragment="scripts">
+        <!-- Map -->
+        <script src="http://maps.googleapis.com/maps/api/js"></script>
+        <script src="/js/map_single_restaurant.js"></script>
+        <script src="/js/infobox.js"></script>
+
+        <!-- DATEPICKER  -->
+        <script th:inline="javascript">
+            $(function () {
+                $('input[name="dates"]').daterangepicker({
+                    autoUpdateInput: true,
+                    parentEl: '.scroll-fix',
+                    singleDatePicker: true,
+                    autoApply: true,
+                    minDate: new Date(),
+                    showCustomRangeLabel: false,
+                    locale: {
+                        format: 'MM-DD-YYYY'
+                    }
+                }, function (start, end, label) {
+                    console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('DD-MM-YYYY') + ' (predefined range: ' + label + ')');
+                });
+            });
+        </script>
+
+        <!-- INPUT QUANTITY  -->
+        <script src="/js/input_qty.js"></script>
+    </th:block>
+
+</th:block>
+
+</html>

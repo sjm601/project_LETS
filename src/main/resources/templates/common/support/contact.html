@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+    th:replace="~{/common/layout/common_layout_V2 :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+
+    <th:block th:fragment="head">
+        <meta name="author" content="VJCommando">
+        <meta name="description" content="LETS - 카페 입점 신청">
+        <title>LETS - 카페 입점 신청</title>
+    </th:block>
+
+    <th:block th:fragment="content">
+        <!-- main -->
+        <main>
+            <section class="hero_in contacts">
+                <div class="wrapper">
+                    <div class="container">
+                        <h1 class="fadeInUp"><span></span>Applying for Business Registration</h1>
+                    </div>
+                </div>
+            </section>
+            <!--/hero_in-->
+
+            <div class="bg_color_1">
+                <div class="container margin_80_55">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <h4 class="text-center">Applying</h4>
+                            <p class="text-center">Please enter the business registration form.</p>
+                            <div id="login">
+                                <form method="post" action="#" id="contactform" autocomplete="off">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label>Your Email</label>
+                                                <input class="form-control" type="email">
+                                                <i class="fas fa-solid fa-envelope"></i>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Your Name</label>
+                                                <input class="form-control" type="text">
+                                                <i class="fas fa-solid fa-user"></i>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Your phone number</label>
+                                                <input class="form-control" type="password">
+                                                <i class="fas fa-solid fa-phone"></i>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Your Cafe Address</label>
+                                                <input class="form-control" type="address">
+                                                <i class="fa-solid fa-location-dot"></i>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Your business number</label>
+                                                <input class="form-control" type="businessNum">
+                                                <i class="fa-solid fa-file-contract"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>RequestMessage</label>
+                                        <textarea class="form-control" id="message_contact" name="message_contact"
+                                                  style="height:250px;"></textarea>
+                                    </div>
+                                    <p class="add_top_30"><input type="submit" value="Submit" class="btn_1 rounded"
+                                                                 id="submit-contact">
+                                    </p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- /bg_color_1 -->
+        </main>
+        <!--/main-->
+    </th:block>
+
+    <th:block th:fragment="scripts">
+    </th:block>
+
+</th:block>
+
+</html>
