@@ -12,9 +12,9 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * MemberHistory 매퍼 테스트 클래스
+ * 회원 매퍼 테스트 클래스
  *
- * @author 김종원
+ * @author VJ특공대 김종원
  * @version 1.0
  * @since 2023-09-08 (금)
  */
@@ -47,7 +47,7 @@ class MemberMapperTest {
         String email = "lhy@gmail.com";
         String password = "1111";
         // when
-        Member member = memberMapper.findByEmailAndPasswd(email, password);
+        Member member = memberMapper.readByEmailAndPasswd(email, password);
         // then
         log.info("회원 정보 : {}", member);
         assertThat(member).isNotNull();
@@ -57,7 +57,7 @@ class MemberMapperTest {
     void findByAllTest() {
         // given
         // when
-        List<Member> list = memberMapper.findByAll();
+        List<Member> list = memberMapper.readAll();
         // then
         log.info("회원 리스트 : {}", list);
         assertThat(list).isNotNull();
@@ -68,7 +68,7 @@ class MemberMapperTest {
         // given
         int id = 1;
         // when
-        Member member = memberMapper.findById(id);
+        Member member = memberMapper.readById(id);
         // then
         log.info("회원 정보 : {}", member);
         assertThat(member).isNotNull();

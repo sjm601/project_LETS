@@ -17,11 +17,18 @@ import java.util.List;
 public interface MemberMapper {
 
     /**
-     * 회원 등록
+     * 회원 생성
      *
      * @param member 멤버 객체
      */
     public void create(Member member);
+
+    /**
+     * 전체 회원 목혹 조회
+     *
+     * @return 회원 목록
+     */
+    public List<Member> readAll();
 
     /**
      * 이메일, 비밀번호로 회원 조회
@@ -30,14 +37,7 @@ public interface MemberMapper {
      * @param password 비밀번호
      * @return 회원 객체
      */
-    public Member findByEmailAndPasswd(@Param("email") String email, @Param("password") String password);
-
-    /**
-     * 전체 회원 목혹 조회
-     *
-     * @return 회원 리스트
-     */
-    public List<Member> findByAll();
+    public Member readByEmailAndPasswd(@Param("email") String email, @Param("password") String password);
 
     /**
      * ID로 회원 조회
@@ -45,7 +45,7 @@ public interface MemberMapper {
      * @param id 회원 ID
      * @return 회원 객체
      */
-    public Member findById(int id);
+    public Member readById(int id);
 
     /**
      * 회원 정보 수정

@@ -5,18 +5,38 @@
 
 <mapper namespace="com.vj.lets.domain.support.mapper.FaqMapper">
 
+    <insert id="create" parameterType="Faq">
+        INSERT INTO FAQ(ID, TITLE, CONTENT, CATEGORY_ID)
+        VALUES (FAQ_ID_SEQ.NEXTVAL, #{title}, #{content}, #{categoryId})
+    </insert>
 
-    <select id="findByAll" resultType="Faq">
-        SELECT id, title, content
+    <select id="readAll" resultType="Faq">
+        SELECT ID, TITLE, CONTENT, CATEGORY_ID
         FROM FAQ
+        ORDER BY CATEGORY_ID
     </select>
 
 
-    <select id="findById" parameterType="int" resultType="Faq">
-        SELECT id, title, content
+    <select id="readByCategory" parameterType="int" resultType="Faq">
+        SELECT ID, TITLE, CONTENT, CATEGORY_ID
         FROM FAQ
-        WHERE id=#{id}
+        WHERE CATEGORY_ID = #{categoryId}
     </select>
+
+    <update id="update" parameterType="Faq">
+        UPDATE FAQ
+        <set>
+            <if test="title != null or title != ''">title = #{title},</if>
+            <if test="content != null or content != ''">content = #{content},</if>
+            <if test="categoryId != null or categoryId != ''">category_id = #{categoryId},</if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM FAQ
+        WHERE ID = #{id}
+    </delete>
 
 
 </mapper>

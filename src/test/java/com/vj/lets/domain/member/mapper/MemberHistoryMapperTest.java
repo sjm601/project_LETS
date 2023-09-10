@@ -6,12 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
- * MemberHistory 매퍼 테스트 클래스
+ * 회원 히스토리 매퍼 테스트 클래스
  *
- * @author 김종원
+ * @author VJ특공대 김종원
  * @version 1.0
  * @since 2023-09-08 (금)
  */

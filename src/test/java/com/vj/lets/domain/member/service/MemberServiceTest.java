@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * 회원 관련 서비스 테스트 클래스
  *
- * @author 김종원
+ * @author VJ특공대 김종원
  * @version 1.0
  * @since 2023-09-08 (금)
  */
@@ -97,7 +97,7 @@ class MemberServiceTest {
         // given
         int id = 1;
         // when
-        memberService.deleteMember(id);
+        memberService.removeMember(id);
         // then
         log.info("삭제한 회원 아이디 : {}", id);
         assertThat(id).isNotZero();

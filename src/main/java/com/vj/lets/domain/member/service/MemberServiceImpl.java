@@ -1,15 +1,13 @@
 package com.vj.lets.domain.member.service;
 
-import java.util.List;
-
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.mapper.MemberHistoryMapper;
 import com.vj.lets.domain.member.mapper.MemberMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import lombok.RequiredArgsConstructor;
+import java.util.List;
 
 /**
  * 회원 관련 비즈니스 로직 처리 및 트랜잭션 관리 서비스 구현체
@@ -46,7 +44,7 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public Member isMember(String email, String password) {
-        return memberMapper.findByEmailAndPasswd(email, password);
+        return memberMapper.readByEmailAndPasswd(email, password);
     }
 
     /**
@@ -56,7 +54,7 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public List<Member> getMemberList() {
-        return memberMapper.findByAll();
+        return memberMapper.readAll();
     }
 
     /**
@@ -67,7 +65,7 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public Member getMember(int id) {
-        return memberMapper.findById(id);
+        return memberMapper.readById(id);
     }
 
     /**
@@ -89,7 +87,7 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     @Transactional
-    public void deleteMember(int id) {
+    public void removeMember(int id) {
         memberMapper.delete(id);
         memberHistoryMapper.delete(id);
     }

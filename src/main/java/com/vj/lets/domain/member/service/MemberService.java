@@ -1,8 +1,8 @@
 package com.vj.lets.domain.member.service;
 
-import java.util.List;
-
 import com.vj.lets.domain.member.dto.Member;
+
+import java.util.List;
 
 /**
  * 회원 관련 비즈니스 로직 처리 및 트랜잭션 관리 서비스 인터페이스
@@ -30,9 +30,9 @@ public interface MemberService {
     public Member isMember(String email, String password);
 
     /**
-     * 전체 회원 리스트 조회
+     * 전체 회원 목록 조회
      *
-     * @return 회원 리스트
+     * @return 회원 목록
      */
     public List<Member> getMemberList();
 
@@ -56,6 +56,6 @@ public interface MemberService {
      *
      * @param id 회원 ID
      */
-    public void deleteMember(int id);
+    public void removeMember(int id);
 
 }
