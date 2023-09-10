@@ -1,6 +1,6 @@
 package com.vj.lets.domain.support.mapper;
 
-import com.vj.lets.domain.support.dto.Faq;
+import com.vj.lets.domain.support.dto.Contact;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * FAQ 관련 매퍼 테스트 클래스
+ * 입점 신청 관련 매퍼 테스트 클래스
  *
  * @author VJ특공대 김종원
  * @version 1.0
@@ -20,68 +20,59 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @SpringBootTest
 @Slf4j
-class FaqMapperTest {
+class ContactMapperTest {
 
     @Autowired
-    private FaqMapper faqMapper;
+    private ContactMapper contactMapper;
 
     @Test
     @Transactional
     void createTest() {
         // given
-        Faq faq = Faq.builder()
-                .title("신규 타이틀")
-                .content("신규 컨텐츠")
-                .categoryId(1)
+        Contact contact = Contact.builder()
+                .email("contact1@gmail.com")
+                .name("신청자1")
+                .phoneNumber("010-8888-8888")
+                .address("서울시 노원구")
+                .message("입점 부탁드립니다.")
+                .businessNumber(1112233333)
                 .build();
         // when
-        faqMapper.create(faq);
+        contactMapper.create(contact);
         // then
-        assertThat(faq).isNotNull();
+        assertThat(contact).isNotNull();
     }
 
     @Test
     void readAllTest() {
         // given
         // when
-        List<Faq> list = faqMapper.readAll();
+        List<Contact> list = contactMapper.readAll();
         // then
         assertThat(list).isNotNull();
     }
 
     @Test
-    void readByCategoryTest() {
+    void readByMailBNumDateTest() {
         // given
-        int categoryId = 1;
+        Contact searchContact = Contact.builder()
+                .email("contact1@gmail.com")
+                .businessNumber(1112233333)
+                .build();
         // when
-        List<Faq> list = faqMapper.readByCategory(1);
+        Contact contact = contactMapper.readByMailBNumDate(searchContact);
         // then
-        assertThat(list).isNotNull();
+        assertThat(contact).isNotNull();
     }
 
     @Test
     @Transactional
     void updateTest() {
         // given
-        Faq faq = Faq.builder()
-                .id(1)
-                .title("업데이트 타이틀")
-                .content("업데이트 컨텐츠")
-                .categoryId(3)
-                .build();
-        // when
-        faqMapper.update(faq);
-        // then
-        assertThat(faq).isNotNull();
-    }
-
-    @Test
-    @Transactional
-    void deleteTest() {
-        // given
         int id = 1;
+        String status = "approve";
         // when
-        faqMapper.delete(id);
+        contactMapper.update(id, status);
         // then
         assertThat(id).isNotZero();
     }

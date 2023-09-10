@@ -5,10 +5,11 @@ import com.vj.lets.domain.support.dto.FaqCategory;
 import com.vj.lets.domain.support.mapper.FaqCategoryMapper;
 import com.vj.lets.domain.support.mapper.FaqMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * FAQ 관련 비즈니스 로직 처리 및 트랜잭션 관리 서비스 구현체
@@ -19,7 +20,6 @@ import java.util.*;
  */
 @RequiredArgsConstructor
 @Service
-@Slf4j
 public class FaqServiceImpl implements FaqService {
 
     private final FaqMapper faqMapper;
