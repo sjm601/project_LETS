@@ -32,12 +32,21 @@ public interface GroupContactMapper {
     /**
      * 가입 승인
      * @param id 회원 아이디
+     * @param studyGroupId 스터디 그룹 아이디
      */
     public void approve(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
 
     /**
      * 가입 거절
      * @param id 회원 아이디
+     * @param studyGroupId 스터디 그룹 아이디
      */
     public void refuse(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
+
+    /**
+     * 가입 신청 삭제
+     * @param id 회원 아이디
+     * @param studyGroupId 스터디 그룹 아이디
+     */
+    public void delete(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
 }

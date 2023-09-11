@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -54,7 +55,7 @@ class StudyGroupMapperTest {
         // given
 
         // when
-        List<StudyGroup> studyGroupList = studyGroupMapper.findByAll();
+        List<Map<String, Object>> studyGroupList = studyGroupMapper.findByAll();
 
         // then
         log.info("스터디 그룹 전체 리스트 : {}", studyGroupList);
@@ -112,5 +113,33 @@ class StudyGroupMapperTest {
         // then
         log.info("삭제 완료");
         assertThat(studyGroup.getStatus()).isEqualTo("disabled");
+    }
+
+    @Test
+    @Transactional
+    @Disabled
+    void increaseest() {
+        // given
+        int studyGroupId = 1;
+
+        // when
+        studyGroupMapper.increase(studyGroupId);
+
+        // then
+        log.info("스터디 회원 증가 완료");
+    }
+
+    @Test
+    @Transactional
+    @Disabled
+    void decreaseTest() {
+        // given
+        int studyGroupId = 1;
+
+        // when
+        studyGroupMapper.decrease(studyGroupId);
+
+        // then
+        log.info("스터디 회원 감소 완료");
     }
 }

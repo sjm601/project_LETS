@@ -78,4 +78,19 @@ class GroupContactMapperTest {
         // then
         log.info("가입 거절");
     }
+
+    @Test
+    @Transactional
+    @Disabled
+    void deleteTest() {
+        // given
+        int id = 30;
+        int studyGroupId = 1;
+
+        // when
+        groupContactMapper.delete(id, studyGroupId);
+
+        // then
+        log.info("가입 신청 삭제");
+    }
 }

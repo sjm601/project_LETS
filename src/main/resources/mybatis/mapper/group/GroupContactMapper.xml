@@ -28,4 +28,9 @@
         SET STATUS = 'refuse'
         WHERE MEMBER_ID = #{id} AND STUDY_GROUP_ID = #{studyGroupId}
     </update>
+
+    <delete id="delete">
+        DELETE FROM GROUP_CONTACT
+        WHERE MEMBER_ID = #{id} AND STUDY_GROUP_ID = #{studyGroupId}
+    </delete>
 </mapper>

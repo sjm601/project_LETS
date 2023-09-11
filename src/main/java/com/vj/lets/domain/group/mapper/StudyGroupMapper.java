@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 스터디 그룹 매퍼
@@ -26,7 +27,7 @@ public interface StudyGroupMapper {
      * 스터디 그룹 전체 리스트 조회
      * @return 스터디 그룹 리스트
      */
-    public List<StudyGroup> findByAll();
+    public List<Map<String, Object>> findByAll();
     /**
      * 스터디 그룹 조회
      * @param studyGroupId
@@ -45,4 +46,16 @@ public interface StudyGroupMapper {
      * @param studyGroupId
      */
     public void delete(int studyGroupId);
+
+    /**
+     * 스터디 그룹 회원 추가
+     * @param studyGroupId 스터디 그룹 아이디
+     */
+    public void increase(int studyGroupId);
+
+    /**
+     * 스터디 그룹 회원 제거
+     * @param studyGroupId 스터디 그룹 아이디
+     */
+    public void decrease(int studyGroupId);
 }

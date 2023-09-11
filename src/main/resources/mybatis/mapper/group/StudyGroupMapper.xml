@@ -10,14 +10,26 @@
         VALUES (STUDY_GROUP_ID_SEQ.NEXTVAL, #{name}, #{headCount}, #{subject}, #{siGunGuId})
     </insert>
 
-    <select id="findByAll">
-        SELECT ID, NAME, HEAD_COUNT, REGDATE, IMAGE_PATH, SUBJECT, STATUS, SI_GUN_GU_ID
-        FROM STUDY_GROUP
+    <select id="findByAll" resultType="map">
+        SELECT
+            SG.ID         ID,
+            SG.NAME       NAME,
+            SG.TOTAL_COUNT TOTALCOUNT,
+            SG.CURRENT_COUNT CURRENTCOUNT,
+            SG.REGDATE    REGDATE,
+            SG.IMAGE_PATH IMAGEPATH,
+            SG.SUBJECT    SUBJECT,
+            SG.STATUS     STATUS,
+            SGG.NAME      SIGUNGUNAME
+        FROM
+            STUDY_GROUP SG
+                JOIN SI_GUN_GU SGG ON SG.SI_GUN_GU_ID = SGG.ID
+        WHERE SG.STATUS = 'enabled'
         ORDER BY REGDATE DESC
     </select>
 
     <select id="getStudyGroup" parameterType="int">
-        SELECT ID, NAME, HEAD_COUNT, REGDATE, IMAGE_PATH, SUBJECT, STATUS, SI_GUN_GU_ID
+        SELECT ID, NAME, TOTAL_COUNT, CURRENT_COUNT, REGDATE, IMAGE_PATH, SUBJECT, STATUS, SI_GUN_GU_ID
         FROM STUDY_GROUP
         WHERE ID = #{studyGroupId}
     </select>
@@ -26,7 +38,7 @@
         UPDATE STUDY_GROUP
         <set>
             <if test="name != null and name != ''">NAME = #{name},</if>
-            <if test="headCount != null and headCount != ''">HEAD_COUNT = #{headCount},</if>
+            <if test="totalCount != null and totalCount != ''">TOTAL_COUNT = #{totalCount},</if>
             <if test="imagePath != null and imagePath != ''">IMAGE_PATH = #{imagePath},</if>
             <if test="subject != null and subject != ''">SUBJECT = #{subject},</if>
         </set>
@@ -36,6 +48,18 @@
     <update id="delete" parameterType="int">
         UPDATE STUDY_GROUP
         SET status = 'disabled'
+        WHERE ID = #{id}
+    </update>
+
+    <update id="increase">
+        UPDATE STUDY_GROUP
+        SET CURRENT_COUNT = CURRENT_COUNT + 1
+        WHERE ID = #{id}
+    </update>
+
+    <update id="decrease">
+        UPDATE STUDY_GROUP
+        SET CURRENT_COUNT = CURRENT_COUNT - 1
         WHERE ID = #{id}
     </update>
 

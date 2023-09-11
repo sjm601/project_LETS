@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 스터디 그룹 서비스 구현체
@@ -52,8 +53,8 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @return 스터디 그룹 리스트
      */
     @Override
-    public List<StudyGroup> getStudyGroupList() {
-        List<StudyGroup> list = null;
+    public List<Map<String, Object>> getStudyGroupList() {
+        List<Map<String, Object>> list = null;
         list = studyGroupMapper.findByAll();
         return list;
     }
@@ -109,7 +110,6 @@ public class StudyGroupServiceImpl implements StudyGroupService{
     @Override
     public void addMember(int id, int studyGroupId) {
         groupMemberListMapper.addMember(id, studyGroupId);
-        groupHistoryMapper.delete(studyGroupId);
     }
 
     /**
@@ -120,6 +120,7 @@ public class StudyGroupServiceImpl implements StudyGroupService{
     @Override
     public void removeMember(int id, int studyGroupId) {
         groupMemberListMapper.removeMember(id, studyGroupId);
+        studyGroupMapper.decrease(id);
         groupHistoryMapper.update(studyGroupId);
     }
 
@@ -153,6 +154,9 @@ public class StudyGroupServiceImpl implements StudyGroupService{
     @Override
     public void approve(int id, int studyGroupId) {
         groupContactMapper.approve(id, studyGroupId);
+        groupContactMapper.delete(id, studyGroupId);
+        groupMemberListMapper.addMember(id, studyGroupId);
+        studyGroupMapper.increase(id);
         groupHistoryMapper.update(studyGroupId);
     }
 
@@ -164,6 +168,6 @@ public class StudyGroupServiceImpl implements StudyGroupService{
     @Override
     public void refuse(int id, int studyGroupId) {
         groupContactMapper.register(id, studyGroupId);
-        groupHistoryMapper.update(studyGroupId);
+        groupContactMapper.delete(id, studyGroupId);
     }
 }

@@ -6,6 +6,7 @@ import com.vj.lets.domain.group.dto.StudyGroup;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 스터디 그룹 서비스 규약
@@ -26,7 +27,7 @@ public interface StudyGroupService {
      * 스터디 그룹 전체 리스트 조회
      * @return 스터디 그룹 리스트
      */
-    public List<StudyGroup> getStudyGroupList();
+    public List<Map<String, Object>> getStudyGroupList();
 
     /**
      * 스터디 그룹 조회
