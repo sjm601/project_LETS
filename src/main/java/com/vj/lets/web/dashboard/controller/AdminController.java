@@ -31,4 +31,34 @@ public class AdminController {
         return "dashboard/admin/admin_dashboard";
     }
 
+    @GetMapping("/contact")
+    public String contactView(Model model) {
+        return "dashboard/admin/contacts";
+    }
+
+    @GetMapping("/faq/register")
+    public String faqRegisterView(Model model) {
+        return "dashboard/admin/faq_add";
+    }
+
+    @GetMapping("/faq")
+    public String faqListView(Model model) {
+        return "dashboard/admin/faq_list";
+    }
+
+    @GetMapping("/chart")
+    public String chartView(Model model) {
+        return "dashboard/admin/charts";
+    }
+
+    @GetMapping("/host")
+    public String hostView(Model model) {
+        return "dashboard/admin/hosts";
+    }
+
+    @GetMapping("/member")
+    public String memberView(Model model) {
+        return "dashboard/admin/members";
+    }
+
 }

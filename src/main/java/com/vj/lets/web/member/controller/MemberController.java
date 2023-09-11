@@ -41,7 +41,7 @@ public class MemberController {
      * @return 논리적 뷰 이름
      */
     @GetMapping("/register")
-    public String registerForm(Model model) {
+    public String registerView(Model model) {
         RegisterForm registerForm = RegisterForm.builder().build();
         model.addAttribute("registerForm", registerForm);
 
@@ -88,7 +88,7 @@ public class MemberController {
      * @return 논리적 뷰 이름
      */
     @GetMapping("/login")
-    public String loginForm(@CookieValue(value = "remember", required = false) String rememberEmail, Model model) {
+    public String loginView(@CookieValue(value = "remember", required = false) String rememberEmail, Model model) {
         LoginForm loginForm = LoginForm.builder().build();
 
         if (rememberEmail != null) {
