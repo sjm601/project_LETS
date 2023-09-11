@@ -29,6 +29,8 @@ public class Article {
     private String status;
     /** 회원번호 (참조)*/
     private int memberId;
+    /** 게시글 작성자*/
+    private String writer;
 
 
 

@@ -1,6 +1,7 @@
 package com.vj.lets.domain.article.service;
 
 import com.vj.lets.domain.article.dto.Article;
+import com.vj.lets.domain.article.dto.PageParams;
 import com.vj.lets.domain.article.mapper.ArticleHistoryMapper;
 import com.vj.lets.domain.article.mapper.ArticleMapper;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +23,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Transactional
     @Override
-    public void creat(Article article) {
-        articleMapper.creat(article);
-        articleHistoryMapper.creat();
+    public void create(Article article) {
+        articleMapper.create(article);
+        articleHistoryMapper.create();
     }
 
     @Override
@@ -46,8 +47,26 @@ public class ArticleServiceImpl implements ArticleService {
         articleHistoryMapper.delete(id);
     }
 
-//    @Override
-//    public List<Article> findAll() {
-//        return null;
-//    }
+    @Override
+    public List<Article> findAll() {
+        return articleMapper.findAll();
+    }
+
+    @Override
+    public List<Article> findByPage(PageParams pageParams) {
+        return articleMapper.findByPage(pageParams);
+    }
+
+    @Override
+    public int getCountAll(String keyword) {
+        return articleMapper.getCountAll(keyword);
+    }
+
+    @Override
+    public Article findById(int id) {
+        return articleMapper.findById(id);
+    }
+
+
+
 }
