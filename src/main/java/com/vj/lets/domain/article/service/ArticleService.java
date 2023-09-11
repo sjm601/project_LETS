@@ -4,6 +4,8 @@ package com.vj.lets.domain.article.service;
 import com.vj.lets.domain.article.dto.Article;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
 * 클래스 설명 : Article 관련 로직 처리 및 관리
 * 작성일 : 2023-09-08

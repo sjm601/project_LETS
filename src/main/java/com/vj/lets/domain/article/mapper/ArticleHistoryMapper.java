@@ -1,6 +1,8 @@
 package com.vj.lets.domain.article.mapper;
 
+import com.vj.lets.domain.article.dto.Article;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
 * 클래스 설명 : ArticleHistoryMapper 파일

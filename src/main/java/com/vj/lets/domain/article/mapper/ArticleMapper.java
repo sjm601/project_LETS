@@ -15,14 +15,14 @@ public interface ArticleMapper {
     /** 게시글 생성*/
     public void creat (Article article);
 
-    /** 게시글 검색*/
-    public Article search (@Param("keyword") String keyword);
-
     /** 게시글 수정*/
     public void update (Article article);
 
     /** 게시글 삭제*/
     public void delete (int id);
+
+    /** 게시글 검색*/
+    public Article search (@Param("keyword") String keyword);
 
     /** 게시글 목록 (추후 페이징 처리 까지 해야함).*/
 //    public List<Article> findAll ();
