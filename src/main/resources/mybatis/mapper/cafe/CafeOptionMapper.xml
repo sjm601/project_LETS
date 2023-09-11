@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vj.lets.domain.cafe.mapper.CafeOptionMapper">
+
+    <insert id="create" parameterType="CafeOption">
+        INSERT INTO CAFE_OPTION (ID, NAME, IMAGE_PATH, DESCRIPTION)
+        VALUES (CAFE_OPTION_ID_SEQ.NEXTVAL, #{name}, #{imagePath}, #{description})
+    </insert>
+
+    <update id="update" parameterType="int">
+    UPDATE CAFE_OPTION
+    <set>
+        <if test="name != null or name != ''">NAME = '#{name}'</if>
+        <if test="imagePath != null">IMAGE_PATH = '#{imagePath}'</if>
+        <if test="description != null">DESCRIPTION = '#{description}'</if>
+    </set>
+    WHERE ID = #{id}
+    </update>
+
+    <select id="readAll" parameterType="int" resultType="CafeOption">
+        SELECT ID, NAME, IMAGE_PATH, DESCRIPTION
+        FROM CAFE_OPTION
+        Where id = #{id}
+    </select>
+
+    <insert id="delete" parameterType="int">
+        DELETE FROM CAFE_OPTION
+        WHERE id = #{id}
+    </insert>
+
+</mapper>

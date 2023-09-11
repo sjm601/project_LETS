@@ -38,4 +38,4 @@ out/
 
 ## Custom ###
 **/src/main/resources/db-config.properties
-**/log/application-dev.log
+log/

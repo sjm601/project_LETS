@@ -1,8 +1,8 @@
 package com.vj.lets.domain.cafe.mapper;
 
 import com.vj.lets.domain.cafe.dto.Cafe;
+import com.vj.lets.domain.cafe.dto.CafeSearch;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -32,18 +32,7 @@ public interface CafeMapper {
     public List<Cafe> findByBest();
 
     /** 카패 검색 결과 출력 */
-    public List<Cafe> findBySearch(@Param("searchName") String name,
-                                   @Param("searchCountPerson") int countPerson,
-                                   @Param("searchPrice") int price,
-                                   @Param("searchOption") String option,
-                                   @Param("searchMinDuration") int minDuration,
-                                   @Param("searchMaxDuration") int maxDuration,
-                                   @Param("rating5") int rating5,
-                                   @Param("rating4") int rating4,
-                                   @Param("rating3") int rating3,
-                                   @Param("rating2") int rating2,
-                                   @Param("rating1") int rating1,
-                                   @Param("rating") int rating);
+    public List<Cafe> findBySearch(CafeSearch cafeSearch);
 
     /** 카페삭제 */
     public void delete(int id);

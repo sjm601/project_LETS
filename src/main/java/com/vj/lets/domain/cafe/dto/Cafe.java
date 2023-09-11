@@ -7,7 +7,7 @@ import lombok.*;
  *
  * @author VJ특공대 강소영
  * @version 1.0
- * @since 2023. 9. 7.
+ * @since 2023. 9. 7. (목)
  */
 @NoArgsConstructor
 @AllArgsConstructor
