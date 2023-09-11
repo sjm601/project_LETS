@@ -12,7 +12,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * FAQ 카테고리 매퍼 테스트 클래스
+ * FAQ 카테고리 관련 매퍼 테스트 클래스
  *
  * @author VJ특공대 김종원
  * @version 1.0
