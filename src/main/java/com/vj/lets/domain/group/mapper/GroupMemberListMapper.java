@@ -1,7 +1,11 @@
 package com.vj.lets.domain.group.mapper;
 
+import com.vj.lets.domain.group.dto.GroupMemberList;
 import com.vj.lets.domain.member.dto.Member;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 스터디 멤버 리스트 매퍼
@@ -15,24 +19,26 @@ public interface GroupMemberListMapper {
 
     /**
      * 스터디 그룹 멤버 리스트 생성
+     * @param id 회원 아이디
      */
     public void create(int id);
 
     /**
-     * 스터디 그룹 가입 신청
-     * @param member
+     * 스터디 그룹 멤버 리스트 조회
+     * @param studyGroupId 스터디 그룹 아이디
+     * @return 멤버 리스트
      */
-    public void register(Member member);
+    public List<GroupMemberList> findByAll(int studyGroupId);
 
     /**
-     * 스터드 그룹 가입 신청 승인
-     * @param id
+     * 스터디 그룹 회원 추가
+     * @param id 회원 아이디
      */
-    public void approve(int id);
+    public void addMember(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
 
     /**
-     * 스터디 그룹 가입 신청 거절
-     * @param id
+     * 스터디 그룹 멤버 탈퇴
+     * @param id 회원 아이디
      */
-    public  void refuse(int id);
+    public  void removeMember(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
 }

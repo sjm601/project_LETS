@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vj.lets.domain.group.mapper.GroupContactMapper">
+
+    <insert id="register">
+        INSERT INTO GROUP_CONTACT(ID, MEMBER_ID, STUDY_GROUP_ID)
+        VALUES (GROUP_CONTACT_ID_SEQ.NEXTVAL, #{id}, #{studyGroupId})
+    </insert>
+
+    <select id="findByAll" parameterType="int">
+        SELECT ID, STATUS, REGDATE, MEMBER_ID, STUDY_GROUP_ID
+        FROM GROUP_CONTACT
+        WHERE STUDY_GROUP_ID = #{studyGroupId}
+        ORDER BY REGDATE
+    </select>
+
+    <update id="approve">
+        UPDATE GROUP_CONTACT
+        SET STATUS = 'approve'
+        WHERE MEMBER_ID = #{id} AND STUDY_GROUP_ID = #{studyGroupId}
+    </update>
+
+    <update id="refuse">
+        UPDATE GROUP_CONTACT
+        SET STATUS = 'refuse'
+        WHERE MEMBER_ID = #{id} AND STUDY_GROUP_ID = #{studyGroupId}
+    </update>
+</mapper>

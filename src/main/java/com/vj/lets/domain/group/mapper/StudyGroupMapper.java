@@ -2,6 +2,7 @@ package com.vj.lets.domain.group.mapper;
 
 import com.vj.lets.domain.group.dto.StudyGroup;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -28,10 +29,10 @@ public interface StudyGroupMapper {
     public List<StudyGroup> findByAll();
     /**
      * 스터디 그룹 조회
-     * @param StudyGroupId
+     * @param studyGroupId
      * @return 스터디 그룹
      */
-    public StudyGroup read(int StudyGroupId);
+    public StudyGroup getStudyGroup(int studyGroupId);
 
     /**
      * 스터디 그룹 변경

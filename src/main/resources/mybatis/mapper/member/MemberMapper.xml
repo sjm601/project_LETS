@@ -31,9 +31,9 @@
     <update id="update" parameterType="Member">
         UPDATE MEMBER
         <set>
-            <if test="name != null or name != ''">NAME = #{name},</if>
-            <if test="password != null or password != ''">PASSWORD = #{password},</if>
-            <if test="imagePath != null or imagePath != ''">IMAGE_PATH = #{imagePath},</if>
+            <if test="name != null and name != ''">NAME = #{name},</if>
+            <if test="password != null and password != ''">PASSWORD = #{password},</if>
+            <if test="imagePath != null and imagePath != ''">IMAGE_PATH = #{imagePath},</if>
         </set>
         WHERE ID = #{id}
     </update>

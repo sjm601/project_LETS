@@ -1,7 +1,6 @@
 package com.vj.lets.domain.group.mapper;//import static org.junit.jupiter.api.Assertions.*;
 
-import com.vj.lets.domain.group.dto.GroupMemberList;
-import com.vj.lets.domain.group.dto.StudyGroup;
+import com.vj.lets.domain.group.dto.GroupContact;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -15,34 +14,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Slf4j
-class GroupMemberListMapperTest {
+class GroupContactMapperTest {
 
     @Autowired
-    private GroupMemberListMapper groupMemberListMapper;
-    @Autowired
-    private StudyGroupMapper studyGroupMapper;
+    private GroupContactMapper groupContactMapper;
 
     @Test
     @Transactional
     @Disabled
-    void createTest() {
+    void registerTest() {
         // given
         int id = 30;
-
-        StudyGroup studyGroup = StudyGroup.builder()
-                .id(1)
-                .name("생성 테스트")
-                .headCount(10)
-                .subject("주제")
-                .siGunGuId(10020)
-                .build();
-        studyGroupMapper.create(studyGroup);
+        int studyGroupId = 1;
 
         // when
-        groupMemberListMapper.create(id);
+        groupContactMapper.register(id, studyGroupId);
 
         // then
-        log.info("스터디 그룹 멤버 리스트 생성");
+        log.info("가입 신청 성공");
     }
 
     @Test
@@ -53,40 +42,40 @@ class GroupMemberListMapperTest {
         int studyGroupId = 1;
 
         // when
-        List<GroupMemberList> list = groupMemberListMapper.findByAll(studyGroupId);
+        List<GroupContact> list = groupContactMapper.findByAll(studyGroupId);
 
         // then
-        log.info("스터디 멤버 리스트 : {}", list);
+        log.info("가입 신청 리스트 : {}", list);
         assertThat(list).isNotNull();
     }
 
     @Test
     @Transactional
     @Disabled
-    void addMemberTest() {
+    void approveTest() {
         // given
         int id = 30;
         int studyGroupId = 1;
 
         // when
-        groupMemberListMapper.addMember(id, studyGroupId);
+        groupContactMapper.approve(id, studyGroupId);
 
         // then
-        log.info("스터디 멤버 추가");
+        log.info("가입 승인");
     }
 
     @Test
     @Transactional
     @Disabled
-    void removeMemberTest() {
+    void refuseTest() {
         // given
         int id = 30;
         int studyGroupId = 1;
 
         // when
-        groupMemberListMapper.removeMember(id, studyGroupId);
+        groupContactMapper.refuse(id, studyGroupId);
 
         // then
-        log.info("스터디 멤버 삭제");
+        log.info("가입 거절");
     }
 }
