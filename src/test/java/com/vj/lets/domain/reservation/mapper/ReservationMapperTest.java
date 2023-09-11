@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -45,5 +48,76 @@ class ReservationMapperTest {
         // then
         log.info("예약 완료 : {}",newReservation);
         assertThat(newReservation).isNotNull();
+    }
+
+    @Test
+    @DisplayName("예약ID로 예약 찾기")
+     void findByIdTest() {
+        // given
+        int findId = 2;
+        // when
+        Reservation reservation = reservationMapper.findById(findId);
+        // then
+        log.info("예약 검색 완료:{}",reservation);
+        assertThat(reservation).isNotNull();
+    }
+
+    @Test
+    @DisplayName("모든 예약 리스트 가져오기")
+    void findByAllTest() {
+        // given
+        // when
+        List<Reservation> list = reservationMapper.findByAll();
+        // then
+        log.info("예약 리스트 출력:{}", list);
+        assertThat(list).isNotNull();
+    }
+
+
+    @Test
+    @DisplayName("멤버ID로 예약 찾기")
+    void findByMemberTest() {
+        // given
+        int memberId = 21;
+        // when
+        List<Reservation> memberReservation = reservationMapper.findByMember(memberId);
+        // then
+        log.info("회원의 예약 목록:{}", memberReservation);
+        assertThat(memberReservation).isNotNull();
+    }
+
+    @Test
+    void findCafeResListTest() {
+        // given
+        int cafeId = 1;
+        // when
+        List<Reservation> cafeReservationList = reservationMapper.findByMember(cafeId);
+        // then
+        log.info("카페 예약 목록:{}", cafeReservationList);
+        assertThat(cafeReservationList).isNotNull();
+    }
+
+    @Test
+    @DisplayName("달마다 예약 건 수 가져오기")
+    void findCountMonthResTest() {
+        // given
+        int cafeId = 1;
+        // when
+        List<Map<String, Object>> monthRes = reservationMapper.findCountMonthRes(cafeId);
+        // then
+        log.info("달마다 총 예약 수:{}", monthRes);
+        assertThat(monthRes).isNotNull();
+    }
+
+    @Test
+    @DisplayName("호스트의 모든 예약 데이터 가져오기")
+    void findTotalDataTest() {
+        // given
+        int cafeId = 1;
+        // when
+        List<Map<String, Reservation>> reserveData = reservationMapper.findTotalData(cafeId);
+        // then
+        log.info("호스트의 모든 예약 데이터:{}", reserveData);
+        assertThat(reserveData).isNotNull();
     }
 }
