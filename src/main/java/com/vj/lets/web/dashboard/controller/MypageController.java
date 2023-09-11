@@ -31,4 +31,9 @@ public class MypageController {
         return "dashboard/mypage/mypage_dashboard";
     }
 
+    @GetMapping("/review")
+    public String reviewView(Model model) {
+        return "dashboard/mypage/reviews_confirm";
+    }
+
 }

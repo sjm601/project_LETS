@@ -4,6 +4,7 @@ import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.dto.LoginForm;
 import com.vj.lets.domain.member.dto.RegisterForm;
 import com.vj.lets.domain.member.service.MemberService;
+import com.vj.lets.domain.member.util.MemberType;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -62,6 +63,7 @@ public class MemberController {
                 .email(registerForm.getEmail())
                 .name(registerForm.getName())
                 .password(registerForm.getPassword())
+                .type(MemberType.GUEST.getType())
                 .build();
         memberService.register(member);
 

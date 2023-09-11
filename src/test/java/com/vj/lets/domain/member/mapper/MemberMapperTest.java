@@ -33,6 +33,7 @@ class MemberMapperTest {
                 .email("aaa@aaa.aaa")
                 .name("가가가")
                 .password("1111")
+                .type("admin")
                 .build();
         // when
         memberMapper.create(member);
@@ -82,7 +83,7 @@ class MemberMapperTest {
                 .id(1)
                 .name("이이이")
                 .password("1234")
-                .imagePath("aaa.jpg")
+//                .imagePath("aaa.jpg")
                 .build();
         // when
         memberMapper.update(member);
@@ -93,11 +94,11 @@ class MemberMapperTest {
 
     @Test
     @Transactional
-    void deleteTest() {
+    void disabledTest() {
         // given
         int id = 1;
         // when
-        memberMapper.delete(id);
+        memberMapper.disabled(id);
         // then
         log.info("삭제된 회원 아이디 : {}", id);
         assertThat(id).isNotZero();

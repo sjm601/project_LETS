@@ -36,7 +36,7 @@ public class ContactServiceImpl implements ContactService {
      * @return 입점 신청 목록
      */
     @Override
-    public List<Contact> getContacts() {
+    public List<Contact> getContactList() {
         return contactMapper.readAll();
     }
 
@@ -47,7 +47,7 @@ public class ContactServiceImpl implements ContactService {
      * @return 입점 신청 조회 정보
      */
     @Override
-    public Contact getCheckContact(Contact contact) {
+    public Contact checkContact(Contact contact) {
         return contactMapper.readByMailBNumDate(contact);
     }
 

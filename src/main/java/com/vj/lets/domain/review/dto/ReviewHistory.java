@@ -3,21 +3,22 @@ package com.vj.lets.domain.review.dto;
 import lombok.*;
 
 /**
- * Review History dto
+ * 리뷰 히스토리 DTO Bean
  *
- * @author 강소영
+ * @author VJ특공대 김종원
  * @version 1.0
- * @since 2023-09-08 (금)
+ * @since 2023-09-11 (월)
  */
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
 @Getter
+@Setter
 @ToString
 @Builder
 public class ReviewHistory {
+
     private int id;
-    private String status;
+    private String modifyComment;
     private String modifyDate;
     private int reviewId;
 }

@@ -21,11 +21,12 @@ public class Member {
     private String name;
     private String password;
     private String phoneNumber;
-    private String gender;
     private int age;
-    private String type;
+    private String gender;
     private String regdate;
+    private String type;
     private String imagePath;
+    private String status;
 }
 
 

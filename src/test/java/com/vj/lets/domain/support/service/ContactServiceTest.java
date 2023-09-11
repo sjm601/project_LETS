@@ -44,23 +44,23 @@ class ContactServiceTest {
     }
 
     @Test
-    void getContactsTest() {
+    void getContactListTest() {
         // given
         // when
-        List<Contact> list = contactService.getContacts();
+        List<Contact> list = contactService.getContactList();
         // then
         assertThat(list).isNotNull();
     }
 
     @Test
-    void getCheckContactTest() {
+    void checkContactTest() {
         // given
         Contact checkContact = Contact.builder()
                 .email("contact2@gmail.com")
                 .businessNumber(1112233334)
                 .build();
         // when
-        Contact contact = contactService.getCheckContact(checkContact);
+        Contact contact = contactService.checkContact(checkContact);
         // then
         assertThat(contact).isNotNull();
     }

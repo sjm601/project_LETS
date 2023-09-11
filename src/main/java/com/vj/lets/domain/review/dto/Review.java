@@ -3,24 +3,27 @@ package com.vj.lets.domain.review.dto;
 import lombok.*;
 
 /**
- * Review dto
+ * 리뷰 DTO Bean
  *
- * @author 강소영
+ * @author VJ특공대 김종원
  * @version 1.0
- * @since 2023-09-08 (금)
+ * @since 2023-09-11 (월)
  */
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
 @Getter
+@Setter
 @ToString
 @Builder
 public class Review {
+
     private int id;
     private String title;
     private String content;
-    private int starRating;
+    private int rating;
     private String writeDate;
-    private int roomId;
+    private String status;
+    private int reservationId;
     private int memberId;
+
 }
