@@ -36,6 +36,7 @@ public class StudyGroupServiceImpl implements StudyGroupService {
         studyGroupMapper.create(studyGroup);
         groupHistoryMapper.create();
         groupMemberListMapper.create(id);
+//        테스트
     }
 
     /**
