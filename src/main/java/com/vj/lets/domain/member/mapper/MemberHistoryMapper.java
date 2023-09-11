@@ -3,7 +3,7 @@ package com.vj.lets.domain.member.mapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * 회원 히스토리 매퍼 인터페이스
+ * 회원 히스토리 관련 매퍼 인터페이스
  *
  * @author VJ특공대 김종원
  * @version 1.0

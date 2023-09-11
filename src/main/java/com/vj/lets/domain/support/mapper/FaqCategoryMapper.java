@@ -18,7 +18,7 @@ public interface FaqCategoryMapper {
     /**
      * FAQ 카테고리 등록
      *
-     * @param category FAQ 카테고리 객체
+     * @param category FAQ 카테고리 정보
      */
     public void create(FaqCategory category);
 
@@ -32,7 +32,7 @@ public interface FaqCategoryMapper {
     /**
      * FAQ 카테고리 정보 수정
      *
-     * @param category FAQ 카테고리 객체
+     * @param category FAQ 카테고리 정보
      */
     public void update(FaqCategory category);
 

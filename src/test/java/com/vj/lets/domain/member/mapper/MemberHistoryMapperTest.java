@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 회원 히스토리 매퍼 테스트 클래스
+ * 회원 히스토리 관련 매퍼 테스트 클래스
  *
  * @author VJ특공대 김종원
  * @version 1.0

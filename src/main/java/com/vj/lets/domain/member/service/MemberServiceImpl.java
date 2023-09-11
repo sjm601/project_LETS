@@ -26,7 +26,7 @@ public class MemberServiceImpl implements MemberService {
     /**
      * 회원 가입
      *
-     * @param member 회원 객체
+     * @param member 회원 정보
      */
     @Override
     @Transactional
@@ -40,7 +40,7 @@ public class MemberServiceImpl implements MemberService {
      *
      * @param email    이메일
      * @param password 비밀번호
-     * @return 회원 객체
+     * @return 회원 정보
      */
     @Override
     public Member isMember(String email, String password) {
@@ -61,7 +61,7 @@ public class MemberServiceImpl implements MemberService {
      * 특정 회원 정보 조회
      *
      * @param id 회원 아이디
-     * @return 회원 객체
+     * @return 회원 정보
      */
     @Override
     public Member getMember(int id) {
@@ -71,7 +71,7 @@ public class MemberServiceImpl implements MemberService {
     /**
      * 회원 정보 수정
      *
-     * @param member 회원 객체
+     * @param member 회원 정보
      */
     @Override
     @Transactional
