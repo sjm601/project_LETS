@@ -1,13 +1,17 @@
 package com.vj.lets.web.reservation.controller;
 
+import com.vj.lets.domain.payment.dto.Payment;
+import com.vj.lets.domain.payment.service.PaymentService;
+import com.vj.lets.domain.reservation.dto.Reservation;
+import com.vj.lets.domain.reservation.service.ReservationService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * 예약 컨트롤러 (임시)
@@ -21,19 +25,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 public class ReservationController {
 
-    @GetMapping("")
-    public String resCart(HttpServletRequest request, Model model){
-        HttpSession session = request.getSession();
-        String name = "A1";
-        String bookDate = "2023-09-27";
-        int headCount = 3;
-        int price = 20000;
-        session.setAttribute("name",name);
-        session.setAttribute("bookDate",bookDate);
-        session.setAttribute("headCount",headCount);
-        session.setAttribute("price",price);
+    private final ReservationService reservationService;
+    private final PaymentService paymentService;
 
+    @GetMapping("/{id}")
+    public String resCart(@PathVariable int id, HttpServletRequest request,Model model){
+        Map<String,Reservation> reservation = reservationService.getResInfo(id);
+       model.addAttribute("reservation", reservation);
         return "common/cafe/reservation";
     }
+
+    @GetMapping("/{id}/payment")
+    public String payPage(@PathVariable int id, HttpServletRequest request,Model model){
+        Map<String,Reservation> reservation = reservationService.getResInfo(id);
+        model.addAttribute("reservation", reservation);
+        return "common/cafe/payment";
+    }
+
+
+    @PostMapping("/{id}/paymet")
+    public String doPay(@PathVariable int id, @ModelAttribute Payment payment, Model model){
+        Map<String,Reservation> reservation = reservationService.getResInfo(id);
+        model.addAttribute("reservation", reservation);
+        payment.setReservationId(id);
+        paymentService.payment(payment);
+        return "redirect:article/1";
+    }
+
+
+
+
 
 }

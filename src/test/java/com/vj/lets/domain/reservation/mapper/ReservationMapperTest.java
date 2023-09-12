@@ -120,4 +120,15 @@ class ReservationMapperTest {
         log.info("호스트의 모든 예약 데이터:{}", reserveData);
         assertThat(reserveData).isNotNull();
     }
+
+    @Test
+    void findResInfoTest() {
+        // given
+        int findId = 2;
+        // when
+        Map<String ,Reservation> reservation = reservationMapper.findResInfo(findId);
+        // then
+        log.info("예약 검색 완료:{}",reservation);
+        assertThat(reservation).isNotNull();
+    }
 }

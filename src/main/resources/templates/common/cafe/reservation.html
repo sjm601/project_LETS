@@ -24,7 +24,7 @@
                                 <div class="progress">
                                     <div class="progress-bar"></div>
                                 </div>
-                                <a href="#0" class="bs-wizard-dot"></a>
+                                <p class="bs-wizard-dot"></p>
                             </div>
 
                             <div class="bs-wizard-step disabled">
@@ -32,7 +32,7 @@
                                 <div class="progress">
                                     <div class="progress-bar"></div>
                                 </div>
-                                <a href="#0" class="bs-wizard-dot"></a>
+                                <p class="bs-wizard-dot"></p>
                             </div>
 
                             <div class="bs-wizard-step disabled">
@@ -40,7 +40,7 @@
                                 <div class="progress">
                                     <div class="progress-bar"></div>
                                 </div>
-                                <a href="#0" class="bs-wizard-dot"></a>
+                                <p class="bs-wizard-dot"></p>
                             </div>
                         </div>
                         <!-- End bs-wizard -->
@@ -78,21 +78,20 @@
                                     <tr>
                                         <td>
                                             <div class="thumb_cart">
-                                                <img src="img/thumb_cart_1.jpg" alt="Image">
+                                                <img th:href="${reservation['image_path']}" src="img/thumb_cart_1.jpg" alt="Image">
                                             </div>
-                                            <span class="item_cart">Persius delenit has cu</span>
+                                            <span th:text="${reservation['cafe_name']}" class="item_cart">Persius delenit has cu</span>
                                         </td>
-                                        <td class="cart_align">
+                                        <td th:text="${reservation['room_name']}" class="cart_align">
                                             A1
                                         </td>
-                                        <td class="cart_align">
+                                        <td th:text="${reservation['booking_date']}" class="cart_align">
                                             2022-11-11
                                         </td>
-                                        <td class="cart_align">
+                                        <td th:text="${reservation['HEAD_COUNT']}" class="cart_align">
                                             1
                                         </td>
-                                        <td class="cart_align">
-                                            <strong>79,000<i class="fa-solid fa-won-sign"></i></strong>
+                                        <td data-th-text="${#numbers.formatInteger(reservation['PRICE'], 3, 'COMMA') + '원'}" class="cart_align">
                                         </td>
                                     </tr>
                                     </tbody>
@@ -111,12 +110,13 @@
                         <aside class="col-lg-4" id="sidebar">
                             <div class="box_detail">
                                 <div id="total_cart">
-                                    Total <span class="float-end">79,000<i class="fa-solid fa-won-sign"></i></span>
+                                    Total <span data-th-text="${#numbers.formatInteger(reservation['totalPrice'], 3, 'COMMA') + '원'}"class="float-end"></span>
                                 </div>
-                                <a href="payment.html" class="btn_1 full-width purchase">Checkout</a>
+                                <a th:href="@{/reservation/{id}/payment (id=${reservation.ID})}" href="payment.html" class="btn_1 full-width purchase">Checkout</a>
                                 <div class="text-center"><small>Click this button to go to the payment page.</small>
                                 </div>
                             </div>
+
                         </aside>
                     </div>
                     <!-- /row -->

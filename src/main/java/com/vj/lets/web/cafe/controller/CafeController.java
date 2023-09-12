@@ -1,11 +1,18 @@
 package com.vj.lets.web.cafe.controller;
 
+import com.vj.lets.domain.cafe.dto.Cafe;
+import com.vj.lets.domain.cafe.service.CafeService;
+import com.vj.lets.domain.reservation.dto.Reservation;
+import com.vj.lets.domain.reservation.service.ReservationService;
+import com.vj.lets.domain.room.dto.Room;
+import com.vj.lets.domain.room.service.RoomService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 카페 관련 요청을 처리하는 세부 컨트롤러 구현 클래스
@@ -17,8 +24,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 //@RestController
 @RequestMapping("/cafe")
+@RequiredArgsConstructor
 @Slf4j
 public class CafeController {
+
+    private final ReservationService reservationService;
+    private final CafeService cafeService;
+    private final RoomService roomService;
 
     @GetMapping("")
     public String cafeDetail(Model model) {
@@ -30,6 +42,22 @@ public class CafeController {
     }
     @GetMapping("/detail/{id}")
     public String cafeDetails(@PathVariable("id") int id, Model model) {
+        Cafe cafe = cafeService.getCafe(id);
+        model.addAttribute("cafe", cafe);
+        List<Room> room =roomService.getSearchCafeRoom(id);
+        model.addAttribute("room",room);
         return "common/cafe/cafe_detail";
     }
+
+    @PostMapping("/detail/{id}")
+    public String reserve(@PathVariable int id, @ModelAttribute Reservation reservation, Model model){
+        Cafe cafe = cafeService.getCafe(id);
+        model.addAttribute("cafe",cafe);
+        List<Room> room =roomService.getSearchCafeRoom(id);
+        model.addAttribute("room",room);
+        reservationService.reserve(reservation);
+        return "common/cafe/reservation";
+    }
+
+
 }
