@@ -66,7 +66,7 @@ public class CafeServiceImpl implements CafeService{
     }
 
     @Override
-    public List<Cafe> getBestCafe(){
+    public List<Integer> getBestCafe(){
         return cafeMapper.findByBest();
     }
 
@@ -77,9 +77,9 @@ public class CafeServiceImpl implements CafeService{
 
     @Override
     @Transactional
-    public void editCafe(Cafe cafe, List<CafeOptionList> cafeOptionLists) {
+    public void editCafe(Cafe cafe, String comment, List<CafeOptionList> cafeOptionLists) {
         cafeMapper.update(cafe);
-        cafeHistoryMapper.update(cafe.getId());
+        cafeHistoryMapper.update(comment, cafe.getId());
         cafeOptionListMapper.delete(cafe.getId());
         for (CafeOptionList list : cafeOptionLists) {
             cafeOptionListMapper.create(list);

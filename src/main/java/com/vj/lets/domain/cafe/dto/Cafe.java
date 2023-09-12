@@ -21,8 +21,8 @@ public class Cafe {
     private String name;
     private String phoneNumber;
     private String detailAddress;
-    private int latitude;
-    private int longitude;
+    private double latitude;
+    private double longitude;
     private int roomCount;
     private int startTime;
     private int endTime;
@@ -30,6 +30,7 @@ public class Cafe {
     private String imagePath;
     private String regdate;
     private int businessNumber;
+    private String status;
     private int siGunGuId;
     private int memberId;
     private String roadAddress;

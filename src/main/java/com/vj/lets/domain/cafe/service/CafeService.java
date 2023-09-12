@@ -64,7 +64,7 @@ public interface CafeService {
      *
      * @return 카페 리스트 6개
      */
-    public List<Cafe> getBestCafe();
+    public List<Integer> getBestCafe();
 
     /**
      * 카페 검색
@@ -78,9 +78,10 @@ public interface CafeService {
      * 카페 정보 수정
      *
      * @param cafe 카페
+     * @param comment 정보 변경 사유
      * @param cafeOptionLists 카페 옵션 리스트
      */
-    public void editCafe(Cafe cafe, List<CafeOptionList> cafeOptionLists);
+    public void editCafe(Cafe cafe, String comment, List<CafeOptionList> cafeOptionLists);
 
     /**
      * 카페 삭제

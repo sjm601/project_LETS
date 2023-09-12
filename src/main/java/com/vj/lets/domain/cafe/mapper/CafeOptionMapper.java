@@ -2,6 +2,7 @@ package com.vj.lets.domain.cafe.mapper;
 
 import com.vj.lets.domain.cafe.dto.CafeOption;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -25,9 +26,12 @@ public interface CafeOptionMapper {
     /**
      * 카페 옵션 수정
      *
-     * @param cafeOption 카페 옵션 정보
+     * @param  카페 옵션 정보
      */
-    public void update(CafeOption cafeOption);
+    public void update(@Param("name") String name,
+                       @Param("imagePath") String imagePath,
+                       @Param("description") String description,
+                       @Param("optionId") int optionId);
 
     /**
      * 전체 카페 옴션 목록 조회
@@ -35,6 +39,14 @@ public interface CafeOptionMapper {
      * @return 카페 옵션 목록
      */
     public List<CafeOption> readAll();
+
+    /**
+     * id로 옵션조회
+     *
+     * @param id 옵션아이디
+     * @return 카페옵션 객체
+     */
+    public CafeOption findByOptionId(int id);
 
     /**
      * 카페 옵션 삭제
