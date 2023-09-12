@@ -18,7 +18,8 @@ import lombok.*;
 public class StudyGroup {
     private int id;
     private String name;
-    private int headCount;
+    private int totalCount;
+    private int currentCount;
     private String regdate;
     private String imagePath;
     private String subject;

@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <th:block
-    th:replace="~{/common/layout/common_layout_V2 :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+        th:replace="~{/common/layout/common_layout_V2 :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
 
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
@@ -140,97 +140,38 @@
                     <div class="col-lg-9">
                         <div class="isotope-wrapper">
                             <div class="row">
-                                <div class="col-md-6 isotope-item popular">
-                                    <div class="box_grid" data-cue="slideInUp">
-                                        <figure>
-                                            <a href="#"><img src="img/restaurant_1.jpg" class="img-fluid" alt=""
-                                                             width="800" height="533">
-                                                <div class="read_more"><span>열기</span></div>
-                                            </a>
-                                        </figure>
-                                        <div class="wrapper pb-2 text-end">
-                                            <h3 class="mb-3 text-start"><a href="#">주식스터디</a></h3>
-                                            <ul class="d-flex p-0 mb-2 border-0">
-                                                <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
-                                                       style="font-size: 14px;"><i
-                                                    class="fa-solid fa-location-dot me-1"></i>강동구</a></li>
-                                                <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
-                                                       style="font-size: 14px;">주식</a></li>
-                                            </ul>
-                                            <span class="text-secondary">멤버수 <strong class="ms-2 text-success fw-bold">40</strong> /
-												50명</span>
+                                <th:block th:each="studyGroup : ${studyGroupList}">
+                                    <div class="col-md-6 isotope-item popular">
+                                        <div class="box_grid" data-cue="slideInUp">
+                                            <figure>
+                                                <a th:href="@{/group/{id}(id=${studyGroup.ID})}" href="#"><img src="img/restaurant_1.jpg" class="img-fluid" alt=""
+                                                                 width="800" height="533">
+                                                    <div class="read_more"><span>열기</span></div>
+                                                </a>
+                                            </figure>
+                                            <div class="wrapper pb-2 text-end">
+                                                <h3 class="mb-3 text-start"><a th:text="${studyGroup.NAME}" th:href="@{/group/{id}(id=${studyGroup.ID})}"  href="#">주식스터디</a>
+                                                </h3>
+                                                <ul class="d-flex p-0 mb-2 border-0">
+                                                    <li><a th:text="${studyGroup.SIGUNGUNAME}"
+                                                           class="text-dark p-2 rounded-5 btn btn-outline-light"
+                                                           href="#"
+                                                           style="font-size: 14px;"><i
+                                                            class="fa-solid fa-location-dot me-1"></i>강동구</a></li>
+                                                    <li><a th:text="${studyGroup.SUBJECT}"
+                                                           class="text-dark p-2 rounded-5 btn btn-outline-light"
+                                                           href="#"
+                                                           style="font-size: 14px;">주식</a></li>
+                                                </ul>
+                                                <span
+                                                        class="text-secondary">멤버수 <strong
+                                                        th:text="${studyGroup.CURRENTCOUNT}"
+                                                        class="ms-2 text-success fw-bold">40</strong> /
+												<th:block th:text="${studyGroup.TOTALCOUNT}">50</th:block>명</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- /box_grid -->
-                                <div class="col-md-6 isotope-item popular">
-                                    <div class="box_grid" data-cue="slideInUp">
-                                        <figure>
-                                            <a href="#"><img src="img/restaurant_1.jpg" class="img-fluid" alt=""
-                                                             width="800" height="533">
-                                                <div class="read_more"><span>열기</span></div>
-                                            </a>
-                                        </figure>
-                                        <div class="wrapper pb-2 text-end">
-                                            <h3 class="mb-3 text-start"><a href="#">주식스터디</a></h3>
-                                            <ul class="d-flex p-0 mb-2 border-0">
-                                                <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
-                                                       style="font-size: 14px;"><i
-                                                    class="fa-solid fa-location-dot me-1"></i>강동구</a></li>
-                                                <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
-                                                       style="font-size: 14px;">주식</a></li>
-                                            </ul>
-                                            <span class="text-secondary">멤버수 <strong class="ms-2 text-success fw-bold">40</strong> /
-												50명</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /box_grid -->
-                                <div class="col-md-6 isotope-item popular">
-                                    <div class="box_grid" data-cue="slideInUp">
-                                        <figure>
-                                            <a href="#"><img src="img/restaurant_1.jpg" class="img-fluid" alt=""
-                                                             width="800" height="533">
-                                                <div class="read_more"><span>열기</span></div>
-                                            </a>
-                                        </figure>
-                                        <div class="wrapper pb-2 text-end">
-                                            <h3 class="mb-3 text-start"><a href="#">주식스터디</a></h3>
-                                            <ul class="d-flex p-0 mb-2 border-0">
-                                                <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
-                                                       style="font-size: 14px;"><i
-                                                    class="fa-solid fa-location-dot me-1"></i>강동구</a></li>
-                                                <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
-                                                       style="font-size: 14px;">주식</a></li>
-                                            </ul>
-                                            <span class="text-secondary">멤버수 <strong class="ms-2 text-success fw-bold">40</strong> /
-												50명</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /box_grid -->
-                                <div class="col-md-6 isotope-item popular">
-                                    <div class="box_grid" data-cue="slideInUp">
-                                        <figure>
-                                            <a href="#"><img src="img/restaurant_1.jpg" class="img-fluid" alt=""
-                                                             width="800" height="533">
-                                                <div class="read_more"><span>열기</span></div>
-                                            </a>
-                                        </figure>
-                                        <div class="wrapper pb-2 text-end">
-                                            <h3 class="mb-3 text-start"><a href="#">주식스터디</a></h3>
-                                            <ul class="d-flex p-0 mb-2 border-0">
-                                                <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
-                                                       style="font-size: 14px;"><i
-                                                    class="fa-solid fa-location-dot me-1"></i>강동구</a></li>
-                                                <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
-                                                       style="font-size: 14px;">주식</a></li>
-                                            </ul>
-                                            <span class="text-secondary">멤버수 <strong class="ms-2 text-success fw-bold">40</strong> /
-												50명</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                </th:block>
                                 <!-- /box_grid -->
                             </div>
                             <!-- /row -->
