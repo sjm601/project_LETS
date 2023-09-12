@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * 스터디 그룹 컨트롤러
  *
- * @author 작성자
+ * @author VJ특공대 이희영
  * @version 1.0
  * @since 2023-09-11 (월)
  */
@@ -30,20 +30,22 @@ public class StudyGroupController {
 
     /**
      * 스터디 전체 리스트 화면 출력
+     *
      * @param model
      * @return 스터디 리스트 화면
      */
     @GetMapping("")
     public String studyGroup(Model model) {
-        List<Map<String, Object>> StudyGroupList = studyGroupService.getStudyGroupList();
+        List<Map<String, Object>> studyGroupList = studyGroupService.getStudyGroupList();
 
-        model.addAttribute("studyGroupList", StudyGroupList);
+        model.addAttribute("studyGroupList", studyGroupList);
 
         return "common/group/group_list";
     }
 
     /**
-     * 스터디 상세보기
+     * 스터디 그룹 상세보기
+     *
      * @param id 스터디 그룹 아이디
      * @param loginMember 로그인 회원 정보
      * @param model
@@ -53,9 +55,9 @@ public class StudyGroupController {
     public String readGroup(@PathVariable int id, @SessionAttribute Member loginMember, Model model) {
         GroupMemberList groupMemberList = null;
 
-        Map<String, Object> studyGroup = studyGroupService.findStudyGroup(id);
-        if (studyGroupService.isMember(loginMember.getId(), id) != null) {
-            groupMemberList = studyGroupService.isMember(loginMember.getId(), id);
+        Map<String, Object> studyGroup = studyGroupService.viewStudyGroup(id);
+        if (studyGroupService.isGroupMember(loginMember.getId(), id) != null) {
+            groupMemberList = studyGroupService.isGroupMember(loginMember.getId(), id);
         }
 
         model.addAttribute("studyMember", groupMemberList);
@@ -66,8 +68,9 @@ public class StudyGroupController {
 
     /**
      * 내 스터디 리스트 조회 화면
+     * 
      * @param model
-     * @return 내 스터디 리스트
+     * @return 가입한 스터디 그룹 리스트
      */
     @GetMapping("/mygroup")
     public String myGroup(@SessionAttribute Member loginMember, Model model) {

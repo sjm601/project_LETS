@@ -6,29 +6,27 @@
 <mapper namespace="com.vj.lets.domain.group.mapper.StudyGroupMapper">
 
     <insert id="create" parameterType="StudyGroup">
-        INSERT INTO STUDY_GROUP(ID, NAME, HEAD_COUNT, SUBJECT, SI_GUN_GU_ID)
+        INSERT INTO STUDY_GROUP (ID, NAME, HEAD_COUNT, SUBJECT, SI_GUN_GU_ID)
         VALUES (STUDY_GROUP_ID_SEQ.NEXTVAL, #{name}, #{headCount}, #{subject}, #{siGunGuId})
     </insert>
 
-    <select id="findByAll" resultType="map">
-        SELECT
-            SG.ID         ID,
-            SG.NAME       NAME,
-            SG.TOTAL_COUNT TOTALCOUNT,
-            SG.CURRENT_COUNT CURRENTCOUNT,
-            SG.REGDATE    REGDATE,
-            SG.IMAGE_PATH IMAGEPATH,
-            SG.SUBJECT    SUBJECT,
-            SG.STATUS     STATUS,
-            SGG.NAME      SIGUNGUNAME
-        FROM
-            STUDY_GROUP SG
-                JOIN SI_GUN_GU SGG ON SG.SI_GUN_GU_ID = SGG.ID
+    <select id="findAll" resultType="map">
+        SELECT SG.ID            ID,
+               SG.NAME          NAME,
+               SG.TOTAL_COUNT   TOTALCOUNT,
+               SG.CURRENT_COUNT CURRENTCOUNT,
+               SG.REGDATE       REGDATE,
+               SG.IMAGE_PATH    IMAGEPATH,
+               SG.SUBJECT       SUBJECT,
+               SG.STATUS        STATUS,
+               SGG.NAME         SIGUNGUNAME
+        FROM STUDY_GROUP SG
+                 JOIN SI_GUN_GU SGG ON SG.SI_GUN_GU_ID = SGG.ID
         WHERE SG.STATUS = 'enabled'
         ORDER BY REGDATE DESC
     </select>
 
-    <select id="getStudyGroup" parameterType="int" resultType="map">
+    <select id="read" parameterType="int" resultType="map">
         SELECT SG.ID            ID,
                SG.NAME          NAME,
                SG.TOTAL_COUNT   TOTALCOUNT,
@@ -46,7 +44,7 @@
           AND SG.STATUS = 'enabled'
     </select>
 
-    <update id="update" parameterType="studyGroup">
+    <update id="update" parameterType="StudyGroup">
         UPDATE STUDY_GROUP
         <set>
             <if test="name != null and name != ''">NAME = #{name},</if>
@@ -63,13 +61,13 @@
         WHERE ID = #{id}
     </update>
 
-    <update id="increase">
+    <update id="add" parameterType="int">
         UPDATE STUDY_GROUP
         SET CURRENT_COUNT = CURRENT_COUNT + 1
         WHERE ID = #{id}
     </update>
 
-    <update id="decrease">
+    <update id="subtract" parameterType="int">
         UPDATE STUDY_GROUP
         SET CURRENT_COUNT = CURRENT_COUNT - 1
         WHERE ID = #{id}

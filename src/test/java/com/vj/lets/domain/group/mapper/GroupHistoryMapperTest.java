@@ -9,6 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * 스터디 그룹 히스토리 매퍼 테스트
+ *
+ * @author VJ특공대 이희영
+ * @version 1.0
+ * @since 2023-09-08 (금)
+ */
 @SpringBootTest
 @Slf4j
 class GroupHistoryMapperTest {
@@ -23,11 +30,11 @@ class GroupHistoryMapperTest {
     void createTest() {
         // given
         StudyGroup studyGroup = StudyGroup.builder()
-                                          .name("테스트")
-                                          .totalCount(10)
-                                          .subject("테스트주제")
-                                          .siGunGuId(10020)
-                                          .build();
+                .name("테스트")
+                .totalCount(10)
+                .subject("테스트주제")
+                .siGunGuId(10020)
+                .build();
 
         // when
         studyGroupMapper.create(studyGroup);
@@ -47,7 +54,7 @@ class GroupHistoryMapperTest {
         groupHistoryMapper.update(studyGroupId);
 
         // then
-        log.info("수정 완료");
+        log.info("스터디 그룹 히스토리 update로 생성");
     }
 
     @Test
@@ -60,6 +67,6 @@ class GroupHistoryMapperTest {
         groupHistoryMapper.delete(studyGroupId);
 
         // then
-        log.info("삭제 완료");
+        log.info("스터디 그룹 히스토리 delete로 생성");
     }
 }

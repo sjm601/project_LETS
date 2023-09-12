@@ -18,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * 스터디 그룹 서비스 테스트
+ *
  * @author VJ특공대 이희영
  * @version 1.0
  * @since 2023-09-11 (월)
@@ -32,8 +33,7 @@ class StudyGroupServiceTest {
 
     @Test
     @Transactional
-    @Disabled
-    void createStudyTest() {
+    void createStudyGroupTest() {
         // given
         String siGunGuName = "노원구";
 
@@ -46,7 +46,7 @@ class StudyGroupServiceTest {
         int id = 30;
 
         // when
-        studyGroupService.createStudy(studyGroup, id, siGunGuName);
+        studyGroupService.createStudyGroup(studyGroup, id, siGunGuName);
 
         // then
         log.info("스터디 그룹 생성");
@@ -54,7 +54,6 @@ class StudyGroupServiceTest {
 
     @Test
     @Transactional
-    @Disabled
     void getStudyGroupListTest() {
         // given
 
@@ -68,13 +67,12 @@ class StudyGroupServiceTest {
 
     @Test
     @Transactional
-    @Disabled
-    void fingStudyGroupTest() {
+    void viewStudyGroupTest() {
         // given
         int studyGroupId = 1;
 
         // when
-        Map<String, Object> studyGroup = studyGroupService.findStudyGroup(studyGroupId);
+        Map<String, Object> studyGroup = studyGroupService.viewStudyGroup(studyGroupId);
 
         // then
         log.info("스터디 그룹 조회 : {}", studyGroup);
@@ -83,22 +81,22 @@ class StudyGroupServiceTest {
 
     @Test
     @Transactional
-    @Disabled
     void editStudyGroupTest() {
         // given
-//        StudyGroup studyGroup = studyGroupService.findStudyGroup(1);
-//        studyGroup.setName("자바스크립트2");
+        StudyGroup studyGroup = StudyGroup.builder()
+                .id(1)
+                .name("이름수정")
+                .build();
 
         // when
-//        studyGroupService.editStudyGroup(studyGroup);
+        studyGroupService.editStudyGroup(studyGroup);
 
         // then
-//        log.info("스터디 그룹 정보 수정 : {}", studyGroup);
+        log.info("스터디 그룹 정보 수정 : {}", studyGroup);
     }
 
     @Test
     @Transactional
-    @Disabled
     void deleteStudyGroupTest() {
         // given
         int studyGroupId = 1;
@@ -112,7 +110,6 @@ class StudyGroupServiceTest {
 
     @Test
     @Transactional
-    @Disabled
     void findByAllMemberTest() {
         // given
         int StudyGroupId = 1;
@@ -127,7 +124,6 @@ class StudyGroupServiceTest {
 
     @Test
     @Transactional
-    @Disabled
     void addMemberTest() {
         // given
         int id = 30;
@@ -142,7 +138,6 @@ class StudyGroupServiceTest {
 
     @Test
     @Transactional
-    @Disabled
     void removeMemberTest() {
         // given
         int id = 30;
@@ -157,7 +152,6 @@ class StudyGroupServiceTest {
 
     @Test
     @Transactional
-    @Disabled
     void registerStudyTest() {
         // given
         int id = 30;
@@ -172,7 +166,6 @@ class StudyGroupServiceTest {
 
     @Test
     @Transactional
-    @Disabled
     void findByAllRegistTest() {
         // given
         int studyGroupId = 1;
@@ -187,7 +180,6 @@ class StudyGroupServiceTest {
 
     @Test
     @Transactional
-    @Disabled
     void approveTest() {
         // given
         int id = 30;
@@ -202,7 +194,6 @@ class StudyGroupServiceTest {
 
     @Test
     @Transactional
-    @Disabled
     void refuseTest() {
         // given
         int id = 30;
@@ -213,5 +204,34 @@ class StudyGroupServiceTest {
 
         // then
         log.info("스터디 가입 승인");
+    }
+
+    @Test
+    @Transactional
+    void isGroupMemberTest() {
+        // given
+        int id = 32;
+        int studyGroupId = 1;
+
+        // when
+        GroupMemberList member = studyGroupService.isGroupMember(id, studyGroupId);
+
+        // then
+        log.info("스터디 그룹에 가입된 회원인지 조회 : {}", member);
+        assertThat(member).isNotNull();
+    }
+
+    @Test
+    @Transactional
+    void myGroupListTest() {
+        // given
+        int id = 32;
+
+        // when
+        List<Map<String, Object>> list = studyGroupService.myGroupList(id);
+
+        // then
+        log.info("가입한 스터디 그룹 리스트 조회 : {}", list);
+        assertThat(list).isNotNull();
     }
 }

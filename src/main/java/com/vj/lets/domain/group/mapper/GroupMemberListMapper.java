@@ -1,7 +1,6 @@
 package com.vj.lets.domain.group.mapper;
 
 import com.vj.lets.domain.group.dto.GroupMemberList;
-import com.vj.lets.domain.member.dto.Member;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -11,7 +10,7 @@ import java.util.Map;
 /**
  * 스터디 멤버 리스트 매퍼
  * 
- * @author 이희영
+ * @author VJ특공대 이희영
  * @version 1.0
  * @since 2023-09-08 (금)
  */
@@ -20,41 +19,47 @@ public interface GroupMemberListMapper {
 
     /**
      * 스터디 그룹 멤버 리스트 생성
+     *
      * @param id 회원 아이디
      */
     public void create(int id);
 
     /**
      * 스터디 그룹 멤버 리스트 조회
+     *
      * @param studyGroupId 스터디 그룹 아이디
-     * @return 멤버 리스트
+     * @return 스터디 그룹 멤버 리스트
      */
-    public List<GroupMemberList> findByAll(int studyGroupId);
+    public List<GroupMemberList> findAll(int studyGroupId);
 
     /**
-     * 스터디 그룹 회원 추가
+     * 스터디 그룹 가입 승인 시 멤버 리스트에 회원 정보 추가
+     * 
      * @param id 회원 아이디
      */
-    public void addMember(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
+    public void add(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
 
     /**
-     * 스터디 그룹 멤버 탈퇴
+     * 스터디 그룹 탈퇴 시 멤버 리스트에서 회원 정보 삭제
+     *
      * @param id 회원 아이디
      */
-    public  void removeMember(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
+    public void remove(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
 
     /**
-     * 스터디 회원이 맞는지 조회
+     * 스터디 그룹에 가입된 회원인지 조회
+     * 
      * @param memberId 회원 아이디
      * @param studyGroupId 스터디 그룹 아이디
-     * @return 스터디 그룹 멤버 리스트 정보
+     * @return 조회된 스터디 그룹 멤버 리스트
      */
-    public GroupMemberList isMember(@Param("memberId") int memberId, @Param("studyGroupId") int studyGroupId);
+    public GroupMemberList isGroupMember(@Param("memberId") int memberId, @Param("studyGroupId") int studyGroupId);
 
     /**
-     * 가입한 스터디 목록 조회
+     * 가입된 스터디 그룹 리스트 조회
+     * 
      * @param memberId 회원 아이디
-     * @return 그룹 리스트
+     * @return 스터디 그룹 리스트
      */
     public List<Map<String, Object>> myGroupList(int memberId);
 }
