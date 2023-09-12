@@ -40,7 +40,7 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @param siGunGuName 시,군,구 이름
      */
     @Override
-    public void register(StudyGroup studyGroup, int id, String siGunGuName) {
+    public void createStudy(StudyGroup studyGroup, int id, String siGunGuName) {
         SiGunGu siGunGu = siGunGuMapper.getSiGunGu(siGunGuName);
         studyGroup.setSiGunGuId(siGunGu.getId());
         studyGroupMapper.create(studyGroup);
@@ -64,8 +64,8 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @return 스터디 그룹 정보
      */
     @Override
-    public List<Map<String, Object>> findStudyGroup(int studyGroupId) {
-        List<Map<String, Object>> studyGroup = null;
+    public Map<String, Object> findStudyGroup(int studyGroupId) {
+        Map<String, Object> studyGroup = null;
         studyGroup = studyGroupMapper.getStudyGroup(studyGroupId);
         return studyGroup;
     }
@@ -130,7 +130,7 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @param studyGroupId 스터디 그룹 아이디
      */
     @Override
-    public void register(int id, int studyGroupId) {
+    public void registerStudy(int id, int studyGroupId) {
         groupContactMapper.register(id, studyGroupId);
     }
 
@@ -169,5 +169,26 @@ public class StudyGroupServiceImpl implements StudyGroupService{
     public void refuse(int id, int studyGroupId) {
         groupContactMapper.register(id, studyGroupId);
         groupContactMapper.delete(id, studyGroupId);
+    }
+
+    /**
+     * 스터디 회원인지 조회
+     * @param memberId 회원 아이디
+     * @param studyGroupId 스터디 그룹 아이디
+     * @return 스터디 그룹 멤버 리스트 정보
+     */
+    @Override
+    public GroupMemberList isMember(int memberId, int studyGroupId) {
+        GroupMemberList groupMemberList = null;
+        groupMemberList = groupMemberListMapper.isMember(memberId, studyGroupId);
+        return groupMemberList;
+    }
+
+    @Override
+    public List<Map<String, Object>> myGroupList(int memberId) {
+        List<Map<String, Object>> studyList = null;
+
+        studyList = groupMemberListMapper.myGroupList(memberId);
+        return studyList;
     }
 }

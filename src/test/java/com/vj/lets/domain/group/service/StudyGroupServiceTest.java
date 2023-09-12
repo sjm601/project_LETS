@@ -33,7 +33,7 @@ class StudyGroupServiceTest {
     @Test
     @Transactional
     @Disabled
-    void registerTest() {
+    void createStudyTest() {
         // given
         String siGunGuName = "노원구";
 
@@ -46,7 +46,7 @@ class StudyGroupServiceTest {
         int id = 30;
 
         // when
-        studyGroupService.register(studyGroup, id, siGunGuName);
+        studyGroupService.createStudy(studyGroup, id, siGunGuName);
 
         // then
         log.info("스터디 그룹 생성");
@@ -74,11 +74,11 @@ class StudyGroupServiceTest {
         int studyGroupId = 1;
 
         // when
-//        StudyGroup studyGroup = studyGroupService.findStudyGroup(studyGroupId);
+        Map<String, Object> studyGroup = studyGroupService.findStudyGroup(studyGroupId);
 
         // then
-//        log.info("스터디 그룹 조회 : {}", studyGroup);
-//        assertThat(studyGroup).isNotNull();
+        log.info("스터디 그룹 조회 : {}", studyGroup);
+        assertThat(studyGroup).isNotNull();
     }
 
     @Test
@@ -158,13 +158,13 @@ class StudyGroupServiceTest {
     @Test
     @Transactional
     @Disabled
-    void testRegisterTest() {
+    void registerStudyTest() {
         // given
         int id = 30;
         int studyGroupId = 1;
 
         // when
-        studyGroupService.register(id, studyGroupId);
+        studyGroupService.registerStudy(id, studyGroupId);
 
         // then
         log.info("스터디 가입 신청");

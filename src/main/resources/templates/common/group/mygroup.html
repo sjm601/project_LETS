@@ -18,7 +18,7 @@
             <section class="hero_in general">
                 <div class="wrapper">
                     <div class="container">
-                        <h1 class="fadeInUp"><span></span>주식 스터디</h1>
+                        <h1 th:text="${studyGroup['NAME']}" class="fadeInUp"><span></span>주식 스터디</h1>
                     </div>
                 </div>
             </section>
@@ -31,23 +31,25 @@
                             <div class="widget">
                                 <div class="bloglist singlepost pb-4">
                                     <div class="d-flex">
-                                        <h1 th:text="${studyGroup.name}" class="my-3 me-2">주식 스터디</h1>
+                                        <h1 th:text="${studyGroup['NAME']}" class="my-3 me-2">주식 스터디</h1>
                                         <!-- 스터디 팀장만 노출 -->
+                                        <th:block th:if="${studyMember != null && studyMember.position == '팀장'}">
                                         <button class="btn btn-secondary my-auto" data-bs-toggle="modal"
                                                 data-bs-target="#settingModal" id="setting" style="font-size: 14px;"><i
                                             class="fa-solid fa-wrench"></i></button>
+                                        </th:block>
                                     </div>
                                     <div class="postmeta">
                                         <ul class="d-flex justify-content-between">
                                             <!-- 스터디 팀원이나 가입 전 회원은 팀장, 팀장은 멤버 초대 노출 -->
                                             <li>
                                                 <div class="text-secondary">멤버수 <strong
-                                                        th:text="${studyGroup.currentCount}"
-                                                    class="ms-2 text-success fw-bold">40</strong> / <th:block th:text="${studyGroup.totalCount}">50</th:block>명
+                                                    th:text="${studyGroup['CURRENTCOUNT']}"
+                                                    class="ms-2 text-success fw-bold">40</strong> / <th:block th:text="${studyGroup['TOTALCOUNT']}">50</th:block>명
                                                 </div>
                                             </li>
                                             <li>
-                                                <div>팀장 : <span>이희영</span></div>
+                                                <div>팀장 : <span th:text="${studyGroup['MEMBERNAME']}">이희영</span></div>
                                             </li>
                                             <!-- <li>
                                                 <div><span>멤버 초대</span></div>
@@ -56,14 +58,18 @@
                                     </div>
                                     <div class="mb-2">
                                         <!-- 가입 전 가입하기 버튼, 가입 후 글 작성 버튼 노출 -->
+                                        <th:block th:if="${studyMember == null}">
                                         <button class="btn btn-success my-auto" data-bs-toggle="modal"
                                                 data-bs-target="#registerModal" id="register"
                                                 style="font-size: 14px;">가입하기
                                         </button>
+                                        </th:block>
+                                        <th:block th:if="${studyMember != null}">
                                         <button class="btn btn-success my-auto" data-bs-toggle="modal"
                                                 data-bs-target="#writeModal" id="write" style="font-size: 14px;">글
                                             작성
                                         </button>
+                                        </th:block>
                                     </div>
                                 </div>
                             </div>
@@ -87,21 +93,21 @@
                                 <ul class="comments-list">
                                     <li>
                                         <div class="alignleft">
-                                            <a href="#0"><img src="img/blog-5.jpg" alt=""></a>
+                                            <a href="#"><img src="/img/blog-5.jpg" alt="#"></a>
                                         </div>
                                         <small>11.08.2016</small>
                                         <h3><a href="#" title="">Verear qualisque ex minimum...</a></h3>
                                     </li>
                                     <li>
                                         <div class="alignleft">
-                                            <a href="#0"><img src="img/blog-6.jpg" alt=""></a>
+                                            <a href="#0"><img src="/img/blog-6.jpg" alt=""></a>
                                         </div>
                                         <small>11.08.2016</small>
                                         <h3><a href="#" title="">Verear qualisque ex minimum...</a></h3>
                                     </li>
                                     <li>
                                         <div class="alignleft">
-                                            <a href="#0"><img src="img/blog-4.jpg" alt=""></a>
+                                            <a href="#0"><img src="/img/blog-4.jpg" alt=""></a>
                                         </div>
                                         <small>11.08.2016</small>
                                         <h3><a href="#" title="">Verear qualisque ex minimum...</a></h3>
@@ -116,7 +122,7 @@
                                 <div class="d-flex mb-5 justify-content-between">
                                     <div class="d-flex">
                                         <div>
-                                            <img class="rounded-5" src="img/avatar1.jpg" alt="">
+                                            <img class="rounded-5" src="/img/avatar1.jpg" alt="">
                                         </div>
                                         <div class="ms-3 my-auto">
                                             <h6>이희영</h6>
@@ -134,7 +140,7 @@
                                 </div>
                                 <h1 class="mb-3">주식 스터디</h1>
                                 <div class="postmeta">
-                                    <p><img alt="" class="img-fluid" src="img/blog-single.jpg"></p>
+                                    <p><img alt="" class="img-fluid" src="/img/blog-single.jpg"></p>
                                 </div>
                                 <!-- /post meta -->
                                 <div class="post-content">
@@ -155,7 +161,7 @@
                                         <ul>
                                             <li>
                                                 <div class="avatar">
-                                                    <a href="#"><img src="img/avatar1.jpg" alt="">
+                                                    <a href="#"><img src="/img/avatar1.jpg" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="comment_right clearfix">
@@ -172,7 +178,7 @@
                                             </li>
                                             <li>
                                                 <div class="avatar">
-                                                    <a href="#"><img src="img/avatar3.jpg" alt="">
+                                                    <a href="#"><img src="/img/avatar3.jpg" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="comment_right clearfix">
@@ -208,7 +214,7 @@
                                 <div class="d-flex mb-5 justify-content-between">
                                     <div class="d-flex">
                                         <div>
-                                            <img class="rounded-5" src="img/avatar1.jpg" alt="">
+                                            <img class="rounded-5" src="/img/avatar1.jpg" alt="">
                                         </div>
                                         <div class="ms-3 my-auto">
                                             <h6>이희영</h6>
@@ -220,7 +226,7 @@
                                 </div>
                                 <h1 class="mb-3">주식 스터디</h1>
                                 <div class="postmeta">
-                                    <p><img alt="" class="img-fluid" src="img/blog-single.jpg"></p>
+                                    <p><img alt="" class="img-fluid" src="/img/blog-single.jpg"></p>
                                 </div>
                                 <!-- /post meta -->
                                 <div class="post-content">
@@ -241,7 +247,7 @@
                                         <ul>
                                             <li>
                                                 <div class="avatar">
-                                                    <a href="#"><img src="img/avatar1.jpg" alt="">
+                                                    <a href="#"><img src="/img/avatar1.jpg" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="comment_right clearfix">
@@ -258,7 +264,7 @@
                                             </li>
                                             <li>
                                                 <div class="avatar">
-                                                    <a href="#"><img src="img/avatar3.jpg" alt="">
+                                                    <a href="#"><img src="/img/avatar3.jpg" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="comment_right clearfix">
@@ -294,7 +300,7 @@
                                 <div class="d-flex mb-5 justify-content-between">
                                     <div class="d-flex">
                                         <div>
-                                            <img class="rounded-5" src="img/avatar1.jpg" alt="">
+                                            <img class="rounded-5" src="/img/avatar1.jpg" alt="">
                                         </div>
                                         <div class="ms-3 my-auto">
                                             <h6>이희영</h6>
@@ -306,7 +312,7 @@
                                 </div>
                                 <h1 class="mb-3">주식 스터디</h1>
                                 <div class="postmeta">
-                                    <p><img alt="" class="img-fluid" src="img/blog-single.jpg"></p>
+                                    <p><img alt="" class="img-fluid" src="/img/blog-single.jpg"></p>
                                 </div>
                                 <!-- /post meta -->
                                 <div class="post-content">
@@ -327,7 +333,7 @@
                                         <ul>
                                             <li>
                                                 <div class="avatar">
-                                                    <a href="#"><img src="img/avatar1.jpg" alt="">
+                                                    <a href="#"><img src="/img/avatar1.jpg" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="comment_right clearfix">
@@ -344,7 +350,7 @@
                                             </li>
                                             <li>
                                                 <div class="avatar">
-                                                    <a href="#"><img src="img/avatar3.jpg" alt="">
+                                                    <a href="#"><img src="/img/avatar3.jpg" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="comment_right clearfix">
@@ -380,7 +386,7 @@
                                 <div class="d-flex mb-5 justify-content-between">
                                     <div class="d-flex">
                                         <div>
-                                            <img class="rounded-5" src="img/avatar1.jpg" alt="">
+                                            <img class="rounded-5" src="/img/avatar1.jpg" alt="">
                                         </div>
                                         <div class="ms-3 my-auto">
                                             <h6>이희영</h6>
@@ -392,7 +398,7 @@
                                 </div>
                                 <h1 class="mb-3">주식 스터디</h1>
                                 <div class="postmeta">
-                                    <p><img alt="" class="img-fluid" src="img/blog-single.jpg"></p>
+                                    <p><img alt="" class="img-fluid" src="/img/blog-single.jpg"></p>
                                 </div>
                                 <!-- /post meta -->
                                 <div class="post-content">
@@ -413,7 +419,7 @@
                                         <ul>
                                             <li>
                                                 <div class="avatar">
-                                                    <a href="#"><img src="img/avatar1.jpg" alt="">
+                                                    <a href="#"><img src="/img/avatar1.jpg" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="comment_right clearfix">
@@ -430,7 +436,7 @@
                                             </li>
                                             <li>
                                                 <div class="avatar">
-                                                    <a href="#"><img src="img/avatar3.jpg" alt="">
+                                                    <a href="#"><img src="/img/avatar3.jpg" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="comment_right clearfix">
@@ -466,7 +472,7 @@
                                 <div class="d-flex mb-5 justify-content-between">
                                     <div class="d-flex">
                                         <div>
-                                            <img class="rounded-5" src="img/avatar1.jpg" alt="">
+                                            <img class="rounded-5" src="/img/avatar1.jpg" alt="">
                                         </div>
                                         <div class="ms-3 my-auto">
                                             <h6>이희영</h6>
@@ -478,7 +484,7 @@
                                 </div>
                                 <h1 class="mb-3">주식 스터디</h1>
                                 <div class="postmeta">
-                                    <p><img alt="" class="img-fluid" src="img/blog-single.jpg"></p>
+                                    <p><img alt="" class="img-fluid" src="/img/blog-single.jpg"></p>
                                 </div>
                                 <!-- /post meta -->
                                 <div class="post-content">
@@ -499,7 +505,7 @@
                                         <ul>
                                             <li>
                                                 <div class="avatar">
-                                                    <a href="#"><img src="img/avatar1.jpg" alt="">
+                                                    <a href="#"><img src="/img/avatar1.jpg" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="comment_right clearfix">
@@ -516,7 +522,7 @@
                                             </li>
                                             <li>
                                                 <div class="avatar">
-                                                    <a href="#"><img src="img/avatar3.jpg" alt="">
+                                                    <a href="#"><img src="/img/avatar3.jpg" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="comment_right clearfix">

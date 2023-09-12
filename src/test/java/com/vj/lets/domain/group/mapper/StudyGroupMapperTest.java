@@ -70,12 +70,12 @@ class StudyGroupMapperTest {
         int studyGroupId = 1;
 
         // when
-        List<Map<String, Object>> studyGroup = studyGroupMapper.getStudyGroup(studyGroupId);
+        Map<String, Object> studyGroup = studyGroupMapper.getStudyGroup(studyGroupId);
 
         // then
         log.info("스터디 그룹 정보 : {}", studyGroup);
 
-//        assertThat(studyGroup).isNotNull();
+        assertThat(studyGroup).isNotNull();
     }
 
     @Test

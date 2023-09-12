@@ -13,6 +13,7 @@
     <select id="findByAll" parameterType="int">
         SELECT ID, POSITION, MEMBER_ID, STUDY_GROUP_ID
         FROM GROUP_MEMBER_LIST
+
         WHERE STUDY_GROUP_ID = #{studyGroupId}
     </select>
 
@@ -27,4 +28,26 @@
         WHERE MEMBER_ID = #{id} AND STUDY_GROUP_ID = #{studyGroupId}
     </delete>
 
+    <select id="isMember">
+        SELECT ID, POSITION, MEMBER_ID, STUDY_GROUP_ID
+        FROM GROUP_MEMBER_LIST
+        WHERE MEMBER_ID = #{memberId} AND STUDY_GROUP_ID = #{studyGroupId}
+    </select>
+
+    <select id="myGroupList" resultType="map">
+        SELECT GML.ID             ID,
+               GML.POSITION       POSTITION,
+               GML.MEMBER_ID      MEMBERID,
+               GML.STUDY_GROUP_ID STUDYGROUPID,
+               SG.NAME            NAME,
+               SG.TOTAL_COUNT     TOTALCOUNT,
+               SG.CURRENT_COUNT   CURRENTCOUNT,
+               SG.SUBJECT         SUBJECT,
+               SG.IMAGE_PATH      IMAGEPATH,
+               SGG.NAME           SIGUNGUNAME
+        FROM GROUP_MEMBER_LIST GML
+                 JOIN STUDY_GROUP SG ON GML.STUDY_GROUP_ID = SG.ID
+                 JOIN SI_GUN_GU sgg ON SG.SI_GUN_GU_ID = SGG.ID
+        WHERE MEMBER_ID = #{memberId}
+    </select>
 </mapper>

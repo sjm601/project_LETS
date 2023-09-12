@@ -21,7 +21,7 @@ public interface StudyGroupService {
      * 스터디 그룹 등록
      * @param studyGroup
      */
-    public void register(StudyGroup studyGroup, int id, String siGunGuName);
+    public void createStudy(StudyGroup studyGroup, int id, String siGunGuName);
 
     /**
      * 스터디 그룹 전체 리스트 조회
@@ -34,7 +34,7 @@ public interface StudyGroupService {
      * @param studyGroupId 스터디 그룹 아이디
      * @return 스터디 그룹 정보
      */
-    public List<Map<String, Object>> findStudyGroup(int studyGroupId);
+    public Map<String, Object> findStudyGroup(int studyGroupId);
 
     /**
      * 스터디 그룹 수정
@@ -74,7 +74,7 @@ public interface StudyGroupService {
      * @param id 회원 아이디
      * @param studyGroupId 스터디 그룹 아이디
      */
-    public void register(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
+    public void registerStudy(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
 
     /**
      * 내 스터디 가입 신청 리스트
@@ -96,4 +96,19 @@ public interface StudyGroupService {
      * @param studyGroupId 스터디 그룹 아이디
      */
     public void refuse(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
+
+    /**
+     * 스터디 회원인지 조회
+     * @param memberId 회원 아이디
+     * @param studyGroupId 스터디 그룹 아이디
+     * @return 스터디 그룹 멤버 리스트 정보
+     */
+    public GroupMemberList isMember(@Param("memberId") int memberId, @Param("studyGroupId") int studyGroupId);
+
+    /**
+     * 가입한 스터디 리스트
+     * @param memberId 회원 아이디
+     * @return 스터디 그룹 리스트
+     */
+    public List<Map<String, Object>> myGroupList(int memberId);
 }
