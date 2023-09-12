@@ -32,7 +32,7 @@ class GroupMemberListMapperTest {
         StudyGroup studyGroup = StudyGroup.builder()
                 .id(1)
                 .name("생성 테스트")
-                .headCount(10)
+                .totalCount(10)
                 .subject("주제")
                 .siGunGuId(10020)
                 .build();

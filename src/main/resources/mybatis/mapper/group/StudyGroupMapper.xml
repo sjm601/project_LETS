@@ -28,10 +28,24 @@
         ORDER BY REGDATE DESC
     </select>
 
-    <select id="getStudyGroup" parameterType="int">
-        SELECT ID, NAME, TOTAL_COUNT, CURRENT_COUNT, REGDATE, IMAGE_PATH, SUBJECT, STATUS, SI_GUN_GU_ID
-        FROM STUDY_GROUP
-        WHERE ID = #{studyGroupId}
+    <select id="getStudyGroup" parameterType="int" resultType="map">
+        SELECT
+            SG.ID            ID,
+            SG.NAME          NAME,
+            SG.TOTAL_COUNT   TOTALCOUNT,
+            SG.CURRENT_COUNT CURRENTCOUNT,
+            SG.REGDATE       REGDATE,
+            SG.IMAGE_PATH    IMAGEPATH,
+            SG.SUBJECT       SUBJECT,
+            SG.SI_GUN_GU_ID  SIGUNGUID,
+            GML.POSITION     POSITION,
+            GML.MEMBER_ID    MEMBERID
+        FROM
+            STUDY_GROUP SG
+                JOIN GROUP_MEMBER_LIST GML ON SG.ID = GML.STUDY_GROUP_ID
+        WHERE
+            SG.ID = #{id}
+          AND SG.STATUS = 'enabled'
     </select>
 
     <update id="update" parameterType="studyGroup">

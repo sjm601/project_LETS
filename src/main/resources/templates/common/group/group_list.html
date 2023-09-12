@@ -144,13 +144,13 @@
                                     <div class="col-md-6 isotope-item popular">
                                         <div class="box_grid" data-cue="slideInUp">
                                             <figure>
-                                                <a href="#"><img src="img/restaurant_1.jpg" class="img-fluid" alt=""
+                                                <a th:href="@{/group/{id}(id=${studyGroup.ID})}" href="#"><img src="img/restaurant_1.jpg" class="img-fluid" alt=""
                                                                  width="800" height="533">
                                                     <div class="read_more"><span>열기</span></div>
                                                 </a>
                                             </figure>
                                             <div class="wrapper pb-2 text-end">
-                                                <h3 class="mb-3 text-start"><a th:text="${studyGroup.NAME}" href="#">주식스터디</a>
+                                                <h3 class="mb-3 text-start"><a th:text="${studyGroup.NAME}" th:href="@{/group/{id}(id=${studyGroup.ID})}"  href="#">주식스터디</a>
                                                 </h3>
                                                 <ul class="d-flex p-0 mb-2 border-0">
                                                     <li><a th:text="${studyGroup.SIGUNGUNAME}"

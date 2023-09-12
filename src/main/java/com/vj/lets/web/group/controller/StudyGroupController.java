@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -32,5 +34,12 @@ public class StudyGroupController {
         log.info("스터디 그룹 리스트 : {}", StudyGroupList);
         model.addAttribute("studyGroupList", StudyGroupList);
         return "common/group/group_list";
+    }
+
+    @GetMapping("/{id}")
+    public String readGroup(@PathVariable int id, Model model) {
+//        StudyGroup studyGroup = studyGroupService.findStudyGroup(id);
+//        model.addAttribute(studyGroup);
+        return "common/group/mygroup";
     }
 }

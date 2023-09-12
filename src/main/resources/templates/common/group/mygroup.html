@@ -31,7 +31,7 @@
                             <div class="widget">
                                 <div class="bloglist singlepost pb-4">
                                     <div class="d-flex">
-                                        <h1 class="my-3 me-2">주식 스터디</h1>
+                                        <h1 th:text="${studyGroup.name}" class="my-3 me-2">주식 스터디</h1>
                                         <!-- 스터디 팀장만 노출 -->
                                         <button class="btn btn-secondary my-auto" data-bs-toggle="modal"
                                                 data-bs-target="#settingModal" id="setting" style="font-size: 14px;"><i
@@ -42,7 +42,8 @@
                                             <!-- 스터디 팀원이나 가입 전 회원은 팀장, 팀장은 멤버 초대 노출 -->
                                             <li>
                                                 <div class="text-secondary">멤버수 <strong
-                                                    class="ms-2 text-success fw-bold">40</strong> / 50명
+                                                        th:text="${studyGroup.currentCount}"
+                                                    class="ms-2 text-success fw-bold">40</strong> / <th:block th:text="${studyGroup.totalCount}">50</th:block>명
                                                 </div>
                                             </li>
                                             <li>

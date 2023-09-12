@@ -64,8 +64,8 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @return 스터디 그룹 정보
      */
     @Override
-    public StudyGroup findStudyGroup(int studyGroupId) {
-        StudyGroup studyGroup = null;
+    public List<Map<String, Object>> findStudyGroup(int studyGroupId) {
+        List<Map<String, Object>> studyGroup = null;
         studyGroup = studyGroupMapper.getStudyGroup(studyGroupId);
         return studyGroup;
     }

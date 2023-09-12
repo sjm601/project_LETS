@@ -33,7 +33,7 @@ public interface StudyGroupMapper {
      * @param studyGroupId
      * @return 스터디 그룹
      */
-    public StudyGroup getStudyGroup(int studyGroupId);
+    public List<Map<String, Object>> getStudyGroup(int studyGroupId);
 
     /**
      * 스터디 그룹 변경

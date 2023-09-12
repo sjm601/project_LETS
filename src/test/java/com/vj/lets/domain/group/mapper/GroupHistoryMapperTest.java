@@ -24,7 +24,7 @@ class GroupHistoryMapperTest {
         // given
         StudyGroup studyGroup = StudyGroup.builder()
                                           .name("테스트")
-                                          .headCount(10)
+                                          .totalCount(10)
                                           .subject("테스트주제")
                                           .siGunGuId(10020)
                                           .build();

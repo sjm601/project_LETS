@@ -34,7 +34,7 @@ public interface StudyGroupService {
      * @param studyGroupId 스터디 그룹 아이디
      * @return 스터디 그룹 정보
      */
-    public StudyGroup findStudyGroup(int studyGroupId);
+    public List<Map<String, Object>> findStudyGroup(int studyGroupId);
 
     /**
      * 스터디 그룹 수정
