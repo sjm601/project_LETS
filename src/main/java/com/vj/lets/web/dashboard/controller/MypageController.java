@@ -31,4 +31,19 @@ public class MypageController {
         return "dashboard/mypage/mypage_dashboard";
     }
 
+    @GetMapping("/reservation")
+    public String reservationView(Model model) {
+        return "dashboard/mypage/reservations";
+    }
+
+    @GetMapping("/review")
+    public String reviewView(Model model) {
+        return "dashboard/mypage/reviews";
+    }
+
+    @GetMapping("/wishlist")
+    public String wishlistView(Model model) {
+        return "dashboard/mypage/wishlists";
+    }
+
 }

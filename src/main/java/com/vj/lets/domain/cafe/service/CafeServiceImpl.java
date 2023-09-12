@@ -1,8 +1,13 @@
 package com.vj.lets.domain.cafe.service;
 
 import com.vj.lets.domain.cafe.dto.Cafe;
+import com.vj.lets.domain.cafe.dto.CafeOption;
+import com.vj.lets.domain.cafe.dto.CafeOptionList;
+import com.vj.lets.domain.cafe.dto.CafeSearch;
 import com.vj.lets.domain.cafe.mapper.CafeHistoryMapper;
 import com.vj.lets.domain.cafe.mapper.CafeMapper;
+import com.vj.lets.domain.cafe.mapper.CafeOptionListMapper;
+import com.vj.lets.domain.cafe.mapper.CafeOptionMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,12 +27,32 @@ public class CafeServiceImpl implements CafeService{
 
     private final CafeMapper cafeMapper;
     private final CafeHistoryMapper cafeHistoryMapper;
+    private final CafeOptionMapper cafeOptionMapper;
+    private final CafeOptionListMapper cafeOptionListMapper;
 
     @Override
     @Transactional
-    public void register(Cafe cafe) {
+    public void register(Cafe cafe){
         cafeMapper.create(cafe);
         cafeHistoryMapper.create();
+    }
+
+    @Override
+    @Transactional
+    public void cafeOptionRegister(List<CafeOptionList> cafeOptionLists) {
+        for (CafeOptionList list : cafeOptionLists) {
+            cafeOptionListMapper.create(list);
+        }
+    }
+
+    @Override
+    public void optionRegister(CafeOption cafeOption) {
+        cafeOptionMapper.create(cafeOption);
+    }
+
+    @Override
+    public void optionDelete(int optionId) {
+        cafeOptionMapper.delete(optionId);
     }
 
     @Override
@@ -46,18 +71,19 @@ public class CafeServiceImpl implements CafeService{
     }
 
     @Override
-    public List<Cafe> getSearchCafe(String name, int countPerson, int price, String option,
-                                    int minDuaration, int maxDuration, int rating5, int rating4,
-                                    int rating3, int rating2, int rating1, int rating){
-        return cafeMapper.findBySearch(name, countPerson, price, option, minDuaration, maxDuration,
-                rating5, rating4, rating3, rating2, rating1, rating);
+    public List<Cafe> getSearchCafe(CafeSearch cafeSearch){
+        return cafeMapper.findBySearch(cafeSearch);
     }
 
     @Override
     @Transactional
-    public void editCafe(Cafe cafe) {
+    public void editCafe(Cafe cafe, List<CafeOptionList> cafeOptionLists) {
         cafeMapper.update(cafe);
         cafeHistoryMapper.update(cafe.getId());
+        cafeOptionListMapper.delete(cafe.getId());
+        for (CafeOptionList list : cafeOptionLists) {
+            cafeOptionListMapper.create(list);
+        }
     }
 
     @Override
@@ -66,4 +92,20 @@ public class CafeServiceImpl implements CafeService{
         cafeMapper.delete(id);
         cafeHistoryMapper.delete(id);
     }
+
+    @Override
+    public List<CafeOptionList> makeCafeOptionList(int cafeId, List<Integer> optionIds) {
+        List<CafeOptionList> cafeOptionLists = null;
+        for (int optionId : optionIds) {
+            CafeOptionList makeList = CafeOptionList
+                    .builder()
+                    .cafeId(cafeId)
+                    .optionId(optionId)
+                    .build();
+            cafeOptionLists.add(makeList);
+        }
+        return cafeOptionLists;
+    }
+
+
 }

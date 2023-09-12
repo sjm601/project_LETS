@@ -1,6 +1,7 @@
 package com.vj.lets.web.home.controller;
 
 import com.vj.lets.domain.member.dto.Member;
+import com.vj.lets.domain.member.util.MemberType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -36,9 +37,9 @@ public class HomeController {
             return "index";
         }
 
-        if (loginMember.getType().equals("admin")) {
+        if (loginMember.getType().equals(MemberType.ADMIN.getType())) {
             return "redirect:/admin";
-        } else if (loginMember.getType().equals("host")) {
+        } else if (loginMember.getType().equals(MemberType.HOST.getType())) {
             return "redirect:/host";
         } else {
             return "redirect:/cafe";

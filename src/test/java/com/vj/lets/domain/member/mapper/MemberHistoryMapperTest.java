@@ -31,21 +31,13 @@ class MemberHistoryMapperTest {
 
     @Test
     @Transactional
-    void updateTest() {
+    void updateByUpdateTest() {
         // given
         int memberId = 1;
+        String comment = "update";
         // when
-        memberHistoryMapper.update(memberId);
+        memberHistoryMapper.createByUpdate(memberId, comment);
         // then
     }
 
-    @Test
-    @Transactional
-    void deleteTest() {
-        // given
-        int memberId = 1;
-        // when
-        memberHistoryMapper.delete(memberId);
-        // then
-    }
 }

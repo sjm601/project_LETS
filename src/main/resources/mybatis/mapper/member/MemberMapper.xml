@@ -7,7 +7,7 @@
 
     <insert id="create" parameterType="Member">
         INSERT INTO MEMBER(ID, EMAIL, NAME, PASSWORD, TYPE)
-        VALUES (MEMBER_ID_SEQ.NEXTVAL, #{email}, #{name}, #{password}, 'guest')
+        VALUES (MEMBER_ID_SEQ.NEXTVAL, #{email}, #{name}, #{password}, #{type})
     </insert>
 
     <select id="readAll" resultType="Member">
@@ -38,7 +38,7 @@
         WHERE ID = #{id}
     </update>
 
-    <update id="delete" parameterType="int">
+    <update id="disabled" parameterType="int">
         UPDATE MEMBER
         SET status = 'disabled'
         WHERE ID = #{id}
