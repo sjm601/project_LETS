@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ArticleHistoryMapper {
     /** 게시글 생성*/
-    public void creat ();
+    public void create ();
 
     /** 게시글 수정*/
     public void update (int articleId);
