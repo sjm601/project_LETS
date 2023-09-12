@@ -52,6 +52,7 @@
                TO_CHAR(rev.WRITE_DATE, 'yyyy-MM-DD') "writeDate",
                caf.NAME                              "cafeName",
                roo.NAME                              "roomName",
+               roo.IMAGE_PATH                        "roomImage",
                res.ID                                "reservationId"
         FROM REVIEW rev
                  JOIN MEMBER mem on rev.MEMBER_ID = mem.ID
@@ -74,7 +75,14 @@
         WHERE rev.STATUS = 'enabled'
           AND res.ID = #{reservationId}
           AND mem.TYPE = 'host'
-        ORDER BY WRITE_DATE DESC, RESERVATION_ID
+    </select>
+
+    <select id="readCountByReservationId" parameterType="int" resultType="boolean">
+        SELECT COUNT(rev.ID)
+        FROM REVIEW rev
+                 JOIN RESERVATION res on res.ID = rev.RESERVATION_ID
+        WHERE rev.STATUS = 'enabled'
+          AND res.ID = #{reservationId}
     </select>
 
     <update id="update" parameterType="Review">

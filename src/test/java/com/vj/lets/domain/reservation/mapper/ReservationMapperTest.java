@@ -80,7 +80,7 @@ class ReservationMapperTest {
         // given
         int memberId = 21;
         // when
-        List<Reservation> memberReservation = reservationMapper.findByMember(memberId);
+        List<Map<String, Object>> memberReservation = reservationMapper.findByMember(memberId);
         // then
         log.info("회원의 예약 목록:{}", memberReservation);
         assertThat(memberReservation).isNotNull();
@@ -91,7 +91,7 @@ class ReservationMapperTest {
         // given
         int cafeId = 1;
         // when
-        List<Reservation> cafeReservationList = reservationMapper.findByMember(cafeId);
+        List<Reservation> cafeReservationList = reservationMapper.findCafeResList(cafeId);
         // then
         log.info("카페 예약 목록:{}", cafeReservationList);
         assertThat(cafeReservationList).isNotNull();

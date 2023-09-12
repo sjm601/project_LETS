@@ -113,7 +113,6 @@ public class MemberController {
      */
     @PostMapping("/login")
     public String login(@Valid @ModelAttribute LoginForm loginForm, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response, Model model) {
-        log.info("===================={}", loginForm);
         if (bindingResult.hasErrors()) {
             return "redirect:/member/login";
         }
@@ -133,7 +132,6 @@ public class MemberController {
             } catch (Exception e) {
                 throw new RuntimeException("오류 메세지");
             }
-
             return "redirect:/member/login";
         }
 
@@ -156,7 +154,10 @@ public class MemberController {
             response.addCookie(saveCookie);
         }
 
-        return "redirect:/";
+        String redirectURI = (String) session.getAttribute("redirectURI");
+        log.warn(redirectURI);
+        String uri = redirectURI == null ? "/" : redirectURI;
+        return "redirect:" + uri;
     }
 
     /**

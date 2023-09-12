@@ -75,7 +75,7 @@ class ReservationServiceTest {
         // given
         int memberId = 21;
         // when
-        List<Reservation> list = reservationService.getMemberResList(memberId);
+        List<Map<String, Object>> list = reservationService.getMemberResList(memberId);
         // then
         log.info("해당 회원의 전체 예약 리스트 : {}", list);
         assertThat(list).isNotNull();

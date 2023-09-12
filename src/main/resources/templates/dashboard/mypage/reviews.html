@@ -39,15 +39,21 @@
                     </div>
                     <div class="list_general reviews">
                         <ul>
-                            <li>
-                                <span>June 15 2017</span>
-                                <span class="rating"><i class="fa fa-fw fa-star yellow"></i><i
+                            <li th:each="review : ${reviewList}">
+                                <span th:text="${review.get('writeDate')}">June 15 2017</span>
+                                <span class="rating">
+                                    <th:block th:text="${review.get('rating')}"></th:block>
+                                    <i class="fa fa-fw fa-star yellow"></i><i
                                     class="fa fa-fw fa-star yellow"></i><i
                                     class="fa fa-fw fa-star yellow"></i><i class="fa fa-fw fa-star yellow"></i><i
-                                    class="fa fa-fw fa-star"></i></span>
-                                <figure><img src="/dashboard/img/item_1.jpg" alt=""></figure>
-                                <h4>Hotel Mariott <small>by M.Twain</small></h4>
-                                <p>Lorem ipsum dolor sit amet, dolores mandamus moderatius ea ius, sed civibus vivendum
+                                    class="fa fa-fw fa-star"></i>
+                                </span>
+                                <figure>
+                                    <img th:if="${review.get('roomImage') == null}" src="/dashboard/img/item_1.jpg" alt="">
+                                    <img th:if="${review.get('roomImage') != null}" th:src="|${review.get('roomImage')}.jpg|" src="/dashboard/img/item_1.jpg" alt="">
+                                </figure>
+                                <h4><th:block th:text="${review.get('cafeName')}">Hotel Mariott<th:block> <small>of <th:block th:text="${review.get('roomName')}">M.Twain</th:block></small></h4>
+                                <p th:text="${review.get('content')}">Lorem ipsum dolor sit amet, dolores mandamus moderatius ea ius, sed civibus vivendum
                                     imperdiet ei, amet
                                     tritani sea id. Ut veri diceret fierent mei, qui facilisi suavitate euripidis ad. In
                                     vim
@@ -56,9 +62,9 @@
                                     solet veniam
                                     mel, ad
                                     everti nostrud vim. Eam no menandri pertinacia deterruisset. </p>
-                                <div class="ml-5 mr-5 bg-dark text-white">
-                                    <p class="mr-3 text-right">June 15 2017</p>
-                                    <p class="ml-5 mr-5">Lorem ipsum dolor sit amet, dolores mandamus moderatius ea ius,
+                                <div th:if="${review.get('commentContent')}" class="ml-5 mr-5 bg-dark text-white">
+                                    <p th:text="${review.get('commentWriteDate')}" class="mr-3 text-right">June 15 2017</p>
+                                    <p th:text="${review.get('commentContent')}" class="ml-5 mr-5">Lorem ipsum dolor sit amet, dolores mandamus moderatius ea ius,
                                         sed
                                         civibus vivendum imperdiet ei, amet
                                         tritani sea id. Ut veri diceret fierent mei, qui facilisi suavitate euripidis
@@ -69,54 +75,6 @@
                                         veniam mel, ad
                                         everti nostrud vim. Eam no menandri pertinacia deterruisset.</p>
                                 </div>
-                                <p class="inline-popups">
-                                    <a href="#modal-reply" data-effect="mfp-zoom-in" class="btn_1 gray"><i
-                                        class="fa fa-fw fa-pencil"></i>
-                                        리뷰 수정</a>
-                                    <a href="#" data-effect="mfp-zoom-in" class="btn_1 gray"><i
-                                        class="fa fa-fw fa-times-circle-o"></i> 리뷰
-                                        삭제</a>
-                                </p>
-                            </li>
-                            <li>
-                                <span>June 15 2017</span>
-                                <span class="rating"><i class="fa fa-fw fa-star yellow"></i><i
-                                    class="fa fa-fw fa-star yellow"></i><i
-                                    class="fa fa-fw fa-star yellow"></i><i class="fa fa-fw fa-star"></i><i
-                                    class="fa fa-fw fa-star"></i></span>
-                                <figure><img src="/dashboard/img/item_2.jpg" alt=""></figure>
-                                <h4>Da Alfredo <small>by M.Giuliani</small></h4>
-                                <p>Ex omnis error aliquam quo, eu eos atqui accusam, ex nec sensibus erroribus
-                                    principes. No pro
-                                    albucius
-                                    eloquentiam accommodare. Mei id illud posse persius. Nec eu dico lucilius delicata,
-                                    qui
-                                    propriae
-                                    voluptaria eu.</p>
-                                <p class="inline-popups">
-                                    <a href="#modal-reply" data-effect="mfp-zoom-in" class="btn_1 gray"><i
-                                        class="fa fa-fw fa-pencil"></i>
-                                        리뷰 수정</a>
-                                    <a href="#" data-effect="mfp-zoom-in" class="btn_1 gray"><i
-                                        class="fa fa-fw fa-times-circle-o"></i> 리뷰
-                                        삭제</a>
-                                </p>
-                            </li>
-                            <li>
-                                <span>June 15 2017</span>
-                                <span class="rating"><i class="fa fa-fw fa-star yellow"></i><i
-                                    class="fa fa-fw fa-star yellow"></i><i
-                                    class="fa fa-fw fa-star yellow"></i><i class="fa fa-fw fa-star yellow"></i><i
-                                    class="fa fa-fw fa-star"></i></span>
-                                <figure><img src="/dashboard/img/item_3.jpg" alt=""></figure>
-                                <h4>Pompidue Museum <small>by G.Lukas</small></h4>
-                                <p>Cum id mundi admodum menandri, eum errem aperiri at. Ut quas facilis qui, euismod
-                                    admodum
-                                    persequeris
-                                    cum at. Summo aliquid eos ut, eum facilisi salutatus ne. Mazim option abhorreant ne
-                                    his. Mel
-                                    simul
-                                    iisque albucius at, probatus indoctum efficiendi mei ei. Veniam percipit ei sea.</p>
                                 <p class="inline-popups">
                                     <a href="#modal-reply" data-effect="mfp-zoom-in" class="btn_1 gray"><i
                                         class="fa fa-fw fa-pencil"></i>
