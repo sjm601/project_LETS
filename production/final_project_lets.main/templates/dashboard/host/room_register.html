@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+
+    <th:block th:fragment="head">
+        <meta name="author" content="VJCommando">
+        <meta name="description" content="LETS - Host Dashboard">
+        <title>LETS - Host Dashboard</title>
+
+        <link href="/dashboard/vendor/dropzone.css" rel="stylesheet">
+    </th:block>
+
+    <th:block th:fragment="content">
+        <!-- Content -->
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/dashboard/host/host_dashboard.html">대시보드</a>
+                    </li>
+                    <li class="breadcrumb-item active">Add Room</li>
+                </ol>
+                <div class="box_general padding_bottom">
+                    <div class="header_box version_2">
+                        <h2><i class="fa fa-file"></i>룸 등록</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="cafeName">스터디카페 이름</label>
+                                <input type="text" class="form-control" id="cafeName" placeholder="홍길동" name="cafeName" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>룸 대표사진</label>
+                                <form action="/file-upload" class="dropzone" name="roomPhoto"></form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /row-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="roomName">룸 이름</label>
+                                <input type="text" class="form-control" id="roomName" placeholder="Name" name="roomName">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="headCount">최대인원</label>
+                                <input type="number" class="form-control" id="headCount" placeholder="최대 수용 인원을 숫자로 입력하세요" name="peopleNum">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="price">시간당 가격</label>
+                                <input type="number" class="form-control" id="price" placeholder="시간당 이용 금액을 숫자로 입력하세요" name="peopleNum">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /row-->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="description">룸 상세설명</label>
+                                <textarea style="height:200px;" class="form-control" id="description" placeholder="설명을 입력해주세요"
+                                          name="cafeDescription"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /row-->
+                </div>
+                <!-- /box_general-->
+
+                <div class="box_general padding_bottom">
+                    <div class="header_box version_2">
+                        <h2><i class="fa fa-clock-o"></i>운영시간</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <label class="fix_spacing">카페시작시간</label>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <div class="styled-select">
+                                    <select>
+                                        <option>Opening Time</option>
+                                        <option>Closed</option>
+                                        <option>01:00</option>
+                                        <option>02:00</option>
+                                        <option>03:00</option>
+                                        <option>04:00</option>
+                                        <option>05:00</option>
+                                        <option>06:00</option>
+                                        <option>07:00</option>
+                                        <option>08:00</option>
+                                        <option>09:00</option>
+                                        <option>10:00</option>
+                                        <option>11:00</option>
+                                        <option>12:00</option>
+                                        <option>13:00</option>
+                                        <option>14:00</option>
+                                        <option>15:00</option>
+                                        <option>16:00</option>
+                                        <option>17:00</option>
+                                        <option>18:00</option>
+                                        <option>19:00</option>
+                                        <option>20:00</option>
+                                        <option>21:00</option>
+                                        <option>22:00</option>
+                                        <option>23:00</option>
+                                        <option>24:00</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <label class="fix_spacing">카페종료시간</label>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <div class="styled-select">
+                                    <select>
+                                        <option>Closing Time</option>
+                                        <option>Closed</option>
+                                        <option>01:00</option>
+                                        <option>02:00</option>
+                                        <option>03:00</option>
+                                        <option>04:00</option>
+                                        <option>05:00</option>
+                                        <option>06:00</option>
+                                        <option>07:00</option>
+                                        <option>08:00</option>
+                                        <option>09:00</option>
+                                        <option>10:00</option>
+                                        <option>11:00</option>
+                                        <option>12:00</option>
+                                        <option>13:00</option>
+                                        <option>14:00</option>
+                                        <option>15:00</option>
+                                        <option>16:00</option>
+                                        <option>17:00</option>
+                                        <option>18:00</option>
+                                        <option>19:00</option>
+                                        <option>20:00</option>
+                                        <option>21:00</option>
+                                        <option>22:00</option>
+                                        <option>23:00</option>
+                                        <option>24:00</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /row-->
+                </div>
+                <!-- /box_general-->
+
+                <div class="float-right mr-3">
+                    <p><a href="room-table.html" class="btn_1 medium">등록</a></p>
+                    <!-- <p><a href="#0" class="btn_1 medium">수정</a></p> -->
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.container-wrapper -->
+        <!-- /Content -->
+    </th:block>
+
+    <th:block th:fragment="scripts">
+        <!-- Custom scripts for this page -->
+        <script src="/dashboard/vendor/dropzone.min.js"></script>
+        <!-- /custom scripts -->
+    </th:block>
+
+</th:block>
+
+</html>

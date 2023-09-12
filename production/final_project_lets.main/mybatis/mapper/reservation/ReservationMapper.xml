@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vj.lets.domain.reservation.mapper.ReservationMapper">
+
+    <insert id="create" parameterType="Reservation">
+        INSERT INTO reservation (id, booking_date, start_time, end_time, head_count, member_id, cafe_id, room_id)
+        VALUES (reservation_id_seq.NEXTVAL, #{bookingDate}, #{startTime}, #{endTime}, #{headCount}, #{memberId}, #{cafeId}, #{roomId})
+    </insert>
+
+    <select id="findById" parameterType="int" resultType="Reservation">
+        SELECT ID, TO_CHAR(booking_date, 'yyyy-MM-DD') booking_date, START_TIME, END_TIME, HEAD_COUNT,MEMBER_ID, CAFE_ID, ROOM_ID
+        FROM RESERVATION
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByAll" resultType="Reservation">
+        SELECT ID, TO_CHAR(booking_date, 'yyyy-MM-DD') booking_date, START_TIME, END_TIME, HEAD_COUNT,MEMBER_ID, CAFE_ID, ROOM_ID
+        FROM RESERVATION
+        ORDER BY booking_date DESC
+    </select>
+
+    <select id="findByMember" parameterType="int" resultType="Reservation">
+        SELECT ID, TO_CHAR(booking_date, 'yyyy-MM-DD') booking_date, START_TIME, END_TIME, HEAD_COUNT, CAFE_ID, ROOM_ID
+        FROM RESERVATION
+        WHERE member_id = #{memberId}
+        ORDER BY booking_date DESC
+    </select>
+
+    <select id="findCafeResList" parameterType="int" resultType="Reservation">
+        SELECT ID, TO_CHAR(booking_date, 'yyyy-MM-DD') booking_date, START_TIME, END_TIME, HEAD_COUNT,MEMBER_ID, ROOM_ID
+        FROM RESERVATION
+        WHERE cafe_id = #{cafeId}
+        ORDER BY booking_date DESC
+    </select>
+
+    <select id="findCountMonthRes" parameterType="int" resultType="java.util.Map">
+        SELECT TO_CHAR(BOOKING_DATE, 'YYYY-MM') AS "reservationMonth",
+               COUNT(*) AS "totalReservations"
+        FROM reservation
+        WHERE EXTRACT(MONTH FROM BOOKING_DATE) BETWEEN 1 AND 12 AND cafe_id = #{cafeId}
+        GROUP BY TO_CHAR(BOOKING_DATE, 'YYYY-MM')
+        ORDER BY TO_CHAR(BOOKING_DATE, 'YYYY-MM')
+    </select>
+
+    <select id="findTotalData" parameterType="int" resultType="java.util.Map">
+        SELECT m.name AS "member_name", ro.name AS "room_name", r.head_count, TO_CHAR(r.BOOKING_DATE, 'YYYY/MM/DD') AS "booking_date", r.start_time, r.end_time, (r.end_time - r.start_time) * ro.price AS "totalPrice"
+        FROM reservation r
+                 JOIN member m ON r.member_id = m.id
+                 JOIN room ro ON r.room_id = ro.id
+        WHERE r.cafe_id = #{cafeId}
+        ORDER BY r.booking_date DESC
+    </select>
+
+    <select id="findResInfo" parameterType="int" resultType="java.util.Map">
+    SELECT ca.name AS "cafe_name", ca.image_path,m.name AS "member_name", ro.name AS "room_name", r.head_count, TO_CHAR(r.BOOKING_DATE, 'YYYY/MM/DD') AS "booking_date", r.start_time, r.end_time, ro.price,(r.end_time - r.start_time) * ro.price AS "totalPrice",r.id
+    FROM reservation r
+    JOIN member m ON r.member_id = m.id
+    JOIN room ro ON r.room_id = ro.id
+    JOIN cafe ca ON ro.cafe_id = ca.id
+    WHERE r.id = #{id}
+    </select>
+
+
+</mapper>

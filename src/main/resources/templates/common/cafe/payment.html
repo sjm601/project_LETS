@@ -108,12 +108,14 @@
                             <aside class="col-lg-4" id="sidebar">
                                 <div class="box_detail">
                                     <div id="total_cart">
-                                        Total <span class="float-end">79,000<i class="fa-solid fa-won-sign"></i></span>
+                                        Total <span data-th-text="${#numbers.formatInteger(reservation.totalPrice, 3, 'COMMA') + '원'}" class="float-end">79,000</span>
                                     </div>
                                     <ul class="cart_details">
-                                        <li>Date <span>2023-09-04</span></li>
-                                        <li>Time <span>11:00 - 13:00</span></li>
-                                        <li>Total Headcount <span>2</span></li>
+                                        <li>Date <span th:text="${reservation['booking_date']}">2023-09-04</span></li>
+                                        <li>Time
+                                            <span th:text="${reservation.START_TIME + ':00' +'-' + reservation.END_TIME + ':00'}">11:00 - 13:00</span>
+                                        </li>
+                                        <li>Total Headcount <span th:text="${reservation['HEAD_COUNT']}">2</span></li>
                                     </ul>
                                     <button type="submit" onclick="requestPay()" class="btn_1 full-width purchase">
                                         Purchase
@@ -135,6 +137,12 @@
     </th:block>
 
     <th:block th:fragment="scripts">
+        <!--iamport 라이브러리-->
+        <!-- jQuery -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+        <!-- iamport.payment.js -->
+        <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+
         <script src="/js/custom/reservation_custom.js"></script>
     </th:block>
 

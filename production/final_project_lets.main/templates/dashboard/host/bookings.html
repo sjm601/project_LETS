@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+
+    <th:block th:fragment="head">
+        <meta name="author" content="VJCommando">
+        <meta name="description" content="LETS - Host Dashboard">
+        <title>LETS - Host Dashboard</title>
+    </th:block>
+
+    <th:block th:fragment="content">
+        <!-- Content -->
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/dashboard/host/host_dashboard.html">My page</a>
+                    </li>
+                    <li class="breadcrumb-item active">Bookings list</li>
+                </ol>
+                <div class="box_general">
+                    <div class="header_box">
+                        <h2 class="d-inline-block">예약 목록</h2>
+                    </div>
+                    <div class="list_general">
+                        <ul>
+                            <li>
+                                <figure><img src="/dashboard/img/item_2.jpg" alt=""></figure>
+                                <h4>룸 이름 <i class="approved">결제완료</i></h4>
+                                <ul class="booking_list">
+                                    <li><strong>예약 날짜</strong> 11 November 2017</li>
+                                    <li><strong>예약 시간</strong> 12:00 - 15:00</li>
+                                    <li><strong>예약 인원수</strong> 2 People</li>
+                                    <li><strong>결제 방법</strong> 신용 카드 (결제완료)</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <figure><img src="/dashboard/img/item_3.jpg" alt=""></figure>
+                                <h4>룸 이름 <i class="approved">결제완료</i></h4>
+                                <ul class="booking_list">
+                                    <li><strong>예약 날짜</strong> 11 November 2017</li>
+                                    <li><strong>예약 시간</strong> 12:00 - 15:00</li>
+                                    <li><strong>예약 인원수</strong> 2 People</li>
+                                    <li><strong>결제 방법</strong> 신용 카드 (결제완료)</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /box_general-->
+                <nav aria-label="...">
+                    <ul class="pagination pagination-sm add_bottom_30">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /pagination-->
+            </div>
+            <!-- /container-fluid-->
+        </div>
+        <!-- /container-wrapper-->
+        <!-- /Content -->
+    </th:block>
+
+    <th:block th:fragment="scripts">
+        <!-- Custom scripts for this page -->
+        <script src="/dashboard/vendor/bootstrap-datepicker.js"></script>
+        <script th:inline="javascript">
+            $('input.date-pick').datepicker();
+        </script>
+        <!-- /custom scripts -->
+    </th:block>
+
+</th:block>
+
+</html>

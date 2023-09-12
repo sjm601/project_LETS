@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+
+    <th:block th:fragment="head">
+        <meta name="author" content="VJCommando">
+        <meta name="description" content="LETS - Host Dashboard">
+        <title>LETS - Host Dashboard</title>
+
+        <link href="/dashboard/vendor/animate.min.css" rel="stylesheet">
+        <link href="/dashboard/vendor/magnific-popup.css" rel="stylesheet">
+    </th:block>
+
+    <th:block th:fragment="content">
+        <!-- Content -->
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/dashboard/host/host_dashboard.html">대시보드</a>
+                    </li>
+                    <li class="breadcrumb-item active">Reviews</li>
+                </ol>
+                <div class="box_general">
+                    <div class="header_box">
+                        <h2 class="d-inline-block">고객 리뷰</h2>
+                        <div class="filter">
+                            <div class="styled-select short">
+                                <select name="orderby">
+                                    <option value="Any time">Any time</option>
+                                    <option value="Latest">Latest</option>
+                                    <option value="Oldest">Oldest</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list_general reviews">
+                        <ul>
+                            <li>
+                                <span>June 15 2017</span>
+                                <span class="rating"><i class="fa fa-fw fa-star yellow"></i><i
+                                    class="fa fa-fw fa-star yellow"></i><i
+                                    class="fa fa-fw fa-star yellow"></i><i class="fa fa-fw fa-star yellow"></i><i
+                                    class="fa fa-fw fa-star"></i></span>
+                                <figure><img src="/dashboard/img/item_1.jpg" alt=""></figure>
+                                <h4>Room A-1 <small>by 예약자 이름(ID)</small></h4>
+
+                                <p>Lorem ipsum dolor sit amet, dolores mandamus moderatius ea ius, sed civibus vivendum
+                                    imperdiet ei, amet
+                                    tritani sea id. Ut veri diceret fierent mei, qui facilisi suavitate euripidis ad. In
+                                    vim
+                                    mucius menandri
+                                    convenire, an brute zril vis. Ancillae delectus necessitatibus no eam, at porro
+                                    solet veniam
+                                    mel, ad
+                                    everti nostrud vim. Eam no menandri pertinacia deterruisset.</p>
+                                <p class="inline-popups"><a href="#modal-reply" data-effect="mfp-zoom-in"
+                                                            class="btn_1 gray"><i
+                                    class="fa fa-fw fa-reply"></i> Reply to this review</a></p>
+                            </li>
+                            <li>
+                                <span>June 15 2017</span>
+                                <span class="rating"><i class="fa fa-fw fa-star yellow"></i><i
+                                    class="fa fa-fw fa-star yellow"></i><i
+                                    class="fa fa-fw fa-star yellow"></i><i class="fa fa-fw fa-star"></i><i
+                                    class="fa fa-fw fa-star"></i></span>
+                                <figure><img src="/dashboard/img/item_2.jpg" alt=""></figure>
+                                <h4>Room A-2 <small>by 예약자 이름(ID)</small></h4>
+                                <p>Ex omnis error aliquam quo, eu eos atqui accusam, ex nec sensibus erroribus
+                                    principes. No pro
+                                    albucius
+                                    eloquentiam accommodare. Mei id illud posse persius. Nec eu dico lucilius delicata,
+                                    qui
+                                    propriae
+                                    voluptaria eu.</p>
+                                <p class="inline-popups"><a href="#modal-reply" data-effect="mfp-zoom-in"
+                                                            class="btn_1 gray"><i
+                                    class="fa fa-fw fa-reply"></i> Reply to this review</a></p>
+                            </li>
+                            <li>
+                                <span>June 15 2017</span>
+                                <span class="rating"><i class="fa fa-fw fa-star yellow"></i><i
+                                    class="fa fa-fw fa-star yellow"></i><i
+                                    class="fa fa-fw fa-star yellow"></i><i class="fa fa-fw fa-star yellow"></i><i
+                                    class="fa fa-fw fa-star"></i></span>
+                                <figure><img src="/dashboard/img/item_3.jpg" alt=""></figure>
+                                <h4>Room A-3 <small>by 예약자 이름(ID)</small></h4>
+                                <p>Cum id mundi admodum menandri, eum errem aperiri at. Ut quas facilis qui, euismod
+                                    admodum
+                                    persequeris
+                                    cum at. Summo aliquid eos ut, eum facilisi salutatus ne. Mazim option abhorreant ne
+                                    his. Mel
+                                    simul
+                                    iisque albucius at, probatus indoctum efficiendi mei ei. Veniam percipit ei sea.</p>
+                                <p class="inline-popups"><a href="#modal-reply" data-effect="mfp-zoom-in"
+                                                            class="btn_1 gray"><i
+                                    class="fa fa-fw fa-reply"></i> Reply to this review</a></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /box_general-->
+                <nav aria-label="...">
+                    <ul class="pagination pagination-sm add_bottom_30">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /pagination-->
+            </div>
+            <!-- /container-fluid-->
+        </div>
+        <!-- /container-wrapper-->
+        <!-- /Content -->
+    </th:block>
+
+    <th:block th:fragment="scripts">
+        <!-- Custom scripts for this page -->
+        <!-- /custom scripts -->
+    </th:block>
+
+</th:block>
+
+</html>

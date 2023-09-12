@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+          content="Panagea - Premium site template for travel agencies, hotels and restaurant listing.">
+    <meta name="author" content="Ansonika">
+    <title>Panagea | Premium site template for travel agencies, hotels and restaurant listing.</title>
+
+    <!-- Favicons-->
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/images/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/images/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- GOOGLE WEB FONT -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- BASE CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/vendors.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+</head>
+
+<body>
+
+<div id="page" class="theia-exception">
+
+    <!-- header -->
+    <header class="header menu_fixed">
+        <div id="preloader">
+            <div data-loader="circle-side"></div>
+        </div><!-- /Page Preload -->
+        <div id="logo">
+            <a href="index.html">
+                <img src="/images/title_textwhite.svg" width="110" height="40" alt="" class="logo_normal">
+                <img src="/images/title_textwhite.svg" width="110" height="40" alt="" class="logo_sticky">
+            </a>
+        </div>
+        <ul id="top_menu">
+            <li><a href="#sign-in-dialog" id="sign-in" class="login" title="Sign In">Sign In</a></li>
+        </ul>
+        <!-- /top_menu -->
+        <a href="#menu" class="btn_mobile">
+            <div class="hamburger hamburger--spin" id="hamburger">
+                <div class="hamburger-box">
+                    <div class="hamburger-inner"></div>
+                </div>
+            </div>
+        </a>
+        <nav id="menu" class="main-menu">
+            <ul>
+                <li><span><a href="#">Home</a></span></li>
+                <li><span><a href="/restaurants-grid-sidebar.html"">Cafe</a></span></li>
+                <li><span><a href="/blog.html">group</a></span></li>
+                <li><span><a href="/help.html">Support</a></span></li>
+                <li><span><a href="/contact.html">Contact</a></span></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- /header -->
+
+    <main>
+        <section class="hero_in general">
+            <div class="wrapper">
+                <div class="container">
+                    <h1 class="fadeInUp"><span></span>Faq Section</h1>
+                </div>
+            </div>
+        </section>
+        <!--/hero_in-->
+
+
+        <div class="container margin_60_35">
+            <div class="row">
+                <aside class="col-lg-3" id="sidebar">
+                    <div class="box_style_cat" id="faq_box">
+                        <ul id="cat_nav">
+                            <li><a href="#studygroup" class="active"><i class="icon_document_alt"></i>스터디그룹 이용안내</a>
+                            </li>
+                            <li><a href="#board"><i class="icon_document_alt"></i>게시판 이용안내</a></li>
+                            <li><a href="#register"><i class="icon_document_alt"></i>스터디 카페 등록</a></li>
+                            <li><a href="#book_payment"><i class="icon_document_alt"></i>예약과 결제</a></li>
+                            <li><a href="#cancel"><i class="icon_document_alt"></i>예약 취소</a></li>
+                        </ul>
+                    </div>
+                    <!--/sticky -->
+                </aside>
+                <!--/aside -->
+                <!--스터디 그룹 아코디언-->
+                <div class="col-lg-8" id="faq">
+                    <h4 class="nomargin_top">스터디 그룹</h4><span id="location123"></span>
+                    <div role="tablist" class="add_bottom_45 accordion_2" id="studygroup">
+                        <div class="card">
+                            <div class="card-header" role="tab">
+                                <h5 class="mb-0">
+                                    <a data-bs-toggle="collapse" href="#collapseOne_payment" aria-expanded="true"><i
+                                        class="indicator ti-minus"></i>스터디 그룹안내</a>
+                                </h5>
+                            </div>
+                            <div id="collapseOne_payment" class="collapse show" role="tabpanel"
+                                 data-bs-parent="#studygroup">
+                                <div class="card-body">
+                                    <p>스터디 그룹 기능은 블라블라블라</p>
+                                    <p>사용하는 방법 블라블라블라</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div class="card">
+                            <div class="card-header" role="tab">
+                                <h5 class="mb-0">
+                                    <a class="collapsed" data-bs-toggle="collapse" href="#collapseTwo_payment"
+                                       aria-expanded="false">
+                                        <i class="indicator ti-plus"></i>스터디 그룹 생성방법
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseTwo_payment" class="collapse" role="tabpanel" data-bs-parent="#studygroup">
+                                <div class="card-body">
+                                    <p>그룹 생성 방법 블라블라블라</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--스터디 그룹 아코디언 끝-->
+
+                    <!-- 게시판 아코디언 -->
+
+                    <h4 class="nomargin_top">게시판</h4>
+                    <div role="tablist" class="add_bottom_45 accordion_2" id="board">
+                        <div class="card">
+                            <div class="card-header" role="tab">
+                                <h5 class="mb-0">
+                                    <a data-bs-toggle="collapse" href="#collapseOne_tips" aria-expanded="true"><i
+                                        class="indicator ti-plus"></i>게시판 안내?</a>
+                                </h5>
+                            </div>
+
+                            <div id="collapseOne_tips" class="collapse" role="tabpanel" data-bs-parent="#board">
+                                <div class="card-body">
+                                    <p>게시판 이용방법</p>
+                                    <p>게시판 주의사항</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /card -->
+                        <div class="card">
+                            <div class="card-header" role="tab">
+                                <h5 class="mb-0">
+                                    <a class="collapsed" data-bs-toggle="collapse" href="#collapseTwo_tips"
+                                       aria-expanded="false">
+                                        <i class="indicator ti-plus"></i>게시판 글쓰기
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseTwo_tips" class="collapse" role="tabpanel" data-bs-parent="#board">
+                                <div class="card-body">
+                                    <p>글쓰기 이용 안내</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--게시판 아코디언 끝-->
+
+                    <!-- 스터디카페등록 아코디언 -->
+
+                    <h4 class="nomargin_top">스터디 카페 등록</h4>
+                    <div role="tablist" class="add_bottom_45 accordion_2" id="register" name="register">
+                        <div class="card">
+                            <div class="card-header" role="tab">
+                                <h5 class="mb-0">
+                                    <a data-bs-toggle="collapse" href="#collapseOne_reccomendations"
+                                       aria-expanded="true"><i class="indicator ti-plus"></i>스터디 카페 등록안내</a>
+                                </h5>
+                            </div>
+
+                            <div id="collapseOne_reccomendations" class="collapse" role="tabpanel"
+                                 data-bs-parent="#register">
+                                <div class="card-body">
+                                    <p>호스트 대상으로 스터디 카페등록 방법 안내</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /card -->
+                        <div class="card">
+                            <div class="card-header" role="tab">
+                                <h5 class="mb-0">
+                                    <a class="collapsed" data-bs-toggle="collapse" href="#collapseTwo_reccomendations"
+                                       aria-expanded="false">
+                                        <i class="indicator ti-plus"></i>비용
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseTwo_reccomendations" class="collapse" role="tabpanel"
+                                 data-bs-parent="#register">
+                                <div class="card-body">
+                                    <p>수수료 및 광고료 안내</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /스터디 카페 등록 아코디언 끝 -->
+
+                    <!--예약 및 결제 아코디언-->
+                    <h4 class="nomargin_top">예약 및 결제</h4>
+                    <div role="tablist" class="add_bottom_45 accordion_2" id="book_payment" name="book_payment">
+                        <div class="card">
+                            <div class="card-header" role="tab">
+                                <h5 class="mb-0">
+                                    <a data-bs-toggle="collapse" href="#collapseOne_terms" aria-expanded="true"><i
+                                        class="indicator ti-plus"></i>예약</a>
+                                </h5>
+                            </div>
+
+                            <div id="collapseOne_terms" class="collapse" role="tabpanel" data-bs-parent="#book_payment">
+                                <div class="card-body">
+                                    <p>Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                                        sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat
+                                        craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably
+                                        haven't heard of them accusamus labore sustainable VHS.</p>
+                                    <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                        richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
+                                        brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                        sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                                        shoreditch et.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /card -->
+                        <div class="card">
+                            <div class="card-header" role="tab">
+                                <h5 class="mb-0">
+                                    <a class="collapsed" data-bs-toggle="collapse" href="#collapseTwo_terms"
+                                       aria-expanded="false">
+                                        <i class="indicator ti-plus"></i>결제
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseTwo_terms" class="collapse" role="tabpanel" data-bs-parent="#book_payment">
+                                <div class="card-body">
+                                    <p>Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                                        sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat
+                                        craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably
+                                        haven't heard of them accusamus labore sustainable VHS.</p>
+                                    <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                        richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
+                                        brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                        sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                                        shoreditch et.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /card -->
+                        <div class="card">
+                            <div class="card-header" role="tab">
+                                <h5 class="mb-0">
+                                    <a class="collapsed" data-bs-toggle="collapse" href="#collapseThree_terms"
+                                       aria-expanded="false">
+                                        <i class="indicator ti-plus"></i>결제 방법
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseThree_terms" class="collapse" role="tabpanel"
+                                 data-bs-parent="#book_payment">
+                                <div class="card-body">
+                                    <p>Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                                        sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat
+                                        craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably
+                                        haven't heard of them accusamus labore sustainable VHS.</p>
+                                    <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                        richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
+                                        brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                        sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                                        shoreditch et.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /card -->
+                    </div>
+
+                    <!--예약 취소 아코디언 -->
+                    <h4 class="nomargin_top">예약 취소</h4>
+                    <div role="tablist" class="add_bottom_45 accordion_2" id="cancel" name="cancel"><a
+                        name="cancel"></a>
+                        <div class="card">
+                            <div class="card-header" role="tab">
+                                <h5 class="mb-0">
+                                    <a data-bs-toggle="collapse" href="#collapseOne_booking" aria-expanded="true"><i
+                                        class="indicator ti-plus"></i>취소 규정</a>
+                                </h5>
+                            </div>
+
+                            <div id="collapseOne_booking" class="collapse" role="tabpanel" data-bs-parent="#cancel">
+                                <div class="card-body">
+                                    <p>Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                                        sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat
+                                        craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably
+                                        haven't heard of them accusamus labore sustainable VHS.</p>
+                                    <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                        richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
+                                        brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                        sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                                        shoreditch et.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /card -->
+                        <div class="card">
+                            <div class="card-header" role="tab">
+                                <h5 class="mb-0">
+                                    <a class="collapsed" data-bs-toggle="collapse" href="#collapseTwo_booking"
+                                       aria-expanded="false">
+                                        <i class="indicator ti-plus"></i>취소 가능 시간
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseTwo_booking" class="collapse" role="tabpanel" data-bs-parent="#cancel">
+                                <div class="card-body">
+                                    <p>Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                                        sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat
+                                        craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably
+                                        haven't heard of them accusamus labore sustainable VHS.</p>
+                                    <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                        richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
+                                        brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                        sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                                        shoreditch et.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /col -->
+            </div>
+            <!-- /row -->
+        </div>
+        <!--/container-->
+    </main>
+
+    <!-- footer -->
+    <footer>
+        <div class="container margin_60_35">
+            <div class="row">
+                <div class="col-lg-5 col-md-12 pe-5">
+                    <p><img src="/images/title_textwhite.svg" width="110" height="40" alt=""></p>
+                    <p>Mea nibh meis philosophia eu. Duis legimus efficiantur ea sea. Id placerat tacimates
+                        definitionem sea, prima quidam vim no. Duo nobis persecuti cu. Nihil facilisi indoctum an
+                        vix, ut delectus expetendis vis.</p>
+                </div>
+                <div class="col-lg-3 col-md-6 ms-lg-auto">
+                    <h5>Useful links</h5>
+                    <ul class="links">
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/login.html">Login</a></li>
+                        <li><a href="/register.html">Register</a></li>
+                        <li><a href="/blog.html">News &amp; Events</a></li>
+                        <li><a href="/contacts.html">Contacts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5>Contact with Us</h5>
+                    <ul class="contacts">
+                        <li><a href="#"><i class="ti-mobile"></i> + 82 10 0000 0000</a></li>
+                        <li><a href="#"><i class="ti-email"></i> lets@LETS.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--/row-->
+            <hr>
+            <div class="row">
+                <div class="col-lg-6"></div>
+                <div class="col-lg-6">
+                    <ul id="additional_links">
+                        <li><a href="#0">Terms and conditions</a></li>
+                        <li><a href="#0">Privacy</a></li>
+                        <li><span>© LETS</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--/footer-->
+
+</div>
+<!-- page -->
+
+<!-- Sign In Popup -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header p-4">
+                <h4>Sign In</h4>
+            </div>
+            <div class="modal-body p-4">
+                <form th:action="@{/member/login}" th:method="post">
+                    <div class="sign-in-wrapper">
+                        <div style="text-align: center;">
+                            <a href="#"><img src="/images/login/kakao_login_medium_wide.png" width="286" alt=""></a>
+                        </div>
+                        <div class="divider"><span>Or</span></div>
+                        <div class="form-group">
+                            <label for="email"><i class="icon_mail_alt mr-4"></i>이메일</label>
+                            <input th:field="*{loginForm.email}" type="email" class="form-control" name="email"
+                                   id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password"><i class="icon_lock_alt mr-4"></i>비밀번호</label>
+                            <input th:field="${loginForm.password}" type="password" class="form-control"
+                                   name="password"
+                                   id="password" required>
+                        </div>
+                        <div class="clearfix add_bottom_15">
+                            <div class="checkboxes float-start">
+                                <label class="container_check">Remember me
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="float-end mt-1"><a id="forgot" href="javascript:void(0);">Forgot
+                                Password?</a>
+                            </div>
+                        </div>
+                        <div class="text-center"><input type="submit" value="Log In" class="btn_1 full-width"></div>
+                        <div class="text-center">
+                            Don’t have an account? <a th:href="@{/member/register}" href="register.html">Sign up</a>
+                        </div>
+                        <div id="forgot_pw">
+                            <div class="form-group">
+                                <label for="email_forgot">Please confirm login email below</label>
+                                <input type="email" class="form-control" name="email_forgot" id="email_forgot">
+                                <i class="icon_mail_alt"></i>
+                            </div>
+                            <p>You will receive an email containing a link allowing you to reset your password to a
+                                new
+                                preferred one.</p>
+                            <div class="text-center"><input type="submit" value="Reset Password" class="btn_1">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!--form -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Sign In Popup -->
+
+<div id="toTop"></div><!-- Back to top button -->
+
+<!-- COMMON SCRIPTS -->
+<script src="/js/common_scripts.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>

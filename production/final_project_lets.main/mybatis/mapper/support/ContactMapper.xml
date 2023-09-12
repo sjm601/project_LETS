@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vj.lets.domain.support.mapper.ContactMapper">
+
+    <insert id="create" parameterType="Contact">
+        INSERT INTO CONTACT(ID, EMAIL, NAME, PHONE_NUMBER, ADDRESS, MESSAGE, BUSINESS_NUMBER)
+        VALUES (CONTACT_ID_SEQ.NEXTVAL, #{email}, #{name}, #{phoneNumber}, #{address}, #{message}, #{businessNumber})
+    </insert>
+
+    <select id="readAll" resultType="Contact">
+        SELECT ID, EMAIL, NAME, PHONE_NUMBER, ADDRESS, MESSAGE, BUSINESS_NUMBER, TO_CHAR(contact_date, 'yyyy-MM-DD') contact_date, status
+        FROM CONTACT
+        ORDER BY contact_date DESC
+    </select>
+
+    <select id="readByMailBNumDate" parameterType="Contact" resultType="Contact">
+        select ID, EMAIL, BUSINESS_NUMBER, TO_CHAR(CONTACT_DATE, 'yyyy-MM-DD') contact_date, STATUS
+        from CONTACT
+        where (EMAIL = #{email} or BUSINESS_NUMBER = #{businessNumber}) AND TO_CHAR(CONTACT_DATE, 'yyyy-MM-DD') = TO_CHAR(SYSDATE, 'yyyy-MM-DD') AND STATUS = 'hold'
+    </select>
+
+    <update id="update">
+        UPDATE CONTACT
+        <set>
+            <if test="status != null or status != ''">status = #{status},</if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+
+</mapper>
