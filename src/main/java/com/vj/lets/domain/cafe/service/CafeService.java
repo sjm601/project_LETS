@@ -1,6 +1,9 @@
 package com.vj.lets.domain.cafe.service;
 
 import com.vj.lets.domain.cafe.dto.Cafe;
+import com.vj.lets.domain.cafe.dto.CafeOption;
+import com.vj.lets.domain.cafe.dto.CafeOptionList;
+import com.vj.lets.domain.cafe.dto.CafeSearch;
 
 import java.util.List;
 
@@ -13,25 +16,85 @@ import java.util.List;
  */
 public interface CafeService {
 
-    /** 카페 등록 */
+    /**
+     * 카페 등록
+     *
+     * @param cafe 카페
+     */
     public void register(Cafe cafe);
 
-    /** 카페 전체 리스트 출력 */
+    /**
+     * 카페 옵션 등록
+     *
+     * @param cafeOptionLists 카페 옵션 리스트
+     */
+    public void cafeOptionRegister(List<CafeOptionList> cafeOptionLists);
+
+    /**
+     * 카페 옵션 등록
+     *
+     * @param cafeOption 카페 옵션
+     */
+    public void optionRegister(CafeOption cafeOption);
+
+    /**
+     * 카페 옵션 삭제
+     *
+     * @param optionId 카페옵션 ID
+     */
+    public void optionDelete(int optionId);
+
+    /**
+     * 카페 전체 리스트 출력
+     *
+     * @return 카페 전체 리스트
+     */
     public List<Cafe> getCafeList();
 
-    /** 카페 id로 검색 */
+    /**
+     * id로 카페 검색
+     *
+     * @param id 카페 ID
+     * @return 카페 검색 결과
+     */
     public Cafe getCafe(int id);
 
-    /** 예약이 많은 카페 6개 검색 */
+    /**
+     * 예약이 많은 카페 6개 검색
+     *
+     * @return 카페 리스트 6개
+     */
     public List<Cafe> getBestCafe();
 
-    /** 카페 키워드 검색 */
-    public List<Cafe> getSearchCafe(String name, int countPerson, int price, String option, int minDuaration, int maxDuration, int rating5, int rating4, int rating3, int rating2, int rating1, int rating);
+    /**
+     * 카페 검색
+     *
+     * @param cafeSearch 카페 검색값
+     * @return 카페 검색 결과
+     */
+    public List<Cafe> getSearchCafe(CafeSearch cafeSearch);
 
+    /**
+     * 카페 정보 수정
+     *
+     * @param cafe 카페
+     * @param cafeOptionLists 카페 옵션 리스트
+     */
+    public void editCafe(Cafe cafe, List<CafeOptionList> cafeOptionLists);
 
-    /** 카페 정보 수정 */
-    public void editCafe(Cafe cafe);
-
-    /** 카페 삭제 */
+    /**
+     * 카페 삭제
+     *
+     * @param id 카페 ID
+     */
     public void deleteCafe(int id);
+
+    /**
+     * 카페 옵션 리스트 객체 생성
+     *
+     * @param cafeId 카페 ID
+     * @param optionIds 카페 옵션 아이디 리스트
+     * @return 카페 옵션 리스트 객체
+     */
+    public List<CafeOptionList> makeCafeOptionList(int cafeId, List<Integer> optionIds);
 }

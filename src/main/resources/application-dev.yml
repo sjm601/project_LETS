@@ -98,7 +98,8 @@ mybatis:
                         com.vj.lets.domain.support.dto,
                         com.vj.lets.domain.reservation.dto,
                         com.vj.lets.domain.article.dto,
-                        com.vj.lets.domain.review.dto
+                        com.vj.lets.domain.review.dto,
+                        com.vj.lets.domain.payment.dto
 
 ---
 
