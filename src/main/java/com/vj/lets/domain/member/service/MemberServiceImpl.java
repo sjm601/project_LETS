@@ -3,6 +3,7 @@ package com.vj.lets.domain.member.service;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.mapper.MemberHistoryMapper;
 import com.vj.lets.domain.member.mapper.MemberMapper;
+import com.vj.lets.domain.member.util.MemberHistoryComment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,7 +78,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public void editMember(Member member) {
         memberMapper.update(member);
-        memberHistoryMapper.update(member.getId());
+        memberHistoryMapper.createByUpdate(member.getId(), MemberHistoryComment.UPDATE.getComment());
     }
 
     /**
@@ -88,7 +89,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void removeMember(int id) {
-        memberMapper.delete(id);
-        memberHistoryMapper.delete(id);
+        memberMapper.disabled(id);
+        memberHistoryMapper.createByUpdate(id, MemberHistoryComment.DELETE.getComment());
     }
 }

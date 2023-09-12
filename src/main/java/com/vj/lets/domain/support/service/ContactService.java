@@ -25,7 +25,7 @@ public interface ContactService {
      *
      * @return 입점 신청 목록
      */
-    public List<Contact> getContacts();
+    public List<Contact> getContactList();
 
     /**
      * 입점 신청 시 이메일, 사업자 번호, 신청 날짜로 중복 신청 조회
@@ -33,7 +33,7 @@ public interface ContactService {
      * @param contact 입점 신청 정보
      * @return 입점 신청 조회 정보
      */
-    public Contact getCheckContact(Contact contact);
+    public Contact checkContact(Contact contact);
 
     /**
      * 입점 승인 시 상태 정보 수정

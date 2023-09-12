@@ -4,6 +4,7 @@ import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.dto.LoginForm;
 import com.vj.lets.domain.member.dto.RegisterForm;
 import com.vj.lets.domain.member.service.MemberService;
+import com.vj.lets.domain.member.util.MemberType;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -40,7 +41,7 @@ public class MemberController {
      * @return 논리적 뷰 이름
      */
     @GetMapping("/register")
-    public String registerForm(Model model) {
+    public String registerView(Model model) {
         RegisterForm registerForm = RegisterForm.builder().build();
         model.addAttribute("registerForm", registerForm);
 
@@ -62,6 +63,7 @@ public class MemberController {
                 .email(registerForm.getEmail())
                 .name(registerForm.getName())
                 .password(registerForm.getPassword())
+                .type(MemberType.GUEST.getType())
                 .build();
         memberService.register(member);
 
@@ -86,7 +88,7 @@ public class MemberController {
      * @return 논리적 뷰 이름
      */
     @GetMapping("/login")
-    public String loginForm(@CookieValue(value = "remember", required = false) String rememberEmail, Model model) {
+    public String loginView(@CookieValue(value = "remember", required = false) String rememberEmail, Model model) {
         LoginForm loginForm = LoginForm.builder().build();
 
         if (rememberEmail != null) {

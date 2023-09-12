@@ -10,14 +10,9 @@
         VALUES (MEMBER_HISTORY_ID_SEQ.NEXTVAL, MEMBER_ID_SEQ.CURRVAL)
     </insert>
 
-    <insert id="update" parameterType="int">
+    <insert id="createByUpdate">
         INSERT INTO MEMBER_HISTORY(ID, MODIFY_COMMENT, MEMBER_ID)
-        VALUES(MEMBER_HISTORY_ID_SEQ.NEXTVAL, 'update', #{memberId})
-    </insert>
-
-    <insert id="delete" parameterType="int">
-        INSERT INTO MEMBER_HISTORY(ID, MODIFY_COMMENT, MEMBER_ID)
-        VALUES(MEMBER_HISTORY_ID_SEQ.NEXTVAL, 'delete', #{memberId})
+        VALUES(MEMBER_HISTORY_ID_SEQ.NEXTVAL, #{comment}, #{memberId})
     </insert>
 
 </mapper>

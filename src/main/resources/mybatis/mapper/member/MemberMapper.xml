@@ -7,7 +7,7 @@
 
     <insert id="create" parameterType="Member">
         INSERT INTO MEMBER(ID, EMAIL, NAME, PASSWORD, TYPE)
-        VALUES (MEMBER_ID_SEQ.NEXTVAL, #{email}, #{name}, #{password}, 'guest')
+        VALUES (MEMBER_ID_SEQ.NEXTVAL, #{email}, #{name}, #{password}, #{type})
     </insert>
 
     <select id="readAll" resultType="Member">
@@ -31,14 +31,14 @@
     <update id="update" parameterType="Member">
         UPDATE MEMBER
         <set>
-            <if test="name != null or name != ''">NAME = #{name},</if>
-            <if test="password != null or password != ''">PASSWORD = #{password},</if>
-            <if test="imagePath != null or imagePath != ''">IMAGE_PATH = #{imagePath},</if>
+            <if test="name != null and name != ''">NAME = #{name},</if>
+            <if test="password != null and password != ''">PASSWORD = #{password},</if>
+            <if test="imagePath != null and imagePath != ''">IMAGE_PATH = #{imagePath},</if>
         </set>
         WHERE ID = #{id}
     </update>
 
-    <update id="delete" parameterType="int">
+    <update id="disabled" parameterType="int">
         UPDATE MEMBER
         SET status = 'disabled'
         WHERE ID = #{id}

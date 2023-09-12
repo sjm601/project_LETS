@@ -55,11 +55,11 @@ public interface MemberMapper {
     public void update(Member member);
 
     /**
-     * 회원 탈퇴 시 비활성화
+     * 회원 비활성화
      *
      * @param id 회원 ID
      */
-    public void delete(int id);
+    public void disabled(int id);
 
 }
 

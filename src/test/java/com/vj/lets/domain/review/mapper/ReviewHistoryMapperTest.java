@@ -1,4 +1,4 @@
-package com.vj.lets.domain.member.mapper;
+package com.vj.lets.domain.review.mapper;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -6,38 +6,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * 회원 히스토리 관련 매퍼 테스트 클래스
- *
- * @author VJ특공대 김종원
- * @version 1.0
- * @since 2023-09-08 (금)
- */
+import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 @Slf4j
-class MemberHistoryMapperTest {
+class ReviewHistoryMapperTest {
 
     @Autowired
-    private MemberHistoryMapper memberHistoryMapper;
+    private ReviewHistoryMapper reviewHistoryMapper;
 
     @Test
     @Transactional
     void createTest() {
         // given
         // when
-        memberHistoryMapper.create();
+        reviewHistoryMapper.create();
         // then
     }
 
     @Test
     @Transactional
-    void updateByUpdateTest() {
+    void createByUpdateTest() {
         // given
-        int memberId = 1;
+        int reviewId = 1;
         String comment = "update";
         // when
-        memberHistoryMapper.createByUpdate(memberId, comment);
+        reviewHistoryMapper.createByUpdate(reviewId, comment);
         // then
     }
-
 }
