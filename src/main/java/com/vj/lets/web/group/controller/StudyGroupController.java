@@ -5,6 +5,8 @@ import com.vj.lets.domain.group.dto.GroupMemberList;
 import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
 import com.vj.lets.domain.group.service.StudyGroupService;
+import com.vj.lets.domain.location.dto.SiGunGu;
+import com.vj.lets.domain.location.service.SiGunGuService;
 import com.vj.lets.domain.member.dto.Member;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +32,7 @@ import java.util.Map;
 public class StudyGroupController {
 
     private final StudyGroupService studyGroupService;
+    private final SiGunGuService siGunGuService;
 
     /**
      * 스터디 전체 리스트 화면 출력
@@ -46,7 +49,6 @@ public class StudyGroupController {
                 .build();
 
         List<Map<String, Object>> studyGroupList = studyGroupService.getStudyGroupList(search);
-        log.info("스터디 리스트 : {}", studyGroupList);
         model.addAttribute("studyGroupList", studyGroupList);
 
         return "common/group/group_list";
@@ -125,5 +127,31 @@ public class StudyGroupController {
 
         int studyGroupId = studyGroupService.createStudyGroup(studyGroup, loginMember.getId(), createForm.getSiGunGuName());
         return "redirect:/group/" + studyGroupId;
+    }
+
+    /**
+     * 스터디 그룹 정보 수정
+     *
+     * @author VJ특공대 이희영
+     * @param createForm
+     * @param id
+     * @param model
+     * @return 스터디 그룹 상세 화면
+     */
+    @PostMapping("/update/{id}")
+    public String updateGroup(@ModelAttribute CreateForm createForm, @PathVariable int id, Model model) {
+        String siGunGuName = createForm.getSiGunGuName();
+        SiGunGu siGunGu = siGunGuService.findById(siGunGuName);
+
+        StudyGroup studyGroup = StudyGroup.builder()
+                .id(id)
+                .name(createForm.getName())
+                .totalCount(createForm.getTotalCount())
+                .imagePath(createForm.getImagePath())
+                .subject(createForm.getSubject())
+                .siGunGuId(siGunGu.getId())
+                .build();
+        studyGroupService.editStudyGroup(studyGroup);
+        return "redirect:/group/{id}";
     }
 }

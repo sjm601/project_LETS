@@ -44,10 +44,11 @@
                SG.REGDATE       REGDATE,
                SG.IMAGE_PATH    IMAGEPATH,
                SG.SUBJECT       SUBJECT,
-               SG.SI_GUN_GU_ID  SIGUNGUID,
+               SGG.NAME  SIGUNGUNAME,
                M.NAME           MEMBERNAME
         FROM STUDY_GROUP SG
                  JOIN GROUP_MEMBER_LIST GML ON SG.ID = GML.STUDY_GROUP_ID
+                 JOIN SI_GUN_GU SGG ON SG.SI_GUN_GU_ID = SGG.ID
                  JOIN MEMBER M ON M.ID = GML.MEMBER_ID
         WHERE SG.ID = #{id}
           AND GML.POSITION = '팀장'
