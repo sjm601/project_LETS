@@ -13,22 +13,48 @@ import java.util.List;
  */
 public interface RoomService {
 
-    /** 룸 등록 */
+    /**
+     * 룸 등록
+     *
+     * @param room 룸
+     */
     public void register(Room room);
 
-    /** 룸 정보 업데이트 */
+    /**
+     * 룸 정보 업데이트
+     *
+     * @param room 룸
+     */
     public void editRoom(Room room);
 
-    /** 룸 전체 리스트 출력 */
+    /**
+     * 룸 전체 리스트 출력
+     *
+     * @return 룸 전체 리스트
+     */
     public List<Room> getRoomList();
 
-    /** 카페 id로 룸 리스트 검색 */
+    /**
+     * 카페 id로 룸 리스트 검색
+     *
+     * @param id 카페 ID
+     * @return 룸 리스트
+     */
     public List<Room> getSearchCafeRoom(int id);
 
-    /** 룸 id로 검색 */
+    /**
+     * 룸 id로 검색
+     *
+     * @param id 룸 ID
+     * @return 검색된 룸
+     */
     public Room getSearchRoom(int id);
 
 
-    /** 룸 삭제 */
+    /**
+     * 룸 삭제
+     *
+     * @param id 룸 ID
+     */
     public void deleteRoom(int id);
 }

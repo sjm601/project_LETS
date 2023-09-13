@@ -10,25 +10,30 @@
         VALUES (CAFE_OPTION_ID_SEQ.NEXTVAL, #{name}, #{imagePath}, #{description})
     </insert>
 
-    <update id="update" parameterType="int">
+    <update id="update" parameterType="CafeOption">
     UPDATE CAFE_OPTION
     <set>
-        <if test="name != null or name != ''">NAME = '#{name}'</if>
-        <if test="imagePath != null">IMAGE_PATH = '#{imagePath}'</if>
-        <if test="description != null">DESCRIPTION = '#{description}'</if>
+        <if test="name != null and name != ''">NAME = #{name},</if>
+        <if test="imagePath != null and imagePath != ''">IMAGE_PATH = #{imagePath},</if>
+        <if test="description != null and description != ''">DESCRIPTION = #{description},</if>
     </set>
     WHERE ID = #{id}
     </update>
 
-    <select id="readAll" parameterType="int" resultType="CafeOption">
+    <select id="readAll" resultType="CafeOption">
         SELECT ID, NAME, IMAGE_PATH, DESCRIPTION
         FROM CAFE_OPTION
-        Where id = #{id}
     </select>
 
-    <insert id="delete" parameterType="int">
+    <select id="findByOptionId" parameterType="int" resultType="CafeOption">
+        SELECT ID, NAME, IMAGE_PATH, DESCRIPTION
+        FROM CAFE_OPTION
+        WHERE ID = #{id}
+    </select>
+
+    <delete id="delete" parameterType="int">
         DELETE FROM CAFE_OPTION
         WHERE id = #{id}
-    </insert>
+    </delete>
 
 </mapper>

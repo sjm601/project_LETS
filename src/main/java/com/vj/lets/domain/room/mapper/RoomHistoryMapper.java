@@ -12,12 +12,22 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface RoomHistoryMapper {
 
-    /** 룸 생성 */
+    /**
+     * 룸 생성
+     */
     public void create();
 
-    /** 룸 업데이트 */
+    /**
+     * 룸 업데이트
+     *
+     * @param roomId 룸 ID
+     */
     public void update(int roomId);
 
-    /** 룸 삭제 */
+    /**
+     * 룸 삭제
+     *
+     * @param roomId 룸 ID
+     */
     public void delete(int roomId);
 }
