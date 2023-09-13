@@ -22,13 +22,13 @@ public interface StudyGroupMapper {
      *
      * @author VJ특공대 이희영
      * @param studyGroup 생성할 스터디 그룹 정보
-     * @return 생성된 스터디 그룹
      */
     public void create(StudyGroup studyGroup);
 
     /**
      * 스터디 그룹 아이디 조회
-     * 
+     *
+     * @author VJ특공대 이희영
      * @return 스터디 그룹 아이디
      */
     public int findId();
@@ -36,13 +36,15 @@ public interface StudyGroupMapper {
     /**
      * 스터디 그룹 전체 리스트 조회
      *
+     * @author VJ특공대 이희영
      * @return 스터디 그룹 리스트
      */
     public List<Map<String, Object>> findAll(Search search);
 
     /**
      * 스터디 그룹 조회
-     * 
+     *
+     * @author VJ특공대 이희영
      * @param studyGroupId 스터디 그룹 아이디
      * @return 조회된 스터디 그룹 정보
      */
@@ -50,14 +52,16 @@ public interface StudyGroupMapper {
 
     /**
      * 스터디 그룹 변경
-     * 
+     *
+     * @author VJ특공대 이희영
      * @param studyGroup 변경할 스터디 그룹 정보
      */
     public void update(StudyGroup studyGroup);
 
     /**
      * 스터디 그룹 삭제
-     * 
+     *
+     * @author VJ특공대 이희영
      * @param studyGroupId 스터디 그룹 아이디
      */
     public void delete(int studyGroupId);
@@ -65,6 +69,7 @@ public interface StudyGroupMapper {
     /**
      * 스터디 그룹 현재 회원수 1 증가
      *
+     * @author VJ특공대 이희영
      * @param studyGroupId 스터디 그룹 아이디
      */
     public void add(int studyGroupId);
@@ -72,6 +77,7 @@ public interface StudyGroupMapper {
     /**
      * 스터디 그룹 현재 회원수 1 감소
      *
+     * @author VJ특공대 이희영
      * @param studyGroupId 스터디 그룹 아이디
      */
     public void subtract(int studyGroupId);

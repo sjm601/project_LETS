@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 관리자 대시보드 관련 요청 컨트롤러
@@ -68,7 +69,7 @@ public class AdminController {
 
     @GetMapping("/host")
     public String hostView(Model model) {
-        List<Cafe> cafeList = cafeMapper.findByAll();
+        List<Map<String, Object>> cafeList = cafeMapper.findByAll();
         model.addAttribute("cafeList", cafeList);
 
         return "dashboard/admin/hosts";

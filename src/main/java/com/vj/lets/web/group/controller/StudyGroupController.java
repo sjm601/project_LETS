@@ -11,10 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.AbstractDocument;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +34,7 @@ public class StudyGroupController {
     /**
      * 스터디 전체 리스트 화면 출력
      *
+     * @author VJ특공대 이희영
      * @param model
      * @return 스터디 리스트 화면
      */
@@ -56,6 +55,7 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 상세보기
      *
+     * @author VJ특공대 이희영
      * @param id          스터디 그룹 아이디
      * @param loginMember 로그인 회원 정보
      * @param model
@@ -79,6 +79,7 @@ public class StudyGroupController {
     /**
      * 내 스터디 리스트 조회 화면
      *
+     * @author VJ특공대 이희영
      * @param model
      * @return 가입한 스터디 그룹 리스트
      */
@@ -94,6 +95,7 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 생성
      *
+     * @author VJ특공대 이희영
      * @param loginMember 로그인 회원 정보
      * @param model
      * @return 스터디 그룹 상세

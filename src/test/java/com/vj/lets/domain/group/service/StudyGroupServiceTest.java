@@ -5,7 +5,6 @@ import com.vj.lets.domain.group.dto.GroupMemberList;
 import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
