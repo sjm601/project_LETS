@@ -137,6 +137,28 @@
         </if>
     </select>
 
+    <select id="readAllForAdmin" resultType="map">
+        SELECT c.ID "id",
+               c.EMAIL "email",
+               c.NAME "cafeName",
+               c.PHONE_NUMBER "phoneNumber",
+               sd.NAME "siDoName",
+               sgg.NAME "siGunGuName",
+               ROAD_ADDRESS "roadAddress",
+               DETAIL_ADDRESS "detailAddress",
+               DESCRIPTION "description",
+               c.IMAGE_PATH "imagePath",
+               c.REGDATE "regdate",
+               BUSINESS_NUMBER "businessNumber",
+               m.NAME "memberName"
+        FROM CAFE c
+                 JOIN MEMBER m ON c.MEMBER_ID = m.ID
+                 JOIN SI_GUN_GU sgg ON c.SI_GUN_GU_ID = sgg.ID
+                 JOIN SI_DO sd ON sgg.SI_DO_ID = sd.ID
+        WHERE c.STATUS = 'enabled'
+        ORDER BY c.regdate DESC
+    </select>
+
     <update id="delete" parameterType="int">
         UPDATE CAFE
         SET STATUS = 'disabled'

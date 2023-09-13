@@ -35,6 +35,14 @@ public interface CafeMapper {
     /** 카패 검색 결과 출력 */
     public List<Map<String, Object>> findBySearch(CafeSearch cafeSearch);
 
+    /**
+     * 전체 카페 목록 조회 (관리자용)
+     *
+     * @return 카페 목록
+     * @see com.vj.lets.web.dashboard.controller.AdminController
+     */
+    public List<Map<String, Object>> readAllForAdmin();
+
     /** 카페삭제 */
     public void delete(int id);
 }

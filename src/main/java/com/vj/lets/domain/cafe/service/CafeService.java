@@ -76,6 +76,14 @@ public interface CafeService {
     public List<Map<String, Object>> getSearchCafe(CafeSearch cafeSearch);
 
     /**
+     * 관리자 용 전체 카페 목록 조회
+     *
+     * @return 카페 목록
+     * @see com.vj.lets.web.cafe.controller.CafeController
+     */
+    public List<Map<String, Object>> getCafeListForAdmin();
+
+    /**
      * 카페 정보 수정
      *
      * @param cafe 카페

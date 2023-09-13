@@ -36,51 +36,14 @@
                     </div>
                     <div class="list_general">
                         <ul>
-                            <li>
-                                <small>Category</small>
-                                <h4>Title</h4>
-                                <p>Lorem ipsum dolor sit amet, est ei idque voluptua copiosae, pro detracto disputando
-                                    reformidans at, ex
-                                    vel suas eripuit. Vel alii zril maiorum ex, mea id sale eirmod epicurei. Sit te
-                                    possit
-                                    senserit, eam
-                                    alia veritus maluisset ei, id cibo vocent ocurreret per....</p>
+                            <li th:each="faq : ${faqList}">
+                                <small th:text="${faq.get('category')}">Category</small>
+                                <h4 th:text="${faq.get('title')}">Title</h4>
+                                <p th:text="${faq.get('content')}">FAQ 내용</p>
                                 <ul class="buttons">
-                                    <li><a href="#0" class="btn_1 gray approve"><i class="fa fa-fw fa-pencil"></i>
+                                    <li><a href="#" class="btn_1 gray approve"><i class="fa fa-fw fa-pencil mr-1"></i>
                                         수정</a></li>
-                                    <li><a href="#0" class="btn_1 gray delete"><i class="fa fa-fw fa-trash-o"></i>
-                                        삭제</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <small>Category</small>
-                                <h4>Title</h4>
-                                <p>Lorem ipsum dolor sit amet, est ei idque voluptua copiosae, pro detracto disputando
-                                    reformidans at, ex
-                                    vel suas eripuit. Vel alii zril maiorum ex, mea id sale eirmod epicurei. Sit te
-                                    possit
-                                    senserit, eam
-                                    alia veritus maluisset ei, id cibo vocent ocurreret per....</p>
-                                <ul class="buttons">
-                                    <li><a href="#0" class="btn_1 gray approve"><i class="fa fa-fw fa-pencil"></i>
-                                        수정</a></li>
-                                    <li><a href="#0" class="btn_1 gray delete"><i class="fa fa-fw fa-trash-o"></i>
-                                        삭제</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <small>Category</small>
-                                <h4>Title</h4>
-                                <p>Lorem ipsum dolor sit amet, est ei idque voluptua copiosae, pro detracto disputando
-                                    reformidans at, ex
-                                    vel suas eripuit. Vel alii zril maiorum ex, mea id sale eirmod epicurei. Sit te
-                                    possit
-                                    senserit, eam
-                                    alia veritus maluisset ei, id cibo vocent ocurreret per....</p>
-                                <ul class="buttons">
-                                    <li><a href="#0" class="btn_1 gray approve"><i class="fa fa-fw fa-pencil"></i>
-                                        수정</a></li>
-                                    <li><a href="#0" class="btn_1 gray delete"><i class="fa fa-fw fa-trash-o"></i>
+                                    <li><a href="#" class="btn_1 gray delete"><i class="fa fa-fw fa-trash-o mr-1"></i>
                                         삭제</a></li>
                                 </ul>
                             </li>

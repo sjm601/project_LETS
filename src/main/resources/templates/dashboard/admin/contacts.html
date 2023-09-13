@@ -8,8 +8,6 @@
         <meta name="author" content="VJCommando">
         <meta name="description" content="LETS - Admin Dashboard">
         <title>LETS - Admin Dashboard</title>
-
-        <link href="/dashboard/css/date_picker.css" rel="stylesheet">
     </th:block>
 
     <th:block th:fragment="content">
@@ -30,105 +28,31 @@
                     <div class="list_general">
                         <ul>
                             <li th:each="contact : ${contactList}">
-                                <figure><img src="/img/item_1.jpg" alt=""></figure>
                                 <h4>
-                                    <th:block>Hotel Mariott</th:block>
-                                    <i class="pending">보류</i>
+                                    <th:block th:text="${contact.cafeName}">Hotel Mariott</th:block>
+                                    <th:block th:switch="${contact.status}">
+                                        <i th:case="hold" class="pending">보류</i>
+                                        <i th:case="approve" class="approved">승인</i>
+                                        <i th:case="refuse" class="cancel">거부</i>
+                                    </th:block>
                                 </h4>
                                 <ul class="booking_list">
-                                    <li><strong>이메일</strong> <a href="#0">hong@gmail.com</a></li>
-                                    <li><strong>상호명</strong> 가나다라카페</li>
-                                    <li><strong>사업자명</strong> 홍길동</li>
-                                    <li><strong>전화번호</strong> 010-0000-0000</li>
-                                    <li><strong>사업자 등록번호</strong> 000-00-000000</li>
+                                    <li><strong>사업자명</strong> <th:block th:text="${contact.name}">홍길동</th:block></li>
+                                    <li><strong>이메일</strong> <th:block th:text="${contact.email}">hong@gmail.com</th:block></li>
+                                    <li><strong>전화번호</strong> <th:block th:text="${contact.phoneNumber}">010-0000-0000</th:block></li>
+                                    <li><strong>주소</strong> <th:block th:text="${contact.address}">서울시 노원구</th:block></li>
+                                    <li><strong>사업자 등록번호</strong> <th:block th:text="${contact.businessNumber}">000-00-000000</th:block></li>
                                     <li><strong>업체설명</strong></li>
                                     <li>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla fuga repellat
-                                            quidem
-                                            modi.
-                                            Necessitatibus expedita sed corrupti mollitia aperiam quibusdam accusantium
-                                            ut quasi
-                                            quia ullam,
-                                            sunt officia aliquid saepe temporibus.</p>
+                                        <p th:text="${contact.message}">======================= 업체 설명 =======================</p>
                                     </li>
                                 </ul>
-                                <ul class="buttons">
-                                    <li><a href="#0" class="btn_1 gray approve"><i
-                                        class="fa fa-fw fa-check-circle-o"></i>승인</a>
+                                <ul th:if="${contact.status}" class="buttons">
+                                    <li><a href="#" class="btn_1 gray approve"><i
+                                        class="fa fa-fw fa-check-circle-o mr-1"></i>승인</a>
                                     </li>
-                                    <li><a href="#0" class="btn_1 gray delete"><i
-                                        class="fa fa-fw fa-times-circle-o"></i>거부</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <figure><img src="img/item_1.jpg" alt=""></figure>
-                                <h4>Hotel Mariott <i class="pending">보류</i></h4>
-                                <ul class="booking_list">
-                                    <li><strong>이메일</strong> <a href="#0">hong@gmail.com</a></li>
-                                    <li><strong>상호명</strong> 가나다라카페</li>
-                                    <li><strong>사업자명</strong> 홍길동</li>
-                                    <li><strong>전화번호</strong> 010-0000-0000</li>
-                                    <li><strong>사업자 등록번호</strong> 000-00-000000</li>
-                                    <li><strong>업체설명</strong></li>
-                                    <li>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla fuga repellat
-                                            quidem
-                                            modi.
-                                            Necessitatibus expedita sed corrupti mollitia aperiam quibusdam accusantium
-                                            ut quasi
-                                            quia ullam,
-                                            sunt officia aliquid saepe temporibus.</p>
-                                    </li>
-                                </ul>
-                                <ul class="buttons">
-                                    <li><a href="#0" class="btn_1 gray approve"><i
-                                        class="fa fa-fw fa-check-circle-o"></i>승인</a>
-                                    </li>
-                                    <li><a href="#0" class="btn_1 gray delete"><i
-                                        class="fa fa-fw fa-times-circle-o"></i>거부</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <figure><img src="img/item_2.jpg" alt=""></figure>
-                                <h4>Da Alfredo <i class="cancel">거부</i></h4>
-                                <ul class="booking_list">
-                                    <li><strong>이메일</strong> <a href="#0">hong@gmail.com</a></li>
-                                    <li><strong>상호명</strong> 가나다라카페</li>
-                                    <li><strong>사업자명</strong> 홍길동</li>
-                                    <li><strong>전화번호</strong> 010-0000-0000</li>
-                                    <li><strong>사업자 등록번호</strong> 000-00-000000</li>
-                                    <li><strong>업체설명</strong></li>
-                                    <li>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla fuga repellat
-                                            quidem
-                                            modi.
-                                            Necessitatibus expedita sed corrupti mollitia aperiam quibusdam accusantium
-                                            ut quasi
-                                            quia ullam,
-                                            sunt officia aliquid saepe temporibus.</p>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <figure><img src="img/item_3.jpg" alt=""></figure>
-                                <h4>Pompidue Museum <i class="approved">승인</i></h4>
-                                <ul class="booking_list">
-                                    <li><strong>이메일</strong> <a href="#0">hong@gmail.com</a></li>
-                                    <li><strong>상호명</strong> 가나다라카페</li>
-                                    <li><strong>사업자명</strong> 홍길동</li>
-                                    <li><strong>전화번호</strong> 010-0000-0000</li>
-                                    <li><strong>사업자 등록번호</strong> 000-00-000000</li>
-                                    <li><strong>업체설명</strong></li>
-                                    <li>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla fuga repellat
-                                            quidem
-                                            modi.
-                                            Necessitatibus expedita sed corrupti mollitia aperiam quibusdam accusantium
-                                            ut quasi
-                                            quia ullam,
-                                            sunt officia aliquid saepe temporibus.</p>
+                                    <li><a href="#" class="btn_1 gray delete"><i
+                                        class="fa fa-fw fa-times-circle-o mr-1"></i>거부</a>
                                     </li>
                                 </ul>
                             </li>
@@ -158,12 +82,6 @@
     </th:block>
 
     <th:block th:fragment="scripts">
-        <!-- Custom scripts for this page -->
-        <script src="/dashboard/vendor/bootstrap-datepicker.js"></script>
-        <script th:inline="javascript">
-            $('input.date-pick').datepicker();
-        </script>
-        <!-- /custom scripts -->
     </th:block>
 
 </th:block>
