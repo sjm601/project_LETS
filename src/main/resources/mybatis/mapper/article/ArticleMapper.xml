@@ -7,8 +7,8 @@
 
     <!-- 게시글 생성 -->
     <insert id="create" parameterType="Article">
-        INSERT INTO article(ID, TITLE, CONTENT, wrtiter)
-        VALUES (MEMBER_ID_SEQ.NEXTVAL, #{title}, #{content}, #{writer})
+        INSERT INTO article(ID, TITLE, CONTENT, MEMBER_ID)
+        VALUES (ARTICLE_ID_SEQ.NEXTVAL, #{title}, #{content} , #{memberId})
     </insert>
 
     <!-- 게시글 수정 -->
@@ -31,27 +31,31 @@
     <!--게시글 목록-->
     <select id="findAll" resultType="Article" >
         SELECT
-            id,
-            title,
-            content,
-            writer,
-            TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate
+            a.id,
+            a.title,
+            a.content,
+            TO_CHAR(a.regdate, 'YYYY-MM-DD HH24:MI') regdate,
+            m.NAME
         FROM
-            article
-        ORDER BY regdate desc
+            article a JOIN MEMBER m ON a.MEMBER_ID = m.ID
+        WHERE a.STATUS = 'enabled'
+        ORDER BY a.regdate desc
+
     </select>
 
     <!-- 페이징 계산(검색값 포함)에 필요한 게시글 전체 갯수 -->
-    <select id="getCountAll" parameterType="object" resultType="int" >
-        SELECT
-        COUNT(id) "cnt"
-        FROM
-        article
-        <where>
-            <if test="keyword != null">AND writer LIKE '%' || #{keyword} || '%',</if>
-            <if test="keyword != null">OR title LIKE '%' || #{keyword} || '%',</if>
-            <if test="keyword != null">OR content LIKE '%' || #{keyword} || '%'</if>
-        </where>
+    <select id="getCountAll" parameterType="object" resultType="int">
+        SELECT COUNT(a.id) AS "cnt"
+        FROM article a
+        JOIN MEMBER m ON a.MEMBER_ID = m.ID
+        WHERE a.STATUS = 'enabled'
+        <if test="keyword != null">
+            AND (
+            m.name LIKE '%' || #{keyword} || '%'
+            OR a.title LIKE '%' || #{keyword} || '%'
+            OR a.content LIKE '%' || #{keyword} || '%'
+            )
+        </if>
     </select>
 
     <!-- 게시글 목록 (페이징) -->
@@ -62,8 +66,7 @@
         content,
         writer,
         regdate,
-        image_path,
-        status
+        image_path
         FROM (
         SELECT
         id,
@@ -71,47 +74,54 @@
         title,
         content,
         writer,
-        TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate,
-        image_path,
-        status
+        regdate,
+        image_path
         FROM (
         SELECT
-        id,
-        title,
-        content,
-        writer,
-        regdate,
-        image_path,
-        status
-        FROM
-        article
-        <where>
-            <if test="keyword != null">AND writer  LIKE '%' || #{keyword} || '%',</if>
-            <if test="keyword != null">OR subject LIKE '%' || #{keyword} || '%',</if>
-            <if test="keyword != null">OR content LIKE '%' || #{keyword} || '%'</if>
-        </where>
-        ORDER BY regdate DESC))
-        WHERE  request_page = #{requestPage}
+        a.id AS id,
+        a.title AS title,
+        a.content AS content,
+        m.name AS writer,
+        TO_CHAR(a.regdate, 'YYYY-MM-DD HH24:MI') AS regdate,
+        a.image_path AS image_path
+        FROM article a
+        JOIN member m ON a.member_id = m.id
+        WHERE a.status = 'enabled'
+        <if test="keyword != null">
+            AND (
+            m.name LIKE '%' || #{keyword} || '%'
+            OR a.title LIKE '%' || #{keyword} || '%'
+            OR a.content LIKE '%' || #{keyword} || '%'
+            )
+        </if>
+        ORDER BY a.regdate DESC
+        )
+        )
+        WHERE request_page = #{requestPage}
     </select>
 
  <!-- 검색 기능 -->
-    <select id="search" parameterType="object" resultType="Article" >
+    <select id="search" parameterType="object" resultType="Article">
         SELECT
-            id,
-            title,
-            content,
-            writer,
-            TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate
-        FROM(
-            article
+        a.ID,
+        a.TITLE,
+        a.CONTENT,
+        TO_CHAR(a.REGDATE, 'YYYY-MM-DD HH24:MI') AS regdate,
+        m.name
+        FROM
+        article a
+        JOIN member m ON a.MEMBER_ID = m.ID
+        WHERE a.id = #{id}
         <where>
-            <if test="keyword != null">AND writer  LIKE '%' || #{keyword} || '%',</if>
-            <if test="keyword != null">OR title LIKE '%' || #{keyword} || '%',</if>
-            <if test="keyword != null">OR content LIKE '%' || #{keyword} || '%'</if>
+            <if test="keyword != null">
+                AND (
+                m.name LIKE '%' || #{keyword} || '%'
+                OR a.title LIKE '%' || #{keyword} || '%'
+                OR a.content LIKE '%' || #{keyword} || '%'
+                )
+            </if>
         </where>
-        ORDER  BY regdate DESC)
-        WHERE
-            id = #{id}
+        ORDER BY a.regdate DESC
     </select>
 
 
