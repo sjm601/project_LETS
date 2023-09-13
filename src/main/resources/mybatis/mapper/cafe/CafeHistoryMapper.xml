@@ -7,17 +7,17 @@
 
     <insert id="create">
         INSERT INTO CAFE_HISTORY (ID, CAFE_ID)
-        VALUES (CAFE_HISTORY_ID_SEQ.NEXTVAL, CAFE_ID_SEQ.CURVAL)
+        VALUES (CAFE_HISTORY_ID_SEQ.NEXTVAL, CAFE_ID_SEQ.CURRVAL)
     </insert>
 
-    <insert id="update" parameterType="int">
+    <insert id="update">
         INSERT INTO CAFE_HISTORY (ID, MODIFY_COMMENT,CAFE_ID)
-        VALUES (CAFE_HISTORY_ID_SEQ.NEXTVAL, 'update',#{cafeId})
+        VALUES (CAFE_HISTORY_ID_SEQ.NEXTVAL, #{comment}, #{cafeId})
     </insert>
 
     <insert id="delete" parameterType="int">
         INSERT INTO CAFE_HISTORY (ID, MODIFY_COMMENT,CAFE_ID)
-        VALUES (CAFE_HISTORY_ID_SEQ.NEXTVAL, 'delte',#{cafeId})
+        VALUES (CAFE_HISTORY_ID_SEQ.NEXTVAL, 'disabled',#{cafeId})
     </insert>
 
 </mapper>

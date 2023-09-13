@@ -46,7 +46,7 @@
                 </div>
             </div>
             <!--/hero_in-->
-            <form action="javascript:void(0);" class="needs-validation" novalidate method="post" name="payForm">
+            <form th:action="@{'/reservation/' + ${reservation.ID} + '/payment'}" action="javascript:void(0);" class="needs-validation" novalidate method="post" name="payForm">
                 <div class="bg_color_1">
                     <div class="container margin_60_35">
                         <div class="row">
@@ -108,14 +108,16 @@
                             <aside class="col-lg-4" id="sidebar">
                                 <div class="box_detail">
                                     <div id="total_cart">
-                                        Total <span class="float-end">79,000<i class="fa-solid fa-won-sign"></i></span>
+                                        Total <span data-th-text="${#numbers.formatInteger(reservation.totalPrice, 3, 'COMMA') + '원'}" class="float-end">79,000</span>
                                     </div>
                                     <ul class="cart_details">
-                                        <li>Date <span>2023-09-04</span></li>
-                                        <li>Time <span>11:00 - 13:00</span></li>
-                                        <li>Total Headcount <span>2</span></li>
+                                        <li>Date <span th:text="${reservation['booking_date']}">2023-09-04</span></li>
+                                        <li>Time
+                                            <span th:text="${reservation.START_TIME + ':00' +'-' + reservation.END_TIME + ':00'}">11:00 - 13:00</span>
+                                        </li>
+                                        <li>Total Headcount <span th:text="${reservation['HEAD_COUNT']}">2</span></li>
                                     </ul>
-                                    <button type="submit" onclick="requestPay()" class="btn_1 full-width purchase">
+                                    <button type="submit" class="btn_1 full-width purchase">
                                         Purchase
                                     </button>
                                     <div class="text-center"><small>Click this button to proceed with the
@@ -135,7 +137,173 @@
     </th:block>
 
     <th:block th:fragment="scripts">
-        <script src="/js/custom/reservation_custom.js"></script>
+
+        <!--iamport 라이브러리-->
+        <!-- jQuery -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+        <!-- iamport.payment.js -->
+        <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+
+        <script th:inline="javascript">
+            document.addEventListener("DOMContentLoaded", function () {
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                const namePattern = /^[가-힣]{2,10}$/;
+                const phoneNumberPattern = /^\d{3}\d{3,4}\d{4}$/;
+
+                const form = document.querySelector('.needs-validation');
+                const inputs = form.querySelectorAll('.form-control');
+
+                function validateInput(inputElement, regexPattern) {
+                    const inputValue = inputElement.value;
+                    return regexPattern.test(inputValue);
+                }
+
+                inputs.forEach((input) => {
+                    input.addEventListener('blur', function () {
+                        const pattern =
+                            input.getAttribute('id') === 'name_booking'
+                                ? namePattern
+                                : input.getAttribute('id') === 'email_booking'
+                                    ? emailPattern
+                                    : input.getAttribute('id') === 'telephone_booking'
+                                        ? phoneNumberPattern
+                                        : null;
+
+                        if (pattern) {
+                            const invalidFeedback = input.nextElementSibling;
+                            const errorMessage =
+                                input.getAttribute('id') === 'name_booking'
+                                    ? '이름을 정확히 입력하여 주세요...'
+                                    : input.getAttribute('id') === 'email_booking'
+                                        ? '이메일을 정확히 입력하여 주세요...'
+                                        : input.getAttribute('id') === 'telephone_booking'
+                                            ? '전화번호를 정확히 입력하여 주세요... (ex. 01012345678)'
+                                            : null;
+
+                            if (!validateInput(input, pattern)) {
+                                input.parentElement.classList.add('was-validated');
+                                invalidFeedback.textContent = errorMessage;
+                                invalidFeedback.style.display = 'block';
+                            } else {
+                                input.parentElement.classList.remove('was-validated');
+                                invalidFeedback.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+
+                    let isValid = true;
+
+                    inputs.forEach((input) => {
+                        const pattern =
+                            input.getAttribute('id') === 'name_booking'
+                                ? namePattern
+                                : input.getAttribute('id') === 'email_booking'
+                                    ? emailPattern
+                                    : input.getAttribute('id') === 'telephone_booking'
+                                        ? phoneNumberPattern
+                                        : null;
+
+                        if (pattern) {
+                            const invalidFeedback = input.nextElementSibling;
+                            const errorMessage =
+                                input.getAttribute('id') === 'name_booking'
+                                    ? '이름을 정확히 입력하여 주세요...'
+                                    : input.getAttribute('id') === 'email_booking'
+                                        ? '이메일을 정확히 입력하여 주세요...'
+                                        : input.getAttribute('id') === 'telephone_booking'
+                                            ? '전화번호를 정확히 입력하여 주세요... (ex. 01012345678)'
+                                            : null;
+
+                            if (!validateInput(input, pattern)) {
+                                input.parentElement.classList.add('was-validated');
+                                invalidFeedback.textContent = errorMessage;
+                                invalidFeedback.style.display = 'block';
+                                isValid = false;
+                            }
+                        }
+                    });
+
+                    if (!isValid) {
+                        return;
+                    } else {
+                        // 아임포트 실행 코드를 이곳에 두세요
+                        var IMP = window.IMP; // 생략가능
+                        IMP.init('imp71428807'); // <-- 본인 가맹점 식별코드 삽입
+
+                        var today = new Date();
+                        var hours = today.getHours(); // 시
+                        var minutes = today.getMinutes(); // 분
+                        var seconds = today.getSeconds(); // 초
+                        var milliseconds = today.getMilliseconds();
+                        var merchantUid = hours + minutes + seconds + milliseconds;
+
+                        var name_booking = document.getElementById('name_booking').value;
+                        var email_booking = document.getElementById('email_booking').value;
+                        var telephone_booking = document.getElementById('telephone_booking').value;
+                        var cafeName = [[${reservation['cafe_name']}]]
+                        var roomName = [[${reservation['room_name']}]]
+                        var amount = [[${reservation.totalPrice}]]
+                        var reservationId = [[${reservation.ID}]]
+
+                        IMP.request_pay({
+                            pg: 'html5_inicis', // 여기에 사용할 PG사 정보를 넣어주세요
+                            pay_method: 'card',
+                            merchant_uid: 'IMP' + merchantUid,
+                            name: cafeName+'    '+'룸'+ roomName ,
+                            amount: amount,
+                            buyer_email: email_booking,
+                            buyer_name: name_booking,
+                            buyer_tel: telephone_booking
+                        }, function (rsp) {
+                            if (rsp.success) {
+                                let msg = '결제가 완료되었습니다.';
+                                console.log(msg);
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/reservation/' + reservationId + '/payment',
+                                    data: {
+                                        merchant_uid: 'IMP' + merchantUid,
+                                        paymentType: 'card',
+                                        payStatus: 'success',
+                                        payName: name_booking,
+                                        payEmail: email_booking,
+                                        payPhoneNumber: telephone_booking
+                                    },
+                                    success: function (data) {
+                                        console.log(data);
+                                        window.location.href = '/reservation/payment/success';
+                                    },
+                                    error: function (xhr, status, error) {
+                                        alert(error);
+                                    }
+                                });
+                            } else {
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/reservation/' + reservationId + '/payment',
+                                    data: {
+                                        merchant_uid: 'IMP' + merchantUid,
+                                        paymentType: 'card',
+                                        payStatus: 'fail',
+                                        payName: name_booking,
+                                        payEmail: email_booking,
+                                        payPhoneNumber: telephone_booking
+                                    }
+                                });
+                                let msg = '결제에 실패하였습니다.';
+                                msg += '에러내용 : ' + rsp.error_msg;
+                                alert(msg);
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
     </th:block>
 
 </th:block>

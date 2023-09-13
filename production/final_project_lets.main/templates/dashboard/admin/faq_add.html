@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+
+    <th:block th:fragment="head">
+        <meta name="author" content="VJCommando">
+        <meta name="description" content="LETS - Admin Dashboard">
+        <title>LETS - Admin Dashboard</title>
+
+        <link href="/dashboard/vendor/dropzone.css" rel="stylesheet">
+        <!-- WYSIWYG Editor -->
+        <link rel="stylesheet" href="/dashboard/js/editor/summernote-bs4.css">
+    </th:block>
+
+    <th:block th:fragment="content">
+        <!-- Content -->
+        <div class="content-wrapper">
+            <form>
+                <div class="container-fluid">
+                    <!-- Breadcrumbs-->
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="admin_dashboard.html">대시보드</a>
+                        </li>
+                        <li class="breadcrumb-item active">FAQ 작성</li>
+                    </ol>
+                    <div class="box_general padding_bottom">
+                        <div class="header_box version_2">
+                            <h2><i class="fa fa-file"></i>FAQ 작성</h2>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="title">제목</label>
+                                    <input type="text" class="form-control" id="title" placeholder="Title">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="category">분류</label>
+                                    <div class="styled-select">
+                                        <select id="category">
+                                            <option>분류 선택</option>
+                                            <option>회원</option>
+                                            <option>호스트</option>
+                                            <option>그룹</option>
+                                            <option>예약</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /row-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="content">내용</label>
+                                    <div id="content" class="editor"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /row-->
+                    </div>
+                    <!-- /box_general-->
+
+                    <p><a href="#0" class="btn_1 medium">Save</a></p>
+                </div>
+            </form>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.container-wrapper -->
+        <!-- /Content -->
+    </th:block>
+
+    <th:block th:fragment="scripts">
+        <!-- Custom scripts for this page -->
+        <script src="/dashboard/vendor/dropzone.min.js"></script>
+        <!-- WYSIWYG Editor -->
+        <script src="/dashboard/js/editor/summernote-bs4.min.js"></script>
+        <script th:inline="javascript">
+            $('.editor').summernote({
+                fontSizes: ['10', '14'],
+                toolbar: [
+                    // [groupName, [list of button]]
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough']],
+                    ['fontsize', ['fontsize']],
+                    ['para', ['ul', 'ol', 'paragraph']]
+                ],
+                placeholder: 'Write here your description....',
+                tabsize: 2,
+                height: 200
+            });
+        </script>
+        <!-- /custom scripts -->
+    </th:block>
+
+</th:block>
+
+</html>

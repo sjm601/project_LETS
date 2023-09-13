@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+
+    <th:block th:fragment="head">
+        <meta name="author" content="VJCommando">
+        <meta name="description" content="LETS - Admin Dashboard">
+        <title>LETS - Admin Dashboard</title>
+    </th:block>
+
+    <th:block th:fragment="content">
+        <!-- Content -->
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="admin_dashboard.html">대시보드</a>
+                    </li>
+                    <li class="breadcrumb-item active">회원 목록</li>
+                </ol>
+                <!-- Example DataTables Card-->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-table"></i> 회원 목록
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>이메일</th>
+                                    <th>이름</th>
+                                    <th>전화번호</th>
+                                    <th>나이</th>
+                                    <th>성별</th>
+                                    <th>가입날짜</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>aaaaaa@bbbbb.ccc</td>
+                                    <td>이름</td>
+                                    <td>000-000-0000</td>
+                                    <td>10</td>
+                                    <td>남성</td>
+                                    <td>2023-09-06</td>
+                                </tr>
+                                <tr>
+                                    <td>aaaaaa@bbbbb.ccc</td>
+                                    <td>이름</td>
+                                    <td>000-000-0000</td>
+                                    <td>10</td>
+                                    <td>남성</td>
+                                    <td>2023-09-06</td>
+                                </tr>
+                                <tr>
+                                    <td>aaaaaa@bbbbb.ccc</td>
+                                    <td>이름</td>
+                                    <td>000-000-0000</td>
+                                    <td>10</td>
+                                    <td>남성</td>
+                                    <td>2023-09-06</td>
+                                </tr>
+                                <tr>
+                                    <td>aaaaaa@bbbbb.ccc</td>
+                                    <td>이름</td>
+                                    <td>000-000-0000</td>
+                                    <td>10</td>
+                                    <td>남성</td>
+                                    <td>2023-09-06</td>
+                                </tr>
+                                <tr>
+                                    <td>aaaaaa@bbbbb.ccc</td>
+                                    <td>이름</td>
+                                    <td>000-000-0000</td>
+                                    <td>10</td>
+                                    <td>남성</td>
+                                    <td>2023-09-06</td>
+                                </tr>
+                                <tr>
+                                    <td>aaaaaa@bbbbb.ccc</td>
+                                    <td>이름</td>
+                                    <td>000-000-0000</td>
+                                    <td>10</td>
+                                    <td>남성</td>
+                                    <td>2023-09-06</td>
+                                </tr>
+                                <tr>
+                                    <td>aaaaaa@bbbbb.ccc</td>
+                                    <td>이름</td>
+                                    <td>000-000-0000</td>
+                                    <td>10</td>
+                                    <td>남성</td>
+                                    <td>2023-09-06</td>
+                                </tr>
+                                <tr>
+                                    <td>aaaaaa@bbbbb.ccc</td>
+                                    <td>이름</td>
+                                    <td>000-000-0000</td>
+                                    <td>10</td>
+                                    <td>남성</td>
+                                    <td>2023-09-06</td>
+                                </tr>
+                                <tr>
+                                    <td>aaaaaa@bbbbb.ccc</td>
+                                    <td>이름</td>
+                                    <td>000-000-0000</td>
+                                    <td>10</td>
+                                    <td>남성</td>
+                                    <td>2023-09-06</td>
+                                </tr>
+                                <tr>
+                                    <td>aaaaaa@bbbbb.ccc</td>
+                                    <td>이름</td>
+                                    <td>000-000-0000</td>
+                                    <td>10</td>
+                                    <td>남성</td>
+                                    <td>2023-09-06</td>
+                                </tr>
+                                <tr>
+                                    <td>aaaaaa@bbbbb.ccc</td>
+                                    <td>이름</td>
+                                    <td>000-000-0000</td>
+                                    <td>10</td>
+                                    <td>남성</td>
+                                    <td>2023-09-06</td>
+                                </tr>
+                                <tr>
+                                    <td>aaaaaa@bbbbb.ccc</td>
+                                    <td>이름</td>
+                                    <td>000-000-0000</td>
+                                    <td>10</td>
+                                    <td>남성</td>
+                                    <td>2023-09-06</td>
+                                </tr>
+                                <tr>
+                                    <td>aaaaaa@bbbbb.ccc</td>
+                                    <td>이름</td>
+                                    <td>000-000-0000</td>
+                                    <td>10</td>
+                                    <td>남성</td>
+                                    <td>2023-09-06</td>
+                                </tr>
+                                <tr>
+                                    <td>aaaaaa@bbbbb.ccc</td>
+                                    <td>이름</td>
+                                    <td>000-000-0000</td>
+                                    <td>10</td>
+                                    <td>남성</td>
+                                    <td>2023-09-06</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                </div>
+                <!-- /tables-->
+            </div>
+            <!-- /container-fluid-->
+        </div>
+        <!-- /container-wrapper-->
+        <!-- /Content -->
+    </th:block>
+
+    <th:block th:fragment="scripts">
+        <!-- Custom scripts for this page -->
+        <script src="/dashboard/js/admin-datatables.js"></script>
+        <!-- /custom scripts -->
+    </th:block>
+
+</th:block>
+
+</html>

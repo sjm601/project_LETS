@@ -1,0 +1,22 @@
+/*============================================================================================*/
+/* Your custom styles below */
+/*============================================================================================*/
+
+.line-strong{
+  width: 100px;
+  display: inline-block;
+}
+.cafe-reply{
+  margin-left: 80px;
+}
+.price-text{
+  color: red;
+  font-size: 1.5em;
+}
+.point-blue{
+  color: white;
+  background-color: #0054a6;
+  font-size: 0.5em;
+  padding: 2px 10px;
+  border-radius: 10px;
+}
