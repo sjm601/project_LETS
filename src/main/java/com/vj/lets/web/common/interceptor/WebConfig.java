@@ -22,18 +22,18 @@ public class WebConfig implements WebMvcConfigurer {
 
     public final List<String> loginEssential = Arrays.asList("/**");
 
-    public final List<String> loginNotEssential = Arrays.asList("/", "/**/*.ico", "/**/*.html", "/**/images/**", "/**/img/**", "/**/css/**", "/**/sass/**", "/**/scss/**", "/**/js/**", "/**/vendor/**",
-            "/member/register", "/member/login", "/member/logout", "/cafe", "/cafe/*", "/contact", "/support/**", "/error");
+    public final List<String> loginNotEssential = Arrays.asList("/", "/**/*.ttf", "/**/*.woff", "/**/*.mp4", "/**/*.ico", "/**/*.html", "/**/images/**", "/**/img/**", "/**/css/**", "/**/sass/**", "/**/scss/**", "/**/js/**", "/**/vendor/**",
+            "/member/register", "/member/login", "/member/logout", "/cafe", "/cafe/*", "/group", "/contact", "/support/**", "/error");
 
     public final List<String> loginModalNotEssential = Arrays.asList("/mypage/**", "/host/**", "/admin/**");
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 세부 컨트롤러 실행 전 로그인 체크 인터셉터 등록
-//        registry.addInterceptor(new LoginCheckInterceptor())
-//                .order(1)
-//                .addPathPatterns(loginEssential)
-//                .excludePathPatterns(loginNotEssential);
+        registry.addInterceptor(new LoginCheckInterceptor())
+                .order(1)
+                .addPathPatterns(loginEssential)
+                .excludePathPatterns(loginNotEssential);
 
         // 로그인 모달 창 인터셉터 등록
         registry.addInterceptor(new LoginModalInterceptor())

@@ -29,7 +29,7 @@ public interface ReservationMapper {
 
     
     //회원 Id 로 예약 전체 리스트 조회
-    public List<Reservation> findByMember(int memberId);
+    public List<Map<String, Object>> findByMember(int memberId);
     
     //카페 id로 예약 전체 리스트 조회
     public List<Reservation> findCafeResList(int cafeId);

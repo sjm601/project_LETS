@@ -4,6 +4,7 @@ import com.vj.lets.domain.support.dto.Contact;
 import com.vj.lets.domain.support.mapper.ContactMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class ContactServiceImpl implements ContactService {
      * @param contact 입점 신청 정보
      */
     @Override
+    @Transactional
     public void register(Contact contact) {
         contactMapper.create(contact);
     }
@@ -57,6 +59,7 @@ public class ContactServiceImpl implements ContactService {
      * @param id 입점 신청 ID
      */
     @Override
+    @Transactional
     public void editContactApprove(int id) {
         contactMapper.update(id, "approve");
     }
@@ -67,6 +70,7 @@ public class ContactServiceImpl implements ContactService {
      * @param id 입점 신청 ID
      */
     @Override
+    @Transactional
     public void editContactRefuse(int id) {
         contactMapper.update(id, "refuse");
     }

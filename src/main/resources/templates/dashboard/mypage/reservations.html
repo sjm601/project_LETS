@@ -40,59 +40,41 @@
                     </div>
                     <div class="list_general">
                         <ul>
-                            <li>
+                            <li th:each="reservation : ${reservationList}">
                                 <figure><img src="/dashboard/img/item_2.jpg" alt=""></figure>
-                                <h4>상호명<i class="cancel ml-1">취소됨</i></h4>
+                                <h4><th:block th:text="${reservation.get('cafeName')}"></th:block>
+                                    <th:block th:switch="${reservation.get('reservationStatus')}">
+                                        <i th:case="complete" class="approved ml-1">예약 완료</i>
+                                        <i th:case="cancel" class="cancel ml-1">예약 취소</i>
+                                        <i th:case="use" class="approved ml-1" style="background-color: gray;">이용 완료</i>
+                                    </th:block>
+                                </h4>
                                 <ul class="booking_list">
-                                    <li><strong>예약 날짜</strong> 11 November 2017</li>
-                                    <li><strong>예약 시간</strong> 12:00 - 15:00</li>
-                                    <li><strong>예약 인원수</strong> 2 People</li>
-                                    <li><strong>룸 정보</strong> Mark Twain</li>
-                                    <li><strong>결제 방법</strong> 신용 카드 (결제완료)</li>
+                                    <li><strong>예약 날짜</strong> <th:block th:text="${reservation.get('bookingDate')}"></th:block></li>
+                                    <li><strong>예약 시간</strong> <th:block th:text="${reservation.get('startTime')}"></th:block> - <th:block th:text="${reservation.get('endTime')}"></th:block></li>
+                                    <li><strong>예약 인원수</strong> <th:block th:text="${reservation.get('headCount')}"></th:block> 명</li>
+                                    <li><strong>룸 정보</strong> <th:block th:text="${reservation.get('roomName')}"></th:block></li>
+                                    <li><strong>결제 방법</strong>
+                                        <th:block th:switch="${reservation.get('paymentType')}">
+                                            <th:block th:case="card">신용카드</th:block>
+                                            <th:block th:case="transfer">계좌이체</th:block>
+                                            <th:block th:case="noBankbook">무통장입금</th:block>
+                                        </th:block>
+                                        (<th:block th:switch="${reservation.get('payStatus')}">
+                                            <th:block th:case="success">결제 완료</th:block>
+                                            <th:block th:case="fail">결제 실패</th:block>
+                                        </th:block>)
+                                    </li>
                                 </ul>
-                            </li>
-                            <li>
-                                <figure><img src="/dashboard/img/item_3.jpg" alt=""></figure>
-                                <h4>상호명<i class="approved ml-1">예약완료</i></h4>
-                                <ul class="booking_list">
-                                    <li><strong>예약 날짜</strong> 11 November 2017</li>
-                                    <li><strong>예약 시간</strong> 12:00 - 15:00</li>
-                                    <li><strong>예약 인원수</strong> 2 People</li>
-                                    <li><strong>룸 정보</strong> Mark Twain</li>
-                                    <li><strong>결제 방법</strong> 신용 카드 (결제완료)</li>
-                                </ul>
-                                <ul class="buttons">
-                                    <li><a href="#0" class="btn_1 gray delete"><i
-                                        class="fa fa-fw fa-times-circle-o mr-1"></i>예약
+                                <ul th:if="${reservation.get('reservationStatus') == 'complete'}" class="buttons">
+                                    <li><a href="#0" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o mr-1"></i>예약
                                         취소</a></li>
                                 </ul>
-                            </li>
-                            <li>
-                                <figure><img src="/dashboard/img/item_3.jpg" alt=""></figure>
-                                <h4>상호명<i class="approved ml-1" style="background-color: gray;">이용완료</i></h4>
-                                <ul class="booking_list">
-                                    <li><strong>예약 날짜</strong> 11 November 2017</li>
-                                    <li><strong>예약 시간</strong> 12:00 - 15:00</li>
-                                    <li><strong>예약 인원수</strong> 2 People</li>
-                                    <li><strong>룸 정보</strong> Mark Twain</li>
-                                    <li><strong>결제 방법</strong> 신용 카드 (결제완료)</li>
-                                </ul>
-                                <p class="inline-popups">
+                                <p th:if="${reservation.get('reservationStatus') == 'use' && reservation.get('reviewBoolean') == 'false'}" class="inline-popups">
                                     <a href="#modal-reply" data-effect="mfp-zoom-in" class="btn_1 gray"><i
                                         class="fa fa-fw fa-pencil mr-1"></i>리뷰 작성</a>
                                 </p>
-                            </li>
-                            <li>
-                                <figure><img src="/dashboard/img/item_3.jpg" alt=""></figure>
-                                <h4>상호명<i class="approved ml-1" style="background-color: gray;">이용완료</i></h4>
-                                <ul class="booking_list">
-                                    <li><strong>예약 날짜</strong> 11 November 2017</li>
-                                    <li><strong>예약 시간</strong> 12:00 - 15:00</li>
-                                    <li><strong>예약 인원수</strong> 2 People</li>
-                                    <li><strong>룸 정보</strong> Mark Twain</li>
-                                    <li><strong>결제 방법</strong> 신용 카드 (결제완료)</li>
-                                </ul>
-                                <div data-effect="mfp-zoom-in" class="btn_999 gray">리뷰 작성 완료</div>
+                                <div th:if="${reservation.get('reservationStatus') == 'use' && reservation.get('reviewBoolean') == 'true'}" data-effect="mfp-zoom-in" class="btn_999 gray">리뷰 작성 완료</div>
                             </li>
                         </ul>
                     </div>

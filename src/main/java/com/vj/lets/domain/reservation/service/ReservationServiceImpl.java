@@ -2,18 +2,24 @@ package com.vj.lets.domain.reservation.service;
 
 import com.vj.lets.domain.reservation.dto.Reservation;
 import com.vj.lets.domain.reservation.mapper.ReservationMapper;
+import com.vj.lets.domain.review.mapper.ReviewMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationMapper reservationMapper;
+    private final ReviewMapper reviewMapper;
+
     @Override
     @Transactional
     public void reserve(Reservation reservation) {
@@ -32,8 +38,16 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> getMemberResList(int memberId) {
-        return reservationMapper.findByMember(memberId);
+    public List<Map<String, Object>> getMemberResList(int memberId) {
+        List<Map<String, Object>> resList = new ArrayList<>();
+        List<Map<String, Object>> list = reservationMapper.findByMember(memberId);
+        for (Map<String, Object> map : list) {
+            int reservationId = Integer.parseInt(map.get("id").toString());
+            boolean reviewBoolean = reviewMapper.readCountByReservationId(reservationId);
+            map.put("reviewBoolean", reviewBoolean);
+            resList.add(map);
+        }
+        return resList;
     }
 
     @Override

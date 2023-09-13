@@ -58,9 +58,8 @@ public class ReviewServiceImpl implements ReviewService {
      */
     @Override
     public List<Map<String, Object>> getReviewListByCafe(int cafeId) {
-        List<Map<String, Object>> reviewList = new ArrayList<>();
         List<Map<String, Object>> guestReviewList = reviewMapper.readByCafe(cafeId);
-        return addMaps(reviewList, guestReviewList);
+        return addMaps(guestReviewList);
     }
 
     /**
@@ -71,26 +70,30 @@ public class ReviewServiceImpl implements ReviewService {
      */
     @Override
     public List<Map<String, Object>> getReviewListByMember(int memberId) {
-        List<Map<String, Object>> reviewList = new ArrayList<>();
         List<Map<String, Object>> guestReviewList = reviewMapper.readByMember(memberId);
-        return addMaps(reviewList, guestReviewList);
+        return addMaps(guestReviewList);
     }
 
     /**
      * 리뷰 목록에 호스트 댓글 추가 메소드
      *
-     * @param reviewList      빈 리뷰 목록
      * @param guestReviewList 게스트 작성 리뷰 목록
      * @return 호스트 작성 댓글 추가된 리뷰 목록
      */
-    private List<Map<String, Object>> addMaps(List<Map<String, Object>> reviewList, List<Map<String, Object>> guestReviewList) {
+    private List<Map<String, Object>> addMaps(List<Map<String, Object>> guestReviewList) {
+        List<Map<String, Object>> reviewList = new ArrayList<>();
+        if (guestReviewList == null) {
+            return null;
+        }
+
         for (Map<String, Object> map : guestReviewList) {
             int reservationId = Integer.parseInt(map.get("reservationId").toString());
             Map<String, String> hostComment = reviewMapper.readHostCommentByResId(reservationId);
-            map.putAll(hostComment);
+            if (hostComment != null) {
+                map.putAll(hostComment);
+            }
             reviewList.add(map);
         }
-
         return reviewList;
     }
 

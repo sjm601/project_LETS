@@ -29,6 +29,38 @@
                     </div>
                     <div class="list_general">
                         <ul>
+                            <li th:each="contact : ${contactList}">
+                                <figure><img src="/img/item_1.jpg" alt=""></figure>
+                                <h4>
+                                    <th:block>Hotel Mariott</th:block>
+                                    <i class="pending">보류</i>
+                                </h4>
+                                <ul class="booking_list">
+                                    <li><strong>이메일</strong> <a href="#0">hong@gmail.com</a></li>
+                                    <li><strong>상호명</strong> 가나다라카페</li>
+                                    <li><strong>사업자명</strong> 홍길동</li>
+                                    <li><strong>전화번호</strong> 010-0000-0000</li>
+                                    <li><strong>사업자 등록번호</strong> 000-00-000000</li>
+                                    <li><strong>업체설명</strong></li>
+                                    <li>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla fuga repellat
+                                            quidem
+                                            modi.
+                                            Necessitatibus expedita sed corrupti mollitia aperiam quibusdam accusantium
+                                            ut quasi
+                                            quia ullam,
+                                            sunt officia aliquid saepe temporibus.</p>
+                                    </li>
+                                </ul>
+                                <ul class="buttons">
+                                    <li><a href="#0" class="btn_1 gray approve"><i
+                                        class="fa fa-fw fa-check-circle-o"></i>승인</a>
+                                    </li>
+                                    <li><a href="#0" class="btn_1 gray delete"><i
+                                        class="fa fa-fw fa-times-circle-o"></i>거부</a>
+                                    </li>
+                                </ul>
+                            </li>
                             <li>
                                 <figure><img src="img/item_1.jpg" alt=""></figure>
                                 <h4>Hotel Mariott <i class="pending">보류</i></h4>
