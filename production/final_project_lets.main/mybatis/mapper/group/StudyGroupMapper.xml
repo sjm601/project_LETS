@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vj.lets.domain.group.mapper.StudyGroupMapper">
+
+    <insert id="create" parameterType="StudyGroup">
+        INSERT INTO STUDY_GROUP(ID, NAME, HEAD_COUNT, SUBJECT, SI_GUN_GU_ID)
+        VALUES (STUDY_GROUP_ID_SEQ.NEXTVAL, #{name}, #{headCount}, #{subject}, #{siGunGuId})
+    </insert>
+
+    <select id="findByAll" resultType="map">
+        SELECT
+            SG.ID         ID,
+            SG.NAME       NAME,
+            SG.TOTAL_COUNT TOTALCOUNT,
+            SG.CURRENT_COUNT CURRENTCOUNT,
+            SG.REGDATE    REGDATE,
+            SG.IMAGE_PATH IMAGEPATH,
+            SG.SUBJECT    SUBJECT,
+            SG.STATUS     STATUS,
+            SGG.NAME      SIGUNGUNAME
+        FROM
+            STUDY_GROUP SG
+                JOIN SI_GUN_GU SGG ON SG.SI_GUN_GU_ID = SGG.ID
+        WHERE SG.STATUS = 'enabled'
+        ORDER BY REGDATE DESC
+    </select>
+
+    <select id="getStudyGroup" parameterType="int" resultType="map">
+        SELECT
+            SG.ID            ID,
+            SG.NAME          NAME,
+            SG.TOTAL_COUNT   TOTALCOUNT,
+            SG.CURRENT_COUNT CURRENTCOUNT,
+            SG.REGDATE       REGDATE,
+            SG.IMAGE_PATH    IMAGEPATH,
+            SG.SUBJECT       SUBJECT,
+            SG.SI_GUN_GU_ID  SIGUNGUID,
+            GML.POSITION     POSITION,
+            GML.MEMBER_ID    MEMBERID
+        FROM
+            STUDY_GROUP SG
+                JOIN GROUP_MEMBER_LIST GML ON SG.ID = GML.STUDY_GROUP_ID
+        WHERE
+            SG.ID = #{id}
+          AND SG.STATUS = 'enabled'
+    </select>
+
+    <update id="update" parameterType="studyGroup">
+        UPDATE STUDY_GROUP
+        <set>
+            <if test="name != null and name != ''">NAME = #{name},</if>
+            <if test="totalCount != null and totalCount != ''">TOTAL_COUNT = #{totalCount},</if>
+            <if test="imagePath != null and imagePath != ''">IMAGE_PATH = #{imagePath},</if>
+            <if test="subject != null and subject != ''">SUBJECT = #{subject},</if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <update id="delete" parameterType="int">
+        UPDATE STUDY_GROUP
+        SET status = 'disabled'
+        WHERE ID = #{id}
+    </update>
+
+    <update id="increase">
+        UPDATE STUDY_GROUP
+        SET CURRENT_COUNT = CURRENT_COUNT + 1
+        WHERE ID = #{id}
+    </update>
+
+    <update id="decrease">
+        UPDATE STUDY_GROUP
+        SET CURRENT_COUNT = CURRENT_COUNT - 1
+        WHERE ID = #{id}
+    </update>
+
+</mapper>

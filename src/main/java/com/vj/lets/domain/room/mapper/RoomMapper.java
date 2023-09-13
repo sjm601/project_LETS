@@ -53,6 +53,7 @@ public interface RoomMapper {
      */
     public Room findById(int id);
 
+
     /**
      * 룸 삭제
      *

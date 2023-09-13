@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="LETS - 회원가입">
+    <meta name="author" content="김종원">
+    <title>LETS - 회원가입</title>
+
+    <!-- COMMON LINK -->
+    <th:block th:replace="~{/common/layout/fragments/common_head :: head}"></th:block>
+</head>
+
+<body id="register_bg">
+
+<nav id="menu" class="fake_menu"></nav>
+
+<div id="preloader">
+    <div data-loader="circle-side"></div>
+</div>
+<!-- End Preload -->
+
+<div id="login">
+    <aside>
+        <figure>
+            <a th:href="@{/}" href="/index" title="lets">
+                <img src="/images/title_textblack.svg" width="110" height="40" alt="" class="logo_sticky">
+            </a>
+        </figure>
+        <form th:action="@{/member/register}" th:method="post" th:object="${registerForm}" autocomplete="off">
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input th:field="*{email}" class="form-control" type="email" id="email" required>
+                <i class="icon_mail_alt"></i>
+            </div>
+            <div class="form-group">
+                <label for="password1">비밀번호</label>
+                <input th:field="*{password}" class="form-control" type="password" id="password1" required>
+                <i class="icon_lock_alt"></i>
+            </div>
+            <div class="form-group">
+                <label for="password2">비밀번호 확인</label>
+                <input th:field="*{confirmPassword}" class="form-control" type="password" id="password2" required>
+                <i class="icon_lock_alt"></i>
+            </div>
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input th:field="*{name}" class="form-control" type="text" id="name" required>
+                <i class="ti-user"></i>
+            </div>
+            <div id="pass-info" class="clearfix"></div>
+            <button class="btn_1 rounded full-width add_top_30">회원 가입</button>
+            <div class="text-center add_top_10">계정이 이미 있으신가요? <strong><a th:href="@{/member/login}" href="login.html">로그인</a></strong></div>
+        </form>
+        <div class="copy">© LETS</div>
+    </aside>
+</div>
+<!-- /login -->
+
+<!-- COMMON SCRIPTS -->
+<th:block th:replace="~{/common/layout/fragments/common_scripts :: scripts}"></th:block>
+
+<!-- SPECIFIC SCRIPTS -->
+<script src="/js/pw_strenght.js"></script>
+
+
+</body>
+
+</html>

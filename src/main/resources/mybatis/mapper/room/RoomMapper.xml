@@ -43,6 +43,7 @@
         WHERE ID = #{id}
     </select>
 
+
     <update id="delete" parameterType="int">
         UPDATE Room
         SET status = 'disabled'

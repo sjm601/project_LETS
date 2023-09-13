@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+    th:replace="~{/common/layout/common_layout_V2 :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+
+    <th:block th:fragment="head">
+        <meta name="author" content="VJCommando">
+        <meta name="description" content="LETS - 카페 리스트">
+        <title>LETS - 카페 리스트</title>
+    </th:block>
+
+    <th:block th:fragment="content">
+        <!-- main -->
+        <main>
+            <section class="hero_in restaurants">
+                <div class="wrapper">
+                    <div class="container">
+                        <h1 class="fadeInUp"><span></span>Paris Eat &amp; Drink grid</h1>
+                    </div>
+                </div>
+            </section>
+            <!--/hero_in-->
+
+            <div class="filters_listing sticky_horizontal">
+                <div class="container">
+                    <ul class="clearfix">
+                        <li>
+                            <div class="switch-field">
+                                <input type="radio" id="all" name="listing_filter" value="all" checked data-filter="*"
+                                       class="selected">
+                                <label for="all">All</label>
+                                <input type="radio" id="popular" name="listing_filter" value="popular"
+                                       data-filter=".popular">
+                                <label for="popular">Popular</label>
+                                <input type="radio" id="latest" name="listing_filter" value="latest"
+                                       data-filter=".latest">
+                                <label for="latest">Latest</label>
+                            </div>
+                        </li>
+                        <!--<li>
+                            <div class="layout_view">
+                                <a href="#" class="active"><i class="icon-th"></i></a>
+                                <a href="restaurants-list-sidebar.html"><i class="icon-th-list"></i></a>
+                            </div>
+                        </li>-->
+                        <li>
+                            <a class="btn_map" data-bs-toggle="collapse" href="#collapseMap" aria-expanded="false"
+                               aria-controls="collapseMap" data-text-swap="Hide map" data-text-original="View on map">View
+                                on map</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /container -->
+            </div>
+            <!-- /filters -->
+
+            <div class="collapse" id="collapseMap">
+                <div id="map" class="map"></div>
+            </div>
+            <!-- End Map -->
+
+            <div class="container margin_60_35">
+                <div class="row">
+                    <aside class="col-lg-3" id="sidebar">
+                        <div class="custom-search-input-2 inner-2">
+                            <div class="form-group">
+                                <input class="form-control" type="text" placeholder="Name..." name="searchName">
+                                <i class="icon_search"></i>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="number" placeholder="Use Person..."
+                                       name="searchCountPerson">
+                                <i class="fa-solid fa-user-group"></i>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="number" placeholder="Maximum Price/1hour..."
+                                       name="searchPrice">
+                                <i class="fa-solid fa-won-sign"></i>
+                            </div>
+                            <div class="form-group">
+                                <select class="wide" name="searchOption">
+                                    <option>Option</option>
+                                    <option>와이파이</option>
+                                    <option>흡연구역</option>
+                                    <option>화이트보드</option>
+                                </select>
+                            </div>
+                            <input type="submit" class="btn_search" value="Search">
+                        </div>
+                        <!-- /custom-search-input-2 -->
+                        <div id="filters_col">
+                            <a data-bs-toggle="collapse" href="#collapseFilters" aria-expanded="false"
+                               aria-controls="collapseFilters" id="filters_col_bt">Filters </a>
+                            <div class="collapse show" id="collapseFilters">
+                                <div class="filter_type">
+                                    <h6>Duration</h6>
+                                    <input type="number" id="range" name="range" value="duration">
+                                </div>
+                                <div class="filter_type">
+                                    <h6>Rating</h6>
+                                    <ul>
+                                        <li>
+                                            <label>Superb: 5+</label>
+                                            <input type="checkbox" class="js-switch" checked>
+                                        </li>
+                                        <li>
+                                            <label>Very good: 4+</label>
+                                            <input type="checkbox" class="js-switch">
+                                        </li>
+                                        <li>
+                                            <label>Good: 3+</label>
+                                            <input type="checkbox" class="js-switch">
+                                        </li>
+                                        <li>
+                                            <label>Pleasant: 2+</label>
+                                            <input type="checkbox" class="js-switch">
+                                        </li>
+                                        <li>
+                                            <label>Poor: 1+</label>
+                                            <input type="checkbox" class="js-switch">
+                                        </li>
+                                        <li>
+                                            <label>No rating</label>
+                                            <input type="checkbox" class="js-switch">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--/collapse -->
+                        </div>
+                        <!--/filters col-->
+                    </aside>
+                    <!-- /aside -->
+
+                    <div class="col-lg-9">
+                        <div class="isotope-wrapper">
+                            <div class="row">
+                                <div class="col-md-6 isotope-item popular">
+                                    <div class="box_grid" data-cue="slideInUp">
+                                        <figure>
+                                            <a href="restaurant-detail.html"><img src="img/restaurant_1.jpg"
+                                                                                  class="img-fluid" alt="" width="800"
+                                                                                  height="533">
+                                                <div class="read_more"><span>Read more</span></div>
+                                            </a>
+                                            <small>영업중</small>
+                                        </figure>
+                                        <div class="wrapper">
+                                            <h3><a href="restaurant-detail.html">이젠스터디카페</a></h3>
+                                            <p>서울특별시 노원구 동일로 500</p>
+                                            <span class="price">평균 <strong>50,000<i
+                                                class="fa-solid fa-won-sign"></i></strong> /1hour</span>
+                                        </div>
+                                        <ul>
+                                            <li><i class="icon_clock_alt"></i> 7시 ~ 20시</li>
+                                            <li>
+                                                <div class="score">
+                                                    <span>Superb<em>30 Reviews</em></span><strong>5.0</strong></div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /box_grid -->
+                                <div class="col-md-6 isotope-item popular">
+                                    <div class="box_grid" data-cue="slideInUp">
+                                        <figure>
+                                            <!-- <a href="#0" class="wish_bt"></a> -->
+                                            <a href="restaurant-detail.html"><img src="img/restaurant_1.jpg"
+                                                                                  class="img-fluid" alt="" width="800"
+                                                                                  height="533">
+                                                <div class="read_more"><span>Read more</span></div>
+                                            </a>
+                                            <small>영업중</small>
+                                        </figure>
+                                        <div class="wrapper">
+                                            <h3><a href="restaurant-detail.html">이젠스터디카페</a></h3>
+                                            <p>서울특별시 노원구 동일로 500</p>
+                                            <span class="price">평균 <strong>50,000<i
+                                                class="fa-solid fa-won-sign"></i></strong> /1hour</span>
+                                        </div>
+                                        <ul>
+                                            <li><i class="icon_clock_alt"></i> 7시 ~ 20시</li>
+                                            <li>
+                                                <div class="score">
+                                                    <span>Superb<em>30 Reviews</em></span><strong>5.0</strong></div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /box_grid -->
+                                <div class="col-md-6 isotope-item popular">
+                                    <div class="box_grid" data-cue="slideInUp">
+                                        <figure>
+                                            <!-- <a href="#0" class="wish_bt"></a> -->
+                                            <a href="restaurant-detail.html"><img src="img/restaurant_1.jpg"
+                                                                                  class="img-fluid" alt="" width="800"
+                                                                                  height="533">
+                                                <div class="read_more"><span>Read more</span></div>
+                                            </a>
+                                            <small>영업중</small>
+                                        </figure>
+                                        <div class="wrapper">
+                                            <h3><a href="restaurant-detail.html">이젠스터디카페</a></h3>
+                                            <p>서울특별시 노원구 동일로 500</p>
+                                            <span class="price">평균 <strong>50,000<i
+                                                class="fa-solid fa-won-sign"></i></strong> /1hour</span>
+                                        </div>
+                                        <ul>
+                                            <li><i class="icon_clock_alt"></i> 7시 ~ 20시</li>
+                                            <li>
+                                                <div class="score">
+                                                    <span>Very Good<em>350 Reviews</em></span><strong>4.0</strong></div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /box_grid -->
+                                <div class="col-md-6 isotope-item popular">
+                                    <div class="box_grid" data-cue="slideInUp">
+                                        <figure>
+                                            <!-- <a href="#0" class="wish_bt"></a> -->
+                                            <a href="restaurant-detail.html"><img src="img/restaurant_1.jpg"
+                                                                                  class="img-fluid" alt="" width="800"
+                                                                                  height="533">
+                                                <div class="read_more"><span>Read more</span></div>
+                                            </a>
+                                            <small>영업중</small>
+                                        </figure>
+                                        <div class="wrapper">
+                                            <h3><a href="restaurant-detail.html">이젠스터디카페</a></h3>
+                                            <p>서울특별시 노원구 동일로 500</p>
+                                            <span class="price">평균 <strong>50,000<i
+                                                class="fa-solid fa-won-sign"></i></strong> /1hour</span>
+                                        </div>
+                                        <ul>
+                                            <li><i class="icon_clock_alt"></i> 7시 ~ 20시</li>
+                                            <li>
+                                                <div class="score">
+                                                    <span>Good<em>30 Reviews</em></span><strong>3.0</strong>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /box_grid -->
+                                <div class="col-md-6 isotope-item popular">
+                                    <div class="box_grid" data-cue="slideInUp">
+                                        <figure>
+                                            <!-- <a href="#0" class="wish_bt"></a> -->
+                                            <a href="restaurant-detail.html"><img src="img/restaurant_1.jpg"
+                                                                                  class="img-fluid" alt="" width="800"
+                                                                                  height="533">
+                                                <div class="read_more"><span>Read more</span></div>
+                                            </a>
+                                            <small>영업중</small>
+                                        </figure>
+                                        <div class="wrapper">
+                                            <h3><a href="restaurant-detail.html">이젠스터디카페</a></h3>
+                                            <p>서울특별시 노원구 동일로 500</p>
+                                            <span class="price">평균 <strong>50,000<i
+                                                class="fa-solid fa-won-sign"></i></strong> /1hour</span>
+                                        </div>
+                                        <ul>
+                                            <li><i class="icon_clock_alt"></i> 7시 ~ 20시</li>
+                                            <li>
+                                                <div class="score">
+                                                    <span>Pleasant<em>30 Reviews</em></span><strong>2.0</strong></div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /box_grid -->
+                                <div class="col-md-6 isotope-item popular">
+                                    <div class="box_grid" data-cue="slideInUp">
+                                        <figure>
+                                            <!-- <a href="#0" class="wish_bt"></a> -->
+                                            <a href="restaurant-detail.html"><img src="img/restaurant_1.jpg"
+                                                                                  class="img-fluid" alt="" width="800"
+                                                                                  height="533">
+                                                <div class="read_more"><span>Read more</span></div>
+                                            </a>
+                                            <small>영업중</small>
+                                        </figure>
+                                        <div class="wrapper">
+                                            <h3><a href="restaurant-detail.html">이젠스터디카페</a></h3>
+                                            <p>서울특별시 노원구 동일로 500</p>
+                                            <span class="price">평균 <strong>50,000<i
+                                                class="fa-solid fa-won-sign"></i></strong> /1hour</span>
+                                        </div>
+                                        <ul>
+                                            <li><i class="icon_clock_alt"></i> 7시 ~ 20시</li>
+                                            <li>
+                                                <div class="score">
+                                                    <span>Poor<em>30 Reviews</em></span><strong>1.0</strong>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /box_grid -->
+                            </div>
+                            <!-- /row -->
+                        </div>
+                        <!-- /isotope-wrapper -->
+
+                        <p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p>
+                    </div>
+                    <!-- /col -->
+                </div>
+            </div>
+            <!-- /container -->
+
+            <div class="bg_color_1">
+                <div class="container margin_60_35">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a href="#0" class="boxed_list">
+                                <i class="pe-7s-help2"></i>
+                                <h4>Need Help? Contact us</h4>
+                                <p>Cum appareat maiestatis interpretaris et, et sit.</p>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="#0" class="boxed_list">
+                                <i class="pe-7s-wallet"></i>
+                                <h4>Payments</h4>
+                                <p>Qui ea nemore eruditi, magna prima possit.</p>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="#0" class="boxed_list">
+                                <i class="pe-7s-note2"></i>
+                                <h4>Cancel Policy</h4>
+                                <p>Hinc vituperata sed ut, pro laudem nonumes ex.</p>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /row -->
+                </div>
+                <!-- /container -->
+            </div>
+            <!-- /bg_color_1 -->
+        </main>
+        <!--/main-->
+    </th:block>
+
+    <th:block th:fragment="scripts">
+        <!-- Map -->
+        <script src="http://maps.googleapis.com/maps/api/js"></script>
+        <script src="/js/markerclusterer.js"></script>
+        <script src="/js/map_restaurants.js"></script>
+        <script src="/js/infobox.js"></script>
+
+        <!-- Masonry Filtering -->
+        <script src="/js/isotope.min.js"></script>
+        <script th:inline="javascript">
+            $(window).on('load', function () {
+                var $container = $('.isotope-wrapper');
+                $container.isotope({itemSelector: '.isotope-item', layoutMode: 'masonry'});
+            });
+
+            $('.filters_listing').on('click', 'input', 'change', function () {
+                var selector = $(this).attr('data-filter');
+                $('.isotope-wrapper').isotope({filter: selector});
+            });
+        </script>
+
+        <!-- Range Slider -->
+        <script th:inline="javascript">
+            $("#range").ionRangeSlider({
+                hide_min_max: true,
+                keyboard: true,
+                min: 30,
+                max: 180,
+                from: 60,
+                to: 130,
+                type: 'double',
+                step: 1,
+                prefix: "Km. ",
+                grid: false
+            });
+        </script>
+    </th:block>
+
+</th:block>
+
+</html>

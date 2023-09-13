@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="setContent(head, content, scripts)">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!--/* 커스텀 헤드 부분 (타이틀, 추가 링크) */-->
+        <th:block th:replace="${head}"></th:block>
+
+        <!--/* 페이지 공통 헤드 */-->
+        <th:block th:replace="~{/common/layout/fragments/common_head :: head}"></th:block>
+    </head>
+
+    <body>
+    <div id="page" class="theia-exception">
+
+        <!--/* 페이지 공통 헤더 */-->
+        <th:block th:replace="~{/common/layout/fragments/common_header :: header}"></th:block>
+
+        <!--/* 커스텀 콘텐츠 부분 */-->
+        <th:block th:replace="${content}"></th:block>
+
+        <!--/* 페이지 공통 푸터 */-->
+        <th:block th:replace="~{/common/layout/fragments/common_footer :: footer}"></th:block>
+
+    </div>
+
+    <!--/* 페이지 공통 로그인 팝업 */-->
+    <th:block th:if="${session.loginMember == null}">
+        <th:block th:replace="~{/common/layout/fragments/common_login-popup :: login-popup}"></th:block>
+    </th:block>
+
+    <div id="toTop"></div><!--/* Back to top button */-->
+
+    <!--/* 페이지 공통 스크립트 */-->
+    <th:block th:replace="~{/common/layout/fragments/common_scripts :: scripts}"></th:block>
+
+    <!--/* 커스텀 스크립트 */-->
+    <th:block th:replace="${scripts}"></th:block>
+
+    </body>
+</th:block>
+</html>

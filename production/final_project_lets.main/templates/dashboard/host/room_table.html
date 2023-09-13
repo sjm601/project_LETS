@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+
+    <th:block th:fragment="head">
+        <meta name="author" content="VJCommando">
+        <meta name="description" content="LETS - Host Dashboard">
+        <title>LETS - Host Dashboard</title>
+    </th:block>
+
+    <th:block th:fragment="content">
+        <!-- Content -->
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/dashboard/host/host_dashboard.html">대시보드</a>
+                    </li>
+                    <li class="breadcrumb-item active">Room Tables</li>
+                </ol>
+                <!-- Example DataTables Card-->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-table"></i> Room Table
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>룸이름</th>
+                                    <th>수용인원</th>
+                                    <th>시간당 가격</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th>1</th>
+                                    <th><a href="/dashboard/host/room-register.html">A1</a></th>
+                                    <th>10</th>
+                                    <th>50000</th>
+                                </tr>
+                                <tr>
+                                    <th>2</th>
+                                    <th><a href="/dashboard/host/room-register.html">B1</a></th>
+                                    <th>10</th>
+                                    <th>20000</th>
+                                </tr>
+                                <tr>
+                                    <th>3</th>
+                                    <th><a href="/dashboard/host/room-register.html">C1</a></th>
+                                    <th>10</th>
+                                    <th>20000</th>
+                                </tr>
+                                <tr>
+                                    <th>4</th>
+                                    <th><a href="/dashboard/host/room-register.html">D1</a></th>
+                                    <th>10</th>
+                                    <th>20000</th>
+                                </tr>
+                                <tr>
+                                    <th>5</th>
+                                    <th><a href="/dashboard/host/room-register.html">E1</a></th>
+                                    <th>10</th>
+                                    <th>20000</th>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                </div>
+                <!-- /tables-->
+            </div>
+            <!-- /container-fluid-->
+        </div>
+        <!-- /container-wrapper-->
+        <!-- /Content -->
+    </th:block>
+
+    <th:block th:fragment="scripts">
+        <!-- Custom scripts for this page -->
+        <script src="/dashboard/js/admin-datatables.js"></script>
+        <!-- /custom scripts -->
+    </th:block>
+
+</th:block>
+
+</html>

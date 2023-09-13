@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vj.lets.domain.group.mapper.GroupHistoryMapper">
+
+    <insert id="create">
+        INSERT INTO GROUP_HISTORY(ID, STUDY_GROUP_ID)
+        VALUES (GROUP_HISTORY_ID_SEQ.NEXTVAL, STUDY_GROUP_ID_SEQ.CURRVAL)
+    </insert>
+
+    <insert id="update">
+        INSERT INTO GROUP_HISTORY(ID, MODIFY_COMMENT, STUDY_GROUP_ID)
+        VALUES (GROUP_HISTORY_ID_SEQ.nextval, 'update', #{studyGroupId})
+    </insert>
+
+    <insert id="delete">
+        INSERT INTO GROUP_HISTORY(ID, MODIFY_COMMENT, STUDY_GROUP_ID)
+        VALUES (GROUP_HISTORY_ID_SEQ.nextval, 'delete', #{studyGroupId})
+    </insert>
+
+</mapper>

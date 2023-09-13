@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vj.lets.domain.support.mapper.FaqMapper">
+
+    <insert id="create" parameterType="Faq">
+        INSERT INTO FAQ(ID, TITLE, CONTENT, CATEGORY_ID)
+        VALUES (FAQ_ID_SEQ.NEXTVAL, #{title}, #{content}, #{categoryId})
+    </insert>
+
+    <select id="readAll" resultType="Faq">
+        SELECT ID, TITLE, CONTENT, CATEGORY_ID
+        FROM FAQ
+        ORDER BY CATEGORY_ID
+    </select>
+
+
+    <select id="readByCategory" parameterType="int" resultType="Faq">
+        SELECT ID, TITLE, CONTENT, CATEGORY_ID
+        FROM FAQ
+        WHERE CATEGORY_ID = #{categoryId}
+    </select>
+
+    <update id="update" parameterType="Faq">
+        UPDATE FAQ
+        <set>
+            <if test="title != null or title != ''">title = #{title},</if>
+            <if test="content != null or content != ''">content = #{content},</if>
+            <if test="categoryId != null or categoryId != ''">category_id = #{categoryId},</if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM FAQ
+        WHERE ID = #{id}
+    </delete>
+
+
+</mapper>

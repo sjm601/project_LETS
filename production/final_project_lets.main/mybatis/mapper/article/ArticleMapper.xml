@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vj.lets.domain.article.mapper.ArticleMapper">
+
+    <!-- 게시글 생성 -->
+    <insert id="create" parameterType="Article">
+        INSERT INTO article(ID, TITLE, CONTENT, wrtiter)
+        VALUES (MEMBER_ID_SEQ.NEXTVAL, #{title}, #{content}, #{writer})
+    </insert>
+
+    <!-- 게시글 수정 -->
+    <update id="update" parameterType="Article">
+        UPDATE Article
+        <set>
+            <if test="title != null or title != ''">title = #{title},</if>
+            <if test="content != null or content != ''">content = #{content}</if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <!-- 게시글 삭제 -->
+    <update id="delete" parameterType="int">
+        UPDATE Article
+        SET status = 'disabled'
+        WHERE ID = #{id}
+    </update>
+
+    <!--게시글 목록-->
+    <select id="findAll" resultType="Article" >
+        SELECT
+            id,
+            title,
+            content,
+            writer,
+            TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate
+        FROM
+            article
+        ORDER BY regdate desc
+    </select>
+
+    <!-- 페이징 계산(검색값 포함)에 필요한 게시글 전체 갯수 -->
+    <select id="getCountAll" parameterType="object" resultType="int" >
+        SELECT
+        COUNT(id) "cnt"
+        FROM
+        article
+        <where>
+            <if test="keyword != null">AND writer LIKE '%' || #{keyword} || '%',</if>
+            <if test="keyword != null">OR title LIKE '%' || #{keyword} || '%',</if>
+            <if test="keyword != null">OR content LIKE '%' || #{keyword} || '%'</if>
+        </where>
+    </select>
+
+    <!-- 게시글 목록 (페이징) -->
+    <select id="findByPage" parameterType="PageParams" resultType="Article">
+        SELECT
+        id,
+        title,
+        content,
+        writer,
+        regdate,
+        image_path,
+        status
+        FROM (
+        SELECT
+        id,
+        CEIL(rownum / #{elementSize}) request_page,
+        title,
+        content,
+        writer,
+        TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate,
+        image_path,
+        status
+        FROM (
+        SELECT
+        id,
+        title,
+        content,
+        writer,
+        regdate,
+        image_path,
+        status
+        FROM
+        article
+        <where>
+            <if test="keyword != null">AND writer  LIKE '%' || #{keyword} || '%',</if>
+            <if test="keyword != null">OR subject LIKE '%' || #{keyword} || '%',</if>
+            <if test="keyword != null">OR content LIKE '%' || #{keyword} || '%'</if>
+        </where>
+        ORDER BY regdate DESC))
+        WHERE  request_page = #{requestPage}
+    </select>
+
+ <!-- 검색 기능 -->
+    <select id="search" parameterType="object" resultType="Article" >
+        SELECT
+            id,
+            title,
+            content,
+            writer,
+            TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate
+        FROM(
+            article
+        <where>
+            <if test="keyword != null">AND writer  LIKE '%' || #{keyword} || '%',</if>
+            <if test="keyword != null">OR title LIKE '%' || #{keyword} || '%',</if>
+            <if test="keyword != null">OR content LIKE '%' || #{keyword} || '%'</if>
+        </where>
+        ORDER  BY regdate DESC)
+        WHERE
+            id = #{id}
+    </select>
+
+
+
+
+</mapper>

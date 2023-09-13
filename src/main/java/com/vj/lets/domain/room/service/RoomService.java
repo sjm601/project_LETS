@@ -50,6 +50,7 @@ public interface RoomService {
      */
     public Room getSearchRoom(int id);
 
+
     /**
      * 룸 삭제
      *
