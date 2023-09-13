@@ -15,21 +15,48 @@ import java.util.List;
 @Mapper
 public interface RoomMapper {
 
-    /** 룸 생성 */
+    /**
+     * 룸 생성
+     *
+     * @param room 룸
+     */
     public void create(Room room);
 
-    /** 룸 정보 업데이트 */
-    public Room update(Room room);
+    /**
+     * 룸 정보 업데이트
+     *
+     * @param room 룸
+     * @return 등록된 룸
+     */
+    public void update(Room room);
 
-    /** 룸 전체 조회 */
+    /**
+     * 룸 전체 조회
+     *
+     * @return 룸 리스트
+     */
     public List<Room> findByAll();
 
-    /** 카페 id로 룸 조회 */
+    /**
+     * 카페 id로 룸 조회
+     *
+     * @param id 카페 id
+     * @return 룸 리스트
+     */
     public List<Room> findByCafe(int id);
 
-    /** 룸 id로 룸 조회 */
+    /**
+     * 룸 id로 룸 조회
+     *
+     * @param id 룸 id
+     * @return 룸
+     */
     public Room findById(int id);
 
-    /** 룸 삭제 */
+    /**
+     * 룸 삭제
+     *
+     * @param id 룸 id
+     */
     public void delete(int id);
 }

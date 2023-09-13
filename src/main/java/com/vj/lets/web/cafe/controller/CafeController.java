@@ -24,10 +24,12 @@ public class CafeController {
     public String cafeDetail(Model model) {
         return "common/cafe/cafe_main";
     }
+    
     @GetMapping("/list")
     public String cafeList(Model model) {
         return "common/cafe/cafe_list";
     }
+
     @GetMapping("/detail/{id}")
     public String cafeDetails(@PathVariable("id") int id, Model model) {
         return "common/cafe/cafe_detail";

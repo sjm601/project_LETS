@@ -17,7 +17,7 @@ import lombok.*;
 @Builder
 public class RoomHistory {
     private int id;
-    private String status;
+    private String modifyComment;
     private String modifyDate;
     private int roomId;
 }

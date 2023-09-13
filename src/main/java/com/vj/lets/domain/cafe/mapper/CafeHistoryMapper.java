@@ -1,6 +1,7 @@
 package com.vj.lets.domain.cafe.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * Cafe History 테이블 관련 명세
@@ -16,7 +17,7 @@ public interface CafeHistoryMapper {
     public void create();
 
     /** 카페 업데이트 */
-    public void update(int cafeId);
+    public void update(@Param("comment") String comment, @Param("cafeId") int cafeId);
 
     /** 카페 삭제 */
     public void delete(int cafeId);

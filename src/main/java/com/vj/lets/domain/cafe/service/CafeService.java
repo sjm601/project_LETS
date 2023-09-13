@@ -6,6 +6,7 @@ import com.vj.lets.domain.cafe.dto.CafeOptionList;
 import com.vj.lets.domain.cafe.dto.CafeSearch;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Cafe 관련 비즈니스 로직 처리 및 트랜잭션 관리
@@ -49,7 +50,7 @@ public interface CafeService {
      *
      * @return 카페 전체 리스트
      */
-    public List<Cafe> getCafeList();
+    public List<Map<String, Object>> getCafeList();
 
     /**
      * id로 카페 검색
@@ -57,14 +58,14 @@ public interface CafeService {
      * @param id 카페 ID
      * @return 카페 검색 결과
      */
-    public Cafe getCafe(int id);
+    public Map<String, Object> getCafe(int id);
 
     /**
      * 예약이 많은 카페 6개 검색
      *
      * @return 카페 리스트 6개
      */
-    public List<Cafe> getBestCafe();
+    public List<Integer> getBestCafe();
 
     /**
      * 카페 검색
@@ -72,15 +73,16 @@ public interface CafeService {
      * @param cafeSearch 카페 검색값
      * @return 카페 검색 결과
      */
-    public List<Cafe> getSearchCafe(CafeSearch cafeSearch);
+    public List<Map<String, Object>> getSearchCafe(CafeSearch cafeSearch);
 
     /**
      * 카페 정보 수정
      *
      * @param cafe 카페
+     * @param comment 정보 변경 사유
      * @param cafeOptionLists 카페 옵션 리스트
      */
-    public void editCafe(Cafe cafe, List<CafeOptionList> cafeOptionLists);
+    public void editCafe(Cafe cafe, String comment, List<CafeOptionList> cafeOptionLists);
 
     /**
      * 카페 삭제
