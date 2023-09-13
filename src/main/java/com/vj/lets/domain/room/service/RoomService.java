@@ -28,6 +28,7 @@ public interface RoomService {
     /** 룸 id로 검색 */
     public Room getSearchRoom(int id);
 
+
     /** 룸 삭제 */
     public void deleteRoom(int id);
 }

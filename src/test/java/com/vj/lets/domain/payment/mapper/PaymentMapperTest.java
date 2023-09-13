@@ -32,7 +32,7 @@ class PaymentMapperTest {
                 .payStatus("success")
                 .payName("신짱구")
                 .payEmail("shin@gmail.com")
-                .payPhoneNumber("010-8282-8282")
+                .payPhoneNumber("01082828282")
                 .reservationId(1)
                 .build();
         // when

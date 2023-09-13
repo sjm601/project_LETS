@@ -1,3 +1,5 @@
+var selectRoom = document.getElementById('roomName').value;
+
 function updateQtyTotal() {
 	var input = document.getElementById("headCount");
 	var cardQty = document.querySelector(".qtyTotal");

@@ -30,6 +30,8 @@ public interface RoomMapper {
     /** 룸 id로 룸 조회 */
     public Room findById(int id);
 
+
+
     /** 룸 삭제 */
     public void delete(int id);
 }

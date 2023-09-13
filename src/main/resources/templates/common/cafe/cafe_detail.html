@@ -395,12 +395,9 @@
                                   th:method="post">
                             <div class="box_detail booking">
                                 <div class="price">
-                                    <span id="selectedRoomPrice">20,000<i
-                                            class="fa-solid fa-won-sign ms-1"></i><small> per 1hour</small></span>
-                                    <div class="score"><span>Superb<em>30 Reviews</em></span><strong>5.0</strong>
-                                    </div>
+                                    <span id="selectedRoomPrice"><span>1000</span><i class="fa-solid fa-won-sign ms-1"></i><small> per 1hour</small></span>
+                                    <div class="score"><span>Superb<em>30 Reviews</em></span><strong>5.0</strong></div>
                                 </div>
-
                                 <div class="form-group input-dates scroll-fix">
                                     <input class="form-control" type="text" name="bookingDate" placeholder="When..">
                                     <i class="icon_calendar"></i>
@@ -419,7 +416,7 @@
 
                                 <div class="form-group clearfix">
                                     <div class="custom-select-form">
-                                        <select class="wide">
+                                        <select  id="roomName" class="wide" name="roomName">
                                             <option>룸 타입</option>
                                             <option th:each="room : ${room}" th:value="${room.name}"
                                                     th:text="${room.name}"></option>

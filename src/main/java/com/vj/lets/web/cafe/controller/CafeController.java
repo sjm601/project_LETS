@@ -40,16 +40,16 @@ public class CafeController {
     public String cafeList(Model model) {
         return "common/cafe/cafe_list";
     }
-    @GetMapping("/detail/{id}")
-    public String cafeDetails(@PathVariable("id") int id, Model model) {
+    @GetMapping("/{id}")
+    public String cafeDetails(@PathVariable int id, Model model) {
         Cafe cafe = cafeService.getCafe(id);
         model.addAttribute("cafe", cafe);
-        List<Room> room =roomService.getSearchCafeRoom(id);
-        model.addAttribute("room",room);
+        List<Room> room = roomService.getSearchCafeRoom(id);
+        model.addAttribute("room", room);
         return "common/cafe/cafe_detail";
     }
 
-    @PostMapping("/detail/{id}")
+    @PostMapping("/{id}")
     public String reserve(@PathVariable int id, @ModelAttribute Reservation reservation, Model model){
         Cafe cafe = cafeService.getCafe(id);
         model.addAttribute("cafe",cafe);
