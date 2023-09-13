@@ -12,7 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Cafe Service 구현체
@@ -56,12 +58,12 @@ public class CafeServiceImpl implements CafeService{
     }
 
     @Override
-    public List<Cafe> getCafeList() {
+    public List<Map<String, Object>> getCafeList() {
         return cafeMapper.findByAll();
     }
 
     @Override
-    public Cafe getCafe(int id) {
+    public Map<String, Object> getCafe(int id) {
         return cafeMapper.findById(id);
     }
 
@@ -71,7 +73,7 @@ public class CafeServiceImpl implements CafeService{
     }
 
     @Override
-    public List<Cafe> getSearchCafe(CafeSearch cafeSearch){
+    public List<Map<String, Object>> getSearchCafe(CafeSearch cafeSearch){
         return cafeMapper.findBySearch(cafeSearch);
     }
 
@@ -95,7 +97,7 @@ public class CafeServiceImpl implements CafeService{
 
     @Override
     public List<CafeOptionList> makeCafeOptionList(int cafeId, List<Integer> optionIds) {
-        List<CafeOptionList> cafeOptionLists = null;
+        List<CafeOptionList> cafeOptionLists = new ArrayList<>();
         for (int optionId : optionIds) {
             CafeOptionList makeList = CafeOptionList
                     .builder()

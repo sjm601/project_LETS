@@ -16,15 +16,21 @@
         ORDER BY ID ASC
     </select>
 
-    <select id="findByOptionId" parameterType="int" resultType="CafeOptionList">
+    <select id="findByOptionListId" parameterType="int" resultType="CafeOptionList">
         SELECT ID, CAFE_ID, OPTION_ID
         FROM CAFE_OPTION_LIST
         WHERE ID = #{id}
     </select>
 
+    <select id="findByOptionCafeId" parameterType="int" resultType="CafeOptionList">
+        SELECT ID, CAFE_ID, OPTION_ID
+        FROM CAFE_OPTION_LIST
+        WHERE CAFE_ID = #{cafeId}
+    </select>
+
     <delete id="delete" parameterType="int">
         DELETE FROM CAFE_OPTION_LIST
-        WHERE CAFE_ID = #{cafeId} AND OPTION_ID = #{optionId}
+        WHERE CAFE_ID = #{cafeId}
     </delete>
 
 </mapper>

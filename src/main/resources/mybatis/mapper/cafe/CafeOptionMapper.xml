@@ -10,14 +10,14 @@
         VALUES (CAFE_OPTION_ID_SEQ.NEXTVAL, #{name}, #{imagePath}, #{description})
     </insert>
 
-    <update id="update">
+    <update id="update" parameterType="CafeOption">
     UPDATE CAFE_OPTION
     <set>
         <if test="name != null and name != ''">NAME = #{name},</if>
         <if test="imagePath != null and imagePath != ''">IMAGE_PATH = #{imagePath},</if>
         <if test="description != null and description != ''">DESCRIPTION = #{description},</if>
     </set>
-    WHERE ID = #{optionId}
+    WHERE ID = #{id}
     </update>
 
     <select id="readAll" resultType="CafeOption">

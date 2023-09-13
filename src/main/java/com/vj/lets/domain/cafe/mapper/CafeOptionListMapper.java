@@ -30,6 +30,14 @@ public interface CafeOptionListMapper {
     public List<CafeOptionList> readAll();
 
     /**
+     * 카페 옵션리스트 아이디로 검색
+     *
+     * @param listId
+     * @return 카페 옵션 리스트
+     */
+    public CafeOptionList findByOptionListId(int listId);
+
+    /**
      * 카페 id로 옵션리스트 조회
      *
      * @param cafeId 카페 아이디

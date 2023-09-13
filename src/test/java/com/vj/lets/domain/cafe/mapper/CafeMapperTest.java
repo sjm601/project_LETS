@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -42,10 +43,9 @@ class CafeMapperTest {
                 .detailAddress("401호")
                 .latitude(37.12422)
                 .longitude(127.112322)
-                .roomCount(5)
                 .startTime(10)
                 .endTime(24)
-                .description("홈카페는 집처럼 좋습니다")
+                .description("")
                 .imagePath("/image/06홈카페")
                 .businessNumber(1111111116)
                 .siGunGuId(10010)
@@ -72,7 +72,6 @@ class CafeMapperTest {
                 .detailAddress("401호")
                 .latitude(37.12422)
                 .longitude(127.112322)
-                .roomCount(5)
                 .startTime(8)
                 .endTime(16)
 //                .description("홈카페는 집처럼 좋습니다")
@@ -95,7 +94,7 @@ class CafeMapperTest {
         //given
         int id = 1;
         //when
-        Cafe cafe = cafeMapper.findById(id);
+        Map<String, Object> cafe = cafeMapper.findById(id);
         //then
         log.info("카페 정보 : {}", cafe);
         assertThat(cafe).isNotNull();
@@ -107,7 +106,7 @@ class CafeMapperTest {
     void findByAllTest() {
         //given
         //when
-        List<Cafe> list = cafeMapper.findByAll();
+        List<Map<String, Object>> list = cafeMapper.findByAll();
         //then
         log.info("카페 리스트 : {}", list);
         assertThat(list).isNotNull();
@@ -135,10 +134,10 @@ class CafeMapperTest {
                 .currentX(27.222222)
                 .currentY(125.222222)
                 .minDuration(0)
-                .maxDuration(500)
+                .maxDuration(10000)
                 .build();
         //when
-        List<Cafe> list = cafeMapper.findBySearch(cafeSearch);
+        List<Map<String, Object>> list = cafeMapper.findBySearch(cafeSearch);
         //then
         log.info("카페 검색 정보 : {}", list);
         assertThat(list).isNotNull();
@@ -146,15 +145,15 @@ class CafeMapperTest {
 
     @Test
     @DisplayName("카페 삭제")
-    @Disabled
+    @Transactional
     void deleteTest() {
         //given
         int id = 1;
         //when
         cafeMapper.delete(id);
-        Cafe cafe = cafeMapper.findById(id);
+        Map<String, Object> cafe = cafeMapper.findById(id);
         //then
         log.info("카페 삭제 정보: {}", cafe);
-        assertThat(cafe).isNotNull();
+        assertThat(cafe).isNull();
     }
 }

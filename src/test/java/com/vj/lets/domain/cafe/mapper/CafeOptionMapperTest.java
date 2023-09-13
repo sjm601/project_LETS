@@ -36,7 +36,7 @@ class CafeOptionMapperTest {
         CafeOption cafeOption = CafeOption.builder()
                 .name("백색소음기")
                 .imagePath("fa-solid fa-sound")
-                .description("소리가 남")
+//                .description("소리가 남")
                 .build();
         //when
         cafeOptionMapper.create(cafeOption);
@@ -51,12 +51,13 @@ class CafeOptionMapperTest {
     @Transactional
     void updateTest() {
         //given
-       String name = "백색소음기";
-       String imagePath = "fa-solid fa-sound";
-        int optionId = 18;
-        String description = "소리가 남";
+        CafeOption cafeOption = CafeOption.builder()
+                .name("백색소음기")
+                .imagePath("fa-solid fa-sound")
+                .id(18)
+                .build();
         //when
-        cafeOptionMapper.update(name, imagePath, description, optionId);
+        cafeOptionMapper.update(cafeOption);
         //then
     }
 
@@ -75,13 +76,24 @@ class CafeOptionMapperTest {
     @Test
     @DisplayName("옵션 아이디로 검색")
     @Disabled
-    void findByOptionId(){
-
+    void findByOptionIdTest(){
+        //given
+        int id = 1;
+        //when
+        CafeOption cafeOption= cafeOptionMapper.findByOptionId(id);
+        //then
+        log.info("아이디로 검색된 카페 옵션 : {}", cafeOption);
+        assertThat(cafeOption).isNotNull();
     }
     @Test
-    void delete() {
+    @DisplayName("아이디로 카페 옵션 삭제")
+    @Disabled
+    @Transactional
+    void deleteTest() {
         //given
+        int id = 18;
         //when
+        cafeOptionMapper.delete(id);
         //then
     }
 }

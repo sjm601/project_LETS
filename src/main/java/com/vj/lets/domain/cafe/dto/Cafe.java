@@ -20,10 +20,10 @@ public class Cafe {
     private String email;
     private String name;
     private String phoneNumber;
+    private String roadAddress;
     private String detailAddress;
     private double latitude;
     private double longitude;
-    private int roomCount;
     private int startTime;
     private int endTime;
     private String description;
@@ -33,5 +33,4 @@ public class Cafe {
     private String status;
     private int siGunGuId;
     private int memberId;
-    private String roadAddress;
 }

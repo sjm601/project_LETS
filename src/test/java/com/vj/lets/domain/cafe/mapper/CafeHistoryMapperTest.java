@@ -42,7 +42,6 @@ class CafeHistoryMapperTest {
                 .detailAddress("401호")
                 .latitude(37.12422)
                 .longitude(127.112322)
-                .roomCount(5)
                 .startTime(10)
                 .endTime(24)
                 .description("홈카페는 집처럼 좋습니다")
