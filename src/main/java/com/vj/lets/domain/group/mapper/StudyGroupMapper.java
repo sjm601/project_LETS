@@ -81,4 +81,12 @@ public interface StudyGroupMapper {
      * @param studyGroupId 스터디 그룹 아이디
      */
     public void subtract(int studyGroupId);
+
+    /**
+     * 신규 스터디 그룹 리스트 3개 조회
+     * 
+     * @author VJ특공대 이희영
+     * @return 신규 스터디 그룹 리스트
+     */
+    public List<StudyGroup> findNewStudyList();
 }

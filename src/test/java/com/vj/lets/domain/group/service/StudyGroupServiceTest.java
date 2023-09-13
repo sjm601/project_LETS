@@ -1,4 +1,4 @@
-package com.vj.lets.domain.group.service;//import static org.junit.jupiter.api.Assertions.*;
+package com.vj.lets.domain.group.service;
 
 import com.vj.lets.domain.group.dto.GroupContact;
 import com.vj.lets.domain.group.dto.GroupMemberList;
@@ -233,5 +233,18 @@ class StudyGroupServiceTest {
         // then
         log.info("가입한 스터디 그룹 리스트 조회 : {}", list);
         assertThat(list).isNotNull();
+    }
+
+    @Test
+    @Transactional
+    void getNewStudyList() {
+        // given
+
+        // when
+        List<StudyGroup> newStudyList = studyGroupService.getNewStudyList();
+
+        // then
+        log.info("신규 스터디 리스트 : {}", newStudyList);
+        assertThat(newStudyList).isNotNull();
     }
 }

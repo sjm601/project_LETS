@@ -49,7 +49,9 @@ public class StudyGroupController {
                 .build();
 
         List<Map<String, Object>> studyGroupList = studyGroupService.getStudyGroupList(search);
+        List<StudyGroup> newStudyList = studyGroupService.getNewStudyList();
         model.addAttribute("studyGroupList", studyGroupList);
+        model.addAttribute("newStudyList", newStudyList);
 
         return "common/group/group_list";
     }

@@ -267,4 +267,18 @@ public class StudyGroupServiceImpl implements StudyGroupService{
         studyList = groupMemberListMapper.myGroupList(memberId);
         return studyList;
     }
+
+    /**
+     * 신규 스터디 그룹 리스트 3개 조회
+     *
+     * @author VJ특공대 이희영
+     * @return 신규 스터디 그룹 리스트
+     */
+    @Override
+    public List<StudyGroup> getNewStudyList() {
+        List<StudyGroup> newStudyList = null;
+
+        newStudyList = studyGroupMapper.findNewStudyList();
+        return newStudyList;
+    }
 }

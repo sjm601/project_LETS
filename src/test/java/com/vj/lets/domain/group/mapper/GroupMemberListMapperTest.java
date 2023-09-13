@@ -1,4 +1,4 @@
-package com.vj.lets.domain.group.mapper;//import static org.junit.jupiter.api.Assertions.*;
+package com.vj.lets.domain.group.mapper;
 
 import com.vj.lets.domain.group.dto.GroupMemberList;
 import com.vj.lets.domain.group.dto.StudyGroup;

@@ -84,4 +84,12 @@
         WHERE ID = #{id}
     </update>
 
+    <select id="findNewStudyList" resultType="StudyGroup">
+        SELECT ID, NAME, REGDATE
+        FROM (SELECT ID, NAME, REGDATE
+                FROM STUDY_GROUP
+                WHERE STATUS = 'enabled'
+                ORDER BY REGDATE DESC)
+        WHERE <![CDATA[ ROWNUM <= 3 ]]>
+    </select>
 </mapper>
