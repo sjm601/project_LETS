@@ -10,9 +10,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * 시,군,구 서비스 테스트
+ * @author VJ특공대 이희영
+ * @version 1.0
+ * @since 2023-09-13 (수)
+ */
 @SpringBootTest
 @Slf4j
-class SiGunGuServiceImplTest {
+class SiGunGuServiceTest {
 
     @Autowired
     private SiGunGuService siGunGuService;
