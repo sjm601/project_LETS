@@ -4,6 +4,7 @@ import com.vj.lets.domain.article.dto.Article;
 import com.vj.lets.domain.article.dto.PageParams;
 import com.vj.lets.domain.article.mapper.ArticleHistoryMapper;
 import com.vj.lets.domain.article.mapper.ArticleMapper;
+import com.vj.lets.domain.article.util.ArticleHistoryComment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,14 +38,14 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void update(Article article) {
         articleMapper.update(article);
-        articleHistoryMapper.update(article.getId());
+        articleHistoryMapper.createByUpdate(article.getId(), ArticleHistoryComment.UPDATE.getComment());
     }
 
     @Transactional
     @Override
     public void delete(int id) {
         articleMapper.delete(id);
-        articleHistoryMapper.delete(id);
+        articleHistoryMapper.createByUpdate(id, ArticleHistoryComment.DELETE.getComment());
     }
 
     @Override
