@@ -65,6 +65,7 @@ public class MemberController {
                 .password(registerForm.getPassword())
                 .type(MemberType.GUEST.getType())
                 .build();
+
         memberService.register(member);
 
         try {

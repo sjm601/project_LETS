@@ -17,7 +17,7 @@
 
     <insert id="delete" parameterType="int">
         INSERT INTO CAFE_HISTORY (ID, MODIFY_COMMENT,CAFE_ID)
-        VALUES (CAFE_HISTORY_ID_SEQ.NEXTVAL, 'delte',#{cafeId})
+        VALUES (CAFE_HISTORY_ID_SEQ.NEXTVAL, 'delete',#{cafeId})
     </insert>
 
 </mapper>

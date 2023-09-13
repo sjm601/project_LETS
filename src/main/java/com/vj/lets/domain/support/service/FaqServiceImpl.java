@@ -6,6 +6,7 @@ import com.vj.lets.domain.support.mapper.FaqCategoryMapper;
 import com.vj.lets.domain.support.mapper.FaqMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -31,6 +32,7 @@ public class FaqServiceImpl implements FaqService {
      * @param faq FAQ 정보
      */
     @Override
+    @Transactional
     public void register(Faq faq) {
         faqMapper.create(faq);
     }
@@ -70,6 +72,7 @@ public class FaqServiceImpl implements FaqService {
      * @param faq FAQ 정보
      */
     @Override
+    @Transactional
     public void edit(Faq faq) {
         faqMapper.update(faq);
     }
@@ -80,6 +83,7 @@ public class FaqServiceImpl implements FaqService {
      * @param id FAQ ID
      */
     @Override
+    @Transactional
     public void remove(int id) {
         faqMapper.delete(id);
     }

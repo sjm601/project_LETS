@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    // JUnit5 Library
+    // JUnit5 Framework
     // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
 
@@ -30,11 +30,11 @@ dependencies {
     // https://mvnrepository.com/artifact/org.assertj/assertj-core
     testImplementation 'org.assertj:assertj-core:3.23.1'
 
-    // Slf4j(Logging Standard Interface) Library
+    // Slf4j(Logging Standard Interface) API
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
     implementation 'org.slf4j:slf4j-api:2.0.7'
 
-    // Logback Library (Slf4j Embodiment)
+    // Logback Framework (Slf4j Embodiment)
     // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
     implementation 'ch.qos.logback:logback-classic:1.4.8'
     testImplementation 'ch.qos.logback:logback-classic:1.4.8'
