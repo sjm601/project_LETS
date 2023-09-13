@@ -11,6 +11,4 @@
         WHERE NAME = #{siGunGuName}
     </select>
 
-
-
 </mapper>

@@ -5,6 +5,13 @@ import com.vj.lets.domain.location.mapper.SiGunGuMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * 시,군,구 서비스 구현체
+ *
+ * @author VJ특공대 이희영
+ * @version 1.0
+ * @since 2023-09-11 (월)
+ */
 @RequiredArgsConstructor
 @Service
 public class SiGunGuServiceImpl implements SiGunGuService {
@@ -13,8 +20,9 @@ public class SiGunGuServiceImpl implements SiGunGuService {
 
     /**
      * 시,군,구 조회
+     *
      * @param siGunGuName
-     * @return 시,군,구 정보
+     * @return 조회된 시,군,구 정보
      */
     @Override
     public SiGunGu findById(String siGunGuName) {

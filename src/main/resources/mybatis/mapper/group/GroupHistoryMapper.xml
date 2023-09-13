@@ -10,12 +10,12 @@
         VALUES (GROUP_HISTORY_ID_SEQ.NEXTVAL, STUDY_GROUP_ID_SEQ.CURRVAL)
     </insert>
 
-    <insert id="update">
+    <insert id="update" parameterType="int">
         INSERT INTO GROUP_HISTORY(ID, MODIFY_COMMENT, STUDY_GROUP_ID)
         VALUES (GROUP_HISTORY_ID_SEQ.nextval, 'update', #{studyGroupId})
     </insert>
 
-    <insert id="delete">
+    <insert id="delete" parameterType="int">
         INSERT INTO GROUP_HISTORY(ID, MODIFY_COMMENT, STUDY_GROUP_ID)
         VALUES (GROUP_HISTORY_ID_SEQ.nextval, 'delete', #{studyGroupId})
     </insert>
