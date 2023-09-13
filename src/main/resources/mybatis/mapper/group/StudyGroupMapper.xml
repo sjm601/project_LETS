@@ -6,9 +6,14 @@
 <mapper namespace="com.vj.lets.domain.group.mapper.StudyGroupMapper">
 
     <insert id="create" parameterType="StudyGroup">
-        INSERT INTO STUDY_GROUP (ID, NAME, HEAD_COUNT, SUBJECT, SI_GUN_GU_ID)
-        VALUES (STUDY_GROUP_ID_SEQ.NEXTVAL, #{name}, #{headCount}, #{subject}, #{siGunGuId})
+        INSERT INTO STUDY_GROUP (ID, NAME, TOTAL_COUNT, SUBJECT, IMAGE_PATH, SI_GUN_GU_ID)
+        VALUES (STUDY_GROUP_ID_SEQ.NEXTVAL, #{name}, #{totalCount}, #{subject}, #{imagePath}, #{siGunGuId})
     </insert>
+
+    <select id="findId" resultType="int">
+        SELECT STUDY_GROUP_ID_SEQ.CURRVAL
+        FROM DUAL
+    </select>
 
     <select id="findAll" resultType="map">
         SELECT SG.ID            ID,
@@ -22,7 +27,12 @@
                SGG.NAME         SIGUNGUNAME
         FROM STUDY_GROUP SG
                  JOIN SI_GUN_GU SGG ON SG.SI_GUN_GU_ID = SGG.ID
-        WHERE SG.STATUS = 'enabled'
+        <where>
+            SG.STATUS = 'enabled'
+            <if test="keyword != null">AND SG.NAME LIKE '%' || #{keyword} || '%'</if>
+            <if test="keyword != null">OR SG.SUBJECT LIKE '%' || #{keyword} || '%'</if>
+            <if test="keyword != null">OR SGG.NAME LIKE '%' || #{keyword} || '%'</if>
+        </where>
         ORDER BY REGDATE DESC
     </select>
 

@@ -2,6 +2,7 @@ package com.vj.lets.domain.group.service;
 
 import com.vj.lets.domain.group.dto.GroupContact;
 import com.vj.lets.domain.group.dto.GroupMemberList;
+import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
 
 import java.util.List;
@@ -22,15 +23,16 @@ public interface StudyGroupService {
      * @param studyGroup 생성할 스터디 그룹 정보
      * @param id 회원 아이디
      * @param siGunGuName 시,군,구 이름
+     * @return 생성된 스터디 그룹 아이디
      */
-    public void createStudyGroup(StudyGroup studyGroup, int id, String siGunGuName);
+    public int createStudyGroup(StudyGroup studyGroup, int id, String siGunGuName);
 
     /**
      * 스터디 그룹 전체 리스트 조회
      *
      * @return 스터디 그룹 리스트
      */
-    public List<Map<String, Object>> getStudyGroupList();
+    public List<Map<String, Object>> getStudyGroupList(Search search);
 
     /**
      * 스터디 그룹 조회

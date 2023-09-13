@@ -2,6 +2,7 @@ package com.vj.lets.domain.group.service;//import static org.junit.jupiter.api.A
 
 import com.vj.lets.domain.group.dto.GroupContact;
 import com.vj.lets.domain.group.dto.GroupMemberList;
+import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
@@ -46,19 +47,20 @@ class StudyGroupServiceTest {
         int id = 30;
 
         // when
-        studyGroupService.createStudyGroup(studyGroup, id, siGunGuName);
+        int studyGroupId = studyGroupService.createStudyGroup(studyGroup, id, siGunGuName);
 
         // then
-        log.info("스터디 그룹 생성");
+        log.info("생성한 스터디 그룹 아이디 : {}", studyGroupId);
     }
 
     @Test
     @Transactional
     void getStudyGroupListTest() {
         // given
+        Search search = Search.builder().build();
 
         // when
-        List<Map<String, Object>> list = studyGroupService.getStudyGroupList();
+        List<Map<String, Object>> list = studyGroupService.getStudyGroupList(search);
 
         // then
         log.info("스터디 그룹 리스트 : {}", list);

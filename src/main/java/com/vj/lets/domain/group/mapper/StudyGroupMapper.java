@@ -1,5 +1,6 @@
 package com.vj.lets.domain.group.mapper;
 
+import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -19,16 +20,25 @@ public interface StudyGroupMapper {
     /**
      * 스터디 그룹 생성
      *
+     * @author VJ특공대 이희영
      * @param studyGroup 생성할 스터디 그룹 정보
+     * @return 생성된 스터디 그룹
      */
     public void create(StudyGroup studyGroup);
+
+    /**
+     * 스터디 그룹 아이디 조회
+     * 
+     * @return 스터디 그룹 아이디
+     */
+    public int findId();
 
     /**
      * 스터디 그룹 전체 리스트 조회
      *
      * @return 스터디 그룹 리스트
      */
-    public List<Map<String, Object>> findAll();
+    public List<Map<String, Object>> findAll(Search search);
 
     /**
      * 스터디 그룹 조회

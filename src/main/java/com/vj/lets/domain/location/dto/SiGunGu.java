@@ -5,7 +5,7 @@ import lombok.*;
 /**
  * 시,군,구 빈
  * 
- * @author 이희영
+ * @author VJ특공대 이희영
  * @version 1.0
  * @since 2023-09-11 (월)
  */

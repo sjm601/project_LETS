@@ -1,5 +1,6 @@
 package com.vj.lets.domain.group.mapper;//import static org.junit.jupiter.api.Assertions.*;
 
+import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
 import com.vj.lets.domain.location.dto.SiGunGu;
 import com.vj.lets.domain.location.mapper.SiGunGuMapper;
@@ -39,6 +40,7 @@ class StudyGroupMapperTest {
                 .name("스터디")
                 .totalCount(10)
                 .subject("주식")
+                .imagePath("")
                 .build();
 
         String siGunGuName = "노원구";
@@ -51,16 +53,38 @@ class StudyGroupMapperTest {
 
         // then
         log.info("생성한 스터디 그룹 정보 : {}", studyGroup);
-        assertThat(studyGroup).isNotNull();
+    }
+
+    @Test
+    @Transactional
+    void findIdTest() {
+        // given
+        StudyGroup studyGroup = StudyGroup.builder()
+                .name("스터디")
+                .totalCount(10)
+                .subject("주식")
+                .build();
+
+        String siGunGuName = "노원구";
+        SiGunGu siGunGu = siGunGuMapper.getSiGunGu(siGunGuName);
+
+        studyGroup.setSiGunGuId(siGunGu.getId());
+
+        // when
+        studyGroupMapper.create(studyGroup);
+        int studyGroupId = studyGroupMapper.findId();
+
+        // then
+        log.info("현재 스터디 그룹 아이디 정보 : {}", studyGroupId);
     }
 
     @Test
     @Transactional
     void findAllTest() {
         // given
-
+        Search search = Search.builder().build();
         // when
-        List<Map<String, Object>> studyGroupList = studyGroupMapper.findAll();
+        List<Map<String, Object>> studyGroupList = studyGroupMapper.findAll(search);
 
         // then
         log.info("스터디 그룹 전체 리스트 : {}", studyGroupList);

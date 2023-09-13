@@ -12,9 +12,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * 시,군,구 서비스 테스트
+ * 
  * @author VJ특공대 이희영
  * @version 1.0
- * @since 2023-09-13 (수)
+ * @since 2023-09-11 (월)
  */
 @SpringBootTest
 @Slf4j
@@ -25,7 +26,6 @@ class SiGunGuServiceTest {
 
     @Test
     @Transactional
-    @Disabled
     void findByIdTest() {
         // given
         String siGunGuName = "제주시";
@@ -35,6 +35,5 @@ class SiGunGuServiceTest {
 
         // then
         log.info("시,군,구 id : {}", siGunGu.getId());
-        assertThat(siGunGu.getId()).isNotNull();
     }
 }

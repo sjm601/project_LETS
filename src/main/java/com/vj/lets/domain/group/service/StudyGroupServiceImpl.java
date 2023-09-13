@@ -2,6 +2,7 @@ package com.vj.lets.domain.group.service;
 
 import com.vj.lets.domain.group.dto.GroupContact;
 import com.vj.lets.domain.group.dto.GroupMemberList;
+import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
 import com.vj.lets.domain.group.mapper.GroupContactMapper;
 import com.vj.lets.domain.group.mapper.GroupHistoryMapper;
@@ -39,19 +40,25 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @param studyGroup 생성할 스터디 그룹 정보
      * @param id 회원 아이디
      * @param siGunGuName 시,군,구 이름
+     * @return 생성된 스터디 그룹 아이디
      */
     @Override
-    public void createStudyGroup(StudyGroup studyGroup, int id, String siGunGuName) {
+    @Transactional
+    public int createStudyGroup(StudyGroup studyGroup, int id, String siGunGuName) {
         // 전달 받은 시,군,구 이름을 시,군,구 아이디로 변환
         SiGunGu siGunGu = siGunGuMapper.getSiGunGu(siGunGuName);
         studyGroup.setSiGunGuId(siGunGu.getId());
 
         // 스터디 그룹 생성
         studyGroupMapper.create(studyGroup);
+        // 현재 생성된 스터디 그룹 아이디 조회
+        int studyGroupId = studyGroupMapper.findId();
         // 스터디 그룹 멤버 리스트에 전달 받은 회원을 팀장으로 추가
         groupMemberListMapper.create(id);
         // 스터디 그룹 히스토리 추가
         groupHistoryMapper.create();
+
+        return studyGroupId;
     }
 
     /**
@@ -60,15 +67,15 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @return 스터디 그룹 리스트
      */
     @Override
-    public List<Map<String, Object>> getStudyGroupList() {
+    public List<Map<String, Object>> getStudyGroupList(Search search) {
         List<Map<String, Object>> list = null;
 
-        list = studyGroupMapper.findAll();
+        list = studyGroupMapper.findAll(search);
         return list;
     }
 
     /**
-     *  스터디 그룹 조회
+     * 스터디 그룹 조회
      *
      * @param studyGroupId 스터디 그룹 아이디
      * @return 조회된 스터디 그룹 정보
@@ -87,6 +94,7 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @param studyGroup 수정할 스터디 그룹 정보
      */
     @Override
+    @Transactional
     public void editStudyGroup(StudyGroup studyGroup) {
         // 스터디 그룹 정보 수정
         studyGroupMapper.update(studyGroup);
@@ -100,6 +108,7 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @param id 삭제할 스터디 그룹 아이디
      */
     @Override
+    @Transactional
     public void deleteStudyGroup(int id) {
         // 스터디 그룹 정보 삭제 -> DB에 정보는 남기고 상태를 disabled로 변경
         studyGroupMapper.delete(id);
@@ -128,6 +137,7 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @param studyGroupId 스터디 그룹 아이디
      */
     @Override
+    @Transactional
     public void addMember(int id, int studyGroupId) {
         // 스터디 그룹 멤버 리스트에 전달 받은 회원 id '팀원'으로 추가
         groupMemberListMapper.add(id, studyGroupId);
@@ -144,6 +154,7 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @param studyGroupId 스터디 그룹 아이디
      */
     @Override
+    @Transactional
     public void removeMember(int id, int studyGroupId) {
         // 스터디 그룹 멤버 리스트에 전달 받은 회원 id 삭제
         groupMemberListMapper.remove(id, studyGroupId);
@@ -185,6 +196,7 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @param studyGroupId 스터디 그룹 아이디
      */
     @Override
+    @Transactional
     public void approve(int id, int studyGroupId) {
         // 스터디 그룹 가입 신청 승인
         groupContactMapper.approve(id, studyGroupId);
@@ -205,6 +217,7 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @param studyGroupId 스터디 그룹 아이디
      */
     @Override
+    @Transactional
     public void refuse(int id, int studyGroupId) {
         // 스터디 그룹 가입 거절
         groupContactMapper.refuse(id, studyGroupId);

@@ -94,15 +94,15 @@
               </div>
               <div class="mb-3">
                 <label class="form-label" for="image">대표 이미지</label>
-                <input type="file" class="real-upload form-control" accept="image/*" id="image" name="image" />
+                <input type="file" class="real-upload form-control" accept="image/*" id="image" name="imagePath" />
               </div>
               <div class="mb-3">
                 <label class="form-label" for="name">스터디 이름</label>
                 <input class="form-control" id="name" name="name" type="text" placeholder="스터디 이름" />
               </div>
               <div class="mb-3">
-                <label class="form-label" for="head_count">스터디 최대 멤버(명)</label>
-                <select class="form-select" name="head_count" id="head_count">
+                <label class="form-label" for="totalCount">스터디 최대 멤버(명)</label>
+                <select class="form-select" name="totalCount" id="totalCount">
                   <option value="10">10 (최소 10)</option>
                   <option value="20">20</option>
                   <option value="30">30</option>
@@ -132,7 +132,7 @@
               </div>
               <div class="mb-5">
                 <label class="form-label" for="address">스터디 대표 주소(시, 군, 구)</label>
-                <input class="form-control" id="address" name="SiGunGu.name" type="text" placeholder="클릭하여 주소 입력하세요" readonly />
+                <input class="form-control" id="address" name="siGunGuName" type="text" placeholder="클릭하여 주소 입력하세요" readonly />
               </div>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
             <button type="submit" class="btn btn-primary">생성</button>
