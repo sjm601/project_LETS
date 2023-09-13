@@ -65,5 +65,9 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationMapper.findTotalData(cafeId);
     }
 
+    @Override
+    public Map<String, Reservation> getResInfo(int id) {
+        return reservationMapper.findResInfo(id);
+    }
 
 }

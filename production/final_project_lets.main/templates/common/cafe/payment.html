@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+    th:replace="~{/common/layout/common_layout_V2 :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+
+    <th:block th:fragment="head">
+        <meta name="author" content="VJCommando">
+        <meta name="description" content="LETS - 결제 페이지">
+        <title>LETS - 결제 페이지</title>
+    </th:block>
+
+    <th:block th:fragment="content">
+        <!-- main -->
+        <main>
+            <div class="hero_in cart_section">
+                <div class="wrapper">
+                    <div class="container">
+                        <div class="bs-wizard clearfix">
+                            <div class="bs-wizard-step">
+                                <div class="text-center bs-wizard-stepnum">Your cart</div>
+                                <div class="progress">
+                                    <div class="progress-bar"></div>
+                                </div>
+                                <a href="reservation.html" class="bs-wizard-dot"></a>
+                            </div>
+
+                            <div class="bs-wizard-step active">
+                                <div class="text-center bs-wizard-stepnum">Payment</div>
+                                <div class="progress">
+                                    <div class="progress-bar"></div>
+                                </div>
+                                <a href="#0" class="bs-wizard-dot"></a>
+                            </div>
+
+                            <div class="bs-wizard-step disabled">
+                                <div class="text-center bs-wizard-stepnum">Finish!</div>
+                                <div class="progress">
+                                    <div class="progress-bar"></div>
+                                </div>
+                                <a href="#0" class="bs-wizard-dot"></a>
+                            </div>
+                        </div>
+                        <!-- End bs-wizard -->
+                    </div>
+                </div>
+            </div>
+            <!--/hero_in-->
+            <form action="javascript:void(0);" class="needs-validation" novalidate method="post" name="payForm">
+                <div class="bg_color_1">
+                    <div class="container margin_60_35">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="box_cart">
+                                    <div class="form_title">
+                                        <h3><strong>★</strong>Payer Details</h3>
+                                        <p>
+                                            Please enter the details of the payer.
+                                        </p>
+                                    </div>
+                                    <div class="step">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="firstname_booking">Name</label>
+                                                    <input type="text" class="form-control" id="name_booking"
+                                                           name="name_booking" required>
+                                                    <div class="invalid-feedback">이름을 정확히 입력하여 주세요...</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="email_booking">Email</label>
+                                                    <input type="email" id="email_booking" name="email_booking"
+                                                           class="form-control" required>
+                                                    <div class="invalid-feedback">이메일을 정확히 입력하여 주세요...</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="telephone_booking">Telephone</label>
+                                                    <input type="tel" id="telephone_booking" name="telephone_booking"
+                                                           class="form-control" required>
+                                                    <div class="invalid-feedback">전화번호를 정확히 입력하여 주세요... (ex.
+                                                        01012345678)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End step -->
+                                    <div id="policy" class="mt-5">
+                                        <h5>Cancellation policy</h5>
+                                        <p class="nomargin">Reservations can be canceled without penalty <a href="#0">on
+                                            My
+                                            Page within 24 hours after the reservation</a> is completed on the
+                                            website.<br>
+                                            Please check the FAQ page for detailed cancellation regulations.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /col -->
+
+                            <aside class="col-lg-4" id="sidebar">
+                                <div class="box_detail">
+                                    <div id="total_cart">
+                                        Total <span class="float-end">79,000<i class="fa-solid fa-won-sign"></i></span>
+                                    </div>
+                                    <ul class="cart_details">
+                                        <li>Date <span>2023-09-04</span></li>
+                                        <li>Time <span>11:00 - 13:00</span></li>
+                                        <li>Total Headcount <span>2</span></li>
+                                    </ul>
+                                    <button type="submit" onclick="requestPay()" class="btn_1 full-width purchase">
+                                        Purchase
+                                    </button>
+                                    <div class="text-center"><small>Click this button to proceed with the
+                                        payment.</small>
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
+                        <!-- /row -->
+                    </div>
+                    <!-- /container -->
+                </div>
+            </form>
+            <!-- /bg_color_1 -->
+        </main>
+        <!--/main-->
+    </th:block>
+
+    <th:block th:fragment="scripts">
+        <script src="/js/custom/reservation_custom.js"></script>
+    </th:block>
+
+</th:block>
+
+</html>

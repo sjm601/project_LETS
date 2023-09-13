@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+
+    <th:block th:fragment="head">
+        <meta name="author" content="VJCommando">
+        <meta name="description" content="LETS - Host Dashboard">
+        <title>LETS - Host Dashboard</title>
+
+        <link href="/dashboard/vendor/dropzone.css" rel="stylesheet">
+    </th:block>
+
+    <th:block th:fragment="content">
+        <!-- Content -->
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/dashboard/host/host_dashboard.html">대시보드</a>
+                    </li>
+                    <li class="breadcrumb-item active">Add Cafe</li>
+                </ol>
+                <div class="box_general padding_bottom">
+                    <div class="header_box version_2">
+                        <h2><i class="fa fa-file"></i>스터디 카페 등록</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>호스트 이름</label>
+                                <input type="text" class="form-control" placeholder="홍길동" name="name" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>호스트 이메일</label>
+                                <input type="text" class="form-control" placeholder="hong@gmail.com" name="email"
+                                       disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>호스트 전화번호</label>
+                                <input type="text" class="form-control" placeholder="01012345678" name="number"
+                                       disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>카페 대표사진</label>
+                                <form action="/file-upload" class="dropzone" name="cafePhoto"></form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>스터디 카페 이름</label>
+                                <input type="text" class="form-control" placeholder="Name" name="cafeName">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>카페 전화번호</label>
+                                <input type="text" class="form-control" placeholder="전화번호를 기호없이 입력하시오 01012345678"
+                                       name="cafeNum">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>룸 개수</label>
+                                <input type="number" class="form-control" placeholder="룸 갯수를 숫자로 입력하세요" name="roomNum">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /row-->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>카페 설명</label>
+                                <textarea style="height:200px;" class="form-control" placeholder="설명을 입력해주세요"
+                                          name="cafeDescription"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /row-->
+                </div>
+                <!-- /box_general-->
+
+                <div class="box_general padding_bottom">
+                    <div class="header_box version_2">
+                        <h2><i class="fa fa-map-marker"></i>Location</h2>
+                    </div>
+                    <!-- /row-->
+                    <div class="row">
+                        <div class="col-md-11">
+                            <div class="form-group">
+                                <label>주소</label>
+                                <input type="text" class="form-control" id="address_kakao_all" placeholder="주소"/>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label>&nbsp;</label>
+                                <button type="button" class="form-control btn_1 gray" id="address_kakao_btn"
+                                        name="address">주소
+                                    검색
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /row-->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="address_detail" placeholder="상세 주소"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" id="address_kakao_do"
+                                       placeholder="ex. 서울특별시 또는 도(강원특별자치도)">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" id="address_kakao_gun"
+                                       placeholder="ex. 구(서초구) 또는 군(구례군)">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" id="address_kakao_detail"
+                                       placeholder="ex. 도로명 주소">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /box_general-->
+
+                <div class="box_general padding_bottom">
+                    <div class="header_box version_2">
+                        <h2><i class="fa fa-clock-o mr-1"></i>운영시간</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <label class="fix_spacing">운영시작시간</label>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <div class="styled-select">
+                                    <select>
+                                        <option>Opening Time</option>
+                                        <option>Closed</option>
+                                        <option>01:00</option>
+                                        <option>02:00</option>
+                                        <option>03:00</option>
+                                        <option>04:00</option>
+                                        <option>05:00</option>
+                                        <option>06:00</option>
+                                        <option>07:00</option>
+                                        <option>08:00</option>
+                                        <option>09:00</option>
+                                        <option>10:00</option>
+                                        <option>11:00</option>
+                                        <option>12:00</option>
+                                        <option>13:00</option>
+                                        <option>14:00</option>
+                                        <option>15:00</option>
+                                        <option>16:00</option>
+                                        <option>17:00</option>
+                                        <option>18:00</option>
+                                        <option>19:00</option>
+                                        <option>20:00</option>
+                                        <option>21:00</option>
+                                        <option>22:00</option>
+                                        <option>23:00</option>
+                                        <option>24:00</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <label class="fix_spacing">운영종료시간</label>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <div class="styled-select">
+                                    <select>
+                                        <option>Closing Time</option>
+                                        <option>Closed</option>
+                                        <option>01:00</option>
+                                        <option>02:00</option>
+                                        <option>03:00</option>
+                                        <option>04:00</option>
+                                        <option>05:00</option>
+                                        <option>06:00</option>
+                                        <option>07:00</option>
+                                        <option>08:00</option>
+                                        <option>09:00</option>
+                                        <option>10:00</option>
+                                        <option>11:00</option>
+                                        <option>12:00</option>
+                                        <option>13:00</option>
+                                        <option>14:00</option>
+                                        <option>15:00</option>
+                                        <option>16:00</option>
+                                        <option>17:00</option>
+                                        <option>18:00</option>
+                                        <option>19:00</option>
+                                        <option>20:00</option>
+                                        <option>21:00</option>
+                                        <option>22:00</option>
+                                        <option>23:00</option>
+                                        <option>24:00</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /row-->
+                </div>
+                <!-- /box_general-->
+
+                <div class="box_general padding_bottom">
+                    <div class="header_box version_2">
+                        <h2><i class="fa fa-dollar"></i>Option</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="fix_spacing mr-2" for="wifi"><i class="fa-solid fa-wifi mr-2"></i>와이파이</label>
+                            <input type="checkbox" id="wifi" value="wifi">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="fix_spacing mr-2"><i class="fa-solid fa-plug mr-2"></i>멀티탭 대여</label>
+                            <input type="checkbox">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="fix_spacing mr-2"><i class="fa-solid fa-camera mr-2"></i>웹캠대여</label>
+                            <input type="checkbox">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="fix_spacing mr-2"><i class="fa-solid fa-whiskey-glass mr-2"></i>음료제공</label>
+                            <input type="checkbox">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="fix_spacing mr-2"><i class="fa-solid fa-cookie mr-2"></i>간식제공</label>
+                            <input type="checkbox">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="fix_spacing mr-2"><i class="fa-solid fa-print mr-2"></i>복합기 사용가능</label>
+                            <input type="checkbox">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="fix_spacing mr-2"><i class="fa-solid fa-door-open mr-2"></i>24시간 운영</label>
+                            <input type="checkbox">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="fix_spacing mr-2"><i class="fa-solid fa-charging-station mr-2"></i>충전기
+                                대여</label>
+                            <input type="checkbox">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="fix_spacing mr-2"><i class="fa-solid fa-rug mr-2"></i>담요 대여</label>
+                            <input type="checkbox">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="fix_spacing mr-2"><i class="fa-solid fa-mask-face mr-2"></i>공기청정기</label>
+                            <input type="checkbox">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="fix_spacing mr-2"><i class="fa-solid fa-wind mr-2"></i>에어컨</label>
+                            <input type="checkbox">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="fix_spacing mr-2"><i class="fa-solid fa-restroom mr-2"></i>전용 화장실</label>
+                            <input type="checkbox">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="fix_spacing mr-2"><i class="fa-solid fa-box-archive mr-2"></i>개별 사물함</label>
+                            <input type="checkbox">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="fix_spacing mr-2"><i class="fa-regular fa-eye mr-2"></i>보안 CCTV</label>
+                            <input type="checkbox">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="fix_spacing mr-2"><i class="fa-solid fa-elevator mr-2"></i>엘리베이터</label>
+                            <input type="checkbox">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="fix_spacing mr-2"><i class="fa-solid fa-smoking mr-2"></i>흡연구역</label>
+                            <input type="checkbox">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="fix_spacing mr-2"><i class="fa-solid fa-chalkboard mr-2"></i>화이트보드</label>
+                            <input type="checkbox">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="fix_spacing mr-2"><i class="fa-solid fa-desktop mr-2"></i>빔프로젝터</label>
+                            <input type="checkbox">
+                        </div>
+                    </div>
+                </div>
+                <!-- /row-->
+            </div>
+            <!-- /box_general-->
+            <div class="float-right mr-3">
+                <p><a href="cafe-register.html" class="btn_1 medium">등록</a></p>
+                <!-- <p><a href="#0" class="btn_1 medium">수정</a></p> -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /Content -->
+    </th:block>
+
+    <th:block th:fragment="scripts">
+        <!-- Custom scripts for this page -->
+        <script src="/dashboard/vendor/dropzone.min.js"></script>
+        <!--카카오 지도 검색 api-->
+        <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <script th:inline="javascript">
+            window.onload = function () {
+                document.getElementById("address_kakao_btn").addEventListener("click", function () {
+                    // 카카오 지도 발생
+                    new daum.Postcode({
+                        oncomplete: function (data) {
+                            document.getElementById("address_kakao_all").value = data.address; // 전체 주소 넣기
+                            document.getElementById("address_kakao_gun").value = data.sigungu; // 군,구 넣기
+                            document.getElementById("address_kakao_do").value = data.sido; // 특별시,도 넣기
+                            const address = document.getElementById('address_kakao_all').value;
+                            const sido = document.getElementById('address_kakao_do').value;
+                            const sigungu = document.getElementById('address_kakao_gun').value;
+
+                            let newAddress = "";
+                            newAddress = address.replace(sido, '');
+                            newAddress = newAddress.replace(sigungu, '');
+                            newAddress = newAddress.trim();
+                            document.getElementById("address_kakao_detail").value = newAddress; // 도로명 주소 넣기
+                            document.querySelector("input[name=address_detail]").focus(); // 상세입력 포커싱
+                        }
+                    }).open();
+                });
+            }
+        </script>
+        <!-- /custom scripts -->
+    </th:block>
+
+</th:block>
+
+</html>

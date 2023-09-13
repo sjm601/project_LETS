@@ -1,5 +1,6 @@
 package com.vj.lets.domain.group.mapper;//import static org.junit.jupiter.api.Assertions.*;
 
+import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
 import com.vj.lets.domain.location.dto.SiGunGu;
 import com.vj.lets.domain.location.mapper.SiGunGuMapper;
@@ -15,6 +16,13 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * 스터디 그룹 매퍼 테스트
+ *
+ * @author VJ특공대 이희영
+ * @version 1.0
+ * @since 2023-09-08 (금)
+ */
 @SpringBootTest
 @Slf4j
 class StudyGroupMapperTest {
@@ -26,8 +34,30 @@ class StudyGroupMapperTest {
 
     @Test
     @Transactional
-    @Disabled
     void createTest() {
+        // given
+        StudyGroup studyGroup = StudyGroup.builder()
+                .name("스터디")
+                .totalCount(10)
+                .subject("주식")
+                .imagePath("")
+                .build();
+
+        String siGunGuName = "노원구";
+        SiGunGu siGunGu = siGunGuMapper.getSiGunGu(siGunGuName);
+
+        studyGroup.setSiGunGuId(siGunGu.getId());
+
+        // when
+        studyGroupMapper.create(studyGroup);
+
+        // then
+        log.info("생성한 스터디 그룹 정보 : {}", studyGroup);
+    }
+
+    @Test
+    @Transactional
+    void findIdTest() {
         // given
         StudyGroup studyGroup = StudyGroup.builder()
                 .name("스터디")
@@ -42,20 +72,19 @@ class StudyGroupMapperTest {
 
         // when
         studyGroupMapper.create(studyGroup);
+        int studyGroupId = studyGroupMapper.findId();
 
         // then
-        log.info("스터디그룹 정보 : {}", studyGroup);
-        assertThat(studyGroup).isNotNull();
+        log.info("현재 스터디 그룹 아이디 정보 : {}", studyGroupId);
     }
 
     @Test
     @Transactional
-    @Disabled
-    void findByAllTest() {
+    void findAllTest() {
         // given
-
+        Search search = Search.builder().build();
         // when
-        List<Map<String, Object>> studyGroupList = studyGroupMapper.findByAll();
+        List<Map<String, Object>> studyGroupList = studyGroupMapper.findAll(search);
 
         // then
         log.info("스터디 그룹 전체 리스트 : {}", studyGroupList);
@@ -64,83 +93,74 @@ class StudyGroupMapperTest {
 
     @Test
     @Transactional
-    @Disabled
-    void getStudyGroupTest() {
+    void readTest() {
         // given
         int studyGroupId = 1;
 
         // when
-        List<Map<String, Object>> studyGroup = studyGroupMapper.getStudyGroup(studyGroupId);
+        Map<String, Object> studyGroup = studyGroupMapper.read(studyGroupId);
 
         // then
-        log.info("스터디 그룹 정보 : {}", studyGroup);
+        log.info("조회된 스터디 그룹 정보 : {}", studyGroup);
 
-//        assertThat(studyGroup).isNotNull();
+        assertThat(studyGroup).isNotNull();
     }
 
     @Test
     @Transactional
-    @Disabled
     void updateTest() {
         // given
         StudyGroup studyGroup = StudyGroup.builder()
-                                          .id(1)
-                                          .name("이름업데이트")
-                                          .totalCount(10)
-                                          .subject("주제")
-                                          .build();
+                .id(1)
+                .name("이름업데이트")
+                .totalCount(10)
+                .subject("주제")
+                .build();
         log.info("테스트 : {}", studyGroup);
 
         // when
         studyGroupMapper.update(studyGroup);
-//        StudyGroup updateStudyGroup = studyGroupMapper.getStudyGroup(1);
 
         // then
-//        log.info("스터디 그룹 업데이트 : {}", updateStudyGroup);
-//        assertThat(updateStudyGroup).isNotNull();
+        log.info("스터디 그룹 수정 완료");
     }
 
     @Test
     @Transactional
-    @Disabled
     void deleteTest() {
         // given
         int studyGroupId = 1;
 
         // when
         studyGroupMapper.delete(studyGroupId);
-//        StudyGroup studyGroup = studyGroupMapper.getStudyGroup(studyGroupId);
 
         // then
-        log.info("삭제 완료");
-//        assertThat(studyGroup.getStatus()).isEqualTo("disabled");
+        log.info("스터디 그룹 삭제 완료");
     }
 
     @Test
     @Transactional
-    @Disabled
-    void increaseest() {
+    void addTest() {
         // given
         int studyGroupId = 1;
 
         // when
-        studyGroupMapper.increase(studyGroupId);
+        studyGroupMapper.add(studyGroupId);
 
         // then
-        log.info("스터디 회원 증가 완료");
+        log.info("스터디 그룹 회원 수 증가 완료");
     }
 
     @Test
     @Transactional
-    @Disabled
-    void decreaseTest() {
+    void subtractTest() {
         // given
         int studyGroupId = 1;
 
         // when
-        studyGroupMapper.decrease(studyGroupId);
+        studyGroupMapper.subtract(studyGroupId);
 
         // then
-        log.info("스터디 회원 감소 완료");
+        log.info("스터디 그룹 회원 수 감소 완료");
     }
 }

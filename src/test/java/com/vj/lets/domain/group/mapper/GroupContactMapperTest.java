@@ -12,6 +12,13 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * 그룹 신청 매퍼 테스트
+ * 
+ * @author VJ특공대 이희영
+ * @version 1.0
+ * @since 2023-09-11 (월)
+ */
 @SpringBootTest
 @Slf4j
 class GroupContactMapperTest {
@@ -21,7 +28,6 @@ class GroupContactMapperTest {
 
     @Test
     @Transactional
-    @Disabled
     void registerTest() {
         // given
         int id = 30;
@@ -36,13 +42,12 @@ class GroupContactMapperTest {
 
     @Test
     @Transactional
-    @Disabled
-    void findByAllTest() {
+    void findAllTest() {
         // given
         int studyGroupId = 1;
 
         // when
-        List<GroupContact> list = groupContactMapper.findByAll(studyGroupId);
+        List<GroupContact> list = groupContactMapper.findAll(studyGroupId);
 
         // then
         log.info("가입 신청 리스트 : {}", list);
@@ -51,7 +56,6 @@ class GroupContactMapperTest {
 
     @Test
     @Transactional
-    @Disabled
     void approveTest() {
         // given
         int id = 30;
@@ -66,7 +70,6 @@ class GroupContactMapperTest {
 
     @Test
     @Transactional
-    @Disabled
     void refuseTest() {
         // given
         int id = 30;
@@ -81,7 +84,6 @@ class GroupContactMapperTest {
 
     @Test
     @Transactional
-    @Disabled
     void deleteTest() {
         // given
         int id = 30;

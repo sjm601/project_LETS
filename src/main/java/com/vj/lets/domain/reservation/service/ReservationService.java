@@ -44,5 +44,8 @@ public interface ReservationService {
     //호스트의 모든 예약 데이터 가져오기
     public List<Map<String,Reservation>> getTotalData(int cafeId);
 
+    //예약에 필요한 예약 정보 가져오기
+    public Map<String,Reservation> getResInfo(int id);
+
 
 }

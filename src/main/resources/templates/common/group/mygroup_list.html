@@ -42,112 +42,34 @@
                     <span class="d-block fs-4 text-danger">스터디 생성</span>
                   </div>
                 </div>
+                <th:block th:each="myStudy : ${myStudyList}">
                 <div class="col-md-3 isotope-item popular">
                   <div class="box_grid" data-cue="slideInUp">
                     <figure>
-                      <a href="blog-post_내스터디.html"><img src="img/restaurant_1.jpg" class="img-fluid" alt="" width="800" height="533">
+                      <a th:href="@{/group/{id}(id=${myStudy.STUDYGROUPID})}" href="blog-post_내스터디.html"><img src="/img/restaurant_1.jpg" class="img-fluid" alt="" width="800" height="533">
                         <div class="read_more"><span>열기</span></div>
                       </a>
                     </figure>
                     <div class="wrapper pb-2 text-end">
-                      <h3 class="mb-3 text-start"><a href="blog-post_내스터디.html">주식스터디</a></h3>
+                      <h3 class="mb-3 text-start"><a th:href="@{/group/{id}(id=${myStudy.STUDYGROUPID})}" th:text="${myStudy.NAME}" href="blog-post_내스터디.html">주식스터디</a></h3>
                       <ul class="d-flex p-0 mb-2 border-0">
                         <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
-                               style="font-size: 14px;"><i class="fa-solid fa-location-dot me-1"></i>강동구</a></li>
-                        <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
+                               style="font-size: 14px;"><i class="fa-solid fa-location-dot me-1"></i><th:block th:text="${myStudy.SIGUNGUNAME}">강동구</th:block></a></li>
+                        <li><a th:text="${myStudy.SUBJECT}" class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
                                style="font-size: 14px;">주식</a></li>
                       </ul>
-                      <span class="text-secondary">멤버수 <strong class="ms-2 text-success fw-bold">40</strong> /
-												50명</span>
+                      <span class="text-secondary">멤버수 <strong th:text="${myStudy.CURRENTCOUNT}" class="ms-2 text-success fw-bold">40</strong> /
+                        <th:block th:text="${myStudy.TOTALCOUNT}">50</th:block>명</span>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-3 isotope-item popular">
-                  <div class="box_grid" data-cue="slideInUp">
-                    <figure>
-                      <a href="blog-post_내스터디.html"><img src="img/restaurant_1.jpg" class="img-fluid" alt="" width="800" height="533">
-                        <div class="read_more"><span>열기</span></div>
-                      </a>
-                    </figure>
-                    <div class="wrapper pb-2 text-end">
-                      <h3 class="mb-3 text-start"><a href="blog-post_내스터디.html">주식스터디</a></h3>
-                      <ul class="d-flex p-0 mb-2 border-0">
-                        <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
-                               style="font-size: 14px;"><i class="fa-solid fa-location-dot me-1"></i>강동구</a></li>
-                        <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
-                               style="font-size: 14px;">주식</a></li>
-                      </ul>
-                      <span class="text-secondary">멤버수 <strong class="ms-2 text-success fw-bold">40</strong> /
-												50명</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-3 isotope-item popular">
-                  <div class="box_grid" data-cue="slideInUp">
-                    <figure>
-                      <a href="blog-post_내스터디.html"><img src="img/restaurant_1.jpg" class="img-fluid" alt="" width="800" height="533">
-                        <div class="read_more"><span>열기</span></div>
-                      </a>
-                    </figure>
-                    <div class="wrapper pb-2 text-end">
-                      <h3 class="mb-3 text-start"><a href="blog-post_내스터디.html">주식스터디</a></h3>
-                      <ul class="d-flex p-0 mb-2 border-0">
-                        <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
-                               style="font-size: 14px;"><i class="fa-solid fa-location-dot me-1"></i>강동구</a></li>
-                        <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
-                               style="font-size: 14px;">주식</a></li>
-                      </ul>
-                      <span class="text-secondary">멤버수 <strong class="ms-2 text-success fw-bold">40</strong> /
-												50명</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-3 isotope-item popular">
-                  <div class="box_grid" data-cue="slideInUp">
-                    <figure>
-                      <a href="blog-post_내스터디.html"><img src="img/restaurant_1.jpg" class="img-fluid" alt="" width="800" height="533">
-                        <div class="read_more"><span>열기</span></div>
-                      </a>
-                    </figure>
-                    <div class="wrapper pb-2 text-end">
-                      <h3 class="mb-3 text-start"><a href="blog-post_내스터디.html">주식스터디</a></h3>
-                      <ul class="d-flex p-0 mb-2 border-0">
-                        <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
-                               style="font-size: 14px;"><i class="fa-solid fa-location-dot me-1"></i>강동구</a></li>
-                        <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
-                               style="font-size: 14px;">주식</a></li>
-                      </ul>
-                      <span class="text-secondary">멤버수 <strong class="ms-2 text-success fw-bold">40</strong> /
-												50명</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-3 isotope-item popular">
-                  <div class="box_grid" data-cue="slideInUp">
-                    <figure>
-                      <a href="blog-post_내스터디.html"><img src="img/restaurant_1.jpg" class="img-fluid" alt="" width="800" height="533">
-                        <div class="read_more"><span>열기</span></div>
-                      </a>
-                    </figure>
-                    <div class="wrapper pb-2 text-end">
-                      <h3 class="mb-3 text-start"><a href="blog-post_내스터디.html">주식스터디</a></h3>
-                      <ul class="d-flex p-0 mb-2 border-0">
-                        <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
-                               style="font-size: 14px;"><i class="fa-solid fa-location-dot me-1"></i>강동구</a></li>
-                        <li><a class="text-dark p-2 rounded-5 btn btn-outline-light" href="#"
-                               style="font-size: 14px;">주식</a></li>
-                      </ul>
-                      <span class="text-secondary">멤버수 <strong class="ms-2 text-success fw-bold">40</strong> /
-												50명</span>
-                    </div>
-                  </div>
-                </div>
+                </th:block>
               </div>
               <!-- /row -->
             </div>
             <!-- /isotope-wrapper -->
 
-            <p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p>
+            <p class="text-center"><a href="#" class="btn_1 rounded add_top_30">Load more</a></p>
           </div>
           <!-- /col -->
         </div>
@@ -166,21 +88,21 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form action="">
+            <form th:action="@{/group/create}" action="/" th:method="post">
               <div class="mb-3">
                 <ul class="image-preview"></ul>
               </div>
               <div class="mb-3">
                 <label class="form-label" for="image">대표 이미지</label>
-                <input type="file" class="real-upload form-control" accept="image/*" id="image" name="image" />
+                <input type="file" class="real-upload form-control" accept="image/*" id="image" name="imagePath" />
               </div>
               <div class="mb-3">
                 <label class="form-label" for="name">스터디 이름</label>
                 <input class="form-control" id="name" name="name" type="text" placeholder="스터디 이름" />
               </div>
               <div class="mb-3">
-                <label class="form-label" for="head_count">스터디 최대 멤버(명)</label>
-                <select class="form-select" name="head_count" id="head_count">
+                <label class="form-label" for="totalCount">스터디 최대 멤버(명)</label>
+                <select class="form-select" name="totalCount" id="totalCount">
                   <option value="10">10 (최소 10)</option>
                   <option value="20">20</option>
                   <option value="30">30</option>
@@ -210,13 +132,11 @@
               </div>
               <div class="mb-5">
                 <label class="form-label" for="address">스터디 대표 주소(시, 군, 구)</label>
-                <input class="form-control" id="address" name="address" type="text" placeholder="클릭하여 주소 입력하세요" readonly />
+                <input class="form-control" id="address" name="siGunGuName" type="text" placeholder="클릭하여 주소 입력하세요" readonly />
               </div>
-            </form>
-          </div>
-          <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
             <button type="submit" class="btn btn-primary">생성</button>
+            </form>
           </div>
         </div>
       </div>

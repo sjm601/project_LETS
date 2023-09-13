@@ -18,7 +18,7 @@ public interface ReservationMapper {
     public void create(Reservation reservation);
 
     
-    // 예약id 로 예약 조회
+    // 결제에 필요한 예약 정보 받아오기
     public Reservation findById(int id);
 
     /**
@@ -41,4 +41,6 @@ public interface ReservationMapper {
     public List<Map<String,Reservation>> findTotalData(int cafeId);
 
 
+    //예약에 필요한 예약 정보 가져오기
+    public Map<String,Reservation> findResInfo(int id);
 }

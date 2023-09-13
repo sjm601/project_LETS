@@ -10,7 +10,7 @@
         VALUES (GROUP_CONTACT_ID_SEQ.NEXTVAL, #{id}, #{studyGroupId})
     </insert>
 
-    <select id="findByAll" parameterType="int">
+    <select id="findAll" parameterType="int" resultType="GroupContact">
         SELECT ID, STATUS, REGDATE, MEMBER_ID, STUDY_GROUP_ID
         FROM GROUP_CONTACT
         WHERE STUDY_GROUP_ID = #{studyGroupId}

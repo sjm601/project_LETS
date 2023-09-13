@@ -1,0 +1,16 @@
+#loginModal .modal-dialog .modal-content .modal-header h4 {
+    margin: 0 !important;
+}
+
+#loginModal .modal-dialog .modal-content .modal-body form .form-group i {
+    font-size: 21px;
+    font-size: 1.3125rem;
+    position: absolute;
+    left: 12px;
+    top: 34px;
+    color: #ccc;
+    width: 25px;
+    height: 25px;
+    display: block;
+    font-weight: 400 !important;
+}

@@ -114,4 +114,15 @@ class ReservationServiceTest {
         log.info("호스트의 모든 예약 데이터:{}", reserveData);
         assertThat(reserveData).isNotNull();
     }
+
+    @Test
+    void getResInfoTest() {
+        // given
+        int findId = 2;
+        // when
+        Map<String ,Reservation> reservation = reservationService.getResInfo(findId);
+        // then
+        log.info("예약 검색 완료:{}",reservation);
+        assertThat(reservation).isNotNull();
+    }
 }

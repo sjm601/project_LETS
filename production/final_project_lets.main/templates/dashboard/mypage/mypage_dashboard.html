@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+
+    <th:block th:fragment="head">
+        <meta name="author" content="VJCommando">
+        <meta name="description" content="LETS - My Page">
+        <title>LETS - My Page</title>
+
+        <link href="/dashboard/vendor/dropzone.css" rel="stylesheet">
+    </th:block>
+
+    <th:block th:fragment="content">
+        <!-- Content -->
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/member_mypage/index.html">My page</a>
+                    </li>
+                    <li class="breadcrumb-item active">My page</li>
+                </ol>
+                <div class="box_general padding_bottom">
+                    <div class="header_box version_2">
+                        <h2><i class="fa fa-user"></i>나의 프로필</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Your photo</label>
+                                <form action="/file-upload" class="dropzone"></form>
+                            </div>
+                        </div>
+                        <div class="col-md-8 add_top_30">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>이메일</label>
+                                        <input type="text" class="form-control" placeholder="Your Email" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /row-->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>이름</label>
+                                        <input type="text" class="form-control" placeholder="Your Name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>전화번호</label>
+                                        <input type="email" class="form-control" placeholder="Your Phone Number">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /row-->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>성별</label>
+                                        <div class="styled-select">
+                                            <select>
+                                                <option selected>Gender</option>
+                                                <option>Male</option>
+                                                <option>Female</option>
+                                                <option>Others</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>MBTI</label>
+                                        <input type="text" class="form-control" placeholder="Your MBTI">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /row-->
+                        </div>
+                    </div>
+                </div>
+                <!-- /box_general-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="box_general padding_bottom">
+                            <div class="header_box version_2">
+                                <h2><i class="fa fa-lock"></i>Change password</h2>
+                            </div>
+                            <div class="form-group">
+                                <label>Old password</label>
+                                <input class="form-control" type="password">
+                            </div>
+                            <div class="form-group">
+                                <label>New password</label>
+                                <input class="form-control" type="password">
+                            </div>
+                            <div class="form-group">
+                                <label>Confirm new password</label>
+                                <input class="form-control" type="password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="box_general padding_bottom">
+                            <div class="header_box version_2">
+                                <h2><i class="fa fa-envelope"></i>Change email</h2>
+                            </div>
+                            <div class="form-group">
+                                <label>Old email</label>
+                                <input class="form-control" name="old_email" id="old_email" type="email">
+                            </div>
+                            <div class="form-group">
+                                <label>New email</label>
+                                <input class="form-control" name="new_email" id="new_email" type="email">
+                            </div>
+                            <div class="form-group">
+                                <label>Confirm new email</label>
+                                <input class="form-control" name="confirm_new_email" id="confirm_new_email"
+                                       type="email">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /row-->
+                <p><a href="#0" class="btn_1 medium">Save</a></p>
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.container-wrapper -->
+        <!-- /Content -->
+    </th:block>
+
+    <th:block th:fragment="scripts">
+        <!-- Custom scripts for this page -->
+        <script src="/dashboard/vendor/dropzone.min.js"></script>
+        <!-- /custom scripts -->
+    </th:block>
+
+</th:block>
+
+</html>
