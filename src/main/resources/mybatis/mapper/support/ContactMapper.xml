@@ -11,15 +11,16 @@
     </insert>
 
     <select id="readAll" resultType="Contact">
-        SELECT ID, EMAIL, NAME, CAFE_NAME, PHONE_NUMBER, ADDRESS, MESSAGE, BUSINESS_NUMBER, TO_CHAR(contact_date, 'yyyy-MM-DD') contact_date, status
+        SELECT ID, EMAIL, NAME, CAFE_NAME, PHONE_NUMBER, ADDRESS, MESSAGE, BUSINESS_NUMBER, TO_CHAR(contact_date, 'yyyy-MM-DD') contact_date, STATUS
         FROM CONTACT
+        WHERE STATUS = 'hold'
         ORDER BY contact_date DESC
     </select>
 
     <select id="readByMailBNumDate" parameterType="Contact" resultType="Contact">
-        select ID, EMAIL, BUSINESS_NUMBER, TO_CHAR(CONTACT_DATE, 'yyyy-MM-DD') contact_date, STATUS
-        from CONTACT
-        where (EMAIL = #{email} or BUSINESS_NUMBER = #{businessNumber}) AND TO_CHAR(CONTACT_DATE, 'yyyy-MM-DD') = TO_CHAR(SYSDATE, 'yyyy-MM-DD') AND STATUS = 'hold'
+        SELECT ID, EMAIL, BUSINESS_NUMBER, TO_CHAR(CONTACT_DATE, 'yyyy-MM-DD') contact_date, STATUS
+        FROM CONTACT
+        WHERE (EMAIL = #{email} or BUSINESS_NUMBER = #{businessNumber}) AND TO_CHAR(CONTACT_DATE, 'yyyy-MM-DD') = TO_CHAR(SYSDATE, 'yyyy-MM-DD') AND STATUS = 'hold'
     </select>
 
     <update id="update">
