@@ -118,7 +118,7 @@ class CafeMapperTest {
     void findByBestTest() {
         //given
         //when
-        List<Integer> list = cafeMapper.findByBest();
+        List<Map<String, Object>> list = cafeMapper.findByBest();
         //then
         log.info("예악많은 카페 리스트 : {}", list);
         assertThat(list).isNotNull();

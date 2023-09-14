@@ -1,6 +1,5 @@
 package com.vj.lets.web.cafe.controller;
 
-import com.vj.lets.domain.cafe.dto.Cafe;
 import com.vj.lets.domain.cafe.service.CafeService;
 import com.vj.lets.domain.reservation.dto.Reservation;
 import com.vj.lets.domain.reservation.service.ReservationService;
@@ -13,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 카페 관련 요청을 처리하는 세부 컨트롤러 구현 클래스
@@ -34,6 +34,8 @@ public class CafeController {
 
     @GetMapping("")
     public String cafeDetail(Model model) {
+        List<Map<String, Object>> bestCafe = cafeService.getBestCafe();
+        model.addAttribute("bestCafe", bestCafe);
         return "common/cafe/cafe_main";
     }
     
@@ -44,7 +46,7 @@ public class CafeController {
   
     @GetMapping("/{id}")
     public String cafeDetails(@PathVariable int id, Model model) {
-        Cafe cafe = cafeService.getCafe(id);
+        Map<String, Object> cafe = cafeService.getCafe(id);
         model.addAttribute("cafe", cafe);
         List<Room> room = roomService.getSearchCafeRoom(id);
         model.addAttribute("room", room);
@@ -54,7 +56,7 @@ public class CafeController {
 
     @PostMapping("/{id}")
     public String reserve(@PathVariable int id, @ModelAttribute Reservation reservation, Model model){
-        Cafe cafe = cafeService.getCafe(id);
+        Map<String, Object> cafe = cafeService.getCafe(id);
         model.addAttribute("cafe",cafe);
         List<Room> room =roomService.getSearchCafeRoom(id);
         model.addAttribute("room",room);

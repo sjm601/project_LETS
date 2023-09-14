@@ -65,7 +65,7 @@ public interface CafeService {
      *
      * @return 카페 리스트 6개
      */
-    public List<Integer> getBestCafe();
+    public List<Map<String, Object>> getBestCafe();
 
     /**
      * 카페 검색

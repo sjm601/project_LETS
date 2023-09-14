@@ -21,7 +21,7 @@
                             <ul>
                                 <li>
                                     <div class="container-item active">
-                                        <a href="restaurants-grid.html">
+                                        <a href="/cafe/list">
                                             <figure><img src="img/hover-cat-bars-thumb.jpg" alt=""></figure>
                                             <h2>Find Study Cafe</h2></a>
                                         <div class="image-bg">
@@ -32,7 +32,7 @@
                                 </li>
                                 <li>
                                     <div class="container-item">
-                                        <a href="tours-grid-sidebar.html">
+                                        <a href="/group">
                                             <figure><img src="img/hover-cat-tours-thumb.jpg" alt=""></figure>
                                             <h2>Find Study Group</h2></a>
                                         <div class="image-bg">
@@ -55,11 +55,12 @@
                     <p>This is a list of the most popular cafes right now.</p>
                 </div>
                 <div id="reccomended" class="owl-carousel owl-theme" data-cue="zoomIn">
-                    <div class="item">
+                    <div class="item" th:each="bestCafe : ${bestCafe}">
                         <div class="box_grid">
                             <figure>
                                 <!-- <a href="#0" class="wish_bt"></a> -->
-                                <a href="tour-detail.html"><img src="img/tour_5.jpg" class="img-fluid" alt=""
+                                <a th:href="@{/cafe/{id}(id=${bestCafe['id']})}" href="/cafe"><img th:src="${bestCafe['imagePath']}"
+                                                                                                   src="img/tour_5.jpg" class="img-fluid" alt=""
                                                                 width="800"
                                                                 height="533">
                                     <div class="read_more"><span>Read more</span></div>
@@ -67,148 +68,31 @@
                                 <small>영업중</small>
                             </figure>
                             <div class="wrapper">
-                                <h3><a href="tour-detail.html">이젠스터디카페</a></h3>
-                                <p>서울특별시 노원구 동일로 500</p>
-                                <span class="price">평균 <strong>50,000<i
-                                    class="fa-solid fa-won-sign"></i></strong> /1hour</span>
+                                <h3><a th:href="@{/cafe/{id}(id=${bestCafe['id']})}" href="/cafe/" th:text="${bestCafe['cafeName']}">이젠스터디카페</a></h3>
+                                <p th:text="${bestCafe['siDoName']}+' '+${bestCafe['siGunGuName']}+' '+${bestCafe['roadAddress']}+' '+${bestCafe['detailAddress']}">
+                                    서울특별시 노원구 동일로 500</p>
+                                <span class="price">최소 <strong th:text="${bestCafe['minPrice']}">50,000<i
+                                    class="fa-solid fa-won-sign"></i></strong>원 /1hour</span>
                             </div>
                             <ul>
-                                <li><i class="icon_clock_alt"></i> 7시 ~ 20시</li>
+                                <li><i class="icon_clock_alt"></i> <strong th:text="${bestCafe['startTime']}+'시 ~ '+${bestCafe['endTime']}+'시'">
+                                    7시 ~ 20시</strong></li>
                                 <li>
-                                    <div class="score"><span>Good<em>30 Reviews</em></span><strong>3.0</strong></div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /item -->
-                    <div class="item">
-                        <div class="box_grid">
-                            <figure>
-                                <!-- <a href="#0" class="wish_bt"></a> -->
-                                <a href="tour-detail.html"><img src="img/tour_5.jpg" class="img-fluid" alt=""
-                                                                width="800"
-                                                                height="533">
-                                    <div class="read_more"><span>Read more</span></div>
-                                </a>
-                                <small>영업중</small>
-                            </figure>
-                            <div class="wrapper">
-                                <h3><a href="tour-detail.html">이젠스터디카페</a></h3>
-                                <p>서울특별시 노원구 동일로 500</p>
-                                <span class="price">평균 <strong>50,000<i
-                                    class="fa-solid fa-won-sign"></i></strong> /1hour</span>
-                            </div>
-                            <ul>
-                                <li><i class="icon_clock_alt"></i> 7시 ~ 20시</li>
-                                <li>
-                                    <div class="score"><span>Superb<em>30 Reviews</em></span><strong>5.0</strong></div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /item -->
-                    <div class="item">
-                        <div class="box_grid">
-                            <figure>
-                                <!-- <a href="#0" class="wish_bt"></a> -->
-                                <a href="tour-detail.html"><img src="img/tour_5.jpg" class="img-fluid" alt=""
-                                                                width="800"
-                                                                height="533">
-                                    <div class="read_more"><span>Read more</span></div>
-                                </a>
-                                <small>영업중</small>
-                            </figure>
-                            <div class="wrapper">
-                                <h3><a href="tour-detail.html">이젠스터디카페</a></h3>
-                                <p>서울특별시 노원구 동일로 500</p>
-                                <span class="price">평균 <strong>50,000<i
-                                    class="fa-solid fa-won-sign"></i></strong> /1hour</span>
-                            </div>
-                            <ul>
-                                <li><i class="icon_clock_alt"></i> 7시 ~ 20시</li>
-                                <li>
-                                    <div class="score"><span>Very Good<em>30 Reviews</em></span><strong>4.0</strong>
+                                    <div class="score"><span>
+                                        <em th:switch="${#numbers.formatDecimal(bestCafe['cafeRating'],1,1)}">
+                                            <em th:case="5">Superb</em>
+                                            <em th:case="4">VeryGood</em>
+                                            <em th:case="3">Good</em>
+                                            <em th:case="2">Pleasant</em>
+                                            <em th:case="1">Poor</em>
+                                            <em th:case="*">No Rating</em>
+                                        </em>
+<!--                                        <em th:if="${bestCafe['cafeRating'] > 4}">Superb</em>-->
+<!--                                        <em th:unless="${bestCafe['cafeRating']< 4} and ${3 <= bestCafe['cafeRating']}">VeryGood</em>-->
+                                        <em th:text="${bestCafe['reviewCount']}+' Reviews'">30 Reviews</em></span>
+                                        <strong th:if="${bestCafe['cafeRating']} == null">0.0</strong>
+                                        <strong th:unless="${bestCafe['cafeRating']} == null" th:text="${#numbers.formatDecimal(bestCafe['cafeRating'],1,1)}">5.0</strong>
                                     </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /item -->
-                    <div class="item">
-                        <div class="box_grid">
-                            <figure>
-                                <!-- <a href="#0" class="wish_bt"></a> -->
-                                <a href="tour-detail.html"><img src="img/tour_5.jpg" class="img-fluid" alt=""
-                                                                width="800"
-                                                                height="533">
-                                    <div class="read_more"><span>Read more</span></div>
-                                </a>
-                                <small>영업중</small>
-                            </figure>
-                            <div class="wrapper">
-                                <h3><a href="tour-detail.html">이젠스터디카페</a></h3>
-                                <p>서울특별시 노원구 동일로 500</p>
-                                <span class="price">평균 <strong>50,000<i
-                                    class="fa-solid fa-won-sign"></i></strong> /1hour</span>
-                            </div>
-                            <ul>
-                                <li><i class="icon_clock_alt"></i> 7시 ~ 20시</li>
-                                <li>
-                                    <div class="score"><span>Very Good<em>30 Reviews</em></span><strong>4.0</strong>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /item -->
-                    <div class="item">
-                        <div class="box_grid">
-                            <figure>
-                                <!-- <a href="#0" class="wish_bt"></a> -->
-                                <a href="tour-detail.html"><img src="img/tour_5.jpg" class="img-fluid" alt=""
-                                                                width="800"
-                                                                height="533">
-                                    <div class="read_more"><span>Read more</span></div>
-                                </a>
-                                <small>영업중</small>
-                            </figure>
-                            <div class="wrapper">
-                                <h3><a href="tour-detail.html">이젠스터디카페</a></h3>
-                                <p>서울특별시 노원구 동일로 500</p>
-                                <span class="price">평균 <strong>50,000<i
-                                    class="fa-solid fa-won-sign"></i></strong> /1hour</span>
-                            </div>
-                            <ul>
-                                <li><i class="icon_clock_alt"></i> 7시 ~ 20시</li>
-                                <li>
-                                    <div class="score"><span>Pleasant<em>30 Reviews</em></span><strong>2.0</strong>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /item -->
-                    <div class="item">
-                        <div class="box_grid">
-                            <figure>
-                                <!-- <a href="#0" class="wish_bt"></a> -->
-                                <a href="tour-detail.html"><img src="img/tour_5.jpg" class="img-fluid" alt=""
-                                                                width="800"
-                                                                height="533">
-                                    <div class="read_more"><span>Read more</span></div>
-                                </a>
-                                <small>영업중</small>
-                            </figure>
-                            <div class="wrapper">
-                                <h3><a href="tour-detail.html">이젠스터디카페</a></h3>
-                                <p>서울특별시 노원구 동일로 500</p>
-                                <span class="price">평균 <strong>50,000<i
-                                    class="fa-solid fa-won-sign"></i></strong> /1hour</span>
-                            </div>
-                            <ul>
-                                <li><i class="icon_clock_alt"></i> 7시 ~ 20시</li>
-                                <li>
-                                    <div class="score"><span>Poor<em>30 Reviews</em></span><strong>1.0</strong></div>
                                 </li>
                             </ul>
                         </div>
@@ -228,7 +112,7 @@
                             <!-- <small>Study Group</small> -->
                             <h3>Your Perfect<br>Study Experience</h3>
                             <p>Find and Make Study Group</p>
-                            <a href="adventure.html" class="btn_1">See Details</a>
+                            <a href="/group" class="btn_1">See Details</a>
                         </div>
                     </div>
                     <!-- /wrapper -->

@@ -1,6 +1,5 @@
 package com.vj.lets.web.dashboard.controller;
 
-import com.vj.lets.domain.cafe.dto.Cafe;
 import com.vj.lets.domain.cafe.mapper.CafeMapper;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.service.MemberService;
@@ -68,8 +67,8 @@ public class AdminController {
 
     @GetMapping("/host")
     public String hostView(Model model) {
-        List<Cafe> cafeList = cafeMapper.findByAll();
-        model.addAttribute("cafeList", cafeList);
+//        List<Cafe> cafeList = cafeMapper.findByAll();
+//        model.addAttribute("cafeList", cafeList);
 
         return "dashboard/admin/hosts";
     }
