@@ -62,7 +62,6 @@ public class AdminController {
     public String faqRegisterView(Model model) {
         FaqRegisterForm faqForm = FaqRegisterForm.builder().build();
         List<FaqCategory> categoryList = faqService.getFaqCategoryList();
-        log.info("======================{}", categoryList);
 
         model.addAttribute("faqForm", faqForm);
         model.addAttribute("categoryList", categoryList);
@@ -85,8 +84,10 @@ public class AdminController {
     @GetMapping("/faq")
     public String faqListView(Model model) {
         List<Map<String, Object>> faqList = faqService.getFaqListForAdmin();
-        model.addAttribute("faqList", faqList);
+        List<FaqCategory> categoryList = faqService.getFaqCategoryList();
 
+        model.addAttribute("faqList", faqList);
+        model.addAttribute("categoryList", categoryList);
         return "dashboard/admin/faq_list";
     }
 

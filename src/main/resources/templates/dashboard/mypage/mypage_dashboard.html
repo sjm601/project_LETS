@@ -71,15 +71,16 @@
                                             <label th:for="gender">성별</label>
                                             <div class="styled-select">
                                                 <select th:id="gender" th:name="gender">
-                                                    <option>Gender</option>
                                                     <option th:value="male" th:selected="${member.gender} == 'male'">
-                                                        Male
+                                                        남성
                                                     </option>
                                                     <option th:value="female"
-                                                            th:selected="${member.gender} == 'female'">Female
+                                                            th:selected="${member.gender} == 'female'">
+                                                        여성
                                                     </option>
                                                     <option th:value="others"
-                                                            th:selected="${member.gender} == 'others'">Others
+                                                            th:selected="${member.gender} == 'others'">
+                                                        기타
                                                     </option>
                                                 </select>
                                             </div>

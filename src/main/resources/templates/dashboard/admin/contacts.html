@@ -8,6 +8,9 @@
         <meta name="author" content="VJCommando">
         <meta name="description" content="LETS - Admin Dashboard">
         <title>LETS - Admin Dashboard</title>
+
+        <link href="/dashboard/vendor/animate.min.css" rel="stylesheet">
+        <link href="/dashboard/vendor/magnific-popup.css" rel="stylesheet">
     </th:block>
 
     <th:block th:fragment="content">
@@ -37,24 +40,85 @@
                                     </th:block>
                                 </h4>
                                 <ul class="booking_list">
-                                    <li><strong>사업자명</strong> <th:block th:text="${contact.name}">홍길동</th:block></li>
-                                    <li><strong>이메일</strong> <th:block th:text="${contact.email}">hong@gmail.com</th:block></li>
-                                    <li><strong>전화번호</strong> <th:block th:text="${contact.phoneNumber}">010-0000-0000</th:block></li>
-                                    <li><strong>주소</strong> <th:block th:text="${contact.address}">서울시 노원구</th:block></li>
-                                    <li><strong>사업자 등록번호</strong> <th:block th:text="${contact.businessNumber}">000-00-000000</th:block></li>
+                                    <li><strong>사업자명</strong>
+                                        <th:block th:text="${contact.name}">홍길동</th:block>
+                                    </li>
+                                    <li><strong>이메일</strong>
+                                        <th:block th:text="${contact.email}">hong@gmail.com</th:block>
+                                    </li>
+                                    <li><strong>전화번호</strong>
+                                        <th:block th:text="${contact.phoneNumber}">010-0000-0000</th:block>
+                                    </li>
+                                    <li><strong>주소</strong>
+                                        <th:block th:text="${contact.address}">서울시 노원구</th:block>
+                                    </li>
+                                    <li><strong>사업자 등록번호</strong>
+                                        <th:block th:text="${contact.businessNumber}">000-00-000000</th:block>
+                                    </li>
                                     <li><strong>업체설명</strong></li>
                                     <li>
-                                        <p th:text="${contact.message}">======================= 업체 설명 =======================</p>
+                                        <p th:text="${contact.message}">======================= 업체 설명
+                                            =======================</p>
                                     </li>
                                 </ul>
-                                <ul th:if="${contact.status}" class="buttons">
-                                    <li><a href="#" class="btn_1 gray approve"><i
-                                        class="fa fa-fw fa-check-circle-o mr-1"></i>승인</a>
-                                    </li>
-                                    <li><a href="#" class="btn_1 gray delete"><i
-                                        class="fa fa-fw fa-times-circle-o mr-1"></i>거부</a>
-                                    </li>
-                                </ul>
+                                <th:block th:if="${contact.status} == 'hold'">
+                                    <ul class="buttons inline-popups">
+                                        <li>
+                                            <a th:href="|#modal-approve_${contact.id}|" href="#"
+                                               class="btn_1 gray approve">
+                                                <i class="fa fa-fw fa-check-circle-o mr-1"></i>
+                                                승인
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a th:href="|#modal-refuse_${contact.id}|" href="#"
+                                               class="btn_1 gray delete">
+                                                <i class="fa fa-fw fa-times-circle-o mr-1"></i>
+                                                거부
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <!-- contact to approve popup -->
+                                    <div th:id="|modal-approve_${contact.id}|" id="modal-approve"
+                                         class="white-popup mfp-with-anim mfp-hide">
+                                        <form>
+                                            <div class="small-dialog-header">
+                                                <h3>입점 승인</h3>
+                                            </div>
+                                            <div class="row justify-content-center message-reply margin-top-0">
+                                                <div class="col-8 align-self-center">
+                                                    <p class="m-0">정말로 해당 입점 신청을 승인하시겠습니까</p>
+                                                </div>
+                                                <div class="col-auto align-self-center">
+                                                    <button type="button" class="btn_1 gray approve">
+                                                        <i class="fa fa-fw fa-check-circle-o mr-1"></i>
+                                                        입점 승인
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- contact to refuse popup -->
+                                    <div th:id="|modal-refuse_${contact.id}|" id="modal-refuse"
+                                         class="white-popup mfp-with-anim mfp-hide">
+                                        <form>
+                                            <div class="small-dialog-header">
+                                                <h3>입점 거부</h3>
+                                            </div>
+                                            <div class="row justify-content-center message-reply margin-top-0">
+                                                <div class="col-8 align-self-center">
+                                                    <p class="m-0">정말로 해당 입점 신청을 거부하시겠습니까</p>
+                                                </div>
+                                                <div class="col-auto align-self-center">
+                                                    <button type="button" class="btn_1 gray delete">
+                                                        <i class="fa fa-fw fa-times-circle-o mr-1"></i>
+                                                        입점 거부
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </th:block>
                             </li>
                         </ul>
                     </div>

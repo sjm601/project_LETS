@@ -8,10 +8,6 @@
         <meta name="author" content="VJCommando">
         <meta name="description" content="LETS - Admin Dashboard">
         <title>LETS - Admin Dashboard</title>
-
-        <link href="/dashboard/vendor/dropzone.css" rel="stylesheet">
-        <!-- WYSIWYG Editor -->
-        <link rel="stylesheet" href="/dashboard/js/editor/summernote-bs4.css">
     </th:block>
 
     <th:block th:fragment="content">
@@ -34,15 +30,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="title">제목</label>
-                                        <input th:field="*{title}" type="text" class="form-control" id="title" placeholder="제목">
+                                        <input th:field="*{title}" type="text" class="form-control" id="title" placeholder="제목" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="category">분류</label>
                                         <div class="styled-select">
-                                            <select th:name="category" id="category">
-                                                <option>분류 선택</option>
+                                            <select th:name="category" id="category" required>
                                                 <option th:each="category : ${categoryList}" th:value="${category.id}" th:text="${category.name}">회원</option>
                                             </select>
                                         </div>
@@ -54,7 +49,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="content">내용</label>
-                                        <div th:field="*{content}" id="content" class="editor"></div>
+                                        <textarea th:field="*{content}" cols="40" rows="20" class="form-control" id="content" required></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -72,26 +67,6 @@
     </th:block>
 
     <th:block th:fragment="scripts">
-        <!-- Custom scripts for this page -->
-        <script src="/dashboard/vendor/dropzone.min.js"></script>
-        <!-- WYSIWYG Editor -->
-        <script src="/dashboard/js/editor/summernote-bs4.min.js"></script>
-        <script th:inline="javascript">
-            $('.editor').summernote({
-                fontSizes: ['10', '14'],
-                toolbar: [
-                    // [groupName, [list of button]]
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough']],
-                    ['fontsize', ['fontsize']],
-                    ['para', ['ul', 'ol', 'paragraph']]
-                ],
-                placeholder: 'FAQ 내용을 입력하여 주세요.',
-                tabsize: 2,
-                height: 200
-            });
-        </script>
-        <!-- /custom scripts -->
     </th:block>
 
 </th:block>

@@ -66,14 +66,74 @@
                                         </th:block>)
                                     </li>
                                 </ul>
-                                <ul th:if="${reservation.get('reservationStatus') == 'complete'}" class="buttons">
-                                    <li><a href="#0" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o mr-1"></i>예약
-                                        취소</a></li>
-                                </ul>
-                                <p th:if="${reservation.get('reservationStatus') == 'use' && reservation.get('reviewBoolean') == 'false'}" class="inline-popups">
-                                    <a href="#modal-reply" data-effect="mfp-zoom-in" class="btn_1 gray"><i
-                                        class="fa fa-fw fa-pencil mr-1"></i>리뷰 작성</a>
-                                </p>
+                                <th:block th:if="${reservation.get('reservationStatus') == 'complete'}">
+                                    <ul class="buttons inline-popups">
+                                        <li>
+                                            <a th:href="|#modal-cancel_${reservation.get('id')}|" href="#" class="btn_1 gray delete">
+                                                <i class="fa fa-fw fa-times-circle-o mr-1"></i>
+                                                예약 취소
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <!-- reservation to delete popup -->
+                                    <div th:id="|modal-cancel_${reservation.get('id')}|" id="modal-delete"
+                                         class="white-popup mfp-with-anim mfp-hide">
+                                        <form>
+                                            <div class="small-dialog-header">
+                                                <h3>예약 취소</h3>
+                                            </div>
+                                            <div class="row justify-content-center message-reply margin-top-0">
+                                                <div class="col-8 align-self-center">
+                                                    <p class="m-0">정말로 해당 예약를 취소하시겠습니까</p>
+                                                </div>
+                                                <div class="col-auto align-self-center">
+                                                    <button type="button" class="btn_1 gray delete">
+                                                        <i class="fa fa-fw fa-times-circle-o mr-1"></i>
+                                                        예약 취소
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </th:block>
+                                <th:block th:if="${reservation.get('reservationStatus') == 'use' && reservation.get('reviewBoolean') == 'false'}">
+                                    <p class="inline-popups">
+                                        <a th:href="|#modal-register_${reservation.get('id')}|" href="#modal-reply" data-effect="mfp-zoom-in" class="btn_1 gray">
+                                            <i class="fa fa-fw fa-pencil mr-1"></i>
+                                            리뷰 작성
+                                        </a>
+                                    </p>
+                                    <!-- register to review popup -->
+                                    <div th:id="|modal-register_${reservation.get('id')}|" id="modal-register"
+                                         class="white-popup mfp-with-anim mfp-hide">
+                                        <form>
+                                            <div class="small-dialog-header">
+                                                <h3>리뷰 작성</h3>
+                                            </div>
+                                            <div>
+                                                <div class="form-group">
+                                                    <select id="rating" name="rating" required>
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                        <option>4</option>
+                                                        <option>5</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="message-reply margin-top-0">
+                                                <div class="form-group">
+                                                <textarea th:id="editReviewContent" th:name="editReviewContent"
+                                                          cols="40" rows="3" class="form-control" required></textarea>
+                                                </div>
+                                                <button type="button" class="btn_1">
+                                                    <i class="fa fa-fw fa-pencil mr-1"></i>
+                                                    리뷰 작성
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </th:block>
                                 <div th:if="${reservation.get('reservationStatus') == 'use' && reservation.get('reviewBoolean') == 'true'}" data-effect="mfp-zoom-in" class="btn_999 gray">리뷰 작성 완료</div>
                             </li>
                         </ul>
@@ -102,11 +162,6 @@
     </th:block>
 
     <th:block th:fragment="scripts">
-        <!-- Custom scripts for this page -->
-        <script th:inline="javascript">
-            $('input.date-pick').datepicker();
-        </script>
-        <!-- /custom scripts -->
     </th:block>
 
 </th:block>
