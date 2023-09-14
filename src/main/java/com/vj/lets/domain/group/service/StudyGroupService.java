@@ -68,7 +68,7 @@ public interface StudyGroupService {
      * @param studyGroupId 스터디 그룹 아이디
      * @return 조회된 회원 리스트
      */
-    public List<GroupMemberList> findByAllMember(int studyGroupId);
+    public List<Map<String, Object>> findByAllMember(int studyGroupId);
 
     /**
      * 스터디 그룹 회원 추가

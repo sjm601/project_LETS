@@ -32,7 +32,7 @@ public interface GroupMemberListMapper {
      * @param studyGroupId 스터디 그룹 아이디
      * @return 스터디 그룹 멤버 리스트
      */
-    public List<GroupMemberList> findAll(int studyGroupId);
+    public List<Map<String, Object>> findAll(int studyGroupId);
 
     /**
      * 스터디 그룹 가입 승인 시 멤버 리스트에 회원 정보 추가

@@ -129,8 +129,8 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @return 조회된 회원 리스트
      */
     @Override
-    public List<GroupMemberList> findByAllMember(int studyGroupId) {
-        List<GroupMemberList> list = null;
+    public List<Map<String, Object>> findByAllMember(int studyGroupId) {
+        List<Map<String, Object>> list = null;
 
         list = groupMemberListMapper.findAll(studyGroupId);
         return list;
