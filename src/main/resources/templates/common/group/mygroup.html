@@ -363,7 +363,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form th:action="@{/group/}" th:method="post" action="">
+                        <form th:action="@{/group/join/{id}(id=${studyGroup['ID']})}" th:method="post" action="">
                             <div class="mb-2">
                                 <label for="name" class="form-label">이름</label>
                                 <input th:readonly="${member.name != null ? 'true' : 'false'}" th:value="${member.name}"
@@ -549,16 +549,28 @@
                                 <div id="collapseTwo" class="accordion-collapse collapse"
                                      data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        <strong>This is the second item's accordion body.</strong> It is hidden by
-                                        default,
-                                        until the collapse plugin adds the appropriate classes that we use to style each
-                                        element. These classes control the overall appearance, as well as the showing
-                                        and
-                                        hiding via CSS transitions. You can modify any of this with custom CSS or
-                                        overriding
-                                        our default variables. It's also worth noting that just about any HTML can go
-                                        within
-                                        the <code>.accordion-body</code>, though the transition does limit overflow.
+                                        <table class="table table-hover">
+                                            <thead>
+                                            <tr class="table-danger">
+                                                <th scope="col">#</th>
+                                                <th scope="col">이름</th>
+                                                <th scope="col">성별</th>
+                                                <th scope="col">나이</th>
+                                                <th scope="col">신청일</th>
+                                                <th scope="col">승인</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="contact, stat : ${contactList}">
+                                                <th th:text="${stat.count}" scope="row">1</th>
+                                                <td th:text="${contact.NAME}">홍길동</td>
+                                                <td th:text="${contact.GENDER}">남자</td>
+                                                <td th:text="${contact.AGE}">20대</td>
+                                                <td th:text="${contact.REGDATE}">2023-09-14</td>
+                                                <td>@mdo</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>

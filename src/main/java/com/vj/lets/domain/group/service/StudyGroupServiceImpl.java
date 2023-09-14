@@ -192,8 +192,8 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @return 가입 신청한 회원 리스트
      */
     @Override
-    public List<GroupContact> findByAllRegist(int studyGroupId) {
-        List<GroupContact> list = null;
+    public List<Map<String, Object>> findByAllRegist(int studyGroupId) {
+        List<Map<String, Object>> list = null;
 
         list = groupContactMapper.findAll(studyGroupId);
         return list;

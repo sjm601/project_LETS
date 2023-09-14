@@ -1,9 +1,6 @@
 package com.vj.lets.web.group.controller;
 
-import com.vj.lets.domain.group.dto.CreateForm;
-import com.vj.lets.domain.group.dto.GroupMemberList;
-import com.vj.lets.domain.group.dto.Search;
-import com.vj.lets.domain.group.dto.StudyGroup;
+import com.vj.lets.domain.group.dto.*;
 import com.vj.lets.domain.group.service.StudyGroupService;
 import com.vj.lets.domain.location.dto.SiGunGu;
 import com.vj.lets.domain.location.service.SiGunGuService;
@@ -83,6 +80,7 @@ public class StudyGroupController {
     public String readGroup(@PathVariable int id, @SessionAttribute Member loginMember, Model model) {
         GroupMemberList groupMember = null;
         List<Map<String, Object>> memberList = null;
+        List<Map<String, Object>> contactList = null;
 
         Map<String, Object> studyGroup = studyGroupService.viewStudyGroup(id);
         if (studyGroupService.isGroupMember(loginMember.getId(), id) != null) {
@@ -91,14 +89,16 @@ public class StudyGroupController {
 
         if (studyGroupService.isGroupMember(loginMember.getId(), id) != null && studyGroupService.isGroupMember(loginMember.getId(), id).getPosition().equals("팀장")) {
             memberList = studyGroupService.findByAllMember(id);
-        }
+            contactList = studyGroupService.findByAllRegist(id);
 
+        }
         Member member = memberService.getMember(loginMember.getId());
 
         model.addAttribute("member", member);
         model.addAttribute("studyGroup", studyGroup);
         model.addAttribute("studyMember", groupMember);
         model.addAttribute("memberList", memberList);
+        model.addAttribute("contactList", contactList);
 
         return "common/group/mygroup";
     }
@@ -188,8 +188,19 @@ public class StudyGroupController {
         return "redirect:/group/mygroup";
     }
 
+    /**
+     * 스터디 그룹 가입
+     *
+     * @author VJ특공대 이희영
+     * @param id 스터디 그룹 아이디
+     * @param loginMember 로그인 멤버
+     * @param model
+     * @return 스터디 그룹 상세 화면
+     */
     @PostMapping("/join/{id}")
     public String joinGroup(@PathVariable int id, @SessionAttribute Member loginMember, Model model) {
+        studyGroupService.registerStudy(loginMember.getId(), id);
+
         return "redirect:/group/{id}";
     }
 

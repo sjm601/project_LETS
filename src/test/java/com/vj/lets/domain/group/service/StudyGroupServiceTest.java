@@ -115,7 +115,7 @@ class StudyGroupServiceTest {
         int StudyGroupId = 1;
 
         // when
-        List<GroupMemberList> list = studyGroupService.findByAllMember(StudyGroupId);
+        List<Map<String, Object>> list = studyGroupService.findByAllMember(StudyGroupId);
 
         // then
         log.info("스터디 그룹 회원 리스트 조회 : {}", list);
@@ -171,7 +171,7 @@ class StudyGroupServiceTest {
         int studyGroupId = 1;
 
         // when
-        List<GroupContact> list = studyGroupService.findByAllRegist(studyGroupId);
+        List<Map<String, Object>> list = studyGroupService.findByAllRegist(studyGroupId);
 
         // then
         log.info("스터디 가입 신청 회원 리스트 : {}", list);

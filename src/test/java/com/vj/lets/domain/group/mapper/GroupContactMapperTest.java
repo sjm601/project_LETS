@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -46,7 +47,7 @@ class GroupContactMapperTest {
         int studyGroupId = 1;
 
         // when
-        List<GroupContact> list = groupContactMapper.findAll(studyGroupId);
+        List<Map<String, Object>> list = groupContactMapper.findAll(studyGroupId);
 
         // then
         log.info("가입 신청 리스트 : {}", list);

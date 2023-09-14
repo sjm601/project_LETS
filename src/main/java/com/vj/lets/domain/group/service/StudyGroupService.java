@@ -104,7 +104,7 @@ public interface StudyGroupService {
      * @param studyGroupId 스터디 그룹 아이디
      * @return 가입 신청한 회원 리스트
      */
-    public List<GroupContact> findByAllRegist(int studyGroupId);
+    public List<Map<String, Object>> findByAllRegist(int studyGroupId);
 
     /**
      * 스터디 그룹 가입 신청 승인
