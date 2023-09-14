@@ -43,7 +43,6 @@ public class StudyGroupController {
      */
     @GetMapping("")
     public String studyGroup(@PathParam("keyword") String keyword, Model model) {
-
         Search search = Search.builder()
                 .keyword(keyword)
                 .build();
@@ -106,8 +105,59 @@ public class StudyGroupController {
      */
     @PostMapping("/create")
     public String createGroup(@ModelAttribute CreateForm createForm, @SessionAttribute Member loginMember, Model model) {
-        String subjectFormOption = createForm.getSubject();
-        subjectFormOption = switch (subjectFormOption) {
+        String selectedSubject = createForm.getSubject();
+        String subject = subjectChange(selectedSubject);
+
+        StudyGroup studyGroup = StudyGroup.builder()
+                .name(createForm.getName())
+                .totalCount(createForm.getTotalCount())
+                .imagePath(createForm.getImagePath())
+                .subject(subject)
+                .build();
+
+        int studyGroupId = studyGroupService.createStudyGroup(studyGroup, loginMember.getId(), createForm.getSiGunGuName());
+        return "redirect:/group/" + studyGroupId;
+    }
+
+    /**
+     * 스터디 그룹 정보 수정
+     *
+     * @author VJ특공대 이희영
+     * @param createForm 정보 수정 Form에서 입력된 객체
+     * @param id 스터디 그룹 아이디
+     * @param model
+     * @return 스터디 그룹 상세 화면
+     */
+    @PostMapping("/update/{id}")
+    public String updateGroup(@ModelAttribute CreateForm createForm, @PathVariable int id, Model model) {
+        String siGunGuName = createForm.getSiGunGuName();
+        SiGunGu siGunGu = siGunGuService.findById(siGunGuName);
+
+        String selectedSubject = createForm.getSubject();
+        String subject = subjectChange(selectedSubject);
+
+        StudyGroup studyGroup = StudyGroup.builder()
+                .id(id)
+                .name(createForm.getName())
+                .totalCount(createForm.getTotalCount())
+                .imagePath(createForm.getImagePath())
+                .subject(subject)
+                .siGunGuId(siGunGu.getId())
+                .build();
+
+        studyGroupService.editStudyGroup(studyGroup);
+        return "redirect:/group/{id}";
+    }
+
+    /**
+     * 스터디 그룹 생성 및 수정 기능에서 사용할 스터디 그룹 주제 변환 기능
+     *
+     * @author VJ특공대 이희영
+     * @param selectedSubject Form에서 선택된 스터디 그룹 주제 옵션
+     * @return DB에 입력될 스터디 그룹 주제
+     */
+    private String subjectChange(String selectedSubject) {
+        selectedSubject = switch (selectedSubject) {
             case "stock" -> "주식 / 코인";
             case "econo" -> "경제 / 부동산";
             case "emplo" -> "취업";
@@ -120,40 +170,6 @@ public class StudyGroupController {
             default -> "기타";
         };
 
-        StudyGroup studyGroup = StudyGroup.builder()
-                .name(createForm.getName())
-                .totalCount(createForm.getTotalCount())
-                .imagePath(createForm.getImagePath())
-                .subject(subjectFormOption)
-                .build();
-
-        int studyGroupId = studyGroupService.createStudyGroup(studyGroup, loginMember.getId(), createForm.getSiGunGuName());
-        return "redirect:/group/" + studyGroupId;
-    }
-
-    /**
-     * 스터디 그룹 정보 수정
-     *
-     * @author VJ특공대 이희영
-     * @param createForm
-     * @param id
-     * @param model
-     * @return 스터디 그룹 상세 화면
-     */
-    @PostMapping("/update/{id}")
-    public String updateGroup(@ModelAttribute CreateForm createForm, @PathVariable int id, Model model) {
-        String siGunGuName = createForm.getSiGunGuName();
-        SiGunGu siGunGu = siGunGuService.findById(siGunGuName);
-
-        StudyGroup studyGroup = StudyGroup.builder()
-                .id(id)
-                .name(createForm.getName())
-                .totalCount(createForm.getTotalCount())
-                .imagePath(createForm.getImagePath())
-                .subject(createForm.getSubject())
-                .siGunGuId(siGunGu.getId())
-                .build();
-        studyGroupService.editStudyGroup(studyGroup);
-        return "redirect:/group/{id}";
+        return selectedSubject;
     }
 }

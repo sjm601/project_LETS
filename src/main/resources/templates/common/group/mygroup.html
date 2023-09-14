@@ -392,7 +392,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form th:action="@{/group/update/{id}(id=${studyGroup['NAME']})}" th:method="post" action="">
+                        <form th:action="@{/group/update/{id}(id=${studyGroup['ID']})}" th:method="post" action="">
                             <div class="mb-3">
                                 <ul class="image-preview"></ul>
                             </div>
@@ -437,14 +437,14 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="address">스터디 대표 주소</label>
-                                <input th:value="${studyGroup['SIGUNGUNAME']}" class="form-control" id="address" name="address" type="text"
+                                <input th:value="${studyGroup['SIGUNGUNAME']}" class="form-control" id="address" name="siGunGuName" type="text"
                                        placeholder="클릭하여 주소 입력하세요" readonly/>
                             </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-secondary me-3" data-bs-dismiss="modal">취소</button>
+                                <button class="btn btn-success" type="submit">설정</button>
+                            </div>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                        <button class="btn btn-success" type="submit">설정</button>
                     </div>
                 </div>
             </div>

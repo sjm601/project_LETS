@@ -62,6 +62,7 @@
             <if test="totalCount != null and totalCount != ''">TOTAL_COUNT = #{totalCount},</if>
             <if test="imagePath != null and imagePath != ''">IMAGE_PATH = #{imagePath},</if>
             <if test="subject != null and subject != ''">SUBJECT = #{subject},</if>
+            <if test="siGunGuId != null and siGunGuId != ''">SI_GUN_GU_ID = #{siGunGuId},</if>
         </set>
         WHERE ID = #{id}
     </update>
