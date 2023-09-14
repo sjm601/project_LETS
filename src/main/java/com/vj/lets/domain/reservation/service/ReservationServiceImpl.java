@@ -80,5 +80,10 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationMapper.checkDuplicateReservation(roomId,bookingDate,startTime,endTime);
     }
 
+    @Override
+    public List<Map<String, Integer>> checkDuplicateResTime(int roomId, String bookingDate, int startTime, int endTime) {
+        return reservationMapper.checkDuplicateResTime(roomId,bookingDate,startTime,endTime);
+    }
+
 
 }

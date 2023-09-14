@@ -65,6 +65,7 @@ public class CafeController {
 
 
 
+
     @PostMapping("/{id}")
     public String bookCafe(@PathVariable("id") int id,
                            @RequestParam("bookingDate") String bookingDate,
@@ -76,21 +77,14 @@ public class CafeController {
                            @SessionAttribute Member loginMember,
                            Model model) {
 
-
-        Map<String,Object> cafe = cafeService.getCafe(id);
-        model.addAttribute("Cafe", cafe);
-        List<Room> roomList = roomService.getSearchCafeRoom(id);
-        model.addAttribute("roomList", roomList);
-
-        int duplicateResCount = reservationService.checkDuplicateReservation(roomId, bookingDate, startTime, endTime);
-
-        if (duplicateResCount > 0) {
-            String errorMessage = "이미 예약된 시간대 입니다. 다른 시간을 선택하세요.";
-            model.addAttribute("errorMessage", errorMessage);
-            return "redirect:/cafe/{id}";
+        // 예약 중복 체크
+        List<Map<String, Integer>> nonReservationTime = reservationService.checkDuplicateResTime(roomId, bookingDate, startTime, endTime);
+        model.addAttribute("nonReservationTime",nonReservationTime);
+        if (!nonReservationTime.isEmpty()) {
+            return "common/cafe/cafe_detail"; // 예약 실패 페이지 또는 에러 페이지로 리다이렉트
         }
 
-        // Reservation 객체 설정
+        // 예약 객체 설정
         reservation.setCafeId(id);
         reservation.setBookingDate(bookingDate);
         reservation.setStartTime(startTime);
@@ -101,7 +95,7 @@ public class CafeController {
         reservationService.reserve(reservation);
         int resId = reservationService.getNowRes(loginMember.getId());
 
-        return "redirect:/reservation/"+resId;
+        return "redirect:/reservation/" + resId;
     }
 
 

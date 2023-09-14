@@ -46,9 +46,14 @@ public interface ReservationMapper {
     //예약에 필요한 예약 정보 가져오기
     public Map<String, Reservation> findResInfo(int id);
 
+    //예약 - 결제 이동을 위해 필요
     public int findNowRes(int memberId);
 
-    int checkDuplicateReservation(@Param("roomId") int roomId,@Param("bookingDate") String bookingDate,@Param("startTime") int startTime,@Param("endTime") int endTime);
+    //예약 중복 방지
+    public int checkDuplicateReservation(@Param("roomId") int roomId,@Param("bookingDate") String bookingDate,@Param("startTime") int startTime,@Param("endTime") int endTime);
+
+    //예약 중복 방지
+    public List<Map<String, Integer>> checkDuplicateResTime(@Param("roomId") int roomId,@Param("bookingDate") String bookingDate,@Param("startTime") int startTime,@Param("endTime") int endTime);
 
 
 

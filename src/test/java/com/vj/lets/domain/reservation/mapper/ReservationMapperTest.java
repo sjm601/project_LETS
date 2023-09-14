@@ -157,4 +157,18 @@ class ReservationMapperTest {
         log.info("결과:{}",result);
         assertThat(result).isNotNull();
     }
+
+    @Test
+    void checkDuplicateResTimeTest() {
+        // given
+        int roomId = 1;
+        String bookDate="23/09/15";
+        int startTime = 10;
+        int endTime = 16;
+        // when
+        List<Map<String, Integer>>  result = reservationMapper.checkDuplicateResTime(roomId,bookDate,startTime,endTime);
+        // then
+        log.info("결과:{}",result);
+        assertThat(result).isNotNull();
+    }
 }
