@@ -6,6 +6,7 @@ import com.vj.lets.domain.group.mapper.GroupContactMapper;
 import com.vj.lets.domain.group.mapper.GroupHistoryMapper;
 import com.vj.lets.domain.group.mapper.GroupMemberListMapper;
 import com.vj.lets.domain.group.mapper.StudyGroupMapper;
+import com.vj.lets.domain.member.dto.EditForm;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.mapper.MemberHistoryMapper;
 import com.vj.lets.domain.member.mapper.MemberMapper;
@@ -91,6 +92,11 @@ public class MemberServiceImpl implements MemberService {
     public void editMember(Member member) {
         memberMapper.update(member);
         memberHistoryMapper.createByUpdate(member.getId(), MemberHistoryComment.UPDATE.getComment());
+    }
+
+    @Override
+    public EditForm checkEdit(int id) {
+        return memberMapper.readUpdateForm(id);
     }
 
     /**

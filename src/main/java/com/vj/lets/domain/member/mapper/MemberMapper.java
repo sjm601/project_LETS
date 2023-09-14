@@ -1,5 +1,6 @@
 package com.vj.lets.domain.member.mapper;
 
+import com.vj.lets.domain.member.dto.EditForm;
 import com.vj.lets.domain.member.dto.Member;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -53,6 +54,14 @@ public interface MemberMapper {
      * @param member 회원 정보
      */
     public void update(Member member);
+
+    /**
+     * 회원 수정 시 수정 정보 체크 용 폼 조회
+     *
+     * @param id 회원 ID
+     * @return  editForm 수정 정보 체크 용 폼 객체
+     */
+    public EditForm readUpdateForm(int id);
 
     /**
      * 회원 비활성화

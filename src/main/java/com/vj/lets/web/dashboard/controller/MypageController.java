@@ -1,5 +1,6 @@
 package com.vj.lets.web.dashboard.controller;
 
+import com.vj.lets.domain.member.dto.EditForm;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.service.MemberService;
 import com.vj.lets.domain.reservation.dto.Reservation;
@@ -46,7 +47,10 @@ public class MypageController {
         Member loginMember = (Member) session.getAttribute("loginMember");
         Member member =  memberService.getMember(loginMember.getId());
 
+        EditForm editForm = EditForm.builder().build();
+
         model.addAttribute("member", member);
+        model.addAttribute("editForm", editForm);
 
         return "dashboard/mypage/mypage_dashboard";
     }

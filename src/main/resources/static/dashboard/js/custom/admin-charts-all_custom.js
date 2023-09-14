@@ -7,7 +7,7 @@ var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ["Mar 1", "Mar 2", "Mar 3", "Mar 4", "Mar 5", "Mar 6", "Mar 7", "Mar 8", "Mar 9", "Mar 10", "Mar 11", "Mar 12", "Mar 13"],
+    labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
     datasets: [{
       label: "Sessions",
       lineTension: 0.3,
@@ -20,7 +20,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBackgroundColor: "rgba(2,117,216,1)",
       pointHitRadius: 20,
       pointBorderWidth: 2,
-      data: [10000, 30162, 26263, 18394, 18287, 28682, 31274, 33259, 25849, 24159, 32651, 31984, 38451],
+      data: [10000, 30162, 26263, 18394, 18287, 28682, 31274, 33259, 25849, 24159, 32651, 31984],
     }],
   },
   options: {
@@ -57,7 +57,7 @@ var ctx = document.getElementById("myBarChart");
 var myLineChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ["January", "February", "March", "April", "May", "June"],
+    labels: ["4월", "5월", "6월", "7월", "8월", "9월"],
     datasets: [{
       label: "Revenue",
       backgroundColor: "rgba(2,117,216,1)",
@@ -99,7 +99,7 @@ var ctx = document.getElementById("myPieChart");
 var myPieChart = new Chart(ctx, {
   type: 'pie',
   data: {
-    labels: ["Blue", "Red", "Yellow", "Green"],
+    labels: ["남성", "여성", "기타", "미정"],
     datasets: [{
       data: [12.21, 15.58, 11.25, 8.32],
       backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745'],

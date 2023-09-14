@@ -1,5 +1,6 @@
 package com.vj.lets.web.member.controller;
 
+import com.vj.lets.domain.member.dto.EditForm;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.dto.LoginForm;
 import com.vj.lets.domain.member.dto.RegisterForm;
@@ -158,6 +159,45 @@ public class MemberController {
         String redirectURI = (String) session.getAttribute("redirectURI");
         log.warn(redirectURI);
         String uri = redirectURI == null ? "/" : redirectURI;
+        return "redirect:" + uri;
+    }
+
+    @PostMapping("/edit")
+    public String edit(@Valid @ModelAttribute EditForm editForm, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response, Model model) {
+        HttpSession session = request.getSession();
+        Member loginMember = (Member) session.getAttribute("loginMember");
+
+        EditForm checkForm = memberService.checkEdit(loginMember.getId());
+
+        if(!editForm.equals(checkForm)) {
+            Member editMember = Member.builder()
+                    .id(loginMember.getId())
+                    .password(editForm.getPassword())
+                    .name(editForm.getName())
+                    .gender(editForm.getGender())
+                    .age(editForm.getAge())
+                    .phoneNumber(editForm.getPhoneNumber())
+                    .imagePath(editForm.getImagePath())
+                    .build();
+
+            memberService.editMember(editMember);
+
+        } else {
+            try {
+                response.setContentType("text/html; charset=utf-8");
+                PrintWriter w = response.getWriter();
+                w.write("<script>alert('수정 정보가 기존 정보와 이미 일치합니다.');location.href='/';</script>");
+                w.flush();
+                w.close();
+            } catch (Exception e) {
+                throw new RuntimeException("오류 메세지");
+            }
+        }
+
+        String redirectURI = (String) session.getAttribute("redirectURI");
+        log.warn(redirectURI);
+        String uri = redirectURI == null ? "/" : redirectURI;
+
         return "redirect:" + uri;
     }
 

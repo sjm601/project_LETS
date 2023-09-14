@@ -76,8 +76,7 @@ public class AdminController {
                 .content(faqForm.getContent())
                 .categoryId(faqForm.getCategory())
                 .build();
-        log.info("======================{}", faq);
-//        faqService.register(faq);
+        faqService.register(faq);
         return "redirect:/admin/faq";
     }
 
@@ -93,6 +92,8 @@ public class AdminController {
 
     @GetMapping("/chart")
     public String chartView(Model model) {
+
+
         return "dashboard/admin/charts";
     }
 

@@ -41,6 +41,12 @@
         WHERE ID = #{id}
     </update>
 
+    <select id="readUpdateForm" parameterType="int" resultType="EditForm">
+        SELECT NAME, PHONE_NUMBER, AGE, GENDER, IMAGE_PATH
+        FROM MEMBER
+        WHERE id = #{id}
+    </select>
+
     <update id="disabled" parameterType="int">
         UPDATE MEMBER
         SET status = 'disabled'
