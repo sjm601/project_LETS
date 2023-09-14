@@ -29,6 +29,7 @@
                  JOIN SI_GUN_GU SGG ON SG.SI_GUN_GU_ID = SGG.ID
         <where>
             SG.STATUS = 'enabled'
+            <if test="subject != null">AND SG.SUBJECT LIKE '%' || #{subject} || '%'</if>
             <if test="keyword != null">AND SG.NAME LIKE '%' || #{keyword} || '%'</if>
             <if test="keyword != null">OR SG.SUBJECT LIKE '%' || #{keyword} || '%'</if>
             <if test="keyword != null">OR SGG.NAME LIKE '%' || #{keyword} || '%'</if>

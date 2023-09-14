@@ -12,6 +12,7 @@ import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,10 +43,21 @@ public class StudyGroupController {
      * @return 스터디 리스트 화면
      */
     @GetMapping("")
-    public String studyGroup(@PathParam("keyword") String keyword, Model model) {
-        Search search = Search.builder()
-                .keyword(keyword)
-                .build();
+    public String studyGroup(@PathParam("keyword") String keyword, @PathParam("subject") String subject, Model model) {
+        Search search = null;
+
+        if (subject != null) {
+            log.info("전체 확인 : {}", subject);
+            String changedSubject = subjectChange(subject);
+            search = Search.builder()
+                    .keyword(keyword)
+                    .subject(changedSubject)
+                    .build();
+        } else {
+            search = Search.builder()
+                    .keyword(keyword)
+                    .build();
+        }
 
         List<Map<String, Object>> studyGroupList = studyGroupService.getStudyGroupList(search);
         List<StudyGroup> newStudyList = studyGroupService.getNewStudyList();

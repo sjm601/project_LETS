@@ -17,4 +17,5 @@ import lombok.*;
 @Builder
 public class Search {
     private String keyword;
+    private String subject;
 }
