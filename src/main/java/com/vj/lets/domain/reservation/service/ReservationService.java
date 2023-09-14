@@ -1,6 +1,7 @@
 package com.vj.lets.domain.reservation.service;
 
 import com.vj.lets.domain.reservation.dto.Reservation;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,15 @@ public interface ReservationService {
 
     //예약에 필요한 예약 정보 가져오기
     public Map<String,Reservation> getResInfo(int id);
+
+    //지금 예약하려는 예약 번호 가져오기
+
+    public int getNowRes(int memberId);
+
+    int checkDuplicateReservation(@Param("roomId") int roomId, @Param("bookingDate") String bookingDate, @Param("startTime") int startTime, @Param("endTime") int endTime);
+
+
+
 
 
 }

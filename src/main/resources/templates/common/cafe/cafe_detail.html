@@ -10,6 +10,23 @@
         <title>LETS - 카페 상세 페이지</title>
 
         <link href="/css/custom/cafe_detail_custom.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script type="text/javascript">
+            function showAlert(message) {
+                Swal.fire({
+                    icon: 'error',
+                    title: '이미 예약된 시간대 입니다.',
+                    text: '다른 시간을 선택하세요.'
+                });
+            }
+
+            window.onload = function () {
+                var errorMessage = "${errorMessage}";
+                if (errorMessage !== undefined && errorMessage !== null && errorMessage !== "") {
+                    showAlert(errorMessage);
+                }
+            };
+        </script>
     </th:block>
 
     <th:block th:fragment="content">
@@ -391,12 +408,11 @@
                         <!-- /col -->
 
                         <aside class="col-lg-4" id="sidebar">
-                            <form th:action="@{/cafe/detail/{id}(id=${cafe.Id})}" action="#"
-                                  th:method="post">
+                            <form th:action="@{'/cafe/' + ${id}}" action="#" th:method="post">
                             <div class="box_detail booking">
                                 <div class="price">
-                                    <span id="selectedRoomPrice"><span>1000</span><i class="fa-solid fa-won-sign ms-1"></i><small> per 1hour</small></span>
-                                    <div class="score"><span>Superb<em>30 Reviews</em></span><strong>5.0</strong></div>
+                                    <span><span id="selectedRoomPrice">1000</span><small> per 1hour</small></span>
+                                    <div class="score"><span>Superb<em>30 Reviews</em></span><strong th:text="${#numbers.formatDecimal(cafeRating, 1, 1)}">4.0</strong></div>
                                 </div>
                                 <div class="form-group input-dates scroll-fix">
                                     <input class="form-control" type="text" name="bookingDate" placeholder="When..">
@@ -416,19 +432,19 @@
 
                                 <div class="form-group clearfix">
                                     <div class="custom-select-form">
-                                        <select  id="roomName" class="wide" name="roomName">
-                                            <option>룸 타입</option>
-                                            <option th:each="room : ${room}" th:value="${room.name}"
-                                                    th:text="${room.name}"></option>
+                                        <select id="roomName" class="wide" name="roomId">
+                                            <option value="">룸 타입</option>
+                                            <option th:each="roomList : ${roomList}" th:value="${roomList.id}"
+                                                    th:text="${roomList.name}" ></option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="form-group clearfix">
                                     <div class="custom-select-form">
-                                        <select class="wide" name="startTime">
+                                        <select class="wide" name="startTime" >
                                             <option>시작시간</option>
-                                            <option th:each="hour : ${#numbers.sequence(cafe.startTime, cafe.endTime - 1)}"
+                                            <option th:each="hour : ${#numbers.sequence(Cafe.startTime, Cafe.endTime - 1)}"
                                                     th:value="${hour}"
                                                     th:text="${#strings.concat(hour, ':00')}"></option>
                                         </select>
@@ -439,9 +455,10 @@
                                     <div class="custom-select-form">
                                         <select class="wide" name="endTime">
                                             <option>종료시간</option>
-                                            <option th:each="hour : ${#numbers.sequence(cafe.startTime +1, cafe.endTime)}"
-                                                    th:value="${hour}"
-                                                    th:text="${#strings.concat(hour, ':00')}"></option>
+                                            <option  th:each="hour : ${#numbers.sequence(Cafe.startTime +1, Cafe.endTime)}"
+                                                     th:value="${hour}"
+                                                     th:text="${#strings.concat(hour, ':00')}"
+                                            ></option>
                                         </select>
                                     </div>
                                 </div>
