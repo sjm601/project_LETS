@@ -149,6 +149,13 @@ public class StudyGroupController {
         return "redirect:/group/{id}";
     }
 
+    @PostMapping("/delete/{id}")
+    public String deleteGroup(@PathVariable int id, Model model) {
+        studyGroupService.deleteStudyGroup(id);
+
+        return "redirect:/group/mygroup";
+    }
+
     /**
      * 스터디 그룹 생성 및 수정 기능에서 사용할 스터디 그룹 주제 변환 기능
      *
