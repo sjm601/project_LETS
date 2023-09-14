@@ -159,6 +159,18 @@
         ORDER BY c.regdate DESC
     </select>
 
+    <select id="readCountByRegMonth" resultType="map">
+        SELECT "month",
+               COUNT(regdate) "cafeCount"
+        FROM ( SELECT TO_CHAR(TRUNC(ADD_MONTHS(SYSDATE, -ROWNUM + 1), 'MM'), 'YYYY-MM') "month"
+               FROM DUAL
+                   CONNECT BY LEVEL &lt;= 12 )
+             LEFT JOIN CAFE ON TO_CHAR(TRUNC(regdate, 'MM'), 'YYYY-MM') = "month"
+                  AND CAFE.STATUS = 'enabled'
+        GROUP BY "month"
+        ORDER BY "month"
+    </select>
+
     <update id="delete" parameterType="int">
         UPDATE CAFE
         SET STATUS = 'disabled'

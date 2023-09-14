@@ -2,6 +2,7 @@ package com.vj.lets.domain.member.service;
 
 import com.vj.lets.domain.cafe.mapper.CafeHistoryMapper;
 import com.vj.lets.domain.cafe.mapper.CafeMapper;
+import com.vj.lets.domain.common.web.Month;
 import com.vj.lets.domain.group.mapper.GroupContactMapper;
 import com.vj.lets.domain.group.mapper.GroupHistoryMapper;
 import com.vj.lets.domain.group.mapper.GroupMemberListMapper;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 회원 관련 비즈니스 로직 처리 및 트랜잭션 관리 서비스 구현체
@@ -97,6 +99,26 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public EditForm checkEdit(int id) {
         return memberMapper.readUpdateForm(id);
+    }
+
+    /**
+     * 최근 1년간 월별 신규 회원 수 조회
+     *
+     * @return 신규 회원 수 목록
+     */
+    @Override
+    public List<Map<String, Object>> getCountByRegMonth() {
+        return memberMapper.readCountByRegMonth();
+    }
+
+    /**
+     * 현재 가입 된 회원 성별 수 조회
+     *
+     * @return 회원 성별 수 목록
+     */
+    @Override
+    public List<Map<String, Object>> getCountByGender() {
+        return memberMapper.readCountByGender();
     }
 
     /**

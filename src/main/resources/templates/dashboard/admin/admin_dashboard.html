@@ -89,7 +89,16 @@
 
     <th:block th:fragment="scripts">
         <!-- Custom scripts for this page -->
-        <script src="/dashboard/js/admin-charts.js"></script>
+        <script th:inline="javascript">
+            let countMember = [[${countMember}]];
+            let monthMemberKey = [];
+            let monthMemberValue = [];
+            for (const countElement of countMember) {
+                monthMemberKey.push(countElement.month);
+                monthMemberValue.push(countElement.memberCount);
+            }
+        </script>
+        <script src="/dashboard/js/custom/admin-charts_custom.js"></script>
         <!-- /custom scripts -->
     </th:block>
 

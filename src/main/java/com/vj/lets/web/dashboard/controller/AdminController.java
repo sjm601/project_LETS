@@ -1,6 +1,7 @@
 package com.vj.lets.web.dashboard.controller;
 
 import com.vj.lets.domain.cafe.service.CafeService;
+import com.vj.lets.domain.common.web.Month;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.service.MemberService;
 import com.vj.lets.domain.support.dto.Contact;
@@ -13,10 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -47,6 +45,9 @@ public class AdminController {
      */
     @GetMapping("")
     public String adminMain(Model model) {
+        List<Map<String, Object>> countMember = memberService.getCountByRegMonth();
+        model.addAttribute("countMember", countMember);
+
         return "dashboard/admin/admin_dashboard";
     }
 
@@ -70,7 +71,6 @@ public class AdminController {
 
     @PostMapping("/faq/register")
     public String faqRegister(@ModelAttribute FaqRegisterForm faqForm, Model model) {
-        log.info("======================{}", faqForm);
         Faq faq = Faq.builder()
                 .title(faqForm.getTitle())
                 .content(faqForm.getContent())
@@ -91,8 +91,13 @@ public class AdminController {
     }
 
     @GetMapping("/chart")
-    public String chartView(Model model) {
-
+    public String  chartView(Model model) {
+        List<Map<String, Object>> countMember = memberService.getCountByRegMonth();
+        model.addAttribute("countMember", countMember);
+        List<Map<String, Object>> countCafe = cafeService.getCountByRegMonth();
+        model.addAttribute("countCafe", countCafe);
+        List<Map<String, Object>> countGender = memberService.getCountByGender();
+        model.addAttribute("countGender", countGender);
 
         return "dashboard/admin/charts";
     }

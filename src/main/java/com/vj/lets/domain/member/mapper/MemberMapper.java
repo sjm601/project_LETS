@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 회원 관련 매퍼 인터페이스
@@ -49,6 +50,20 @@ public interface MemberMapper {
     public Member readById(int id);
 
     /**
+     * 최근 1년간 월별 신규 회원 수 조회
+     *
+     * @return 신규 회원 수 목록
+     */
+    public List<Map<String, Object>> readCountByRegMonth();
+
+    /**
+     * 현재 가입 된 회원 성별 수 조회
+     * 
+     * @return 회원 성별 수 목록
+     */
+    public List<Map<String, Object>> readCountByGender();
+
+    /**
      * 회원 정보 수정
      *
      * @param member 회원 정보
@@ -59,7 +74,7 @@ public interface MemberMapper {
      * 회원 수정 시 수정 정보 체크 용 폼 조회
      *
      * @param id 회원 ID
-     * @return  editForm 수정 정보 체크 용 폼 객체
+     * @return editForm 수정 정보 체크 용 폼 객체
      */
     public EditForm readUpdateForm(int id);
 

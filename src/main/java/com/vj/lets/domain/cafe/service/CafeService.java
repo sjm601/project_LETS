@@ -84,6 +84,13 @@ public interface CafeService {
     public List<Map<String, Object>> getCafeListForAdmin();
 
     /**
+     * 최근 1년간 월별 신규 카페 수 조회
+     *
+     * @return 신규 카페 수 목록
+     */
+    public List<Map<String, Object>> getCountByRegMonth();
+
+    /**
      * 카페 정보 수정
      *
      * @param cafe 카페
