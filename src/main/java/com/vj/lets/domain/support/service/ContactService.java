@@ -1,5 +1,7 @@
 package com.vj.lets.domain.support.service;
 
+import com.vj.lets.domain.cafe.dto.Cafe;
+import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.support.dto.Contact;
 import com.vj.lets.domain.support.dto.ContactForm;
 
@@ -37,17 +39,17 @@ public interface ContactService {
     public List<Contact> checkContact(ContactForm contactForm);
 
     /**
-     * 입점 승인 시 상태 정보 수정
+     * 입점 승인 시 회원 등록, 카페 개설, 입점 신청 상태 정보 수정
      *
      * @param id 입점 신청 ID
      */
-    public void editContactApprove(int id);
+    public void approveContact(int id, Member member, Cafe cafe);
 
     /**
      * 입점 거절 시 상태 정보 수정
      *
      * @param id 입점 신청 ID
      */
-    public void editContactRefuse(int id);
+    public void refuseContact(int id);
 
 }

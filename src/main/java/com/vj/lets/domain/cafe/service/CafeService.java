@@ -19,13 +19,6 @@ import java.util.Map;
 public interface CafeService {
 
     /**
-     * 카페 등록
-     *
-     * @param cafe 카페
-     */
-    public void register(Cafe cafe);
-
-    /**
      * 카페 옵션 등록
      *
      * @param cafeOptionLists 카페 옵션 리스트
@@ -95,8 +88,8 @@ public interface CafeService {
     /**
      * 카페 정보 수정
      *
-     * @param cafe 카페
-     * @param comment 정보 변경 사유
+     * @param cafe            카페
+     * @param comment         정보 변경 사유
      * @param cafeOptionLists 카페 옵션 리스트
      */
     public void editCafe(Cafe cafe, String comment, List<CafeOptionList> cafeOptionLists);
@@ -111,7 +104,7 @@ public interface CafeService {
     /**
      * 카페 옵션 리스트 객체 생성
      *
-     * @param cafeId 카페 ID
+     * @param cafeId    카페 ID
      * @param optionIds 카페 옵션 아이디 리스트
      * @return 카페 옵션 리스트 객체
      */

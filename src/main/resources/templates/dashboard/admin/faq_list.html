@@ -88,7 +88,7 @@
                                                       cols="40" rows="3" class="form-control"></textarea>
                                         </div>
                                         <input th:name="faqId" th:value="${faq.get('id')}" readonly hidden>
-                                        <button th:name="type" th:value="edit" type="submit" class="btn_1">
+                                        <button th:name="faqRequest" th:value="edit" type="submit" class="btn_1">
                                             <i class="fa fa-fw fa-pencil mr-1"></i>
                                             수정
                                         </button>
@@ -107,7 +107,7 @@
                                                 <p class="m-0">정말로 해당 FAQ를 삭제하시겠습니까</p>
                                             </div>
                                             <div class="col-auto align-self-center">
-                                                <button th:name="type" th:value="remove" type="submit" class="btn_1 gray delete">
+                                                <button th:name="faqRequest" th:value="remove" type="submit" class="btn_1 gray delete">
                                                     <i class="fa fa-fw fa-times-circle-o mr-1"></i>
                                                     삭제
                                                 </button>

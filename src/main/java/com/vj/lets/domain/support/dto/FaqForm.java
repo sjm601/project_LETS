@@ -21,6 +21,5 @@ public class FaqForm {
     String title;
     int category;
     String content;
-    String type;
 
 }

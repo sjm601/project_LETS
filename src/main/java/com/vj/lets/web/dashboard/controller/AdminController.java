@@ -1,9 +1,12 @@
 package com.vj.lets.web.dashboard.controller;
 
 
+import com.vj.lets.domain.cafe.dto.Cafe;
 import com.vj.lets.domain.cafe.service.CafeService;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.service.MemberService;
+import com.vj.lets.domain.member.util.DefaultPassword;
+import com.vj.lets.domain.member.util.MemberType;
 import com.vj.lets.domain.support.dto.*;
 import com.vj.lets.domain.support.service.ContactService;
 import com.vj.lets.domain.support.service.FaqService;
@@ -61,14 +64,30 @@ public class AdminController {
     public String contactApprove(@RequestParam("contactRequest") String contactRequest, @ModelAttribute ContactForm contactForm, Model model) {
         List<Contact> checkContactList = contactService.checkContact(contactForm);
         int contactId = 0;
+        log.info("=============={}", checkContactList);
         for (Contact refuseContact : checkContactList) {
             contactId = refuseContact.getId();
+            log.info("=============={}", contactId);
         }
+        log.info("=============={}", contactId);
 
         if (contactRequest.equals(ContactStatus.APPROVE.getStatus())) {
-            log.warn("==============={}", contactId);
+            Member member = Member.builder()
+                    .email(contactForm.getEmail())
+                    .name(contactForm.getName())
+                    .password(DefaultPassword.DEFAULT.getPassword())
+                    .type(MemberType.HOST.getType())
+                    .build();
+            log.info("=============={}", member);
+            Cafe cafe = Cafe.builder()
+                    .email(contactForm.getEmail())
+                    .name(contactForm.getCafeName())
+                    .businessNumber(contactForm.getBusinessNumber())
+                    .build();
+            log.info("=============={}", cafe);
+            contactService.approveContact(contactId, member, cafe);
         } else if (contactRequest.equals(ContactStatus.REFUSE.getStatus())) {
-            contactService.editContactRefuse(contactId);
+            contactService.refuseContact(contactId);
         }
 
         return "redirect:/admin/contact";
@@ -112,20 +131,19 @@ public class AdminController {
     }
 
     @PostMapping("/faq")
-    public String faqEditAndRemove(@ModelAttribute FaqForm faqForm, Model model) {
+    public String faqEditAndRemove(@RequestParam("faqRequest") String faqRequest, @ModelAttribute FaqForm faqForm, Model model) {
         log.warn("============{}", faqForm);
 
-        if (faqForm.getType().equals("edit")) {
+        if (faqRequest.equals("edit")) {
             Faq faq = Faq.builder()
                     .id(faqForm.getFaqId())
                     .title(faqForm.getTitle())
                     .content(faqForm.getContent())
                     .categoryId(faqForm.getCategory())
                     .build();
-            log.warn("============{}", faq);
 
             faqService.edit(faq);
-        } else if (faqForm.getType().equals("remove")) {
+        } else if (faqRequest.equals("remove")) {
             faqService.remove(faqForm.getFaqId());
         }
 
