@@ -1,6 +1,7 @@
 package com.vj.lets.domain.support.service;
 
 import com.vj.lets.domain.support.dto.Contact;
+import com.vj.lets.domain.support.dto.ContactForm;
 import com.vj.lets.domain.support.mapper.ContactMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -45,12 +46,12 @@ public class ContactServiceImpl implements ContactService {
     /**
      * 입점 신청 시 이메일, 사업자 번호, 신청 날짜로 중복 신청 조회
      *
-     * @param contact 입점 신청 정보
-     * @return 입점 신청 조회 정보
+     * @param contactForm 입점 신청 입력 폼
+     * @return 입점 신청 정보
      */
     @Override
-    public Contact checkContact(Contact contact) {
-        return contactMapper.readByMailBNumDate(contact);
+    public List<Contact> checkContact(ContactForm contactForm) {
+        return contactMapper.readByMailBNumDate(contactForm);
     }
 
     /**

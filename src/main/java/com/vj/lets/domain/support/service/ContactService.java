@@ -1,6 +1,7 @@
 package com.vj.lets.domain.support.service;
 
 import com.vj.lets.domain.support.dto.Contact;
+import com.vj.lets.domain.support.dto.ContactForm;
 
 import java.util.List;
 
@@ -30,10 +31,10 @@ public interface ContactService {
     /**
      * 입점 신청 시 이메일, 사업자 번호, 신청 날짜로 중복 신청 조회
      *
-     * @param contact 입점 신청 정보
-     * @return 입점 신청 조회 정보
+     * @param contactForm 입점 신청 입력 폼
+     * @return 입점 신청 정보
      */
-    public Contact checkContact(Contact contact);
+    public List<Contact> checkContact(ContactForm contactForm);
 
     /**
      * 입점 승인 시 상태 정보 수정

@@ -1,6 +1,7 @@
 package com.vj.lets.domain.support.service;
 
 import com.vj.lets.domain.support.dto.Contact;
+import com.vj.lets.domain.support.dto.ContactForm;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,12 +56,12 @@ class ContactServiceTest {
     @Test
     void checkContactTest() {
         // given
-        Contact checkContact = Contact.builder()
+        ContactForm checkContact = ContactForm.builder()
                 .email("contact2@gmail.com")
                 .businessNumber(1112233334)
                 .build();
         // when
-        Contact contact = contactService.checkContact(checkContact);
+        List<Contact> contact = contactService.checkContact(checkContact);
         // then
         assertThat(contact).isNotNull();
     }

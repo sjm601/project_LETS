@@ -61,12 +61,12 @@
                                 <!-- Edit to FAQ popup -->
                                 <div th:id="|modal-edit_${faq.get('id')}|" id="modal-edit"
                                      class="white-popup mfp-with-anim mfp-hide">
-                                    <form>
+                                    <form th:action="@{/admin/faq}" th:method="post" th:object="${faqForm}">
                                         <div class="small-dialog-header">
                                             <h3>FAQ 수정</h3>
                                         </div>
                                         <div class="form-group">
-                                            <label th:for="rating">별점</label>
+                                            <label th:for="category">카테고리</label>
                                             <div class="styled-select">
                                                 <select th:name="category" id="category" required>
                                                     <option th:each="category : ${categoryList}"
@@ -76,13 +76,19 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label th:for="title">제목</label>
+                                            <input th:id="title" th:name="title" th:value="${faq.get('title')}" type="text"
+                                                   class="form-control">
+                                        </div>
                                         <div class="form-group message-reply margin-top-0">
-                                            <label th:for="faqContent">내용</label>
-                                            <textarea th:id="faqContent" th:name="faqContent"
+                                            <label th:for="content">내용</label>
+                                            <textarea th:id="content" th:name="content"
                                                       th:text="${faq.get('content')}"
                                                       cols="40" rows="3" class="form-control"></textarea>
                                         </div>
-                                        <button type="button" class="btn_1">
+                                        <input th:name="faqId" th:value="${faq.get('id')}" readonly hidden>
+                                        <button th:name="type" th:value="edit" type="submit" class="btn_1">
                                             <i class="fa fa-fw fa-pencil mr-1"></i>
                                             수정
                                         </button>
@@ -91,16 +97,17 @@
                                 <!-- Delete to FAQ popup -->
                                 <div th:id="|modal-delete_${faq.get('id')}|" id="modal-delete"
                                      class="white-popup mfp-with-anim mfp-hide">
-                                    <form>
+                                    <form th:action="@{/admin/faq}" th:method="post" th:object="${faqForm}">
                                         <div class="small-dialog-header">
                                             <h3>FAQ 삭제</h3>
                                         </div>
+                                        <input th:name="faqId" th:value="${faq.get('id')}" readonly hidden>
                                         <div class="row justify-content-center message-reply margin-top-0">
                                             <div class="col-8 align-self-center">
                                                 <p class="m-0">정말로 해당 FAQ를 삭제하시겠습니까</p>
                                             </div>
                                             <div class="col-auto align-self-center">
-                                                <button type="button" class="btn_1 gray delete">
+                                                <button th:name="type" th:value="remove" type="submit" class="btn_1 gray delete">
                                                     <i class="fa fa-fw fa-times-circle-o mr-1"></i>
                                                     삭제
                                                 </button>
