@@ -29,6 +29,7 @@
                  JOIN SI_GUN_GU SGG ON SG.SI_GUN_GU_ID = SGG.ID
         <where>
             SG.STATUS = 'enabled'
+            <if test="subject != null">AND SG.SUBJECT LIKE '%' || #{subject} || '%'</if>
             <if test="keyword != null">AND SG.NAME LIKE '%' || #{keyword} || '%'</if>
             <if test="keyword != null">OR SG.SUBJECT LIKE '%' || #{keyword} || '%'</if>
             <if test="keyword != null">OR SGG.NAME LIKE '%' || #{keyword} || '%'</if>
@@ -44,10 +45,11 @@
                SG.REGDATE       REGDATE,
                SG.IMAGE_PATH    IMAGEPATH,
                SG.SUBJECT       SUBJECT,
-               SG.SI_GUN_GU_ID  SIGUNGUID,
+               SGG.NAME  SIGUNGUNAME,
                M.NAME           MEMBERNAME
         FROM STUDY_GROUP SG
                  JOIN GROUP_MEMBER_LIST GML ON SG.ID = GML.STUDY_GROUP_ID
+                 JOIN SI_GUN_GU SGG ON SG.SI_GUN_GU_ID = SGG.ID
                  JOIN MEMBER M ON M.ID = GML.MEMBER_ID
         WHERE SG.ID = #{id}
           AND GML.POSITION = '팀장'
@@ -61,6 +63,7 @@
             <if test="totalCount != null and totalCount != ''">TOTAL_COUNT = #{totalCount},</if>
             <if test="imagePath != null and imagePath != ''">IMAGE_PATH = #{imagePath},</if>
             <if test="subject != null and subject != ''">SUBJECT = #{subject},</if>
+            <if test="siGunGuId != null and siGunGuId != ''">SI_GUN_GU_ID = #{siGunGuId},</if>
         </set>
         WHERE ID = #{id}
     </update>
@@ -83,4 +86,12 @@
         WHERE ID = #{id}
     </update>
 
+    <select id="findNewStudyList" resultType="StudyGroup">
+        SELECT ID, NAME, REGDATE
+        FROM (SELECT ID, NAME, REGDATE
+                FROM STUDY_GROUP
+                WHERE STATUS = 'enabled'
+                ORDER BY REGDATE DESC)
+        WHERE <![CDATA[ ROWNUM <= 3 ]]>
+    </select>
 </mapper>

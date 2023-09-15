@@ -70,4 +70,20 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationMapper.findResInfo(id);
     }
 
+    @Override
+    public int getNowRes(int memberId) {
+        return reservationMapper.findNowRes(memberId);
+    }
+
+    @Override
+    public int checkDuplicateReservation(int roomId, String bookingDate, int startTime, int endTime) {
+        return reservationMapper.checkDuplicateReservation(roomId,bookingDate,startTime,endTime);
+    }
+
+    @Override
+    public List<Map<String, Integer>> checkDuplicateResTime(int roomId, String bookingDate, int startTime, int endTime) {
+        return reservationMapper.checkDuplicateResTime(roomId,bookingDate,startTime,endTime);
+    }
+
+
 }

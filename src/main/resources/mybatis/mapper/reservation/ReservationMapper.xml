@@ -75,5 +75,31 @@
     WHERE r.id = #{id}
     </select>
 
+    <select id="findNowRes" parameterType="int" resultType="int">
+        SELECT id
+        FROM reservation
+        WHERE member_id =#{memberId} AND ROWNUM=1
+        ORDER BY id DESC
+    </select>
+
+    <select id="checkDuplicateReservation" parameterType="map" resultType="int">
+        SELECT COUNT(ID)
+        FROM reservation
+        WHERE ROOM_ID = #{roomId}
+        AND BOOKING_DATE = #{bookingDate}
+        AND ((START_TIME &lt;= #{endTime} AND END_TIME &gt;= #{endTime})
+        OR (START_TIME &lt;= #{startTime} AND END_TIME &gt;= #{startTime})
+            OR (START_TIME &gt;= #{startTime} AND END_TIME &lt;= #{endTime}))
+    </select>
+
+    <select id="checkDuplicateResTime" parameterType="map" resultType="java.util.Map">
+    SELECT START_TIME, END_TIME
+    FROM reservation
+    WHERE ROOM_ID = #{roomId}
+    AND BOOKING_DATE = #{bookingDate}
+    AND ((START_TIME &lt;= #{endTime} AND END_TIME &gt;= #{endTime})
+    OR (START_TIME &lt;= #{startTime} AND END_TIME &gt;= #{startTime})
+    OR (START_TIME &gt;= #{startTime} AND END_TIME &lt;= #{endTime}))
+    </select>
 
 </mapper>

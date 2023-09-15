@@ -3,7 +3,7 @@ package com.vj.lets.domain.group.dto;
 import lombok.*;
 
 /**
- * 스터디 그룹 생성 폼
+ * 스터디 그룹 생성 폼 객체
  *
  * @author VJ특공대 이희영
  * @version 1.0

@@ -23,8 +23,6 @@ public class ArticleComment {
     private String regdate;
     /** 댓글 상태*/
     private String status;
-    /** 댓글 작성자*/
-    private String writer;
     /** 회원번호 (참조)*/
     private int memberId;
     /** 게시글 번호(참조)*/

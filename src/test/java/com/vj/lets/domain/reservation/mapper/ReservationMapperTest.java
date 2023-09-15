@@ -131,4 +131,44 @@ class ReservationMapperTest {
         log.info("예약 검색 완료:{}",reservation);
         assertThat(reservation).isNotNull();
     }
+
+    @Test
+    void findNowResTest() {
+        // given
+        int memberId=21;
+        // when
+        int resId = reservationMapper.findNowRes(memberId);
+        // then
+        log.info("지금 예약하려는 번호:{}", resId);
+        assertThat(resId).isNotNull();
+    }
+
+
+    @Test
+    void checkDuplicateReservationTest() {
+        // given
+        int roomId = 26;
+        String bookDate="23/09/26";
+        int startTime = 11;
+        int endTime = 16;
+        // when
+        int result = reservationMapper.checkDuplicateReservation(roomId,bookDate,startTime,endTime);
+        // then
+        log.info("결과:{}",result);
+        assertThat(result).isNotNull();
+    }
+
+    @Test
+    void checkDuplicateResTimeTest() {
+        // given
+        int roomId = 1;
+        String bookDate="23/09/15";
+        int startTime = 10;
+        int endTime = 16;
+        // when
+        List<Map<String, Integer>>  result = reservationMapper.checkDuplicateResTime(roomId,bookDate,startTime,endTime);
+        // then
+        log.info("결과:{}",result);
+        assertThat(result).isNotNull();
+    }
 }

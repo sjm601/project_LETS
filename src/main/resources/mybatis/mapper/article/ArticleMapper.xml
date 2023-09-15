@@ -100,28 +100,16 @@
         WHERE request_page = #{requestPage}
     </select>
 
- <!-- 검색 기능 -->
-    <select id="search" parameterType="object" resultType="Article">
+    <!-- 게시글 찾기 -->
+    <select id="findById" parameterType="int" resultType="Article">
         SELECT
-        a.ID,
-        a.TITLE,
-        a.CONTENT,
-        TO_CHAR(a.REGDATE, 'YYYY-MM-DD HH24:MI') AS regdate,
-        m.name
+            ID,
+            title,
+            content
         FROM
-        article a
-        JOIN member m ON a.MEMBER_ID = m.ID
-        WHERE a.id = #{id}
-        <where>
-            <if test="keyword != null">
-                AND (
-                m.name LIKE '%' || #{keyword} || '%'
-                OR a.title LIKE '%' || #{keyword} || '%'
-                OR a.content LIKE '%' || #{keyword} || '%'
-                )
-            </if>
-        </where>
-        ORDER BY a.regdate DESC
+            article
+        WHERE
+            id = #{id}
     </select>
 
 

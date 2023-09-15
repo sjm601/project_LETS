@@ -244,10 +244,10 @@
                         var name_booking = document.getElementById('name_booking').value;
                         var email_booking = document.getElementById('email_booking').value;
                         var telephone_booking = document.getElementById('telephone_booking').value;
-                        var cafeName = [[${reservation['cafe_name']}]]
-                        var roomName = [[${reservation['room_name']}]]
-                        var amount = [[${reservation.totalPrice}]]
-                        var reservationId = [[${reservation.ID}]]
+                        var cafeName = [[${reservation['cafe_name']}]];
+                        var roomName = [[${reservation['room_name']}]];
+                        var amount = [[${reservation.totalPrice}]];
+                        var reservationId = [[${reservation.ID}]];
 
                         IMP.request_pay({
                             pg: 'html5_inicis', // 여기에 사용할 PG사 정보를 넣어주세요
