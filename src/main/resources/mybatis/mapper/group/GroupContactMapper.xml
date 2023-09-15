@@ -10,11 +10,14 @@
         VALUES (GROUP_CONTACT_ID_SEQ.NEXTVAL, #{id}, #{studyGroupId})
     </insert>
 
-    <select id="findAll" parameterType="int" resultType="GroupContact">
-        SELECT ID, STATUS, REGDATE, MEMBER_ID, STUDY_GROUP_ID
-        FROM GROUP_CONTACT
-        WHERE STUDY_GROUP_ID = #{studyGroupId}
-        ORDER BY REGDATE
+    <select id="findAll" parameterType="int">
+        SELECT GC.ID ID, TO_CHAR(GC.REGDATE, 'yyyy-MM-dd') REGDATE, M.NAME NAME, M.GENDER GENDER, M.AGE AGE
+        FROM GROUP_CONTACT GC
+                 JOIN MEMBER M ON GC.MEMBER_ID = M.ID
+        WHERE GC.STUDY_GROUP_ID = #{studyGroupId}
+          AND GC.STATUS = 'hold'
+          AND M.STATUS = 'enabled'
+        ORDER BY GC.REGDATE
     </select>
 
     <update id="approve">
