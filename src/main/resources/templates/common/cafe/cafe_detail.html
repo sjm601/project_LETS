@@ -425,7 +425,7 @@
                                     </div>
                                 </div>
 
-                                <!--
+
                                 <div class="form-group clearfix">
                                     <div class="custom-select-form">
                                         <select class="wide" name="startTime" id="startTimeSelect" >
@@ -448,8 +448,8 @@
                                         </select>
                                     </div>
                                 </div>
-                            -->
 
+    <!--
                                 <div class="form-group clearfix">
                                     <div class="customSelect">
                                         <select class="wide d-flex" name="startTime" id="startTimeSelect" >
@@ -472,6 +472,8 @@
                                         </select>
                                 </div>
                             </div>
+-->
+
                             <div class="price text-end">
                                 <strong class="me-2">Total</strong><small>20,000<i
                                     class="fa-solid fa-xmark me-1 ms-1"></i>4시간<i
@@ -532,27 +534,28 @@
                 });
             }
 
-            document.addEventListener('DOMContentLoaded', function () {
-                let endTime = parseInt([[${Cafe.endTime}]]);
-                let startTime = document.querySelector('#startTimeSelect');
-                let finishTime = document.querySelector('#endTimeSelect');
-                console.log(startTime);
-                console.log(finishTime);
+            $(document).ready(function() {
+                // startTimeSelect와 endTimeSelect를 nice-select로 변환
+                $("#startTimeSelect").niceSelect();
+                $("#endTimeSelect").niceSelect();
 
-                startTime.onchange = function () {
-                    let selectedStartTime = parseInt(startTime.value);
-                    console.log(selectedStartTime);
+                // 시작 시간 선택 이벤트 처리
+                $("#startTimeSelect").on("change", function() {
+                    let selectedStartTime = parseInt($(this).val());
 
-                    for (let i = 0; i < finishTime.options.length; i++) {
-                        let optionValue = parseInt(finishTime.options[i].value);
-                        console.log(optionValue);
+                    // 시작 시간에 따른 종료 시간 옵션 비활성화
+                    $("#endTimeSelect").find("option").each(function() {
+                        let optionValue = parseInt($(this).val());
                         if (optionValue <= selectedStartTime) {
-                            finishTime.options[i].setAttribute("disabled", true);
+                            $(this).prop("disabled", true);
                         } else {
-                            finishTime.options[i].disabled = false;
+                            $(this).prop("disabled", false);
                         }
-                    }
-                }
+                    });
+
+                    // nice-select 업데이트
+                    $("#endTimeSelect").niceSelect("update");
+                });
             });
         </script>
         <!-- INPUT QUANTITY  -->
