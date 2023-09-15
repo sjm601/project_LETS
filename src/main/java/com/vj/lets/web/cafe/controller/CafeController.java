@@ -37,7 +37,7 @@ public class CafeController {
     public String cafeDetail(Model model) {
         return "common/cafe/cafe_main";
     }
-    
+
     @GetMapping("/list")
     public String cafeList(Model model) {
         return "common/cafe/cafe_list";
@@ -45,26 +45,25 @@ public class CafeController {
 
 
     @GetMapping("/{id}")
-    public String viewDetail(@PathVariable int id, Model model){
-        Map<String,Object> cafe = cafeService.getCafe(id);
+    public String viewDetail(@PathVariable int id,
+                             @ModelAttribute Reservation reservation,
+                             Model model) {
+        Map<String, Object> cafe = cafeService.getCafe(id);
         Object cafeRating = cafe.get("cafeRating");
         if (cafeRating == null) {
             cafeRating = 5;
         }
+
         model.addAttribute("Cafe", cafe);
         model.addAttribute("cafeRating", cafeRating);
 
         List<Room> roomList = roomService.getSearchCafeRoom(id);
         model.addAttribute("roomList", roomList);
 
+        model.addAttribute("errorMessage", "");
+
         return "common/cafe/cafe_detail";
     }
-
-
-
-
-
-
 
     @PostMapping("/{id}")
     public String bookCafe(@PathVariable("id") int id,
@@ -77,12 +76,12 @@ public class CafeController {
                            @SessionAttribute Member loginMember,
                            Model model) {
 
-        // 예약 중복 체크
-        List<Map<String, Integer>> nonReservationTime = reservationService.checkDuplicateResTime(roomId, bookingDate, startTime, endTime);
-        model.addAttribute("nonReservationTime",nonReservationTime);
-        if (!nonReservationTime.isEmpty()) {
-            return "common/cafe/cafe_detail"; // 예약 실패 페이지 또는 에러 페이지로 리다이렉트
+        int count = reservationService.checkDuplicateReservation(roomId, bookingDate, startTime, endTime);
+        if (count > 0) {
+            model.addAttribute("errorMessage", "이미 예약된 시간대 입니다. 다른 시간을 선택하세요.");
+            return "redirect:/cafe/{id}?error=true";
         }
+
 
         // 예약 객체 설정
         reservation.setCafeId(id);

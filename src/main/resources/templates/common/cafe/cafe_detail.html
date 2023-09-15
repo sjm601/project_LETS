@@ -11,60 +11,7 @@
 
         <link href="/css/custom/cafe_detail_custom.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-        <script type="text/javascript">
-            function getDuplicateReservationTime(callback) {
-                var cafeId = [[${id}]];
-                var bookingDate = [[${nonReservationTime.bookingDate}]];
-                var roomId = [[${nonReservationTime.roomId}]];
-                $.ajax({
-                    url: '/cafe/' + cafeId, // 실제 서버 엔드포인트에 맞게 수정
-                    type: 'GET',
-                    data: {
-                        bookingDate: bookingDate,
-                        roomId: roomId
-                    },
-                    success: function (data) {
-                        callback(data); // 중복된 예약 시간 데이터를 콜백 함수에 전달
-                    },
-                    error: function (error) {
-                        console.error('Error fetching duplicate reservation time: ' + error);
-                    }
-                });
-            }
-            // 중복된 예약 시간을 받아온 후에 시작 시간과 종료 시간을 비활성화하는 함수
-            function handleDuplicateReservationTime() {
-                var bookingDate = document.querySelector('[name="bookingDate"]').value;
-                var roomId = document.querySelector('[name="roomId"]').value;
 
-                getDuplicateReservationTime(bookingDate, roomId, function (duplicateTime) {
-                    // 시작 시간과 종료 시간 <select> 엘리먼트 가져오기
-                    var startTimeSelect = document.getElementById("startTimeSelect");
-                    var endTimeSelect = document.getElementById("endTimeSelect");
-
-                    // 시작 시간과 종료 시간 옵션을 모두 활성화
-                    for (var i = 0; i < startTimeSelect.options.length; i++) {
-                        startTimeSelect.options[i].disabled = false;
-                        endTimeSelect.options[i].disabled = false;
-                    }
-
-                    // 중복된 예약 시간대 비활성화
-                    for (var i = 0; i < duplicateTime.length; i++) {
-                        var startHour = duplicateTime[i].start;
-                        var endHour = duplicateTime[i].end;
-
-                        // 시작 시간과 종료 시간 <select> 엘리먼트에서 해당 시간대를 비활성화
-                        for (var j = startHour; j <= endHour; j++) {
-                            startTimeSelect.options[j].disabled = true;
-                            endTimeSelect.options[j].disabled = true;
-                        }
-                    }
-                });
-            }
-
-            // 시작 시간과 종료 시간을 비활성화하는 함수를 호출하는 이벤트 리스너 연결
-            document.querySelector('[name="bookingDate"]').addEventListener('change', handleDuplicateReservationTime);
-            document.querySelector('[name="roomId"]').addEventListener('change', handleDuplicateReservationTime);
-        </script>
     </th:block>
 
     <th:block th:fragment="content">
@@ -478,6 +425,7 @@
                                     </div>
                                 </div>
 
+                                <!--
                                 <div class="form-group clearfix">
                                     <div class="custom-select-form">
                                         <select class="wide" name="startTime" id="startTimeSelect" >
@@ -500,7 +448,29 @@
                                         </select>
                                     </div>
                                 </div>
+                            -->
 
+                                <div class="form-group clearfix">
+                                    <div class="customSelect">
+                                        <select class="wide d-flex" name="startTime" id="startTimeSelect" >
+                                            <option>시작시간</option>
+                                            <option th:each="hour : ${#numbers.sequence(Cafe.startTime, Cafe.endTime - 1)}"
+                                                    th:value="${hour}"
+                                                    th:text="${#strings.concat(hour, ':00')}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group clearfix">
+                                    <div class="customSelect">
+                                        <select class="wide d-flex" name="endTime" id="endTimeSelect">
+                                            <option>종료시간</option>
+                                            <option  th:each="hour : ${#numbers.sequence(Cafe.startTime +1, Cafe.endTime)}"
+                                                     th:value="${hour}"
+                                                     th:text="${#strings.concat(hour, ':00')}"
+                                            ></option>
+                                        </select>
+                                </div>
                             </div>
                             <div class="price text-end">
                                 <strong class="me-2">Total</strong><small>20,000<i
@@ -546,7 +516,45 @@
                 });
             });
         </script>
+        <script type="text/javascript">
+            window.onload = function () {
+                var showAlertParam = new URLSearchParams(window.location.search).get("error");
+                if (showAlertParam === "true") {
+                    showAlert();
+                }
+            };
 
+            function showAlert() {
+                Swal.fire({
+                    icon: 'error',
+                    title: '이미 예약된 시간대 입니다.',
+                    text: '다른 시간을 선택하세요.'
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                let endTime = parseInt([[${Cafe.endTime}]]);
+                let startTime = document.querySelector('#startTimeSelect');
+                let finishTime = document.querySelector('#endTimeSelect');
+                console.log(startTime);
+                console.log(finishTime);
+
+                startTime.onchange = function () {
+                    let selectedStartTime = parseInt(startTime.value);
+                    console.log(selectedStartTime);
+
+                    for (let i = 0; i < finishTime.options.length; i++) {
+                        let optionValue = parseInt(finishTime.options[i].value);
+                        console.log(optionValue);
+                        if (optionValue <= selectedStartTime) {
+                            finishTime.options[i].setAttribute("disabled", true);
+                        } else {
+                            finishTime.options[i].disabled = false;
+                        }
+                    }
+                }
+            });
+        </script>
         <!-- INPUT QUANTITY  -->
         <script src="/js/input_qty.js"></script>
     </th:block>

@@ -35,3 +35,4 @@ $(function() {
 	counter.addEventListener("animationend", removeAnimation);
 
 });
+
