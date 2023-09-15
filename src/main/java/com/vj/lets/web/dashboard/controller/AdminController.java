@@ -52,24 +52,38 @@ public class AdminController {
         return "dashboard/admin/admin_dashboard";
     }
 
+    /**
+     * 입점 신청 화면 출력
+     *
+     * @param model 모델 객체
+     * @return 논리적 뷰 이름
+     */
     @GetMapping("/contact")
     public String contactView(Model model) {
         List<Contact> contactList = contactService.getContactList();
+        ContactForm contactForm = ContactForm.builder().build();
+
         model.addAttribute("contactList", contactList);
+        model.addAttribute("contactForm", contactForm);
 
         return "dashboard/admin/contacts";
     }
 
+    /**
+     * 입점 신청 승인 및 거부
+     *
+     * @param contactRequest 입점 신청 승인 여부 요청
+     * @param contactForm    입점 신청 정보 폼
+     * @param model          모델 객체
+     * @return 논리적 뷰 이름
+     */
     @PostMapping("/contact")
     public String contactApprove(@RequestParam("contactRequest") String contactRequest, @ModelAttribute ContactForm contactForm, Model model) {
         List<Contact> checkContactList = contactService.checkContact(contactForm);
         int contactId = 0;
-        log.info("=============={}", checkContactList);
         for (Contact refuseContact : checkContactList) {
             contactId = refuseContact.getId();
-            log.info("=============={}", contactId);
         }
-        log.info("=============={}", contactId);
 
         if (contactRequest.equals(ContactStatus.APPROVE.getStatus())) {
             Member member = Member.builder()
@@ -78,13 +92,11 @@ public class AdminController {
                     .password(DefaultPassword.DEFAULT.getPassword())
                     .type(MemberType.HOST.getType())
                     .build();
-            log.info("=============={}", member);
             Cafe cafe = Cafe.builder()
                     .email(contactForm.getEmail())
                     .name(contactForm.getCafeName())
                     .businessNumber(contactForm.getBusinessNumber())
                     .build();
-            log.info("=============={}", cafe);
             contactService.approveContact(contactId, member, cafe);
         } else if (contactRequest.equals(ContactStatus.REFUSE.getStatus())) {
             contactService.refuseContact(contactId);
@@ -93,6 +105,12 @@ public class AdminController {
         return "redirect:/admin/contact";
     }
 
+    /**
+     * FAQ 신규 등록 화면 출력
+     *
+     * @param model 모델 객체
+     * @return 논리적 뷰 이름
+     */
     @GetMapping("/faq/register")
     public String faqRegisterView(Model model) {
         FaqForm faqForm = FaqForm.builder().build();
@@ -104,6 +122,13 @@ public class AdminController {
         return "dashboard/admin/faq_add";
     }
 
+    /**
+     * FAQ 신규 등록
+     *
+     * @param faqForm FAQ 등록 폼
+     * @param model   모델 객체
+     * @return 논리적 뷰 이름
+     */
     @PostMapping("/faq/register")
     public String faqRegister(@ModelAttribute FaqForm faqForm, Model model) {
         Faq faq = Faq.builder()
@@ -117,6 +142,12 @@ public class AdminController {
         return "redirect:/admin/faq";
     }
 
+    /**
+     * FAQ 목록 화면 출력
+     *
+     * @param model 모델 객체
+     * @return 논리적 뷰 이름
+     */
     @GetMapping("/faq")
     public String faqListView(Model model) {
         List<Map<String, Object>> faqList = faqService.getFaqListForAdmin();
@@ -130,10 +161,16 @@ public class AdminController {
         return "dashboard/admin/faq_list";
     }
 
+    /**
+     * FAQ 수정 및 삭제
+     *
+     * @param faqRequest FAQ 수정 및 삭제 요청
+     * @param faqForm    FAQ 폼
+     * @param model      모델 객체
+     * @return 논리적 뷰 이름
+     */
     @PostMapping("/faq")
     public String faqEditAndRemove(@RequestParam("faqRequest") String faqRequest, @ModelAttribute FaqForm faqForm, Model model) {
-        log.warn("============{}", faqForm);
-
         if (faqRequest.equals("edit")) {
             Faq faq = Faq.builder()
                     .id(faqForm.getFaqId())
@@ -150,6 +187,12 @@ public class AdminController {
         return "redirect:/admin/faq";
     }
 
+    /**
+     * 차트 화면 출력
+     *
+     * @param model 모델 객체
+     * @return 논리적 뷰 이름
+     */
     @GetMapping("/chart")
     public String chartView(Model model) {
         List<Map<String, Object>> countMember = memberService.getCountByRegMonth();
@@ -163,6 +206,12 @@ public class AdminController {
         return "dashboard/admin/charts";
     }
 
+    /**
+     * 현재 입점 목록 화면 출력
+     *
+     * @param model 모델 객체
+     * @return 논리적 뷰 이름
+     */
     @GetMapping("/host")
     public String hostView(Model model) {
         List<Map<String, Object>> cafeList = cafeService.getCafeListForAdmin();
@@ -172,6 +221,12 @@ public class AdminController {
         return "dashboard/admin/hosts";
     }
 
+    /**
+     * 현재 회원 목록 화면 출력
+     *
+     * @param model 모델 객체
+     * @return 논리적 뷰 이름
+     */
     @GetMapping("/member")
     public String memberView(Model model) {
         List<Member> memberList = memberService.getMemberList();

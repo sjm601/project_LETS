@@ -1,5 +1,7 @@
 package com.vj.lets.domain.support.service;
 
+import com.vj.lets.domain.cafe.dto.Cafe;
+import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.support.dto.Contact;
 import com.vj.lets.domain.support.dto.ContactForm;
 import lombok.extern.slf4j.Slf4j;
@@ -71,8 +73,10 @@ class ContactServiceTest {
     void editContactApproveTest() {
         // given
         int id = 1;
+        Member member = Member.builder().build();
+        Cafe cafe = Cafe.builder().build();
         // when
-        contactService.editContactApprove(id);
+        contactService.approveContact(id, member, cafe);
         // then
         assertThat(id).isNotZero();
     }
@@ -83,7 +87,7 @@ class ContactServiceTest {
         // given
         int id = 1;
         // when
-        contactService.editContactRefuse(id);
+        contactService.refuseContact(id);
         // then
         assertThat(id).isNotZero();
     }

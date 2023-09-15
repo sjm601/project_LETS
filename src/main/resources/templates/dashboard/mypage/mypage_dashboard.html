@@ -83,7 +83,7 @@
         <!-- /.container-wrapper -->
         <!-- /Content -->
 
-        <!-- Edit to review popup -->
+        <!-- Edit to member popup -->
         <div id="modal-edit" class="white-popup mfp-with-anim mfp-hide">
             <form th:action="@{/member/edit}" th:method="post" th:object="${editForm}">
                 <div class="small-dialog-header">
@@ -91,7 +91,6 @@
                 </div>
                 <div class="form-group">
                     <label>Your photo</label>
-                    <form action="/file-upload" class="dropzone"></form>
                 </div>
                 <div class="form-group">
                     <label th:for="name">이름</label>
@@ -127,17 +126,16 @@
                     <input th:id="age" th:name="age" th:value="${member.age}" type="number"
                            class="form-control" placeholder="Your AGE">
                 </div>
-                <button type="button" class="btn_1 my-2">
+                <button type="submit" class="btn_1 my-2">
                     <i class="fa fa-fw fa-pencil mr-1"></i>
                     회원 정보 수정
                 </button>
             </form>
         </div>
 
-        <!-- delete to review popup -->
+        <!-- delete to member popup -->
         <div id="modal-delete"
              class="white-popup mfp-with-anim mfp-hide">
-            <form>
                 <div class="small-dialog-header">
                     <h3>회원 탈퇴</h3>
                 </div>
@@ -145,11 +143,10 @@
                     <label th:for="password">비밀번호</label>
                     <input type="password" th:id="password" th:name="password" class="form-control">
                 </div>
-                <button type="button" class="btn_1 gray delete">
+                <button type="submit" class="btn_1 gray delete">
                     <i class="fa fa-fw fa-times-circle-o mr-1"></i>
                     회원 탈퇴
                 </button>
-            </form>
         </div>
 
 

@@ -78,7 +78,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label th:for="title">제목</label>
-                                            <input th:id="title" th:name="title" th:value="${faq.get('title')}" type="text"
+                                            <input th:id="title" th:name="title" th:value="${faq.get('title')}"
+                                                   type="text"
                                                    class="form-control">
                                         </div>
                                         <div class="form-group message-reply margin-top-0">
@@ -107,7 +108,8 @@
                                                 <p class="m-0">정말로 해당 FAQ를 삭제하시겠습니까</p>
                                             </div>
                                             <div class="col-auto align-self-center">
-                                                <button th:name="faqRequest" th:value="remove" type="submit" class="btn_1 gray delete">
+                                                <button th:name="faqRequest" th:value="remove" type="submit"
+                                                        class="btn_1 gray delete">
                                                     <i class="fa fa-fw fa-times-circle-o mr-1"></i>
                                                     삭제
                                                 </button>

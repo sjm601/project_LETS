@@ -166,6 +166,7 @@ public class MemberController {
     public String edit(@Valid @ModelAttribute EditForm editForm, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response, Model model) {
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
+        log.info("=============={}", loginMember);
 
         EditForm checkForm = memberService.checkEdit(loginMember.getId());
 

@@ -121,6 +121,7 @@
                                             </div>
                                         </form>
                                     </div>
+
                                     <!-- contact to refuse popup -->
                                     <div th:id="|modal-refuse_${contact.id}|" id="modal-refuse"
                                          class="white-popup mfp-with-anim mfp-hide">
@@ -131,17 +132,17 @@
                                             <div class="form-group">
                                                 <label th:for="name">사업자명</label>
                                                 <input th:id="name" th:name="name" th:value="${contact.name}" type="text"
-                                                       class="form-control" placeholder="Your Name" readonly>
+                                                       class="form-control" readonly>
                                             </div>
                                             <div class="form-group">
                                                 <label th:for="name">이메일</label>
                                                 <input th:id="email" th:name="email" th:value="${contact.email}" type="text"
-                                                       class="form-control" placeholder="Your Name" readonly>
+                                                       class="form-control" readonly>
                                             </div>
                                             <div class="form-group">
                                                 <label th:for="name">사업자 등록번호</label>
                                                 <input th:id="businessNumber" th:name="businessNumber" th:value="${contact.businessNumber}" type="text"
-                                                       class="form-control" placeholder="Your Name" readonly>
+                                                       class="form-control" readonly>
                                             </div>
                                             <div class="row justify-content-center message-reply margin-top-0">
                                                 <div class="col-8 align-self-center">

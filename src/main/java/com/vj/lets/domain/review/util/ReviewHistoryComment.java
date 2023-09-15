@@ -1,6 +1,8 @@
 package com.vj.lets.domain.review.util;
 
 
+import lombok.Getter;
+
 /**
  * 리뷰 히스토리 코멘트 이넘 클래스
  *
@@ -8,6 +10,7 @@ package com.vj.lets.domain.review.util;
  * @version 1.0
  * @since 2023-09-15 (금)
  */
+@Getter
 public enum ReviewHistoryComment {
     CREATE("create"), UPDATE("update"), DELETE("delete");
 
@@ -17,7 +20,4 @@ public enum ReviewHistoryComment {
         this.comment = comment;
     }
 
-    public String getComment() {
-        return comment;
-    }
 }
