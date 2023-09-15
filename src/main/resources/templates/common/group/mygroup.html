@@ -18,7 +18,7 @@
             <section class="hero_in general">
                 <div class="wrapper">
                     <div class="container">
-                        <h1 class="fadeInUp"><span></span>주식 스터디</h1>
+                        <h1 th:text="${studyGroup['NAME']}" class="fadeInUp"><span></span>주식 스터디</h1>
                     </div>
                 </div>
             </section>
@@ -31,22 +31,25 @@
                             <div class="widget">
                                 <div class="bloglist singlepost pb-4">
                                     <div class="d-flex">
-                                        <h1 class="my-3 me-2">주식 스터디</h1>
+                                        <h1 th:text="${studyGroup['NAME']}" class="my-3 me-2">주식 스터디</h1>
                                         <!-- 스터디 팀장만 노출 -->
+                                        <th:block th:if="${studyMember != null && studyMember.position == '팀장'}">
                                         <button class="btn btn-secondary my-auto" data-bs-toggle="modal"
                                                 data-bs-target="#settingModal" id="setting" style="font-size: 14px;"><i
                                             class="fa-solid fa-wrench"></i></button>
+                                        </th:block>
                                     </div>
                                     <div class="postmeta">
                                         <ul class="d-flex justify-content-between">
                                             <!-- 스터디 팀원이나 가입 전 회원은 팀장, 팀장은 멤버 초대 노출 -->
                                             <li>
                                                 <div class="text-secondary">멤버수 <strong
-                                                    class="ms-2 text-success fw-bold">40</strong> / 50명
+                                                    th:text="${studyGroup['CURRENTCOUNT']}"
+                                                    class="ms-2 text-success fw-bold">40</strong> / <th:block th:text="${studyGroup['TOTALCOUNT']}">50</th:block>명
                                                 </div>
                                             </li>
                                             <li>
-                                                <div>팀장 : <span>이희영</span></div>
+                                                <div>팀장 : <span th:text="${studyGroup['MEMBERNAME']}">이희영</span></div>
                                             </li>
                                             <!-- <li>
                                                 <div><span>멤버 초대</span></div>
@@ -55,14 +58,18 @@
                                     </div>
                                     <div class="mb-2">
                                         <!-- 가입 전 가입하기 버튼, 가입 후 글 작성 버튼 노출 -->
+                                        <th:block th:if="${studyMember == null}">
                                         <button class="btn btn-success my-auto" data-bs-toggle="modal"
                                                 data-bs-target="#registerModal" id="register"
                                                 style="font-size: 14px;">가입하기
                                         </button>
+                                        </th:block>
+                                        <th:block th:if="${studyMember != null}">
                                         <button class="btn btn-success my-auto" data-bs-toggle="modal"
                                                 data-bs-target="#writeModal" id="write" style="font-size: 14px;">글
                                             작성
                                         </button>
+                                        </th:block>
                                     </div>
                                 </div>
                             </div>
@@ -86,21 +93,21 @@
                                 <ul class="comments-list">
                                     <li>
                                         <div class="alignleft">
-                                            <a href="#0"><img src="img/blog-5.jpg" alt=""></a>
+                                            <a href="#"><img src="/img/blog-5.jpg" alt="#"></a>
                                         </div>
                                         <small>11.08.2016</small>
                                         <h3><a href="#" title="">Verear qualisque ex minimum...</a></h3>
                                     </li>
                                     <li>
                                         <div class="alignleft">
-                                            <a href="#0"><img src="img/blog-6.jpg" alt=""></a>
+                                            <a href="#0"><img src="/img/blog-6.jpg" alt=""></a>
                                         </div>
                                         <small>11.08.2016</small>
                                         <h3><a href="#" title="">Verear qualisque ex minimum...</a></h3>
                                     </li>
                                     <li>
                                         <div class="alignleft">
-                                            <a href="#0"><img src="img/blog-4.jpg" alt=""></a>
+                                            <a href="#0"><img src="/img/blog-4.jpg" alt=""></a>
                                         </div>
                                         <small>11.08.2016</small>
                                         <h3><a href="#" title="">Verear qualisque ex minimum...</a></h3>
@@ -111,12 +118,11 @@
                         </aside>
                         <!-- /aside -->
                         <div class="col-lg-9">
-                            <th:block th:each = "articleList : ${articleList}">
-                                <div class="bloglist singlepost isotope-item">
-                                        <div class="d-flex mb-5 justify-content-between">
-                                            <div class="d-flex">
-                                                <div>
-                                                    <img class="rounded-5" src="img/avatar1.jpg" alt="">
+                            <div class="bloglist singlepost isotope-item">
+                                <div class="d-flex mb-5 justify-content-between">
+                                    <div class="d-flex">
+                                        <div>
+                                            <img class="rounded-5" src="/img/avatar1.jpg" alt="">
                                                 </div>
                                                 <div class="ms-3 my-auto">
                                                     <h6 th:text="${articleList.writer}">이희영</h6>
@@ -195,7 +201,6 @@
                                     </div>
                                     <!-- /col -->
                                 </div>
-
                                 <!-- Modify Modal -->
                                 <div th:id="'modifyModal_' + ${articleList.id}" class="modal fade modal-dialog-scrollable" tabindex="-1" id="modifyModal"
                                      aria-labelledby="exampleModalLabel"
@@ -240,7 +245,7 @@
                                 <div class="d-flex mb-5 justify-content-between">
                                     <div class="d-flex">
                                         <div>
-                                            <img class="rounded-5" src="img/avatar1.jpg" alt="">
+                                            <img class="rounded-5" src="/img/avatar1.jpg" alt="">
                                         </div>
                                         <div class="ms-3 my-auto">
                                             <h6>이희영</h6>
@@ -252,7 +257,7 @@
                                 </div>
                                 <h1 class="mb-3">주식 스터디</h1>
                                 <div class="postmeta">
-                                    <p><img alt="" class="img-fluid" src="img/blog-single.jpg"></p>
+                                    <p><img alt="" class="img-fluid" src="/img/blog-single.jpg"></p>
                                 </div>
                                 <!-- /post meta -->
                                 <div class="post-content">
@@ -273,7 +278,7 @@
                                         <ul>
                                             <li>
                                                 <div class="avatar">
-                                                    <a href="#"><img src="img/avatar1.jpg" alt="">
+                                                    <a href="#"><img src="/img/avatar1.jpg" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="comment_right clearfix">
@@ -290,7 +295,7 @@
                                             </li>
                                             <li>
                                                 <div class="avatar">
-                                                    <a href="#"><img src="img/avatar3.jpg" alt="">
+                                                    <a href="#"><img src="/img/avatar3.jpg" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="comment_right clearfix">
@@ -322,6 +327,267 @@
                             </div>
                             <!-- /post -->
                             <!-- /single-post -->
+<<<<<<< HEAD
+=======
+                            <div class="bloglist singlepost isotope-item">
+                                <div class="d-flex mb-5 justify-content-between">
+                                    <div class="d-flex">
+                                        <div>
+                                            <img class="rounded-5" src="/img/avatar1.jpg" alt="">
+                                        </div>
+                                        <div class="ms-3 my-auto">
+                                            <h6>이희영</h6>
+                                            <span class="mb-0">2023-09-06</span>
+                                        </div>
+                                    </div>
+                                    <a class="btn btn-danger my-auto" href="#"
+                                       style="font-size: 14px; height: 30px;">삭제</a>
+                                </div>
+                                <h1 class="mb-3">주식 스터디</h1>
+                                <div class="postmeta">
+                                    <p><img alt="" class="img-fluid" src="/img/blog-single.jpg"></p>
+                                </div>
+                                <!-- /post meta -->
+                                <div class="post-content">
+                                    <p>Aorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                                        Ipsum has been the
+                                        industry's standard dummy text ever since the 1500s, when an unknown printer
+                                        took a galley of type
+                                        and scrambled it to make a type specimen book. It has survived not only five
+                                        centuries, but also the
+                                        leap into electronic typesetting, remaining essentially unchanged. It was
+                                        popularised in the 1960s
+                                        with the release of Letraset sheets containing Lorem Ipsum passages, and more
+                                        recently with desktop
+                                        publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                    <div id="comments">
+                                        <hr/>
+                                        <h5>댓글</h5>
+                                        <ul>
+                                            <li>
+                                                <div class="avatar">
+                                                    <a href="#"><img src="/img/avatar1.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="comment_right clearfix">
+                                                    <div class="comment_info">
+                                                        <span>Anna Smith</span><span>|</span>2023-09-06
+                                                    </div>
+                                                    <p>
+                                                        Nam cursus tellus quis magna porta adipiscing. Donec et eros
+                                                        leo, non pellentesque arcu.
+                                                        Curabitur
+                                                        vitae mi enim, at vestibulum magna.
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="avatar">
+                                                    <a href="#"><img src="/img/avatar3.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="comment_right clearfix">
+                                                    <div class="comment_info">
+                                                        <span>Anna Smith</span><span>|</span>2023-09-06
+                                                    </div>
+                                                    <p>
+                                                        Cursus tellus quis magna porta adipiscin
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <hr/>
+                                    <h5>댓글 작성</h5>
+                                    <form>
+                                        <div class="form-group">
+											<textarea class="form-control" name="comments" id="comments2" rows="6"
+                                                      placeholder="댓글을 작성해주세요" style="height: 100px;"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" id="submit2"
+                                                    class="btn_1 rounded add_bottom_30">작성
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /col -->
+                            </div>
+                            <!-- /post -->
+                            <!-- /single-post -->
+                            <div class="bloglist singlepost isotope-item">
+                                <div class="d-flex mb-5 justify-content-between">
+                                    <div class="d-flex">
+                                        <div>
+                                            <img class="rounded-5" src="/img/avatar1.jpg" alt="">
+                                        </div>
+                                        <div class="ms-3 my-auto">
+                                            <h6>이희영</h6>
+                                            <span class="mb-0">2023-09-06</span>
+                                        </div>
+                                    </div>
+                                    <a class="btn btn-danger my-auto" href="#"
+                                       style="font-size: 14px; height: 30px;">삭제</a>
+                                </div>
+                                <h1 class="mb-3">주식 스터디</h1>
+                                <div class="postmeta">
+                                    <p><img alt="" class="img-fluid" src="/img/blog-single.jpg"></p>
+                                </div>
+                                <!-- /post meta -->
+                                <div class="post-content">
+                                    <p>Aorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                                        Ipsum has been the
+                                        industry's standard dummy text ever since the 1500s, when an unknown printer
+                                        took a galley of type
+                                        and scrambled it to make a type specimen book. It has survived not only five
+                                        centuries, but also the
+                                        leap into electronic typesetting, remaining essentially unchanged. It was
+                                        popularised in the 1960s
+                                        with the release of Letraset sheets containing Lorem Ipsum passages, and more
+                                        recently with desktop
+                                        publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                    <div id="comments">
+                                        <hr/>
+                                        <h5>댓글</h5>
+                                        <ul>
+                                            <li>
+                                                <div class="avatar">
+                                                    <a href="#"><img src="/img/avatar1.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="comment_right clearfix">
+                                                    <div class="comment_info">
+                                                        <span>Anna Smith</span><span>|</span>2023-09-06
+                                                    </div>
+                                                    <p>
+                                                        Nam cursus tellus quis magna porta adipiscing. Donec et eros
+                                                        leo, non pellentesque arcu.
+                                                        Curabitur
+                                                        vitae mi enim, at vestibulum magna.
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="avatar">
+                                                    <a href="#"><img src="/img/avatar3.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="comment_right clearfix">
+                                                    <div class="comment_info">
+                                                        <span>Anna Smith</span><span>|</span>2023-09-06
+                                                    </div>
+                                                    <p>
+                                                        Cursus tellus quis magna porta adipiscin
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <hr/>
+                                    <h5>댓글 작성</h5>
+                                    <form>
+                                        <div class="form-group">
+											<textarea class="form-control" name="comments" id="comments2" rows="6"
+                                                      placeholder="댓글을 작성해주세요" style="height: 100px;"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" id="submit2"
+                                                    class="btn_1 rounded add_bottom_30">작성
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /col -->
+                            </div>
+                            <!-- /post -->
+                            <!-- /single-post -->
+                            <div class="bloglist singlepost isotope-item">
+                                <div class="d-flex mb-5 justify-content-between">
+                                    <div class="d-flex">
+                                        <div>
+                                            <img class="rounded-5" src="/img/avatar1.jpg" alt="">
+                                        </div>
+                                        <div class="ms-3 my-auto">
+                                            <h6>이희영</h6>
+                                            <span class="mb-0">2023-09-06</span>
+                                        </div>
+                                    </div>
+                                    <a class="btn btn-danger my-auto" href="#"
+                                       style="font-size: 14px; height: 30px;">삭제</a>
+                                </div>
+                                <h1 class="mb-3">주식 스터디</h1>
+                                <div class="postmeta">
+                                    <p><img alt="" class="img-fluid" src="/img/blog-single.jpg"></p>
+                                </div>
+                                <!-- /post meta -->
+                                <div class="post-content">
+                                    <p>Aorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                                        Ipsum has been the
+                                        industry's standard dummy text ever since the 1500s, when an unknown printer
+                                        took a galley of type
+                                        and scrambled it to make a type specimen book. It has survived not only five
+                                        centuries, but also the
+                                        leap into electronic typesetting, remaining essentially unchanged. It was
+                                        popularised in the 1960s
+                                        with the release of Letraset sheets containing Lorem Ipsum passages, and more
+                                        recently with desktop
+                                        publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                    <div id="comments">
+                                        <hr/>
+                                        <h5>댓글</h5>
+                                        <ul>
+                                            <li>
+                                                <div class="avatar">
+                                                    <a href="#"><img src="/img/avatar1.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="comment_right clearfix">
+                                                    <div class="comment_info">
+                                                        <span>Anna Smith</span><span>|</span>2023-09-06
+                                                    </div>
+                                                    <p>
+                                                        Nam cursus tellus quis magna porta adipiscing. Donec et eros
+                                                        leo, non pellentesque arcu.
+                                                        Curabitur
+                                                        vitae mi enim, at vestibulum magna.
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="avatar">
+                                                    <a href="#"><img src="/img/avatar3.jpg" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="comment_right clearfix">
+                                                    <div class="comment_info">
+                                                        <span>Anna Smith</span><span>|</span>2023-09-06
+                                                    </div>
+                                                    <p>
+                                                        Cursus tellus quis magna porta adipiscin
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <hr/>
+                                    <h5>댓글 작성</h5>
+                                    <form>
+                                        <div class="form-group">
+											<textarea class="form-control" name="comments" id="comments2" rows="6"
+                                                      placeholder="댓글을 작성해주세요" style="height: 100px;"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" id="submit2"
+                                                    class="btn_1 rounded add_bottom_30">작성
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /col -->
+                            </div>
+                            <!-- /post -->
+                            <!-- /single-post -->
+>>>>>>> d0ea0aae9e4c0f226e013a3f8c64a99a81e9506c
                             <!--게시글 페이징 처리-->
                             <div>
                             <ul class="pagination h-100 justify-content-center align-items-center">

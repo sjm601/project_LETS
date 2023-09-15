@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vj.lets.domain.payment.mapper.PaymentMapper">
+
+    <insert id="register" parameterType="Payment">
+        INSERT INTO payment (id, pay_status, pay_name, pay_email, pay_phone_number, reservation_id)
+        VALUES (payment_id_seq.NEXTVAL, #{payStatus}, #{payName}, #{payEmail}, #{payPhoneNumber}, #{reservationId})
+    </insert>
+
+
+
+
+</mapper>

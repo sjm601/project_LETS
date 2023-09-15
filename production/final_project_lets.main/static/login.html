@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="LETS - Let's Every Together Study">
+    <meta name="author" content="VJCommando">
+    <title>LETS - Let's Every Together Study</title>
+
+    <!-- Favicons-->
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/images/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/images/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- GOOGLE WEB FONT -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- BASE CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/vendors.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+</head>
+
+<body id="login_bg">
+
+<nav id="menu" class="fake_menu"></nav>
+
+<div id="preloader">
+    <div data-loader="circle-side"></div>
+</div>
+<!-- End Preload -->
+
+<div id="login">
+    <aside>
+        <figure>
+            <a href="index.html" title="lets">
+                <img src="/images/title_textwhite.svg" width="110" height="40" alt="" class="logo_sticky">
+            </a>
+        </figure>
+        <form>
+            <div class="access_social" style="text-align: center;">
+                <a href="#0"><img src="/images/login/kakao_login_medium_wide.png" width="286" alt=""></a>
+            </div>
+            <div class="divider"><span>Or</span></div>
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="id" class="form-control" name="email" id="email" required>
+                <i class="icon_mail_alt"></i>
+            </div>
+            <div class="form-group">
+                <label for="password">비밀번호</label>
+                <input type="password" class="form-control" name="password" id="password" required>
+                <i class="icon_lock_alt"></i>
+            </div>
+            <div class="clearfix add_bottom_30">
+                <div class="checkboxes float-start">
+                    <label class="container_check">이메일 기억
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div class="float-end mt-1"><a id="forgot" href="javascript:void(0);">비밀번호를 잊으셨나요?</a></div>
+            </div>
+            <button class="btn_1 rounded full-width">Login to LETS</button>
+            <div class="text-center add_top_10">New to LETS? <strong><a href="/register.html">회원가입!</a></strong>
+            </div>
+        </form>
+        <div class="copy">© LETS</div>
+    </aside>
+</div>
+<!-- /login -->
+
+<!-- COMMON SCRIPTS -->
+<script src="/js/common_scripts.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+
+</html>

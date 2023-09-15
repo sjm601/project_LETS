@@ -22,10 +22,22 @@
         ORDER BY booking_date DESC
     </select>
 
-    <select id="findByMember" parameterType="int" resultType="Reservation">
-        SELECT ID, TO_CHAR(booking_date, 'yyyy-MM-DD') booking_date, START_TIME, END_TIME, HEAD_COUNT, CAFE_ID, ROOM_ID
-        FROM RESERVATION
-        WHERE member_id = #{memberId}
+    <select id="findByMember" parameterType="int" resultType="map">
+        SELECT res.ID "id",
+               TO_CHAR(res.booking_date, 'yyyy-MM-DD') "bookingDate",
+               res.START_TIME "startTime",
+               res.END_TIME "endTime",
+               res.HEAD_COUNT "headCount",
+               res.STATUS "reservationStatus",
+               caf.NAME "cafeName",
+               roo.NAME "roomName",
+               pay.PAYMENT_TYPE "paymentType",
+               pay.PAY_STATUS "payStatus"
+        FROM RESERVATION res
+                 JOIN ROOM roo ON res.ROOM_ID = roo.ID
+                 JOIN CAFE caf ON res.CAFE_ID = caf.ID
+                 JOIN PAYMENT pay ON res.ID = pay.RESERVATION_ID
+        WHERE res.member_id = #{memberId}
         ORDER BY booking_date DESC
     </select>
 
@@ -54,6 +66,14 @@
         ORDER BY r.booking_date DESC
     </select>
 
+    <select id="findResInfo" parameterType="int" resultType="java.util.Map">
+    SELECT ca.name AS "cafe_name", ca.image_path,m.name AS "member_name", ro.name AS "room_name", r.head_count, TO_CHAR(r.BOOKING_DATE, 'YYYY/MM/DD') AS "booking_date", r.start_time, r.end_time, ro.price,(r.end_time - r.start_time) * ro.price AS "totalPrice",r.id
+    FROM reservation r
+    JOIN member m ON r.member_id = m.id
+    JOIN room ro ON r.room_id = ro.id
+    JOIN cafe ca ON ro.cafe_id = ca.id
+    WHERE r.id = #{id}
+    </select>
 
 
 </mapper>

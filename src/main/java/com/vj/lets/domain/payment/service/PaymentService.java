@@ -8,12 +8,6 @@ public interface PaymentService {
      * 결제 등록
      * @param payment
      */
-    public void register(Payment payment);
+    public void payment(Payment payment);
 
-    /**
-     * 예약 번호에 따른 결제 내역 조회
-     * @param reservationId
-     * @return 결제 정보
-     */
-    public Payment read(int reservationId);
 }

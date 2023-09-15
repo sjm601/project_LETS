@@ -20,6 +20,7 @@ public class Contact {
     int id;
     String email;
     String name;
+    String cafeName;
     String phoneNumber;
     String address;
     String message;

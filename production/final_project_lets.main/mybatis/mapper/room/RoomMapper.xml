@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vj.lets.domain.room.mapper.RoomMapper">
+
+    <insert id="create" parameterType="Room">
+        INSERT INTO ROOM(ID, NAME, DESCRIPTION, IMAGE_PATH, HEAD_COUNT, PRICE, CAFE_ID)
+        VALUES (ROOM_ID_SEQ.NEXTVAL, #{id}, #{name}, #{description}, #{imagePath}, #{head_count},
+                #{price}, #{cafeId})
+    </insert>
+
+    <update id="update" parameterType="Room">
+        UPDATE ROOM
+        <set>
+            <if test="name != null or name != ''">NAME = #{name},</if>
+            <if test="description != null or description != ''">DESCRIPTION = #{description},</if>
+            <if test="imagePath != null or imagePath != ''">IMAGE_PATH = #{imagePath},</if>
+            <if test="headCount != null or headCount != ''">HEAD_COUNT = #{headCount},</if>
+            <if test="price != null or price != ''">PRICE = #{price},</if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="findByAll" resultType="Room">
+        SELECT ID, NAME, DESCRIPTION, IMAGE_PATH, HEAD_COUNT, PRICE, STATUS, CAFE_ID
+        FROM Room
+        ORDER BY id ASC
+    </select>
+
+    <select id="findByCafe" parameterType="int" resultType="Room">
+        SELECT ID, NAME, DESCRIPTION, IMAGE_PATH, HEAD_COUNT, PRICE, STATUS, CAFE_ID
+        FROM Room
+        WHERE CAFE_ID = #{id}
+        ORDER BY id ASC
+    </select>
+
+    <select id="findById" parameterType="int" resultType="Room">
+        SELECT ID, NAME, DESCRIPTION, IMAGE_PATH, HEAD_COUNT, PRICE, STATUS, CAFE_ID
+        FROM Room
+        WHERE ID = #{id}
+    </select>
+
+    <update id="delete" parameterType="int">
+        UPDATE Room
+        SET status = 'disabled'
+        WHERE ID = #{id}
+    </update>
+
+</mapper>

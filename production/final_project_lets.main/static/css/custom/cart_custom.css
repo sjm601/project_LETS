@@ -1,0 +1,31 @@
+/*============================================================================================*/
+/* Your custom styles below */
+/*============================================================================================*/
+.cart_align{
+  text-align: center !important;
+}
+
+#login .form-group i {
+  font-size: 21px;
+  font-size: 1.3125rem;
+  position: absolute;
+  left: 12px;
+  top: 34px;
+  color: #ccc;
+  display: block;
+}
+
+#login form{
+  margin-bottom: 60px;
+  display: block;
+}
+#login form .form-group input{
+  padding-left: 40px;
+}
+
+a.btn_1.outline:hover,
+.btn_1.outline:hover {
+  background: #fc5b62;
+  color: #fff;
+  border-color: #fc5b62 !important;
+}

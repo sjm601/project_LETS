@@ -6,69 +6,135 @@
 <mapper namespace="com.vj.lets.domain.cafe.mapper.CafeMapper">
 
     <insert id="create" parameterType="Cafe">
-        INSERT INTO CAFE (ID, EMAIL, NAME, PHONE_NUMBER, DETAIL_ADDRESS, LATITUDE, LONGITUDE, ROOM_COUNT,
+        INSERT INTO CAFE (ID, EMAIL, NAME, PHONE_NUMBER, DETAIL_ADDRESS, LATITUDE, LONGITUDE,
                           START_TIME, END_TIME, DESCRIPTION, IMAGE_PATH, BUSINESS_NUMBER,
                           SI_GUN_GU_ID, MEMBER_ID, ROAD_ADDRESS)
         VALUES (CAFE_ID_SEQ.NEXTVAL, #{email}, #{name}, #{phoneNumber}, #{detailAddress}, #{latitude}, #{longitude},
-                #{roomCount}, #{startTime}, #{endTime}, #{description}, #{imagePath}, #{businessNumber},
+                #{startTime}, #{endTime}, #{description}, #{imagePath}, #{businessNumber},
                 #{siGunGuId}, #{memberId}, #{roadAddress})
     </insert>
 
-    <insert id="update" parameterType="Cafe">
+    <update id="update" parameterType="Cafe">
     UPDATE CAFE
-    SET
-        <if test="cafeName != null">name = #{name},</if>
-        <if test="cafeNum != null">phone_number = #{phoneNumber},</if>
-        <if test="cafeAddress != null">detail_address = #{detailAddress},</if>
-        <if test="cafeAddress != null">latitude = #{latitude},</if>
-        <if test="cafeAddress != null">longitude = #{longitude},</if>
-        <if test="roomNum != null">room_count = #{roomCount},</if>
-        <if test="startTime != null">start_time = #{startTime},</if>
-        <if test="endTime != null">end_time = #{endTime},</if>
-        <if test="cafeDescription != null">description = #{description},</if>
-        <if test="cafePhoto != null">image_path = #{imagePath},</if>
-        <if test="businessNumber != null">business_number = #{businessNumber},</if>
-        <if test="cafeAddress != null">si_gun_gu_id = #{siGunGuId},</if>
-        <if test="cafeAddress != null">road_address = #{roadAddress},</if>
-    </insert>
+    <set>
+        <if test="name != null and name != ''">NAME = #{name},</if>
+        <if test="phoneNumber != null and phoneNumber != ''">PHONE_NUMBER= #{phoneNumber},</if>
+        <if test="detailAddress != null and detailAddress != ''">DETAIL_ADDRESS = #{detailAddress},</if>
+        <if test="roadAddress != null and roadAddress != ''">LATITUDE = #{latitude},</if>
+        <if test="roadAddress != null and roadAddress != ''">LONGITUDE = #{longitude},</if>
+        <if test="startTime != null and startTime != ''">START_TIME = #{startTime},</if>
+        <if test="endTime != null and endTime != ''">END_TIME = #{endTime},</if>
+        <if test="description != null and description != ''">DESCRIPTION = #{description},</if>
+        <if test="imagePath != null and imagePath != ''">IMAGE_PATH = #{imagePath},</if>
+        <if test="businessNumber != null and businessNumber != ''">BUSINESS_NUMBER = #{businessNumber},</if>
+        <if test="roadAddress != null and roadAddress != ''">SI_GUN_GU_ID = #{siGunGuId},</if>
+        <if test="roadAddress != null and roadAddress != ''">ROAD_ADDRESS = #{roadAddress},</if>
+    </set>
+    </update>
 
-    <select id="findById" parameterType="int" resultType="Cafe">
-        SELECT ID, EMAIL, NAME, PHONE_NUMBER, DETAIL_ADDRESS, LATITUDE, LONGITUDE, ROOM_COUNT,
-               START_TIME, END_TIME, DESCRIPTION, IMAGE_PATH, TO_CHAR(regdate, 'yyyy-MM-DD') regdate, BUSINESS_NUMBER,
-               SI_GUN_GU_ID, MEMBER_ID, ROAD_ADDRESS
-        FROM CAFE
-        Where id = #{id}
+    <select id="findById" parameterType="int" resultType="map">
+        SELECT caf.ID "id",
+               EMAIL "email",
+               caf.NAME "name",
+               PHONE_NUMBER "phoneNumber",
+               do.NAME "siDoName",
+               si.NAME "siGunGuName",
+               ROAD_ADDRESS "roadAddress",
+               DETAIL_ADDRESS "detailAddress",
+               LATITUDE "latitude",
+               LONGITUDE "longitude",
+               START_TIME "startTime",
+               END_TIME "endTime",
+               DESCRIPTION "description",
+               IMAGE_PATH "imagePath",
+               "cafeRating"
+        FROM CAFE caf
+                 LEFT JOIN (SELECT res.CAFE_ID, AVG(rev.RATING) "cafeRating"
+                            FROM REVIEW rev
+                                     JOIN RESERVATION res ON rev.RESERVATION_ID = res.ID
+                            GROUP BY res.CAFE_ID) a ON a.CAFE_ID = caf.ID
+                 LEFT JOIN SI_GUN_GU si ON si.ID = caf.SI_GUN_GU_ID
+                 LEFT JOIN SI_DO do ON do.ID = si.SI_DO_ID
+        Where caf.ID = #{id}
+          AND STATUS = 'enabled'
     </select>
 
-    <select id="findByAll" resultType="Cafe">
-        SELECT ID, EMAIL, NAME, PHONE_NUMBER, DETAIL_ADDRESS, LATITUDE, LONGITUDE, ROOM_COUNT,
-               START_TIME, END_TIME, DESCRIPTION, IMAGE_PATH, TO_CHAR(regdate, 'yyyy-MM-DD') regdate, BUSINESS_NUMBER,
-               SI_GUN_GU_ID, MEMBER_ID, ROAD_ADDRESS
-        FROM CAFE
+    <select id="findByAll" resultType="map">
+        SELECT caf.ID "id",
+               caf.NAME "cafeName",
+               do.NAME "siDoName",
+               si.NAME "siGunGuName",
+               ROAD_ADDRESS "roadAddress",
+               DETAIL_ADDRESS "detailAddress",
+               LATITUDE "latitude",
+               LONGITUDE "longitude",
+               START_TIME "startTime",
+               END_TIME "endTime",
+               IMAGE_PATH "imagePath",
+               "cafeRating",
+               "minPrice"
+        FROM CAFE caf
+                 LEFT JOIN (SELECT res.CAFE_ID, AVG(rev.RATING) "cafeRating"
+                            FROM REVIEW rev
+                                     JOIN RESERVATION res ON rev.RESERVATION_ID = res.ID
+                            GROUP BY res.CAFE_ID) a ON a.CAFE_ID = caf.ID
+                 LEFT JOIN (SELECT CAFE_ID, MIN(PRICE) "minPrice"
+                            FROM ROOM roo
+                                     JOIN CAFE ON CAFE_ID = CAFE.ID
+                            GROUP BY CAFE_ID) b ON b.CAFE_ID = caf.ID
+                 LEFT JOIN SI_GUN_GU si ON si.ID = caf.SI_GUN_GU_ID
+                 LEFT JOIN SI_DO do ON do.ID = si.SI_DO_ID
+        WHERE STATUS = 'enabled'
         ORDER BY regdate DESC
     </select>
 
-    <select id="findByBest" resultType="Cafe">
-        SELECT c.id,
-               COUNT(rv.id)
-        FROM CAFE c
-                 JOIN RESERVATION RV ON c.id = rv.cafe_id
-        GROUP BY c.id
-        ORDER BY COUNT(rv.id) DESC
+    <select id="findByBest" resultType="int">
+        SELECT C.ID
+        FROM CAFE C
+                 LEFT JOIN RESERVATION RV ON C.ID = RV.CAFE_ID
+        WHERE ROWNUM &lt;= 6
+                AND C.STATUS = 'enabled'
+                AND RV.STATUS = 'use'
+        GROUP BY C.ID
+        ORDER BY COUNT(RV.ID) DESC
     </select>
 
-    <select id="findBySearch" parameterType="CafeSearch" resultType="Cafe">
-        SELECT ID, NAME, DETAIL_ADDRESS, LATITUDE, LONGITUDE, START_TIME, END_TIME, IMAGE_PATH,
-                SI_GUN_GU_ID, ROAD_ADDRESS
-        FROM CAFE
-        WHERE
-            <if test="searchName != null and searchName != ''">NAME = '%' || #{name} || '%'</if>
-            <if test="searchCount != null and searchCount != ''">OR HEAD_COUNT LIKE '%' || #{countPerson} || '%'</if>
-            <if test="searchOption != null and searchOption != ''">OR OPTION LIKE '#{option}'</if>
-            <if test="minDuration != null and minDuration != ''">OR DURAION LIKE '#{price}'</if>
-            <if test="maxDuration != null and maxDuration != ''">OR OPTION LIKE '#{price}'</if>
-            <if test="maxRating != null and maxRating != ''">OR OPTION LIKE '#{price}'</if>
-            <if test="minRating != null and minRating != ''">OR OPTION LIKE '#{price}'</if>
+    <select id="findBySearch" parameterType="CafeSearch" resultType="map">
+        SELECT caf.ID "id",
+        caf.NAME "cafeName",
+        do.NAME "siDoName",
+        si.NAME "siGunGuName",
+        ROAD_ADDRESS "roadAddress",
+        DETAIL_ADDRESS "detailAddress",
+        LATITUDE "latitude",
+        LONGITUDE "longitude",
+        START_TIME "startTime",
+        END_TIME "endTime",
+        IMAGE_PATH "imagePath",
+        "cafeRating",
+        "minPrice"
+        FROM CAFE caf
+            LEFT JOIN (SELECT res.CAFE_ID, AVG(rev.RATING) "cafeRating"
+                       FROM REVIEW rev
+                           JOIN RESERVATION res ON rev.RESERVATION_ID = res.ID
+                       GROUP BY res.CAFE_ID) a ON a.CAFE_ID = caf.ID
+            LEFT JOIN (SELECT CAFE_ID, MIN(PRICE) "minPrice"
+                       FROM ROOM roo
+                           JOIN CAFE ON CAFE_ID = CAFE.ID
+                       GROUP BY CAFE_ID) b ON b.CAFE_ID = caf.ID
+            LEFT JOIN SI_GUN_GU si ON si.ID = caf.SI_GUN_GU_ID
+            LEFT JOIN SI_DO do ON do.ID = si.SI_DO_ID
+        <where>
+            STATUS = 'enabled'
+            <if test="name != null and name != ''">AND NAME LIKE '%' || #{name} || '%'</if>
+            <if test="minDuration != null and minDuration != '' and maxDuration != null and maxDuration != ''">
+                AND DISTNACE_WGS84(LATITUDE, LONGITUDE, #{currentY}, #{currentX}) BETWEEN #{minDuration} AND
+                #{maxDuration}
+            </if>
+        </where>
+        <if test="minDuration != null and minDuration != '' and maxDuration != null and maxDuration != ''">
+            ORDER BY DISTNACE_WGS84(LATITUDE, LONGITUDE, #{currentY}, #{currentX}) ASC
+        </if>
     </select>
 
     <update id="delete" parameterType="int">

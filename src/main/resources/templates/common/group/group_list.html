@@ -100,7 +100,7 @@
                             <form>
                                 <div class="form-group">
                                     <label for="search">스터디 검색</label>
-                                    <input class="form-control" type="text" name="search" id="search" placeholder="검색어">
+                                    <input class="form-control" type="text" name="keyword" id="search" placeholder="검색어">
                                 </div>
                                 <button class="btn_1 rounded" type="submit" id="submit">검색</button>
                             </form>
@@ -153,11 +153,10 @@
                                                 <h3 class="mb-3 text-start"><a th:text="${studyGroup.NAME}" th:href="@{/group/{id}(id=${studyGroup.ID})}"  href="#">주식스터디</a>
                                                 </h3>
                                                 <ul class="d-flex p-0 mb-2 border-0">
-                                                    <li><a th:text="${studyGroup.SIGUNGUNAME}"
-                                                           class="text-dark p-2 rounded-5 btn btn-outline-light"
+                                                    <li><a class="text-dark p-2 rounded-5 btn btn-outline-light"
                                                            href="#"
                                                            style="font-size: 14px;"><i
-                                                            class="fa-solid fa-location-dot me-1"></i>강동구</a></li>
+                                                            class="fa-solid fa-location-dot me-1"></i><th:block th:text="${studyGroup.SIGUNGUNAME}">강동구</th:block></a></li>
                                                     <li><a th:text="${studyGroup.SUBJECT}"
                                                            class="text-dark p-2 rounded-5 btn btn-outline-light"
                                                            href="#"

@@ -35,7 +35,7 @@ public interface ReviewMapper {
     /**
      * 카페 ID로 리뷰 목록 조회
      *
-     * @param cafeId     카페 ID
+     * @param cafeId 카페 ID
      * @return 리뷰 목록
      */
     public List<Map<String, Object>> readByCafe(int cafeId);
@@ -55,6 +55,14 @@ public interface ReviewMapper {
      * @return 리뷰 정보
      */
     public Map<String, String> readHostCommentByResId(int reservationId);
+
+    /**
+     * 예약 ID로 리뷰 유무 조회
+     *
+     * @param reservationId 예약 ID
+     * @return 리뷰 유무
+     */
+    public boolean readCountByReservationId(int reservationId);
 
     /**
      * 리뷰 수정

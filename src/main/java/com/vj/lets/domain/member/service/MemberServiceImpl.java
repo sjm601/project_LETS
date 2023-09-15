@@ -1,5 +1,11 @@
 package com.vj.lets.domain.member.service;
 
+import com.vj.lets.domain.cafe.mapper.CafeHistoryMapper;
+import com.vj.lets.domain.cafe.mapper.CafeMapper;
+import com.vj.lets.domain.group.mapper.GroupContactMapper;
+import com.vj.lets.domain.group.mapper.GroupHistoryMapper;
+import com.vj.lets.domain.group.mapper.GroupMemberListMapper;
+import com.vj.lets.domain.group.mapper.StudyGroupMapper;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.mapper.MemberHistoryMapper;
 import com.vj.lets.domain.member.mapper.MemberMapper;
@@ -23,6 +29,12 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberMapper memberMapper;
     private final MemberHistoryMapper memberHistoryMapper;
+    private final CafeMapper cafeMapper;
+    private final CafeHistoryMapper cafeHistoryMapper;
+    private final StudyGroupMapper studyGroupMapper;
+    private final GroupHistoryMapper groupHistoryMapper;
+    private final GroupMemberListMapper groupMemberListMapper;
+    private final GroupContactMapper groupContactMapper;
 
     /**
      * 회원 가입
@@ -89,7 +101,28 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void removeMember(int id) {
+        Member member = memberMapper.readById(id);
+        String memberType = member.getType();
+
+        if (memberType.equals("host")) {
+            // 멤버 ID로 카페 찾기
+//            cafeMapper.delete(cafeId);
+//            cafeHistoryMapper.delete(cafeId);
+        } else if (memberType.equals("guest")) {
+//             멤버 아이디로 스터디 그룹 전체 찾기
+//             if (포지션 = 팀장) {
+//             groupMemberListMapper.removeMember(studygroupid);
+//            studyGroupMapper.delete(studygroupid);
+//            groupHistoryMapper.delete(studygroupid);
+//             } else if ( 포지션 = 팀원) {
+//            groupMemberListMapper.removeMember(id, studygroupid);
+//            studyGroupMapper.decrease(studygroupid);
+//            groupHistoryMapper.update(studygroupid);
+//             }
+        }
+
         memberMapper.disabled(id);
         memberHistoryMapper.createByUpdate(id, MemberHistoryComment.DELETE.getComment());
+
     }
 }

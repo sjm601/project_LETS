@@ -22,5 +22,6 @@ public class Room {
     private String imagePath;
     private int headCount;
     private int price;
+    private String status;
     private int cafeId;
 }

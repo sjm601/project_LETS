@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vj.lets.domain.room.mapper.RoomHistoryMapper">
+
+    <insert id="create">
+        INSERT INTO ROOM_HISTORY(ID, MEMBER_ID)
+        VALUES (ROOM_HISTORY_ID_SEQ.NEXTVAL, ROOM_ID_SEQ.CURRVAL)
+    </insert>
+
+    <insert id="update" parameterType="int">
+        INSERT INTO ROOM_HISTORY(ID, MODIFY_COMMENT, MEMBER_ID)
+        VALUES(ROOM_HISTORY_ID_SEQ.NEXTVAL, 'update', #{roomId})
+    </insert>
+
+    <insert id="delete" parameterType="int">
+        INSERT INTO ROOM_HISTORY(ID, MODIFY_COMMENT, MEMBER_ID)
+        VALUES(ROOM_HISTORY_ID_SEQ.NEXTVAL, 'delete', #{roomId})
+    </insert>
+
+</mapper>

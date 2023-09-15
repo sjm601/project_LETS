@@ -40,117 +40,17 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>aaaaaa@bbbbb.ccc</td>
-                                    <td>이름</td>
-                                    <td>000-000-0000</td>
-                                    <td>10</td>
-                                    <td>남성</td>
-                                    <td>2023-09-06</td>
-                                </tr>
-                                <tr>
-                                    <td>aaaaaa@bbbbb.ccc</td>
-                                    <td>이름</td>
-                                    <td>000-000-0000</td>
-                                    <td>10</td>
-                                    <td>남성</td>
-                                    <td>2023-09-06</td>
-                                </tr>
-                                <tr>
-                                    <td>aaaaaa@bbbbb.ccc</td>
-                                    <td>이름</td>
-                                    <td>000-000-0000</td>
-                                    <td>10</td>
-                                    <td>남성</td>
-                                    <td>2023-09-06</td>
-                                </tr>
-                                <tr>
-                                    <td>aaaaaa@bbbbb.ccc</td>
-                                    <td>이름</td>
-                                    <td>000-000-0000</td>
-                                    <td>10</td>
-                                    <td>남성</td>
-                                    <td>2023-09-06</td>
-                                </tr>
-                                <tr>
-                                    <td>aaaaaa@bbbbb.ccc</td>
-                                    <td>이름</td>
-                                    <td>000-000-0000</td>
-                                    <td>10</td>
-                                    <td>남성</td>
-                                    <td>2023-09-06</td>
-                                </tr>
-                                <tr>
-                                    <td>aaaaaa@bbbbb.ccc</td>
-                                    <td>이름</td>
-                                    <td>000-000-0000</td>
-                                    <td>10</td>
-                                    <td>남성</td>
-                                    <td>2023-09-06</td>
-                                </tr>
-                                <tr>
-                                    <td>aaaaaa@bbbbb.ccc</td>
-                                    <td>이름</td>
-                                    <td>000-000-0000</td>
-                                    <td>10</td>
-                                    <td>남성</td>
-                                    <td>2023-09-06</td>
-                                </tr>
-                                <tr>
-                                    <td>aaaaaa@bbbbb.ccc</td>
-                                    <td>이름</td>
-                                    <td>000-000-0000</td>
-                                    <td>10</td>
-                                    <td>남성</td>
-                                    <td>2023-09-06</td>
-                                </tr>
-                                <tr>
-                                    <td>aaaaaa@bbbbb.ccc</td>
-                                    <td>이름</td>
-                                    <td>000-000-0000</td>
-                                    <td>10</td>
-                                    <td>남성</td>
-                                    <td>2023-09-06</td>
-                                </tr>
-                                <tr>
-                                    <td>aaaaaa@bbbbb.ccc</td>
-                                    <td>이름</td>
-                                    <td>000-000-0000</td>
-                                    <td>10</td>
-                                    <td>남성</td>
-                                    <td>2023-09-06</td>
-                                </tr>
-                                <tr>
-                                    <td>aaaaaa@bbbbb.ccc</td>
-                                    <td>이름</td>
-                                    <td>000-000-0000</td>
-                                    <td>10</td>
-                                    <td>남성</td>
-                                    <td>2023-09-06</td>
-                                </tr>
-                                <tr>
-                                    <td>aaaaaa@bbbbb.ccc</td>
-                                    <td>이름</td>
-                                    <td>000-000-0000</td>
-                                    <td>10</td>
-                                    <td>남성</td>
-                                    <td>2023-09-06</td>
-                                </tr>
-                                <tr>
-                                    <td>aaaaaa@bbbbb.ccc</td>
-                                    <td>이름</td>
-                                    <td>000-000-0000</td>
-                                    <td>10</td>
-                                    <td>남성</td>
-                                    <td>2023-09-06</td>
-                                </tr>
-                                <tr>
-                                    <td>aaaaaa@bbbbb.ccc</td>
-                                    <td>이름</td>
-                                    <td>000-000-0000</td>
-                                    <td>10</td>
-                                    <td>남성</td>
-                                    <td>2023-09-06</td>
+                                <tr th:each="member : ${memberList}">
+                                    <td th:text="${member.email}">aaaaaa@bbbbb.ccc</td>
+                                    <td th:text="${member.name}">이름</td>
+                                    <td th:text="${member.phoneNumber}">000-000-0000</td>
+                                    <td th:text="${member.age}">10</td>
+                                    <td>
+                                        <th:block th:if="${member.gender} == 'male'">남성</th:block>
+                                        <th:block th:if="${member.gender} == 'female'">여성</th:block>
+                                        <th:block th:if="${member.gender} == 'others'">기타</th:block>
+                                    </td>
+                                    <td th:text="${member.regdate}">2023-09-06</td>
                                 </tr>
                                 </tbody>
                             </table>

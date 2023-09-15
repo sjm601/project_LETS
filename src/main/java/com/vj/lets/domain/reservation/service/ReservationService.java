@@ -33,7 +33,7 @@ public interface ReservationService {
    public List<Reservation> getReservationList();
 
     //회원 Id 로 예약 전체 리스트 조회
-    public List<Reservation> getMemberResList(int memberId);
+    public List<Map<String, Object>> getMemberResList(int memberId);
 
     //카페 id로 예약 전체 리스트 조회
     public List<Reservation> getCafeResList(int cafeId);
@@ -43,6 +43,9 @@ public interface ReservationService {
 
     //호스트의 모든 예약 데이터 가져오기
     public List<Map<String,Reservation>> getTotalData(int cafeId);
+
+    //예약에 필요한 예약 정보 가져오기
+    public Map<String,Reservation> getResInfo(int id);
 
 
 }

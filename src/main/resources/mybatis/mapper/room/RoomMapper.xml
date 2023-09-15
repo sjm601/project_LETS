@@ -7,18 +7,18 @@
 
     <insert id="create" parameterType="Room">
         INSERT INTO ROOM(ID, NAME, DESCRIPTION, IMAGE_PATH, HEAD_COUNT, PRICE, CAFE_ID)
-        VALUES (ROOM_ID_SEQ.NEXTVAL, #{id}, #{name}, #{description}, #{imagePath}, #{head_count},
+        VALUES (ROOM_ID_SEQ.NEXTVAL, #{name}, #{description}, #{imagePath}, #{headCount},
                 #{price}, #{cafeId})
     </insert>
 
     <update id="update" parameterType="Room">
         UPDATE ROOM
         <set>
-            <if test="name != null or name != ''">NAME = #{name},</if>
-            <if test="description != null or description != ''">DESCRIPTION = #{description},</if>
-            <if test="imagePath != null or imagePath != ''">IMAGE_PATH = #{imagePath},</if>
-            <if test="headCount != null or headCount != ''">HEAD_COUNT = #{headCount},</if>
-            <if test="price != null or price != ''">PRICE = #{price},</if>
+            <if test="name != null and name != ''">NAME = #{name},</if>
+            <if test="description != null and description != ''">DESCRIPTION = #{description},</if>
+            <if test="imagePath != null and imagePath != ''">IMAGE_PATH = #{imagePath},</if>
+            <if test="headCount != null and headCount != ''">HEAD_COUNT = #{headCount},</if>
+            <if test="price != null and price != ''">PRICE = #{price},</if>
         </set>
         WHERE ID = #{id}
     </update>
@@ -26,6 +26,7 @@
     <select id="findByAll" resultType="Room">
         SELECT ID, NAME, DESCRIPTION, IMAGE_PATH, HEAD_COUNT, PRICE, STATUS, CAFE_ID
         FROM Room
+        WHERE STATUS = 'enabled'
         ORDER BY id ASC
     </select>
 
@@ -41,6 +42,7 @@
         FROM Room
         WHERE ID = #{id}
     </select>
+
 
     <update id="delete" parameterType="int">
         UPDATE Room

@@ -75,7 +75,7 @@ class ReservationServiceTest {
         // given
         int memberId = 21;
         // when
-        List<Reservation> list = reservationService.getMemberResList(memberId);
+        List<Map<String, Object>> list = reservationService.getMemberResList(memberId);
         // then
         log.info("해당 회원의 전체 예약 리스트 : {}", list);
         assertThat(list).isNotNull();
@@ -113,5 +113,16 @@ class ReservationServiceTest {
         // then
         log.info("호스트의 모든 예약 데이터:{}", reserveData);
         assertThat(reserveData).isNotNull();
+    }
+
+    @Test
+    void getResInfoTest() {
+        // given
+        int findId = 2;
+        // when
+        Map<String ,Reservation> reservation = reservationService.getResInfo(findId);
+        // then
+        log.info("예약 검색 완료:{}",reservation);
+        assertThat(reservation).isNotNull();
     }
 }

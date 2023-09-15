@@ -1,11 +1,19 @@
 package com.vj.lets.web.dashboard.controller;
 
+import com.vj.lets.domain.cafe.dto.Cafe;
+import com.vj.lets.domain.cafe.mapper.CafeMapper;
+import com.vj.lets.domain.member.dto.Member;
+import com.vj.lets.domain.member.service.MemberService;
+import com.vj.lets.domain.support.dto.Contact;
+import com.vj.lets.domain.support.service.ContactService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 /**
  * 관리자 대시보드 관련 요청 컨트롤러
@@ -20,6 +28,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 public class AdminController {
 
+    private final MemberService memberService;
+    private final ContactService contactService;
+    private final CafeMapper cafeMapper;
+
     /**
      * 관리자 대시보드 메인 화면 출력
      *
@@ -33,6 +45,9 @@ public class AdminController {
 
     @GetMapping("/contact")
     public String contactView(Model model) {
+        List<Contact> contactList = contactService.getContactList();
+        model.addAttribute("contactList", contactList);
+
         return "dashboard/admin/contacts";
     }
 
@@ -53,11 +68,17 @@ public class AdminController {
 
     @GetMapping("/host")
     public String hostView(Model model) {
+        List<Cafe> cafeList = cafeMapper.findByAll();
+        model.addAttribute("cafeList", cafeList);
+
         return "dashboard/admin/hosts";
     }
 
     @GetMapping("/member")
     public String memberView(Model model) {
+        List<Member> memberList = memberService.getMemberList();
+        model.addAttribute("memberList", memberList);
+
         return "dashboard/admin/members";
     }
 

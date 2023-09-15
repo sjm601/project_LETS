@@ -7,7 +7,9 @@
 
     <insert id="register" parameterType="Payment">
         INSERT INTO payment (id, pay_status, pay_name, pay_email, pay_phone_number, reservation_id)
-        VALUES (paymnet_id_seq.NEXTVAL, #{payStatus}, #{payName}, #{payEmail}, #{payPhoneNumber}, #{reservationId})
+        VALUES (payment_id_seq.NEXTVAL, #{payStatus}, #{payName}, #{payEmail},
+                SUBSTR(#{payPhoneNumber}, 1, 3) || '-' || SUBSTR(#{payPhoneNumber}, 4, 4) || '-' || SUBSTR(#{payPhoneNumber}, 8),
+                #{reservationId})
     </insert>
 
 
