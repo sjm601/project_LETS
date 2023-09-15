@@ -1,7 +1,9 @@
 package com.vj.lets.web.cafe.controller;
 
+
 import com.vj.lets.domain.cafe.dto.CafeOption;
 import com.vj.lets.domain.cafe.service.CafeService;
+import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.reservation.dto.Reservation;
 import com.vj.lets.domain.reservation.service.ReservationService;
 import com.vj.lets.domain.room.dto.Room;
@@ -48,26 +50,59 @@ public class CafeController {
         model.addAttribute("allCafe", allCafe);
         return "common/cafe/cafe_list";
     }
-  
+
+
     @GetMapping("/{id}")
-    public String cafeDetails(@PathVariable int id, Model model) {
-        Map<String, Object> cafe = cafeService.getCafe(id);
-        model.addAttribute("cafe", cafe);
-        List<Room> room = roomService.getSearchCafeRoom(id);
-        model.addAttribute("room", room);
+    public String viewDetail(@PathVariable int id, Model model){
+        Map<String,Object> cafe = cafeService.getCafe(id);
+        Object cafeRating = cafe.get("cafeRating");
+        if (cafeRating == null) {
+            cafeRating = 5;
+        }
+        model.addAttribute("Cafe", cafe);
+        model.addAttribute("cafeRating", cafeRating);
+
+        List<Room> roomList = roomService.getSearchCafeRoom(id);
+        model.addAttribute("roomList", roomList);
 
         return "common/cafe/cafe_detail";
     }
 
+
+
+
+
+
+
     @PostMapping("/{id}")
-    public String reserve(@PathVariable int id, @ModelAttribute Reservation reservation, Model model){
-        Map<String, Object> cafe = cafeService.getCafe(id);
-        model.addAttribute("cafe",cafe);
-        List<Room> room =roomService.getSearchCafeRoom(id);
-        model.addAttribute("room",room);
+    public String bookCafe(@PathVariable("id") int id,
+                           @RequestParam("bookingDate") String bookingDate,
+                           @RequestParam("headCount") int headCount,
+                           @RequestParam("startTime") int startTime,
+                           @RequestParam("endTime") int endTime,
+                           @RequestParam("roomId") int roomId,
+                           @ModelAttribute Reservation reservation,
+                           @SessionAttribute Member loginMember,
+                           Model model) {
+
+        // 예약 중복 체크
+        List<Map<String, Integer>> nonReservationTime = reservationService.checkDuplicateResTime(roomId, bookingDate, startTime, endTime);
+        model.addAttribute("nonReservationTime",nonReservationTime);
+        if (!nonReservationTime.isEmpty()) {
+            return "common/cafe/cafe_detail"; // 예약 실패 페이지 또는 에러 페이지로 리다이렉트
+        }
+
+        // 예약 객체 설정
+        reservation.setCafeId(id);
+        reservation.setBookingDate(bookingDate);
+        reservation.setStartTime(startTime);
+        reservation.setEndTime(endTime);
+        reservation.setMemberId(loginMember.getId());
+        reservation.setHeadCount(headCount);
+        reservation.setRoomId(roomId);
         reservationService.reserve(reservation);
-        return "common/cafe/reservation";
+        int resId = reservationService.getNowRes(loginMember.getId());
+
+        return "redirect:/reservation/" + resId;
     }
-
-
 }

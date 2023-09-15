@@ -10,6 +10,61 @@
         <title>LETS - 카페 상세 페이지</title>
 
         <link href="/css/custom/cafe_detail_custom.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script type="text/javascript">
+            function getDuplicateReservationTime(callback) {
+                var cafeId = [[${id}]];
+                var bookingDate = [[${nonReservationTime.bookingDate}]];
+                var roomId = [[${nonReservationTime.roomId}]];
+                $.ajax({
+                    url: '/cafe/' + cafeId, // 실제 서버 엔드포인트에 맞게 수정
+                    type: 'GET',
+                    data: {
+                        bookingDate: bookingDate,
+                        roomId: roomId
+                    },
+                    success: function (data) {
+                        callback(data); // 중복된 예약 시간 데이터를 콜백 함수에 전달
+                    },
+                    error: function (error) {
+                        console.error('Error fetching duplicate reservation time: ' + error);
+                    }
+                });
+            }
+            // 중복된 예약 시간을 받아온 후에 시작 시간과 종료 시간을 비활성화하는 함수
+            function handleDuplicateReservationTime() {
+                var bookingDate = document.querySelector('[name="bookingDate"]').value;
+                var roomId = document.querySelector('[name="roomId"]').value;
+
+                getDuplicateReservationTime(bookingDate, roomId, function (duplicateTime) {
+                    // 시작 시간과 종료 시간 <select> 엘리먼트 가져오기
+                    var startTimeSelect = document.getElementById("startTimeSelect");
+                    var endTimeSelect = document.getElementById("endTimeSelect");
+
+                    // 시작 시간과 종료 시간 옵션을 모두 활성화
+                    for (var i = 0; i < startTimeSelect.options.length; i++) {
+                        startTimeSelect.options[i].disabled = false;
+                        endTimeSelect.options[i].disabled = false;
+                    }
+
+                    // 중복된 예약 시간대 비활성화
+                    for (var i = 0; i < duplicateTime.length; i++) {
+                        var startHour = duplicateTime[i].start;
+                        var endHour = duplicateTime[i].end;
+
+                        // 시작 시간과 종료 시간 <select> 엘리먼트에서 해당 시간대를 비활성화
+                        for (var j = startHour; j <= endHour; j++) {
+                            startTimeSelect.options[j].disabled = true;
+                            endTimeSelect.options[j].disabled = true;
+                        }
+                    }
+                });
+            }
+
+            // 시작 시간과 종료 시간을 비활성화하는 함수를 호출하는 이벤트 리스너 연결
+            document.querySelector('[name="bookingDate"]').addEventListener('change', handleDuplicateReservationTime);
+            document.querySelector('[name="roomId"]').addEventListener('change', handleDuplicateReservationTime);
+        </script>
     </th:block>
 
     <th:block th:fragment="content">
@@ -391,12 +446,11 @@
                         <!-- /col -->
 
                         <aside class="col-lg-4" id="sidebar">
-                            <form th:action="@{/cafe/detail/{id}(id=${cafe.Id})}" action="#"
-                                  th:method="post">
+                            <form th:action="@{'/cafe/' + ${id}}" action="#" th:method="post">
                             <div class="box_detail booking">
                                 <div class="price">
-                                    <span id="selectedRoomPrice"><span>1000</span><i class="fa-solid fa-won-sign ms-1"></i><small> per 1hour</small></span>
-                                    <div class="score"><span>Superb<em>30 Reviews</em></span><strong>5.0</strong></div>
+                                    <span><span id="selectedRoomPrice">1000</span><small> per 1hour</small></span>
+                                    <div class="score"><span>Superb<em>30 Reviews</em></span><strong th:text="${#numbers.formatDecimal(cafeRating, 1, 1)}">4.0</strong></div>
                                 </div>
                                 <div class="form-group input-dates scroll-fix">
                                     <input class="form-control" type="text" name="bookingDate" placeholder="When..">
@@ -416,19 +470,19 @@
 
                                 <div class="form-group clearfix">
                                     <div class="custom-select-form">
-                                        <select  id="roomName" class="wide" name="roomName">
-                                            <option>룸 타입</option>
-                                            <option th:each="room : ${room}" th:value="${room.name}"
-                                                    th:text="${room.name}"></option>
+                                        <select id="roomName" class="wide" name="roomId">
+                                            <option value="">룸 타입</option>
+                                            <option th:each="roomList : ${roomList}" th:value="${roomList.id}"
+                                                    th:text="${roomList.name}" ></option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="form-group clearfix">
                                     <div class="custom-select-form">
-                                        <select class="wide" name="startTime">
+                                        <select class="wide" name="startTime" id="startTimeSelect" >
                                             <option>시작시간</option>
-                                            <option th:each="hour : ${#numbers.sequence(cafe.startTime, cafe.endTime - 1)}"
+                                            <option th:each="hour : ${#numbers.sequence(Cafe.startTime, Cafe.endTime - 1)}"
                                                     th:value="${hour}"
                                                     th:text="${#strings.concat(hour, ':00')}"></option>
                                         </select>
@@ -437,11 +491,12 @@
 
                                 <div class="form-group clearfix">
                                     <div class="custom-select-form">
-                                        <select class="wide" name="endTime">
+                                        <select class="wide" name="endTime" id="endTimeSelect">
                                             <option>종료시간</option>
-                                            <option th:each="hour : ${#numbers.sequence(cafe.startTime +1, cafe.endTime)}"
-                                                    th:value="${hour}"
-                                                    th:text="${#strings.concat(hour, ':00')}"></option>
+                                            <option  th:each="hour : ${#numbers.sequence(Cafe.startTime +1, Cafe.endTime)}"
+                                                     th:value="${hour}"
+                                                     th:text="${#strings.concat(hour, ':00')}"
+                                            ></option>
                                         </select>
                                     </div>
                                 </div>

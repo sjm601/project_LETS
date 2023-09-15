@@ -14,12 +14,15 @@ public interface GroupHistoryMapper {
 
     /**
      * 스터디 그룹 히스토리 생성
+     *
+     * @author VJ특공대 이희영
      */
     public void create();
 
     /**
      * 스터디 그룹 변경 시  히스토리 업데이트
      *
+     * @author VJ특공대 이희영
      * @param studyGroupId 스터디 그룹 아이디
      */
     public void update(int studyGroupId);
@@ -27,6 +30,7 @@ public interface GroupHistoryMapper {
     /**
      * 스터디 그룹 삭제 시 히스토리 업데이트
      *
+     * @author VJ특공대 이희영
      * @param studyGroupId 스터디 그룹 아이디
      */
     public void delete(int studyGroupId);

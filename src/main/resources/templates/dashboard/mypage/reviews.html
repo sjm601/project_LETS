@@ -56,10 +56,12 @@
                                          alt="">
                                 </figure>
                                 <h4>
-                                    <th:block th:text="${review.get('cafeName')}">Hotel Mariott
-                                        <th:block><small>of
-                                            <th:block th:text="${review.get('roomName')}">M.Twain</th:block>
-                                        </small>
+                                    <th:block th:text="${review.get('cafeName')}">
+                                        Hotel Mariott
+                                    </th:block>
+                                    <small>of
+                                        <th:block th:text="${review.get('roomName')}">M.Twain</th:block>
+                                    </small>
                                 </h4>
                                 <p th:text="${review.get('content')}">리뷰 콘텐츠</p>
                                 <div th:if="${review.get('commentContent')}" class="ml-5 mr-5 bg-dark text-white">
@@ -69,13 +71,15 @@
                                 </div>
                                 <p class="inline-popups">
                                     <a th:href="|#modal-edit_${review.get('id')}|" href="#modal-edit"
-                                       data-effect="mfp-zoom-in" class="btn_1 gray"><i
-                                        class="fa fa-fw fa-pencil"></i>
-                                        리뷰 수정</a>
+                                       data-effect="mfp-zoom-in" class="btn_1 gray">
+                                        <i class="fa fa-fw fa-pencil mr-1"></i>
+                                        리뷰 수정
+                                    </a>
                                     <a th:href="|#modal-delete_${review.get('id')}|" href="#modal-delete"
-                                       data-effect="mfp-zoom-in" class="btn_1 gray"><i
-                                        class="fa fa-fw fa-times-circle-o"></i> 리뷰
-                                        삭제</a>
+                                       data-effect="mfp-zoom-in" class="btn_1 gray delete">
+                                        <i class="fa fa-fw fa-times-circle-o mr-1"></i>
+                                        리뷰 삭제
+                                    </a>
                                 </p>
                                 <!-- Edit to review popup -->
                                 <div th:id="|modal-edit_${review.get('id')}|" id="modal-edit"
@@ -84,24 +88,46 @@
                                         <div class="small-dialog-header">
                                             <h3>리뷰 수정</h3>
                                         </div>
-                                        <div class="message-reply margin-top-0">
-                                            <div class="form-group">
-                                                <textarea th:id="editReviewContent" th:name="editReviewContent"
-                                                          cols="40" rows="3" class="form-control"></textarea>
+                                        <div class="form-group">
+                                            <label th:for="rating">별점</label>
+                                            <div class="styled-select">
+                                                <select id="rating" name="rating" required>
+                                                    <option th:selected="${review.get('rating') == 1}">1</option>
+                                                    <option th:selected="${review.get('rating') == 2}">2</option>
+                                                    <option th:selected="${review.get('rating') == 3}">3</option>
+                                                    <option th:selected="${review.get('rating') == 4}">4</option>
+                                                    <option th:selected="${review.get('rating') == 5}">5</option>
+                                                </select>
                                             </div>
-                                            <button type="button" class="btn_1">수정</button>
                                         </div>
+                                        <div class="form-group message-reply margin-top-0">
+                                            <label th:for="editReviewContent">내용</label>
+                                            <textarea th:id="editReviewContent" th:name="editReviewContent" th:text="${review.get('content')}"
+                                                      cols="40" rows="3" class="form-control"></textarea>
+                                        </div>
+                                        <button type="button" class="btn_1">
+                                            <i class="fa fa-fw fa-pencil mr-1"></i>
+                                            리뷰 수정
+                                        </button>
                                     </form>
                                 </div>
-                                <!-- Delete to review popup -->
+                                <!-- delete to review popup -->
                                 <div th:id="|modal-delete_${review.get('id')}|" id="modal-delete"
                                      class="white-popup mfp-with-anim mfp-hide">
                                     <form>
                                         <div class="small-dialog-header">
                                             <h3>리뷰 삭제</h3>
                                         </div>
-                                        <div class="message-reply margin-top-0">
-                                            <button type="button" class="btn_1">삭제</button>
+                                        <div class="row justify-content-center message-reply margin-top-0">
+                                            <div class="col-8 align-self-center">
+                                                <p class="m-0">정말로 해당 리뷰를 삭제하시겠습니까</p>
+                                            </div>
+                                            <div class="col-auto align-self-center">
+                                                <button type="button" class="btn_1 gray delete">
+                                                    <i class="fa fa-fw fa-times-circle-o mr-1"></i>
+                                                    리뷰 삭제
+                                                </button>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
@@ -128,7 +154,6 @@
             <!-- /container-fluid-->
         </div>
         <!-- /container-wrapper-->
-
         <!-- /Content -->
     </th:block>
 

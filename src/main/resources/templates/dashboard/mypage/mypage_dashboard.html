@@ -10,6 +10,8 @@
         <title>LETS - My Page</title>
 
         <link href="/dashboard/vendor/dropzone.css" rel="stylesheet">
+        <link href="/dashboard/vendor/animate.min.css" rel="stylesheet">
+        <link href="/dashboard/vendor/magnific-popup.css" rel="stylesheet">
     </th:block>
 
     <th:block th:fragment="content">
@@ -23,92 +25,134 @@
                     </li>
                     <li class="breadcrumb-item active">My page</li>
                 </ol>
-                <form>
-                    <div class="box_general padding_bottom">
-                        <div class="header_box version_2">
-                            <h2><i class="fa fa-user"></i>나의 프로필</h2>
+                <div class="box_general padding_bottom">
+                    <div class="header_box version_2">
+                        <h2><i class="fa fa-user"></i>나의 프로필</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 align-self-center">
+                            <div class="text-center">
+                                <img src="/upload_image/member/default_others.png" style="max-width: 240px" alt="...">
+                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label>Your photo</label>
-                                    <form action="/file-upload" class="dropzone"></form>
+                        <div class="col-md-7 add_top_30">
+                            <div class="row">
+                                <div class="col-md-12 my-2">
+                                    <label>이메일</label>
+                                    <h6 th:text="${member.email}"></h6>
                                 </div>
                             </div>
-                            <div class="col-md-7 add_top_30">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label th:for="email">이메일</label>
-                                            <input th:id="email" th:name="email" th:value="${member.email}" type="text"
-                                                   class="form-control" placeholder="Your Email" disabled>
-                                        </div>
-                                    </div>
+                            <!-- /row-->
+                            <div class="row">
+                                <div class="col-md-12 my-2">
+                                    <label>이름</label>
+                                    <h6 th:text="${member.name}"></h6>
                                 </div>
-                                <!-- /row-->
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label th:for="name">이름</label>
-                                            <input th:id="name" th:name="name" th:value="${member.name}" type="text"
-                                                   class="form-control" placeholder="Your Name">
-                                        </div>
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 my-2">
+                                    <label>전화번호</label>
+                                    <h6 th:text="${member.phoneNumber}"></h6>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label th:for="phoneNumber">전화번호</label>
-                                            <input th:id="phoneNumber" th:name="phoneNumber"
-                                                   th:value="${member.phoneNumber}" type="text" class="form-control"
-                                                   placeholder="Your Phone Number">
-                                        </div>
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 my-2">
+                                    <label>성별</label>
+                                    <h6 th:if="${member.gender} == 'male'" th:text="남성"></h6>
+                                    <h6 th:if="${member.gender} == 'female'" th:text="여성"></h6>
+                                    <h6 th:if="${member.gender} == 'others'" th:text="기타"></h6>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label th:for="gender">성별</label>
-                                            <div class="styled-select">
-                                                <select th:id="gender" th:name="gender">
-                                                    <option>Gender</option>
-                                                    <option th:value="male" th:selected="${member.gender} == 'male'">
-                                                        Male
-                                                    </option>
-                                                    <option th:value="female"
-                                                            th:selected="${member.gender} == 'female'">Female
-                                                    </option>
-                                                    <option th:value="others"
-                                                            th:selected="${member.gender} == 'others'">Others
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label th:for="age">나이</label>
-                                            <input th:id="age" th:name="age" th:value="${member.age}" type="number"
-                                                   class="form-control" placeholder="Your AGE">
-                                        </div>
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 my-2">
+                                    <label>나이</label>
+                                    <h6 th:text="${member.age}"></h6>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- /box_general-->
-                    <div class="d-flex flex-row-reverse">
-                        <a href="#" class="btn_1 medium mx-1">저장</a>
-                        <a href="#" class="btn_1 medium mx-1">수정</a>
-                    </div>
-                </form>
+                </div>
+                <!-- /box_general-->
+                <div class="d-flex flex-row-reverse inline-popups">
+                    <a href="#modal-delete" class="btn_1 medium mx-1">탈퇴</a>
+                    <a href="#modal-edit" class="btn_1 medium mx-1">수정</a>
+                </div>
             </div>
             <!-- /.container-fluid -->
         </div>
         <!-- /.container-wrapper -->
         <!-- /Content -->
+
+        <!-- Edit to review popup -->
+        <div id="modal-edit" class="white-popup mfp-with-anim mfp-hide">
+            <form th:action="@{/member/edit}" th:method="post" th:object="${editForm}">
+                <div class="small-dialog-header">
+                    <h3>회원 수정</h3>
+                </div>
+                <div class="form-group">
+                    <label>Your photo</label>
+                    <form action="/file-upload" class="dropzone"></form>
+                </div>
+                <div class="form-group">
+                    <label th:for="name">이름</label>
+                    <input th:id="name" th:name="name" th:value="${member.name}" type="text"
+                           class="form-control" placeholder="Your Name">
+                </div>
+                <div class="form-group">
+                    <label th:for="phoneNumber">전화번호</label>
+                    <input th:id="phoneNumber" th:name="phoneNumber"
+                           th:value="${member.phoneNumber}" type="text" class="form-control"
+                           placeholder="Your Phone Number">
+                </div>
+                <div class="form-group">
+                    <label th:for="gender">성별</label>
+                    <div class="styled-select">
+                        <select th:id="gender" th:name="gender">
+                            <option th:value="male" th:selected="${member.gender} == 'male'">
+                                남성
+                            </option>
+                            <option th:value="female"
+                                    th:selected="${member.gender} == 'female'">
+                                여성
+                            </option>
+                            <option th:value="others"
+                                    th:selected="${member.gender} == 'others'">
+                                기타
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label th:for="age">나이</label>
+                    <input th:id="age" th:name="age" th:value="${member.age}" type="number"
+                           class="form-control" placeholder="Your AGE">
+                </div>
+                <button type="button" class="btn_1 my-2">
+                    <i class="fa fa-fw fa-pencil mr-1"></i>
+                    회원 정보 수정
+                </button>
+            </form>
+        </div>
+
+        <!-- delete to review popup -->
+        <div id="modal-delete"
+             class="white-popup mfp-with-anim mfp-hide">
+            <form>
+                <div class="small-dialog-header">
+                    <h3>회원 탈퇴</h3>
+                </div>
+                <div class="form-group message-reply margin-top-0">
+                    <label th:for="password">비밀번호</label>
+                    <input type="password" th:id="password" th:name="password" class="form-control">
+                </div>
+                <button type="button" class="btn_1 gray delete">
+                    <i class="fa fa-fw fa-times-circle-o mr-1"></i>
+                    회원 탈퇴
+                </button>
+            </form>
+        </div>
+
+
     </th:block>
 
     <th:block th:fragment="scripts">

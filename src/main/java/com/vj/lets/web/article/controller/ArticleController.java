@@ -1,8 +1,10 @@
 package com.vj.lets.web.article.controller;
 
 import com.vj.lets.domain.article.dto.Article;
+import com.vj.lets.domain.article.dto.ArticleComment;
 import com.vj.lets.domain.article.dto.PageParams;
 import com.vj.lets.domain.article.dto.Pagination;
+import com.vj.lets.domain.article.service.ArticleCommentService;
 import com.vj.lets.domain.article.service.ArticleService;
 import com.vj.lets.domain.member.dto.Member;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,13 +32,14 @@ import java.util.List;
 @Slf4j
 public class ArticleController {
     private final ArticleService articleService;
+    private final ArticleCommentService articleCommentService;
     private static final int ELEMENT_SIZE = 5;
     private static final int PAGE_SIZE = 5;
 
 
-    //게시글 목록 (페이징,검색값 포함)화면 , 수정 , 등록 , 삭제 다 이 페이지에서 실행
+    //게시글 목록 (페이징,검색값,게시글의 댓글 포함)화면 , 수정 , 등록 , 삭제 다 이 페이지에서 실행
     @GetMapping("/list")
-    public String articleList(@PathParam("page") String page, @PathParam("keyword")String keyword, Model model) {
+    public String articleList(@PathParam("page") String page, @PathParam("keyword")String keyword, Model model, Model model2) {
         List<Article> list = articleService.findAll();
         model.addAttribute("list", list);
 //        log.info("1페이지 전체 리스트{}", list);
@@ -59,6 +62,13 @@ public class ArticleController {
         List<Article> articleList = articleService.findByPage(pageParams);
 //        log.info("페이징 된 리스트{}",articleList);
         model.addAttribute("articleList", articleList);
+
+        List<ArticleComment> articleCommentList = articleCommentService.findCommentAll();
+        if (!articleCommentList.isEmpty()) {
+            model2.addAttribute("articleCommentList", articleCommentList);
+            log.info("댓글{}",articleCommentList);
+        }
+
         return "common/group/mygroup";
     }
 
@@ -82,16 +92,11 @@ public class ArticleController {
     }
     // 게시글 수정
     @PostMapping("/list/update")
-    public String update(@PathParam("articleId") int id ,@ModelAttribute Article article, Model model) {
-        Article targetArticle = articleService.findById(id);
-        model.addAttribute("article", targetArticle);
-        String title = article.getTitle();
-        String content = article.getContent();
-//        log.info("입력값 : {}", article);
-        targetArticle.setTitle(title);
-        targetArticle.setContent(content);
-//        log.info("업데이트 : {}", targetArticle);
-        articleService.update(targetArticle);
+    public String update(@ModelAttribute Article article, Model model) {
+        model.addAttribute("targetArticle", article);
+        log.info("입력값 : {}", article);
+        articleService.update(article);
+        model.addAttribute("article", article);
         return "redirect:/article/list";
 
     }
@@ -99,13 +104,14 @@ public class ArticleController {
         @PostMapping("/list/delete")
         public String delete(@PathParam("articleId") int id, @ModelAttribute Article article,
                              Model model) {
-            List<Article> articleList = articleService.findAll();
-            model.addAttribute("list", articleList);
             Article targetArticle = articleService.findById(id);
             model.addAttribute("article", targetArticle);
                 articleService.delete(id);
                 return "redirect:/article/list";
         }
+
+
+
 
 
 }

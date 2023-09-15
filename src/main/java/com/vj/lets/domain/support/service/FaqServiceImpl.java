@@ -48,7 +48,7 @@ public class FaqServiceImpl implements FaqService {
     }
 
     /**
-     * 카테고리 별로 정렬하여 FAQ 목록 조회
+     * 카테고리 별로 정렬하여 전체 FAQ 목록 조회
      *
      * @return FAQ 목록
      */
@@ -64,6 +64,16 @@ public class FaqServiceImpl implements FaqService {
         }
 
         return faqListMap;
+    }
+
+    /**
+     * 전체 FAQ 목록 조회 (관리자용)
+     *
+     * @return FAQ 목록
+     */
+    @Override
+    public List<Map<String, Object>> getFaqListForAdmin() {
+        return faqMapper.readAll();
     }
 
     /**

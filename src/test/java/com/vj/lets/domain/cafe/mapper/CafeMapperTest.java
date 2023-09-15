@@ -89,10 +89,9 @@ class CafeMapperTest {
 
     @Test
     @DisplayName("id로 카페 검색")
-    @Disabled
     void findByIdTest() {
         //given
-        int id = 1;
+        int id = 5;
         //when
         Map<String, Object> cafe = cafeMapper.findById(id);
         //then

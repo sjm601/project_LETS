@@ -4,6 +4,7 @@ import com.vj.lets.domain.support.dto.Faq;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * FAQ 관련 매퍼 인터페이스
@@ -27,7 +28,7 @@ public interface FaqMapper {
      *
      * @return FAQ 목록
      */
-    public List<Faq> readAll();
+    public List<Map<String, Object>> readAll();
 
     /**
      * 카테고리 별 FAQ 목록 조회

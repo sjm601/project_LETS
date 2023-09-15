@@ -11,6 +11,7 @@ import java.util.Map;
  * Cafe 테이블 관련 명세
  *
  * @author VJ특공대 강소영
+ * @author VJ특공대 김종원
  * @version 1.0
  * @since 2023. 9. 7.
  */
@@ -34,6 +35,22 @@ public interface CafeMapper {
 
     /** 카패 검색 결과 출력 */
     public List<Map<String, Object>> findBySearch(CafeSearch cafeSearch);
+
+    /**
+     * 전체 카페 목록 조회 (관리자용)
+     *
+     * @return 카페 목록
+     * @see com.vj.lets.web.dashboard.controller.AdminController
+     */
+    public List<Map<String, Object>> readAllForAdmin();
+
+    /**
+     * 최근 1년간 월별 신규 카페 수 조회
+     *
+     * @return 신규 카페 수 목록
+     * @see com.vj.lets.web.dashboard.controller.AdminController
+     */
+    public List<Map<String, Object>> readCountByRegMonth();
 
     /** 카페삭제 */
     public void delete(int id);

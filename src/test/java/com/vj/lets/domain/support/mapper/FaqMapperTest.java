@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -44,7 +45,7 @@ class FaqMapperTest {
     void readAllTest() {
         // given
         // when
-        List<Faq> list = faqMapper.readAll();
+        List<Map<String, Object>> list = faqMapper.readAll();
         // then
         assertThat(list).isNotNull();
     }
