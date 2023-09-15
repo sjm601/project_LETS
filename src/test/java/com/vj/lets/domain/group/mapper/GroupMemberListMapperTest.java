@@ -58,7 +58,7 @@ class GroupMemberListMapperTest {
         int studyGroupId = 1;
 
         // when
-        List<GroupMemberList> list = groupMemberListMapper.findAll(studyGroupId);
+        List<Map<String, Object>> list = groupMemberListMapper.findAll(studyGroupId);
 
         // then
         log.info("스터디 멤버 리스트 : {}", list);

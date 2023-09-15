@@ -1,5 +1,7 @@
 package com.vj.lets.web.group.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vj.lets.domain.group.dto.*;
 import com.vj.lets.domain.group.service.StudyGroupService;
 import com.vj.lets.domain.location.dto.SiGunGu;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -97,10 +100,21 @@ public class StudyGroupController {
         model.addAttribute("member", member);
         model.addAttribute("studyGroup", studyGroup);
         model.addAttribute("groupMember", groupMember);
-        model.addAttribute("memberList", memberList);
+//        model.addAttribute("memberList", memberList);
         model.addAttribute("contactList", contactList);
 
         return "common/group/mygroup";
+    }
+
+    @ResponseBody
+    @RequestMapping("/groupSetting/{id}")
+    public String settingModal(@PathVariable int id, Model model) throws JsonProcessingException {
+        ObjectMapper objectMapper= new ObjectMapper();
+
+        List<Map<String, Object>> memberList1 = studyGroupService.findByAllMember(id);
+        String memberList = objectMapper.writeValueAsString(memberList1);
+
+        return memberList;
     }
 
     /**
@@ -191,11 +205,11 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 가입
      *
-     * @author VJ특공대 이희영
-     * @param id 스터디 그룹 아이디
+     * @param id          스터디 그룹 아이디
      * @param loginMember 로그인 멤버
      * @param model
      * @return 스터디 그룹 상세 화면
+     * @author VJ특공대 이희영
      */
     @PostMapping("/join/{id}")
     public String joinGroup(@PathVariable int id, @SessionAttribute Member loginMember, Model model) {
