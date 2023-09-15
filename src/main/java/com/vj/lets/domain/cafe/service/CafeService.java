@@ -53,6 +53,13 @@ public interface CafeService {
     public List<Map<String, Object>> getCafeList();
 
     /**
+     * 카페 옵션 리스트 출력
+     *
+     * @return 카페 옵션 전체 리스트
+     */
+    public List<CafeOption> getOptionList();
+
+    /**
      * id로 카페 검색
      *
      * @param id 카페 ID

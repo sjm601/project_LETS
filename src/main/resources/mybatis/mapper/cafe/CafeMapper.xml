@@ -60,21 +60,22 @@
     </select>
 
     <select id="findByAll" resultType="map">
-        SELECT  caf.ID "id",
-                caf.NAME "cafeName",
-                do.NAME "siDoName",
-                si.NAME "siGunGuName",
-                ROAD_ADDRESS "roadAddress",
-                DETAIL_ADDRESS "detailAddress",
-                LATITUDE "latitude",
-                LONGITUDE "longitude",
-                START_TIME "startTime",
-                END_TIME "endTime",
-                IMAGE_PATH "imagePath",
-                "cafeRating",
-                "minPrice",
-                "reviewCount"
-                    "resCount"
+        SELECT
+            caf.ID "id",
+            caf.NAME "cafeName",
+            do.NAME "siDoName",
+            si.NAME "siGunGuName",
+            ROAD_ADDRESS "roadAddress",
+            DETAIL_ADDRESS "detailAddress",
+            LATITUDE "latitude",
+            LONGITUDE "longitude",
+            START_TIME "startTime",
+            END_TIME "endTime",
+            IMAGE_PATH "imagePath",
+            "cafeRating",
+            "minPrice",
+            "reviewCount",
+            "resCount"
         FROM CAFE caf
                  LEFT JOIN (SELECT res.CAFE_ID, AVG(rev.RATING) "cafeRating"
                             FROM REVIEW rev
@@ -92,9 +93,10 @@
                             GROUP BY res.CAFE_ID) c ON c.CAFE_ID = caf.ID
                  LEFT JOIN (SELECT res.CAFE_ID, COUNT(res.ID) "resCount"
                             FROM RESERVATION res
+                            WHERE res.STATUS = 'use' OR res.STATUS = 'complete'
                             GROUP BY res.CAFE_ID) d ON d.CAFE_ID = caf.ID
         WHERE STATUS = 'enabled'
-        ORDER BY REGDATE DESC;
+        ORDER BY REGDATE DESC
     </select>
 
     <select id="findByBest" resultType="map">

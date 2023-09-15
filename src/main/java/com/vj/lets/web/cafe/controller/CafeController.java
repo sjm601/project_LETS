@@ -1,5 +1,6 @@
 package com.vj.lets.web.cafe.controller;
 
+import com.vj.lets.domain.cafe.dto.CafeOption;
 import com.vj.lets.domain.cafe.service.CafeService;
 import com.vj.lets.domain.reservation.dto.Reservation;
 import com.vj.lets.domain.reservation.service.ReservationService;
@@ -41,6 +42,10 @@ public class CafeController {
     
     @GetMapping("/list")
     public String cafeList(Model model) {
+        List<CafeOption> options = cafeService.getOptionList();
+        model.addAttribute("options", options);
+        List<Map<String, Object>> allCafe = cafeService.getCafeList();
+        model.addAttribute("allCafe", allCafe);
         return "common/cafe/cafe_list";
     }
   

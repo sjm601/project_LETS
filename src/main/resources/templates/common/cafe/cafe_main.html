@@ -58,18 +58,20 @@
                     <div class="item" th:each="bestCafe : ${bestCafe}">
                         <div class="box_grid">
                             <figure>
-                                <!-- <a href="#0" class="wish_bt"></a> -->
                                 <a th:href="@{/cafe/{id}(id=${bestCafe['id']})}" href="/cafe"><img th:src="${bestCafe['imagePath']}"
                                                                                                    src="img/tour_5.jpg" class="img-fluid" alt=""
                                                                 width="800"
                                                                 height="533">
                                     <div class="read_more"><span>Read more</span></div>
                                 </a>
-                                <small>영업중</small>
+                                <small th:if="${bestCafe['startTime']} < ${#calendars.format(#calendars.createNow(),'HH')} and ${bestCafe['endTime']} > ${#calendars.format(#calendars.createNow(),'HH')}">영업중</small>
+                                <small th:unless="${bestCafe['startTime']} < ${#calendars.format(#calendars.createNow(),'HH')} and ${bestCafe['endTime']} > ${#calendars.format(#calendars.createNow(),'HH')}">영업종료</small>
                             </figure>
                             <div class="wrapper">
                                 <h3><a th:href="@{/cafe/{id}(id=${bestCafe['id']})}" href="/cafe/" th:text="${bestCafe['cafeName']}">이젠스터디카페</a></h3>
-                                <p th:text="${bestCafe['siDoName']}+' '+${bestCafe['siGunGuName']}+' '+${bestCafe['roadAddress']}+' '+${bestCafe['detailAddress']}">
+                                <p th:if="${bestCafe['detailAddress']} != null" th:text="${bestCafe['siDoName']}+' '+${bestCafe['siGunGuName']}+' '+${bestCafe['roadAddress']}">
+                                    서울특별시 노원구 동일로 500</p>
+                                <p th:unless="${bestCafe['detailAddress']} != null" th:text="${bestCafe['siDoName']}+' '+${bestCafe['siGunGuName']}+' '+${bestCafe['roadAddress']}+' '+${bestCafe['detailAddress']}">
                                     서울특별시 노원구 동일로 500</p>
                                 <span class="price">최소 <strong th:text="${bestCafe['minPrice']}">50,000<i
                                     class="fa-solid fa-won-sign"></i></strong>원 /1hour</span>
@@ -79,7 +81,7 @@
                                     7시 ~ 20시</strong></li>
                                 <li>
                                     <div class="score"><span>
-                                        <em th:switch="${#numbers.formatDecimal(bestCafe['cafeRating'],1,1)}">
+                                        <em th:switch="${#numbers.formatInteger(bestCafe['cafeRating'],1)}">
                                             <em th:case="5">Superb</em>
                                             <em th:case="4">VeryGood</em>
                                             <em th:case="3">Good</em>
@@ -87,9 +89,8 @@
                                             <em th:case="1">Poor</em>
                                             <em th:case="*">No Rating</em>
                                         </em>
-<!--                                        <em th:if="${bestCafe['cafeRating'] > 4}">Superb</em>-->
-<!--                                        <em th:unless="${bestCafe['cafeRating']< 4} and ${3 <= bestCafe['cafeRating']}">VeryGood</em>-->
-                                        <em th:text="${bestCafe['reviewCount']}+' Reviews'">30 Reviews</em></span>
+                                        <em th:if="${bestCafe['reviewCount']} != null" th:text="${bestCafe['reviewCount']}+' Reviews'">30 Reviews</em>
+                                        <em th:if="${bestCafe['reviewCount']} == null">0 Reviews</em></span>
                                         <strong th:if="${bestCafe['cafeRating']} == null">0.0</strong>
                                         <strong th:unless="${bestCafe['cafeRating']} == null" th:text="${#numbers.formatDecimal(bestCafe['cafeRating'],1,1)}">5.0</strong>
                                     </div>
@@ -100,7 +101,7 @@
                     <!-- /item -->
                 </div>
                 <!-- /carousel -->
-                <p class="btn_home_align"><a href="tours-grid-isotope.html" class="btn_1 rounded">View all Cafes</a></p>
+                <p class="btn_home_align"><a href="/cafe/list" class="btn_1 rounded">View all Cafes</a></p>
                 <hr class="large">
             </div>
             <!-- /container -->
