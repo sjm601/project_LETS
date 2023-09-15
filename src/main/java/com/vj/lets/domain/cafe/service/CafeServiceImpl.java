@@ -78,6 +78,16 @@ public class CafeServiceImpl implements CafeService{
     }
 
     @Override
+    public List<Map<String, Object>> getCafeListForAdmin() {
+        return cafeMapper.readAllForAdmin();
+    }
+
+    @Override
+    public List<Map<String, Object>> getCountByRegMonth() {
+        return cafeMapper.readCountByRegMonth();
+    }
+
+    @Override
     @Transactional
     public void editCafe(Cafe cafe, String comment, List<CafeOptionList> cafeOptionLists) {
         cafeMapper.update(cafe);

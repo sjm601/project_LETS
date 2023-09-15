@@ -10,9 +10,10 @@
         VALUES (FAQ_ID_SEQ.NEXTVAL, #{title}, #{content}, #{categoryId})
     </insert>
 
-    <select id="readAll" resultType="Faq">
-        SELECT ID, TITLE, CONTENT, CATEGORY_ID
-        FROM FAQ
+    <select id="readAll" resultType="map">
+        SELECT f.ID "id", TITLE "title", CONTENT "content", c.NAME "category"
+        FROM FAQ f
+                 JOIN FAQ_CATEGORY c ON f.CATEGORY_ID = c.ID
         ORDER BY CATEGORY_ID
     </select>
 

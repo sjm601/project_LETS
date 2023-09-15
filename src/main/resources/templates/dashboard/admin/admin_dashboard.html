@@ -33,7 +33,7 @@
                                     <h5>26 신규 회원!</h5>
                                 </div>
                             </div>
-                            <a class="card-footer text-white clearfix small z-1" href="members.html">
+                            <a th:href="@{/admin/member}" class="card-footer text-white clearfix small z-1" href="members.html">
                                 <span class="float-left">View Details</span>
                                 <span class="float-right"><i class="fa fa-angle-right"></i></span>
                             </a>
@@ -49,7 +49,7 @@
                                     <h5>10 신규 신청!</h5>
                                 </div>
                             </div>
-                            <a class="card-footer text-white clearfix small z-1" href="contacts.html">
+                            <a th:href="@{/admin/contact}" class="card-footer text-white clearfix small z-1" href="contacts.html">
                                 <span class="float-left">View Details</span>
                                 <span class="float-right"><i class="fa fa-angle-right"></i></span>
                             </a>
@@ -65,7 +65,7 @@
                                     <h5>10 신규 입점!</h5>
                                 </div>
                             </div>
-                            <a class="card-footer text-white clearfix small z-1" href="hosts.html">
+                            <a th:href="@{/admin/host}" class="card-footer text-white clearfix small z-1" href="hosts.html">
                                 <span class="float-left">View Details</span>
                                 <span class="float-right"><i class="fa fa-angle-right"></i></span>
                             </a>
@@ -89,7 +89,16 @@
 
     <th:block th:fragment="scripts">
         <!-- Custom scripts for this page -->
-        <script src="/dashboard/js/admin-charts.js"></script>
+        <script th:inline="javascript">
+            let countMember = [[${countMember}]];
+            let monthMemberKey = [];
+            let monthMemberValue = [];
+            for (const countElement of countMember) {
+                monthMemberKey.push(countElement.month);
+                monthMemberValue.push(countElement.memberCount);
+            }
+        </script>
+        <script src="/dashboard/js/custom/admin-charts_custom.js"></script>
         <!-- /custom scripts -->
     </th:block>
 

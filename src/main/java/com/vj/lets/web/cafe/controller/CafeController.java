@@ -97,6 +97,4 @@ public class CafeController {
 
         return "redirect:/reservation/" + resId;
     }
-
-
 }

@@ -1,16 +1,20 @@
 package com.vj.lets.web.dashboard.controller;
 
+
 import com.vj.lets.domain.cafe.mapper.CafeMapper;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.service.MemberService;
 import com.vj.lets.domain.support.dto.Contact;
+import com.vj.lets.domain.support.dto.Faq;
+import com.vj.lets.domain.support.dto.FaqCategory;
+import com.vj.lets.domain.support.dto.FaqRegisterForm;
 import com.vj.lets.domain.support.service.ContactService;
+import com.vj.lets.domain.support.service.FaqService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -30,7 +34,8 @@ public class AdminController {
 
     private final MemberService memberService;
     private final ContactService contactService;
-    private final CafeMapper cafeMapper;
+    private final CafeService cafeService;
+    private final FaqService faqService;
 
     /**
      * 관리자 대시보드 메인 화면 출력
@@ -40,6 +45,9 @@ public class AdminController {
      */
     @GetMapping("")
     public String adminMain(Model model) {
+        List<Map<String, Object>> countMember = memberService.getCountByRegMonth();
+        model.addAttribute("countMember", countMember);
+
         return "dashboard/admin/admin_dashboard";
     }
 
@@ -53,22 +61,52 @@ public class AdminController {
 
     @GetMapping("/faq/register")
     public String faqRegisterView(Model model) {
+        FaqRegisterForm faqForm = FaqRegisterForm.builder().build();
+        List<FaqCategory> categoryList = faqService.getFaqCategoryList();
+
+        model.addAttribute("faqForm", faqForm);
+        model.addAttribute("categoryList", categoryList);
         return "dashboard/admin/faq_add";
+    }
+
+    @PostMapping("/faq/register")
+    public String faqRegister(@ModelAttribute FaqRegisterForm faqForm, Model model) {
+        Faq faq = Faq.builder()
+                .title(faqForm.getTitle())
+                .content(faqForm.getContent())
+                .categoryId(faqForm.getCategory())
+                .build();
+        faqService.register(faq);
+        return "redirect:/admin/faq";
     }
 
     @GetMapping("/faq")
     public String faqListView(Model model) {
+        List<Map<String, Object>> faqList = faqService.getFaqListForAdmin();
+        List<FaqCategory> categoryList = faqService.getFaqCategoryList();
+
+        model.addAttribute("faqList", faqList);
+        model.addAttribute("categoryList", categoryList);
         return "dashboard/admin/faq_list";
     }
 
     @GetMapping("/chart")
-    public String chartView(Model model) {
+    public String  chartView(Model model) {
+        List<Map<String, Object>> countMember = memberService.getCountByRegMonth();
+        model.addAttribute("countMember", countMember);
+        List<Map<String, Object>> countCafe = cafeService.getCountByRegMonth();
+        model.addAttribute("countCafe", countCafe);
+        List<Map<String, Object>> countGender = memberService.getCountByGender();
+        model.addAttribute("countGender", countGender);
+
         return "dashboard/admin/charts";
     }
 
     @GetMapping("/host")
     public String hostView(Model model) {
-        List<Map<String, Object>> cafeList = cafeMapper.findByAll();
+
+        List<Map<String, Object>> cafeList = cafeService.getCafeListForAdmin();
+
         model.addAttribute("cafeList", cafeList);
 
         return "dashboard/admin/hosts";

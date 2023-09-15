@@ -30,11 +30,18 @@ public interface FaqService {
     public List<FaqCategory> getFaqCategoryList();
 
     /**
-     * 카테고리 별로 정렬하여 FAQ 목록 조회
+     * 카테고리 별로 정렬하여 전체 FAQ 목록 조회
      *
      * @return FAQ 목록
      */
     public Map<String, List<Faq>> getFaqList();
+
+    /**
+     * 전체 FAQ 목록 조회 (관리자용)
+     *
+     * @return FAQ 목록
+     */
+    public List<Map<String, Object>> getFaqListForAdmin();
 
     /**
      * FAQ 수정

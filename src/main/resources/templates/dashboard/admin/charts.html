@@ -29,7 +29,6 @@
                     <div class="card-body">
                         <canvas id="myAreaChart" width="100%" height="30"></canvas>
                     </div>
-                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                 </div>
                 <div class="row">
                     <div class="col-lg-8">
@@ -41,7 +40,6 @@
                             <div class="card-body">
                                 <canvas id="myBarChart" width="100" height="50"></canvas>
                             </div>
-                            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -53,7 +51,6 @@
                             <div class="card-body">
                                 <canvas id="myPieChart" width="100%" height="100"></canvas>
                             </div>
-                            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                         </div>
                     </div>
                 </div>
@@ -66,7 +63,33 @@
 
     <th:block th:fragment="scripts">
         <!-- Custom scripts for this page -->
-        <script src="/dashboard/js/admin-charts-all.js"></script>
+        <script th:inline="javascript">
+            let countMember = [[${countMember}]];
+            let monthMemberKey = [];
+            let monthMemberValue = [];
+            for (const countElement of countMember) {
+                monthMemberKey.push(countElement.month);
+                monthMemberValue.push(countElement.memberCount);
+            }
+
+            let countCafe = [[${countCafe}]];
+            let monthCafeKey = [];
+            let monthCafeValue = [];
+            for (const countElement of countCafe) {
+                monthCafeKey.push(countElement.month);
+                monthCafeValue.push(countElement.cafeCount);
+            }
+
+            let countGender = [[${countGender}]];
+            let monthGenderKey = [];
+            let monthGenderValue = [];
+            for (const countElement of countGender) {
+                monthGenderKey.push(countElement.gender);
+                monthGenderValue.push(countElement.count);
+            }
+
+        </script>
+        <script src="/dashboard/js/custom/admin-charts-all_custom.js"></script>
         <!-- /custom scripts -->
     </th:block>
 
