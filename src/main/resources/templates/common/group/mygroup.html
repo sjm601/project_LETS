@@ -507,7 +507,7 @@
                             <!-- 스터디 가입 신청 내역 아코디언 -->
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button settingAccordionBtn collapsed" type="button"
+                                    <button th:id="contactListBtn" class="accordion-button settingAccordionBtn collapsed" type="button"
                                             data-bs-toggle="collapse"
                                             data-bs-target="#collapseTwo" aria-expanded="false"
                                             aria-controls="collapseTwo">
@@ -525,20 +525,20 @@
                                                 <th scope="col">성별</th>
                                                 <th scope="col">나이</th>
                                                 <th scope="col">신청일</th>
-                                                <th scope="col">승인</th>
+                                                <th th:text="'승인 / 거절'" scope="col">승인</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody th:id="tbodyContactList">
                                             <!-- 스터디 가입 신청 내역 출력 -->
                                             <!-- List<Map<String, Object>> contactList -->
-                                            <tr th:each="contact, stat : ${contactList}">
-                                                <th th:text="${stat.count}" scope="row">1</th>
-                                                <td th:text="${contact.NAME}">홍길동</td>
-                                                <td th:text="${contact.GENDER}">남자</td>
-                                                <td th:text="${contact.AGE}">20대</td>
-                                                <td th:text="${contact.REGDATE}">2023-09-14</td>
-                                                <td>@mdo</td>
-                                            </tr>
+<!--                                            <tr th:each="contact, stat : ${contactList}">-->
+<!--                                                <th th:text="${stat.count}" scope="row">1</th>-->
+<!--                                                <td th:text="${contact.NAME}">홍길동</td>-->
+<!--                                                <td th:text="${contact.GENDER}">남자</td>-->
+<!--                                                <td th:text="${contact.AGE}">20대</td>-->
+<!--                                                <td th:text="${contact.REGDATE}">2023-09-14</td>-->
+<!--                                                <td>@mdo</td>-->
+<!--                                            </tr>-->
                                             </tbody>
                                         </table>
                                     </div>
@@ -549,7 +549,7 @@
                             <!-- 스터디 멤버 관리 아코디언 -->
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button settingAccordionBtn collapsed" type="button"
+                                    <button th:id="memberListBtn" class="accordion-button settingAccordionBtn collapsed" type="button"
                                             data-bs-toggle="collapse"
                                             data-bs-target="#collapseThree" aria-expanded="false"
                                             aria-controls="collapseThree">
@@ -569,16 +569,16 @@
                                                 <th scope="col">탈퇴</th>
                                             </tr>
                                             </thead>
-                                            <tbody id="memberTr" >
+                                            <tbody th:id="tbodyMemberList">
                                             <!-- 스터디 멤버 출력 -->
                                             <!-- List<Map<String, Object>> memberList -->
-                                            <tr th:each="member : ${memberList}">
-                                                <th th:text="${member.ID}" scope="row">1</th>
-                                                <td th:text="${member.NAME}">홍길동</td>
-                                                <td th:text="${member.GENDER}">남자</td>
-                                                <td th:text="${member.AGE}">20대</td>
-                                                <td>@mdo</td>
-                                            </tr>
+<!--                                            <tr th:each="member : ${memberList}">-->
+<!--                                                <th th:text="${member.ID}" scope="row">1</th>-->
+<!--                                                <td th:text="${member.NAME}">홍길동</td>-->
+<!--                                                <td th:text="${member.GENDER}">남자</td>-->
+<!--                                                <td th:text="${member.AGE}">20대</td>-->
+<!--                                                <td>@mdo</td>-->
+<!--                                            </tr>-->
                                             </tbody>
                                         </table>
                                     </div>
@@ -599,40 +599,6 @@
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script src="/js/custom/address.js"></script>
         <script src="/js/custom/image_upload.js"></script>
-
-        <script th:inline="javascript">
-            const thead = document.querySelector('#memberList');
-            settingBtn.addEventListener('click', e => {
-                request();
-            });
-
-            function request() {
-                const url = `/group/groupSetting/${studyGroupId}`;
-                let promise = fetch(url);
-                promise
-                    .then(response => response.json())
-                    .then(data => {
-                        // for (let i = 0; i < data.length; i++) {
-                        //     document.querySelector("#memberList").innerHTML +=
-                        //         "<tr>" +
-                        //         "<td>" + (i + 1) + "</td>" +
-                        //         "<td> " + data[i].NAME + "</td>" +
-                        //         "<td> " + data[i].GENDER + "</td>" +
-                        //         "<td> " + data[i].AGE + "</td>" +
-                        //         "<td> " + "탈퇴" + "</td>" +
-                        //         "</tr>";
-                        // }
-                        displayDataInThymeleaf(data);
-                    })
-                    .catch(error => alert(error));
-            }
-
-            function displayDataInThymeleaf(data) {
-                const memberList = JSON.stringify(data); // JSON 데이터를 문자열로 변환
-                const jsonArrayElement = document.querySelector('#memberTr'); // Thymeleaf에 전달할 요소 선택
-                jsonArrayElement.setAttribute('th:data-json-array', memberList); // 데이터 속성을 사용하여 JSON 배열 전달
-            }
-        </script>
     </th:block>
 
 </th:block>

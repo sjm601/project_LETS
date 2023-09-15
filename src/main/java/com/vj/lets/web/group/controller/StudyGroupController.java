@@ -82,7 +82,7 @@ public class StudyGroupController {
     @GetMapping("/{id}")
     public String readGroup(@PathVariable int id, @SessionAttribute Member loginMember, Model model) {
         GroupMemberList groupMember = null;
-        List<Map<String, Object>> memberList = null;
+//        List<Map<String, Object>> memberList = null;
         List<Map<String, Object>> contactList = null;
 
         Map<String, Object> studyGroup = studyGroupService.viewStudyGroup(id);
@@ -91,7 +91,7 @@ public class StudyGroupController {
         }
 
         if (studyGroupService.isGroupMember(loginMember.getId(), id) != null && studyGroupService.isGroupMember(loginMember.getId(), id).getPosition().equals("팀장")) {
-            memberList = studyGroupService.findByAllMember(id);
+//            memberList = studyGroupService.findByAllMember(id);
             contactList = studyGroupService.findByAllRegist(id);
 
         }
@@ -106,15 +106,108 @@ public class StudyGroupController {
         return "common/group/mygroup";
     }
 
+    /**
+     * 스터디 그룹 멤버 관리 화면 출력
+     *
+     * @author VJ특공대 이희영
+     * @param id 스터디 그룹 아이디
+     * @param model
+     * @return 스터디 그룹 회원 리스트
+     * @throws JsonProcessingException Json 데이터 예외
+     */
     @ResponseBody
     @RequestMapping("/groupSetting/{id}")
-    public String settingModal(@PathVariable int id, Model model) throws JsonProcessingException {
+    public String groupMemberModal(@PathVariable int id, Model model) throws JsonProcessingException {
         ObjectMapper objectMapper= new ObjectMapper();
 
-        List<Map<String, Object>> memberList1 = studyGroupService.findByAllMember(id);
-        String memberList = objectMapper.writeValueAsString(memberList1);
+        List<Map<String, Object>> memberList = studyGroupService.findByAllMember(id);
 
-        return memberList;
+        return objectMapper.writeValueAsString(memberList);
+    }
+
+    /**
+     * 스터디 그룹 멤버 탈퇴
+     *
+     * @author VJ특공대 이희영
+     * @param id 스터디 그룹 아이디
+     * @param memberId 회원 아이디
+     * @param model
+     * @return 탈퇴 성공 유무
+     */
+    @ResponseBody
+    @DeleteMapping("/{id}/{memberId}")
+    public String removeMemberModal(@PathVariable int id, @PathVariable int memberId, Model model) {
+        studyGroupService.removeMember(memberId, id);
+        GroupMemberList groupMemberList = studyGroupService.isGroupMember(memberId, id);
+
+        if (groupMemberList == null) {
+            return "delete-success";
+        } else {
+            return "delete-failure";
+        }
+    }
+
+    /**
+     * 스터디 그룹 신청 내역 화면 출력
+     *
+     * @author VJ특공대 이희영
+     * @param id 스터디 그룹 아이디
+     * @param model
+     * @return 스터디 그룹 가입 신청 리스트
+     * @throws JsonProcessingException Json 데이터 예외
+     */
+    @ResponseBody
+    @RequestMapping("/contactSetting/{id}")
+    public String groupContactModal(@PathVariable int id, Model model) throws JsonProcessingException {
+        ObjectMapper objectMapper= new ObjectMapper();
+
+        List<Map<String, Object>> contactList = studyGroupService.findByAllRegist(id);
+
+        return objectMapper.writeValueAsString(contactList);
+    }
+
+    /**
+     * 스터디 그룹 가입 신청 승인
+     *
+     * @author VJ특공대 이희영
+     * @param studyGroupId 스터디 그룹 아이디
+     * @param id 회원 아이디
+     * @param model
+     * @return 가입 승인 성공 / 실패 메세지
+     */
+    @ResponseBody
+    @PutMapping("memberContact/{studyGroupId}/{id}")
+    public String groupContactApprove(@PathVariable int studyGroupId, @PathVariable int id, Model model) {
+        studyGroupService.approve(id, studyGroupId);
+        GroupMemberList groupMemberList = studyGroupService.isGroupMember(id, studyGroupId);
+
+        if (groupMemberList != null) {
+            return "approve-success";
+        } else {
+            return "approve-failure";
+        }
+    }
+
+    /**
+     * 스터디 그룹 가입 신청 거절
+     *
+     * @author VJ특공대 이희영
+     * @param studyGroupId 스터디 그룹 아이디
+     * @param id 회원 아이디
+     * @param model
+     * @return 가입 거절 성공 / 실패 메세지
+     */
+    @ResponseBody
+    @DeleteMapping("memberContact/{studyGroupId}/{id}")
+    public String groupContactRefuse(@PathVariable int studyGroupId, @PathVariable int id, Model model) {
+        studyGroupService.refuse(id, studyGroupId);
+        GroupMemberList groupMemberList = studyGroupService.isGroupMember(id, studyGroupId);
+
+        if (groupMemberList == null) {
+            return "refuse-success";
+        } else {
+            return "refuse-failure";
+        }
     }
 
     /**
