@@ -96,7 +96,7 @@ public class StudyGroupController {
 
         model.addAttribute("member", member);
         model.addAttribute("studyGroup", studyGroup);
-        model.addAttribute("studyMember", groupMember);
+        model.addAttribute("groupMember", groupMember);
         model.addAttribute("memberList", memberList);
         model.addAttribute("contactList", contactList);
 
