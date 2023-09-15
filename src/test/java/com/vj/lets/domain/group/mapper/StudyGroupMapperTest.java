@@ -1,11 +1,10 @@
-package com.vj.lets.domain.group.mapper;//import static org.junit.jupiter.api.Assertions.*;
+package com.vj.lets.domain.group.mapper;
 
 import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
 import com.vj.lets.domain.location.dto.SiGunGu;
 import com.vj.lets.domain.location.mapper.SiGunGuMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -162,5 +161,18 @@ class StudyGroupMapperTest {
 
         // then
         log.info("스터디 그룹 회원 수 감소 완료");
+    }
+
+    @Test
+    @Transactional
+    void findNewStudyListTest() {
+        // given
+
+        // when
+        List<StudyGroup> newStudyList = studyGroupMapper.findNewStudyList();
+
+        // then
+        log.info("신규 스터디 리스트 : {}", newStudyList);
+        assertThat(newStudyList).isNotNull();
     }
 }
