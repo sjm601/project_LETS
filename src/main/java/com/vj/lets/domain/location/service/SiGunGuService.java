@@ -13,6 +13,8 @@ public interface SiGunGuService {
 
     /**
      * 시,군,구 조회
+     *
+     * @author VJ특공대 이희영
      * @param siGunGuName
      * @return 조회된 시,군,구 정보
      */

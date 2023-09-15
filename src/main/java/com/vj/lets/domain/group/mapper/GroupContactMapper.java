@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 그룹 신청 매퍼
@@ -18,7 +19,8 @@ public interface GroupContactMapper {
 
     /**
      * 스터디 그룹 가입 신청
-     *
+     * 
+     * @author VJ특공대 이희영
      * @param id 회원 아이디
      * @param studyGroupId 스터디 그룹 아이디
      */
@@ -26,14 +28,16 @@ public interface GroupContactMapper {
 
     /**
      * 스터디 그룹 가입 신청 리스트 조회
-     * 
+     *
+     * @author VJ특공대 이희영
      * @return 조회된 가입 신청 리스트
      */
-    public List<GroupContact> findAll(int studyGroupId);
+    public List<Map<String, Object>> findAll(int studyGroupId);
 
     /**
      * 스터디 그룹 가입 승인
      *
+     * @author VJ특공대 이희영
      * @param id 회원 아이디
      * @param studyGroupId 스터디 그룹 아이디
      */
@@ -42,6 +46,7 @@ public interface GroupContactMapper {
     /**
      * 스터디 그룹 가입 거절
      *
+     * @author VJ특공대 이희영
      * @param id 회원 아이디
      * @param studyGroupId 스터디 그룹 아이디
      */
@@ -50,6 +55,7 @@ public interface GroupContactMapper {
     /**
      * 스터디 그룹 가입 신청 내역 삭제
      *
+     * @author VJ특공대 이희영
      * @param id 회원 아이디
      * @param studyGroupId 스터디 그룹 아이디
      */

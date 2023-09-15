@@ -11,9 +11,10 @@
     </insert>
 
     <select id="findAll" parameterType="int">
-        SELECT ID, POSITION, MEMBER_ID, STUDY_GROUP_ID
-        FROM GROUP_MEMBER_LIST
-        WHERE STUDY_GROUP_ID = #{studyGroupId}
+        SELECT GML.ID ID, GML.POSITION POSITION, M.NAME NAME, M.AGE, M.GENDER, GML.STUDY_GROUP_ID STUDYGROUPID
+        FROM GROUP_MEMBER_LIST GML
+            JOIN MEMBER M ON GML.MEMBER_ID = M.ID
+        WHERE GML.STUDY_GROUP_ID = #{studyGroupId} AND M.STATUS = 'enabled'
     </select>
 
     <insert id="add">
@@ -51,4 +52,5 @@
                  JOIN SI_GUN_GU sgg ON SG.SI_GUN_GU_ID = SGG.ID
         WHERE MEMBER_ID = #{memberId} AND SG.STATUS = 'enabled'
     </select>
+
 </mapper>

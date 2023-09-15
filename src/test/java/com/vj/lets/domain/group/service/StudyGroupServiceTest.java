@@ -1,11 +1,10 @@
-package com.vj.lets.domain.group.service;//import static org.junit.jupiter.api.Assertions.*;
+package com.vj.lets.domain.group.service;
 
 import com.vj.lets.domain.group.dto.GroupContact;
 import com.vj.lets.domain.group.dto.GroupMemberList;
 import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -117,7 +115,7 @@ class StudyGroupServiceTest {
         int StudyGroupId = 1;
 
         // when
-        List<GroupMemberList> list = studyGroupService.findByAllMember(StudyGroupId);
+        List<Map<String, Object>> list = studyGroupService.findByAllMember(StudyGroupId);
 
         // then
         log.info("스터디 그룹 회원 리스트 조회 : {}", list);
@@ -173,7 +171,7 @@ class StudyGroupServiceTest {
         int studyGroupId = 1;
 
         // when
-        List<GroupContact> list = studyGroupService.findByAllRegist(studyGroupId);
+        List<Map<String, Object>> list = studyGroupService.findByAllRegist(studyGroupId);
 
         // then
         log.info("스터디 가입 신청 회원 리스트 : {}", list);
@@ -235,5 +233,18 @@ class StudyGroupServiceTest {
         // then
         log.info("가입한 스터디 그룹 리스트 조회 : {}", list);
         assertThat(list).isNotNull();
+    }
+
+    @Test
+    @Transactional
+    void getNewStudyList() {
+        // given
+
+        // when
+        List<StudyGroup> newStudyList = studyGroupService.getNewStudyList();
+
+        // then
+        log.info("신규 스터디 리스트 : {}", newStudyList);
+        assertThat(newStudyList).isNotNull();
     }
 }

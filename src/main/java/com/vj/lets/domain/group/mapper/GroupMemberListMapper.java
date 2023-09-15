@@ -20,6 +20,7 @@ public interface GroupMemberListMapper {
     /**
      * 스터디 그룹 멤버 리스트 생성
      *
+     * @author VJ특공대 이희영
      * @param id 회원 아이디
      */
     public void create(int id);
@@ -27,14 +28,16 @@ public interface GroupMemberListMapper {
     /**
      * 스터디 그룹 멤버 리스트 조회
      *
+     * @author VJ특공대 이희영
      * @param studyGroupId 스터디 그룹 아이디
      * @return 스터디 그룹 멤버 리스트
      */
-    public List<GroupMemberList> findAll(int studyGroupId);
+    public List<Map<String, Object>> findAll(int studyGroupId);
 
     /**
      * 스터디 그룹 가입 승인 시 멤버 리스트에 회원 정보 추가
-     * 
+     *
+     * @author VJ특공대 이희영
      * @param id 회원 아이디
      */
     public void add(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
@@ -42,13 +45,15 @@ public interface GroupMemberListMapper {
     /**
      * 스터디 그룹 탈퇴 시 멤버 리스트에서 회원 정보 삭제
      *
+     * @author VJ특공대 이희영
      * @param id 회원 아이디
      */
     public void remove(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
 
     /**
      * 스터디 그룹에 가입된 회원인지 조회
-     * 
+     *
+     * @author VJ특공대 이희영
      * @param memberId 회원 아이디
      * @param studyGroupId 스터디 그룹 아이디
      * @return 조회된 스터디 그룹 멤버 리스트
@@ -57,7 +62,8 @@ public interface GroupMemberListMapper {
 
     /**
      * 가입된 스터디 그룹 리스트 조회
-     * 
+     *
+     * @author VJ특공대 이희영
      * @param memberId 회원 아이디
      * @return 스터디 그룹 리스트
      */

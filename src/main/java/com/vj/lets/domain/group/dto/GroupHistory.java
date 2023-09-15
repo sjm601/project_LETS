@@ -2,8 +2,6 @@ package com.vj.lets.domain.group.dto;
 
 import lombok.*;
 
-import javax.swing.text.html.HTMLDocument;
-
 /**
  * 스터디 그룹 히스토리 빈
  *
