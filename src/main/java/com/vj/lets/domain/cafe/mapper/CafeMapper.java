@@ -31,7 +31,7 @@ public interface CafeMapper {
     public List<Map<String, Object>> findByAll();
 
     /** 누적 예약이 가장 많은 카페 6개 출력 */
-    public List<Integer> findByBest();
+    public List<Map<String, Object>> findByBest();
 
     /** 카패 검색 결과 출력 */
     public List<Map<String, Object>> findBySearch(CafeSearch cafeSearch);

@@ -63,12 +63,17 @@ public class CafeServiceImpl implements CafeService{
     }
 
     @Override
+    public List<CafeOption> getOptionList() {
+        return cafeOptionMapper.readAll();
+    }
+
+    @Override
     public Map<String, Object> getCafe(int id) {
         return cafeMapper.findById(id);
     }
 
     @Override
-    public List<Integer> getBestCafe(){
+    public List<Map<String, Object>> getBestCafe(){
         return cafeMapper.findByBest();
     }
 
