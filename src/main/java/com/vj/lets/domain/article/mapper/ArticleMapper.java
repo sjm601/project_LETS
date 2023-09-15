@@ -37,7 +37,7 @@ public interface ArticleMapper {
     public int getCountAll(@Param("keyword") String keyword);
 
     /** 게시글 조회 */
-    public Article findById(int articleId);
+    public Article findById(int id);
 
 
 
