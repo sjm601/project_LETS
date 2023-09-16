@@ -1,8 +1,8 @@
 package com.vj.lets.web.member.controller;
 
 import com.vj.lets.domain.member.dto.EditForm;
-import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.dto.LoginForm;
+import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.dto.RegisterForm;
 import com.vj.lets.domain.member.service.MemberService;
 import com.vj.lets.domain.member.util.MemberType;
@@ -13,11 +13,15 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
@@ -32,6 +36,9 @@ import java.io.PrintWriter;
 @RequiredArgsConstructor
 @Slf4j
 public class MemberController {
+
+    @Value("${member.imageLocation}")
+    private String imageLocation;
 
     private final MemberService memberService;
 
@@ -59,7 +66,9 @@ public class MemberController {
      * @return 논리적 뷰 이름
      */
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute RegisterForm registerForm, BindingResult bindingResult, HttpServletResponse response, Model model) {
+    public String register(@Valid @ModelAttribute RegisterForm registerForm,
+                           BindingResult bindingResult,
+                           HttpServletResponse response, Model model) {
         Member member = Member.builder()
                 .email(registerForm.getEmail())
                 .name(registerForm.getName())
@@ -114,7 +123,9 @@ public class MemberController {
      * @return 논리적 뷰 이름
      */
     @PostMapping("/login")
-    public String login(@Valid @ModelAttribute LoginForm loginForm, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response, Model model) {
+    public String login(@Valid @ModelAttribute LoginForm loginForm,
+                        BindingResult bindingResult,
+                        HttpServletRequest request, HttpServletResponse response, Model model) {
         if (bindingResult.hasErrors()) {
             return "redirect:/member/login";
         }
@@ -162,15 +173,38 @@ public class MemberController {
         return "redirect:" + uri;
     }
 
+    /**
+     * 회원 정보 수정
+     *
+     * @param editForm      회원 정보 수정 폼 객체
+     * @param bindingResult 바인딩 객체
+     * @param request       리퀘스트 객체
+     * @param response      리스폰스 객체
+     * @param model         모델 객체
+     * @return 논리적 뷰 이름
+     */
     @PostMapping("/edit")
-    public String edit(@Valid @ModelAttribute EditForm editForm, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response, Model model) {
+    public String edit(@Valid @ModelAttribute EditForm editForm,
+                       BindingResult bindingResult,
+                       HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
-        log.info("=============={}", loginMember);
 
         EditForm checkForm = memberService.checkEdit(loginMember.getId());
 
-        if(!editForm.equals(checkForm)) {
+        if (!editForm.equals(checkForm)) {
+            // 업로드 이미지 확장자 가져오기
+            String imageExtension = StringUtils.getFilenameExtension(editForm.getImagePath().getOriginalFilename());
+            // 업로드 한 이미지 다운로드 받을 위치
+            String imagePath = imageLocation + loginMember.getId() + "." + imageExtension;
+            File uploadDir = new File(imagePath);
+
+            if(!uploadDir.exists()) {
+                uploadDir.mkdirs();
+            }
+
+            editForm.getImagePath().transferTo(uploadDir);
+
             Member editMember = Member.builder()
                     .id(loginMember.getId())
                     .password(editForm.getPassword())
@@ -178,7 +212,7 @@ public class MemberController {
                     .gender(editForm.getGender())
                     .age(editForm.getAge())
                     .phoneNumber(editForm.getPhoneNumber())
-                    .imagePath(editForm.getImagePath())
+                    .imagePath("upload_image/member/" + loginMember.getId() + "." + imageExtension)
                     .build();
 
             memberService.editMember(editMember);
