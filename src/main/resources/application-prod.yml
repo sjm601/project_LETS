@@ -94,10 +94,13 @@ mybatis:
 
 
 ---
-      
+
 # 파일업로드 경로 설정
 common:
-  uploadPath: C:/ezen-fullstack/workspace/final_project_template/upload/
+  uploadPath: C:/ezen-fullstack/workspace/final_project_lets/upload/
+member:
+  imageLocation: C:/ezen-fullstack/workspace/final_project_lets/src/main/resources/static/upload_image/member/
+  imageDBPath: /upload_image/member/
   
   
   
