@@ -12,7 +12,6 @@ import com.vj.lets.domain.support.service.ContactService;
 import com.vj.lets.domain.support.service.FaqService;
 import com.vj.lets.domain.support.util.ContactStatus;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +29,6 @@ import java.util.Map;
 @Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor
-@Slf4j
 public class AdminController {
 
     private final MemberService memberService;
@@ -53,7 +51,7 @@ public class AdminController {
     }
 
     /**
-     * 입점 신청 화면 출력
+     * 입점 신청 목록 화면 출력
      *
      * @param model 모델 객체
      * @return 논리적 뷰 이름
@@ -70,10 +68,10 @@ public class AdminController {
     }
 
     /**
-     * 입점 신청 승인 및 거부
+     * 입점 신청 승인 및 거부 기능
      *
      * @param contactRequest 입점 신청 승인 여부 요청
-     * @param contactForm    입점 신청 정보 폼
+     * @param contactForm    입점 신청 정보 폼 객체
      * @param model          모델 객체
      * @return 논리적 뷰 이름
      */
@@ -97,6 +95,7 @@ public class AdminController {
                     .name(contactForm.getCafeName())
                     .businessNumber(contactForm.getBusinessNumber())
                     .build();
+
             contactService.approveContact(contactId, member, cafe);
         } else if (contactRequest.equals(ContactStatus.REFUSE.getStatus())) {
             contactService.refuseContact(contactId);
@@ -123,9 +122,9 @@ public class AdminController {
     }
 
     /**
-     * FAQ 신규 등록
+     * FAQ 신규 등록 기능
      *
-     * @param faqForm FAQ 등록 폼
+     * @param faqForm FAQ 등록 폼 객체
      * @param model   모델 객체
      * @return 논리적 뷰 이름
      */
@@ -162,7 +161,7 @@ public class AdminController {
     }
 
     /**
-     * FAQ 수정 및 삭제
+     * FAQ 수정 및 삭제 기능
      *
      * @param faqRequest FAQ 수정 및 삭제 요청
      * @param faqForm    FAQ 폼

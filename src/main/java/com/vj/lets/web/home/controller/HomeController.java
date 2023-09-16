@@ -1,12 +1,13 @@
 package com.vj.lets.web.home.controller;
 
+import com.vj.lets.domain.member.dto.LoginForm;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.util.MemberType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -19,21 +20,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/")
-@Slf4j
 public class HomeController {
 
     /**
-     * 현재 로그인 상태 및 로그인 회원 타입에 따른 홈 화면 출력
+     * 현재 로그인 상태 및 로그인 회원 타입에 따른 홈 화면 출력 및 리다이렉트
      *
-     * @param request 리퀘스트 객체
-     * @param model   객체 모델
+     * @param request 서블릿 리퀘스트 객체
+     * @param model   모델 객체
      * @return 논리적 뷰 이름
      */
     @GetMapping("")
-    public String home(HttpServletRequest request, Model model) {
+    public String home(@CookieValue(value = "remember", required = false) String rememberEmail,
+                       HttpServletRequest request, Model model) {
+
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
+
         if (loginMember == null) {
+            LoginForm loginForm = LoginForm.builder().build();
+
+            if (!rememberEmail.isBlank()) {
+                loginForm.setEmail(rememberEmail);
+                loginForm.setRemember(true);
+            }
+
             return "index";
         }
 

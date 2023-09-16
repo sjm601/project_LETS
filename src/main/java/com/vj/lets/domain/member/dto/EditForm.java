@@ -1,7 +1,6 @@
 package com.vj.lets.domain.member.dto;
 
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 회원 수정 용 폼 객체
@@ -24,6 +23,5 @@ public class EditForm {
     String phoneNumber;
     String gender;
     int age;
-    MultipartFile imagePath;
 
 }

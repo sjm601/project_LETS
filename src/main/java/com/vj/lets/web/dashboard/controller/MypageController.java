@@ -3,24 +3,17 @@ package com.vj.lets.web.dashboard.controller;
 import com.vj.lets.domain.member.dto.EditForm;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.service.MemberService;
-import com.vj.lets.domain.reservation.dto.Reservation;
 import com.vj.lets.domain.reservation.service.ReservationService;
 import com.vj.lets.domain.review.dto.Review;
 import com.vj.lets.domain.review.dto.ReviewForm;
 import com.vj.lets.domain.review.service.ReviewService;
-import com.vj.lets.domain.support.dto.Faq;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +27,6 @@ import java.util.Map;
 @Controller
 @RequestMapping("/mypage")
 @RequiredArgsConstructor
-@Slf4j
 public class MypageController {
 
     private final MemberService memberService;
@@ -44,7 +36,7 @@ public class MypageController {
     /**
      * 마이페이지 메인 화면 출력
      *
-     * @param model 객체 모델
+     * @param model 모델 객체
      * @return 논리적 뷰 이름
      */
     @GetMapping("")
@@ -62,9 +54,9 @@ public class MypageController {
     }
 
     /**
-     * 예약 확인 화면 출력
+     * 예약 확인 및 리뷰 작성 화면 출력
      *
-     * @param request 리퀘스트 객체
+     * @param request 서블릿 리퀘스트 객체
      * @param model   모델 객체
      * @return 논리적 뷰 이름
      */
@@ -73,6 +65,7 @@ public class MypageController {
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
         List<Map<String, Object>> reservationList = reservationService.getMemberResList(loginMember.getId());
+
         ReviewForm reviewForm = ReviewForm.builder().build();
 
         model.addAttribute("reviewForm", reviewForm);
@@ -82,9 +75,12 @@ public class MypageController {
     }
 
     /**
-     * 예약 취소 및 리뷰 작성
+     * 예약 취소 및 리뷰 작성 기능
      *
-     * @param model 모델 객체
+     * @param requestType   요청 종류
+     * @param reservationId 예약 ID
+     * @param reviewForm    리뷰 작성 폼 객체
+     * @param model         모델 객체
      * @return 논리적 뷰 이름
      */
     @PostMapping("/reservation")
@@ -110,7 +106,7 @@ public class MypageController {
     /**
      * 리뷰 확인 화면 출력
      *
-     * @param request 리퀘스트 객체
+     * @param request 서블릿 리퀘스트 객체
      * @param model   모델 객체
      * @return 논리적 뷰 이름
      */
@@ -128,10 +124,10 @@ public class MypageController {
     }
 
     /**
-     * 리뷰 수정 및 삭제
+     * 리뷰 수정 및 삭제 기능
      *
-     * @param reviewRequest 리뷰 수정 및 삭제 요청
-     * @param reviewForm    리뷰 폼
+     * @param reviewRequest 리뷰 관련 요청 종류
+     * @param reviewForm    리뷰 폼 객체
      * @param model         모델 객체
      * @return 논리적 뷰 이름
      */
