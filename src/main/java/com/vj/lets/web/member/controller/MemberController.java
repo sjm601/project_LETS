@@ -118,7 +118,7 @@ public class MemberController {
     public String loginView(@CookieValue(value = "remember", required = false) String rememberEmail, Model model) {
         LoginForm loginForm = LoginForm.builder().build();
 
-        if (!rememberEmail.isBlank()) {
+        if (rememberEmail != null) {
             loginForm.setEmail(rememberEmail);
             loginForm.setRemember(true);
         }
