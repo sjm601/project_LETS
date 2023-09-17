@@ -34,7 +34,7 @@ class GroupContactMapperTest {
         int studyGroupId = 1;
 
         // when
-        groupContactMapper.register(id, studyGroupId);
+        groupContactMapper.contactGroup(id, studyGroupId);
 
         // then
         log.info("가입 신청 성공");
@@ -47,7 +47,7 @@ class GroupContactMapperTest {
         int studyGroupId = 1;
 
         // when
-        List<Map<String, Object>> list = groupContactMapper.findAll(studyGroupId);
+        List<Map<String, Object>> list = groupContactMapper.findAllGroupContactList(studyGroupId);
 
         // then
         log.info("가입 신청 리스트 : {}", list);
@@ -62,7 +62,7 @@ class GroupContactMapperTest {
         int studyGroupId = 1;
 
         // when
-        groupContactMapper.approve(id, studyGroupId);
+        groupContactMapper.approveGroupContact(id, studyGroupId);
 
         // then
         log.info("가입 승인");
@@ -76,7 +76,7 @@ class GroupContactMapperTest {
         int studyGroupId = 1;
 
         // when
-        groupContactMapper.refuse(id, studyGroupId);
+        groupContactMapper.refuseGroupContact(id, studyGroupId);
 
         // then
         log.info("가입 거절");
@@ -90,7 +90,7 @@ class GroupContactMapperTest {
         int studyGroupId = 1;
 
         // when
-        groupContactMapper.delete(id, studyGroupId);
+        groupContactMapper.deleteContact(id, studyGroupId);
 
         // then
         log.info("가입 신청 삭제");

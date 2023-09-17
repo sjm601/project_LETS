@@ -1,6 +1,5 @@
 package com.vj.lets.domain.group.mapper;
 
-import com.vj.lets.domain.group.dto.GroupContact;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,7 +23,7 @@ public interface GroupContactMapper {
      * @param id 회원 아이디
      * @param studyGroupId 스터디 그룹 아이디
      */
-    public void register(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
+    public void contactGroup(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
 
     /**
      * 스터디 그룹 가입 신청 리스트 조회
@@ -32,7 +31,7 @@ public interface GroupContactMapper {
      * @author VJ특공대 이희영
      * @return 조회된 가입 신청 리스트
      */
-    public List<Map<String, Object>> findAll(int studyGroupId);
+    public List<Map<String, Object>> findAllGroupContactList(int studyGroupId);
 
     /**
      * 스터디 그룹 가입 승인
@@ -41,7 +40,7 @@ public interface GroupContactMapper {
      * @param id 회원 아이디
      * @param studyGroupId 스터디 그룹 아이디
      */
-    public void approve(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
+    public void approveGroupContact(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
 
     /**
      * 스터디 그룹 가입 거절
@@ -50,7 +49,7 @@ public interface GroupContactMapper {
      * @param id 회원 아이디
      * @param studyGroupId 스터디 그룹 아이디
      */
-    public void refuse(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
+    public void refuseGroupContact(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
 
     /**
      * 스터디 그룹 가입 신청 내역 삭제
@@ -59,5 +58,5 @@ public interface GroupContactMapper {
      * @param id 회원 아이디
      * @param studyGroupId 스터디 그룹 아이디
      */
-    public void delete(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
+    public void deleteContact(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
 }

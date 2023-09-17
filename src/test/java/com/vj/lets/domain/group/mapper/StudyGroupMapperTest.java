@@ -48,7 +48,7 @@ class StudyGroupMapperTest {
         studyGroup.setSiGunGuId(siGunGu.getId());
 
         // when
-        studyGroupMapper.create(studyGroup);
+        studyGroupMapper.createStudy(studyGroup);
 
         // then
         log.info("생성한 스터디 그룹 정보 : {}", studyGroup);
@@ -70,8 +70,8 @@ class StudyGroupMapperTest {
         studyGroup.setSiGunGuId(siGunGu.getId());
 
         // when
-        studyGroupMapper.create(studyGroup);
-        int studyGroupId = studyGroupMapper.findId();
+        studyGroupMapper.createStudy(studyGroup);
+        int studyGroupId = studyGroupMapper.findByStudyId();
 
         // then
         log.info("현재 스터디 그룹 아이디 정보 : {}", studyGroupId);
@@ -83,7 +83,7 @@ class StudyGroupMapperTest {
         // given
         Search search = Search.builder().build();
         // when
-        List<Map<String, Object>> studyGroupList = studyGroupMapper.findAll(search);
+        List<Map<String, Object>> studyGroupList = studyGroupMapper.findAllStudyList(search);
 
         // then
         log.info("스터디 그룹 전체 리스트 : {}", studyGroupList);
@@ -97,7 +97,7 @@ class StudyGroupMapperTest {
         int studyGroupId = 1;
 
         // when
-        Map<String, Object> studyGroup = studyGroupMapper.read(studyGroupId);
+        Map<String, Object> studyGroup = studyGroupMapper.readStudy(studyGroupId);
 
         // then
         log.info("조회된 스터디 그룹 정보 : {}", studyGroup);
@@ -118,7 +118,7 @@ class StudyGroupMapperTest {
         log.info("테스트 : {}", studyGroup);
 
         // when
-        studyGroupMapper.update(studyGroup);
+        studyGroupMapper.updateStudy(studyGroup);
 
         // then
         log.info("스터디 그룹 수정 완료");
@@ -131,7 +131,7 @@ class StudyGroupMapperTest {
         int studyGroupId = 1;
 
         // when
-        studyGroupMapper.delete(studyGroupId);
+        studyGroupMapper.deleteStudy(studyGroupId);
 
         // then
         log.info("스터디 그룹 삭제 완료");
@@ -144,7 +144,7 @@ class StudyGroupMapperTest {
         int studyGroupId = 1;
 
         // when
-        studyGroupMapper.add(studyGroupId);
+        studyGroupMapper.plusCurrentCount(studyGroupId);
 
         // then
         log.info("스터디 그룹 회원 수 증가 완료");
@@ -157,7 +157,7 @@ class StudyGroupMapperTest {
         int studyGroupId = 1;
 
         // when
-        studyGroupMapper.subtract(studyGroupId);
+        studyGroupMapper.minusCurrentCount(studyGroupId);
 
         // then
         log.info("스터디 그룹 회원 수 감소 완료");
