@@ -82,7 +82,6 @@ class CafeServiceTest {
         int id = 17;
         //when
         cafeService.optionDelete(id);
-        //다시해봐야함
         //then
     }
 
@@ -117,7 +116,7 @@ class CafeServiceTest {
     void getBestCafeTest() {
         //given
         //when
-        List<Integer> list = cafeService.getBestCafe();
+        List<Map<String, Object>> list = cafeService.getBestCafe();
         //then
         log.info("예약 많은 카페 번호 리스트 : {}", list);
         assertThat(list).isNotNull();

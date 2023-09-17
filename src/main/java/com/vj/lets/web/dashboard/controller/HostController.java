@@ -1,5 +1,7 @@
 package com.vj.lets.web.dashboard.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -29,6 +31,20 @@ public class HostController {
     @GetMapping("")
     public String hostMain(Model model) {
         return "dashboard/host/host_dashboard";
+    }
+    @GetMapping("/cafe")
+    public String cafeRegister(HttpServletRequest request, Model model){
+        HttpSession session = request.getSession();
+
+        return "dashboard/host/cafe_register";
+    }
+    @GetMapping("/room")
+    public String roomList(HttpServletRequest request, Model model){
+        return "dashboard/host/room_table";
+    }
+    @GetMapping("/room/{id}")
+    public String roomDetail(HttpServletRequest request, Model model){
+        return "dashboard/host/room_register";
     }
 
 }
