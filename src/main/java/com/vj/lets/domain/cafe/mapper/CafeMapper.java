@@ -27,6 +27,14 @@ public interface CafeMapper {
     /** id로 카페 조회 */
     public Map<String, Object> findById(int id);
 
+    /**
+     * 멤버 id로 카페 검색
+     *
+     * @param id 멤버 아이디
+     * @return cafe
+     */
+    public Map<String, Object> findByMemberId(int id);
+
     /** 카페 전체리스트 출력 */
     public List<Map<String, Object>> findByAll();
 

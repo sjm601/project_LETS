@@ -22,9 +22,10 @@
         WHERE ID = #{id}
     </select>
 
-    <select id="findByOptionCafeId" parameterType="int" resultType="CafeOptionList">
-        SELECT ID, CAFE_ID, OPTION_ID
-        FROM CAFE_OPTION_LIST
+    <select id="findByOptionCafeId" parameterType="int" resultType="CafeOption">
+        SELECT cop.NAME, cop.IMAGE_PATH
+        FROM CAFE_OPTION_LIST col
+                JOIN CAFE_OPTION cop ON col.OPTION_ID = cop.ID
         WHERE CAFE_ID = #{cafeId}
     </select>
 
