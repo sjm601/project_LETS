@@ -31,14 +31,7 @@ public class CafeServiceImpl implements CafeService{
     private final CafeHistoryMapper cafeHistoryMapper;
     private final CafeOptionMapper cafeOptionMapper;
     private final CafeOptionListMapper cafeOptionListMapper;
-
-    @Override
-    @Transactional
-    public void register(Cafe cafe){
-        cafeMapper.create(cafe);
-        cafeHistoryMapper.create();
-    }
-
+    
     @Override
     @Transactional
     public void cafeOptionRegister(List<CafeOptionList> cafeOptionLists) {
@@ -63,12 +56,27 @@ public class CafeServiceImpl implements CafeService{
     }
 
     @Override
+    public List<CafeOption> getOptionList() {
+        return cafeOptionMapper.readAll();
+    }
+
+    @Override
     public Map<String, Object> getCafe(int id) {
         return cafeMapper.findById(id);
     }
 
     @Override
-    public List<Integer> getBestCafe(){
+    public Map<String, Object> getCafeMemberId(int id) {
+        return cafeMapper.findByMemberId(id);
+    }
+
+    @Override
+    public List<CafeOption> getCafeOptionCafeId(int id) {
+        return cafeOptionListMapper.findByOptionCafeId(id);
+    }
+
+    @Override
+    public List<Map<String, Object>> getBestCafe(){
         return cafeMapper.findByBest();
     }
 

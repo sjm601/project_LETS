@@ -33,35 +33,6 @@ class CafeServiceTest {
     private CafeService cafeService;
 
     @Test
-    @DisplayName("카페 등록")
-    @Disabled
-    @Transactional
-    void registerTest() {
-        //given
-        Cafe cafe = Cafe.builder()
-                .email("homecafe@gmail.com")
-                .name("홈카페")
-                .phoneNumber("010-1111-22220")
-                .roadAddress("동일로 300")
-                .detailAddress("401호")
-                .latitude(37.12422)
-                .longitude(127.112322)
-                .startTime(10)
-                .endTime(24)
-                .description("홈카페는 집처럼 좋습니다")
-                .imagePath("/image/06홈카페")
-                .businessNumber(1111111116)
-                .siGunGuId(10010)
-                .memberId(6)
-                .build();
-        //when
-        cafeService.register(cafe);
-        //then
-        log.info("등록된 카페 정보 : {}", cafe);
-        assertThat(cafe).isNotNull();
-    }
-
-    @Test
     @DisplayName("카페옵션 등록")
     @Disabled
     @Transactional
@@ -111,7 +82,6 @@ class CafeServiceTest {
         int id = 17;
         //when
         cafeService.optionDelete(id);
-        //다시해봐야함
         //then
     }
 
@@ -146,7 +116,7 @@ class CafeServiceTest {
     void getBestCafeTest() {
         //given
         //when
-        List<Integer> list = cafeService.getBestCafe();
+        List<Map<String, Object>> list = cafeService.getBestCafe();
         //then
         log.info("예약 많은 카페 번호 리스트 : {}", list);
         assertThat(list).isNotNull();

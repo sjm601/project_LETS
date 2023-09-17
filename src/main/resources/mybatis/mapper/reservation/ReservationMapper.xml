@@ -10,6 +10,12 @@
         VALUES (reservation_id_seq.NEXTVAL, #{bookingDate}, #{startTime}, #{endTime}, #{headCount}, #{memberId}, #{cafeId}, #{roomId})
     </insert>
 
+    <update id="cancel" parameterType="int">
+        UPDATE RESERVATION
+        SET status = 'cancel'
+        WHERE ID = #{id}
+    </update>
+
     <select id="findById" parameterType="int" resultType="Reservation">
         SELECT ID, TO_CHAR(booking_date, 'yyyy-MM-DD') booking_date, START_TIME, END_TIME, HEAD_COUNT,MEMBER_ID, CAFE_ID, ROOM_ID
         FROM RESERVATION

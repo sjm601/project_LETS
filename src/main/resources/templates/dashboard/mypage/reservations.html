@@ -66,6 +66,8 @@
                                         </th:block>)
                                     </li>
                                 </ul>
+
+                                <!-- reservation status is complete -->
                                 <th:block th:if="${reservation.get('reservationStatus') == 'complete'}">
                                     <ul class="buttons inline-popups">
                                         <li>
@@ -78,7 +80,7 @@
                                     <!-- reservation to delete popup -->
                                     <div th:id="|modal-cancel_${reservation.get('id')}|" id="modal-delete"
                                          class="white-popup mfp-with-anim mfp-hide">
-                                        <form>
+                                        <form th:action="@{/mypage/reservation}" th:method="post">
                                             <div class="small-dialog-header">
                                                 <h3>예약 취소</h3>
                                             </div>
@@ -86,8 +88,9 @@
                                                 <div class="col-8 align-self-center">
                                                     <p class="m-0">정말로 해당 예약를 취소하시겠습니까</p>
                                                 </div>
+                                                <input th:name="reservationId" th:value="${reservation.get('id')}" readonly hidden>
                                                 <div class="col-auto align-self-center">
-                                                    <button type="button" class="btn_1 gray delete">
+                                                    <button th:name="requestType" th:value="cancel" type="submit" class="btn_1 gray delete">
                                                         <i class="fa fa-fw fa-times-circle-o mr-1"></i>
                                                         예약 취소
                                                     </button>
@@ -96,6 +99,8 @@
                                         </form>
                                     </div>
                                 </th:block>
+
+                                <!-- reservation status is use -->
                                 <th:block th:if="${reservation.get('reservationStatus') == 'use' && reservation.get('reviewBoolean') == 'false'}">
                                     <p class="inline-popups">
                                         <a th:href="|#modal-register_${reservation.get('id')}|" href="#modal-reply" data-effect="mfp-zoom-in" class="btn_1 gray">
@@ -106,27 +111,28 @@
                                     <!-- register to review popup -->
                                     <div th:id="|modal-register_${reservation.get('id')}|" id="modal-register"
                                          class="white-popup mfp-with-anim mfp-hide">
-                                        <form>
+                                        <form th:action="@{/mypage/reservation}" th:method="post" th:object="${reviewForm}">
                                             <div class="small-dialog-header">
                                                 <h3>리뷰 작성</h3>
                                             </div>
                                             <div>
                                                 <div class="form-group">
                                                     <select id="rating" name="rating" required>
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
+                                                        <option th:value="1">1</option>
+                                                        <option th:value="2">2</option>
+                                                        <option th:value="3">3</option>
+                                                        <option th:value="4">4</option>
+                                                        <option th:value="5">5</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="message-reply margin-top-0">
                                                 <div class="form-group">
-                                                <textarea th:id="editReviewContent" th:name="editReviewContent"
+                                                <textarea th:field="*{content}"
                                                           cols="40" rows="3" class="form-control" required></textarea>
                                                 </div>
-                                                <button type="button" class="btn_1">
+                                                <input th:name="reservationId" th:value="${reservation.get('id')}" readonly hidden>
+                                                <button th:name="requestType" th:value="review" type="submit" class="btn_1">
                                                     <i class="fa fa-fw fa-pencil mr-1"></i>
                                                     리뷰 작성
                                                 </button>
@@ -134,7 +140,11 @@
                                         </form>
                                     </div>
                                 </th:block>
-                                <div th:if="${reservation.get('reservationStatus') == 'use' && reservation.get('reviewBoolean') == 'true'}" data-effect="mfp-zoom-in" class="btn_999 gray">리뷰 작성 완료</div>
+
+                                <th:block th:if="${reservation.get('reservationStatus') == 'use' && reservation.get('reviewBoolean') == 'true'}">
+                                    <div data-effect="mfp-zoom-in" class="btn_999 gray">리뷰 작성 완료</div>
+                                </th:block>
+
                             </li>
                         </ul>
                     </div>

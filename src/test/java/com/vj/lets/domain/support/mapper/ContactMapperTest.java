@@ -1,6 +1,7 @@
 package com.vj.lets.domain.support.mapper;
 
 import com.vj.lets.domain.support.dto.Contact;
+import com.vj.lets.domain.support.dto.ContactForm;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,12 +56,12 @@ class ContactMapperTest {
     @Test
     void readByMailBNumDateTest() {
         // given
-        Contact searchContact = Contact.builder()
+        ContactForm searchContact = ContactForm.builder()
                 .email("contact1@gmail.com")
                 .businessNumber(1112233333)
                 .build();
         // when
-        Contact contact = contactMapper.readByMailBNumDate(searchContact);
+        List<Contact> contact = contactMapper.readByMailBNumDate(searchContact);
         // then
         assertThat(contact).isNotNull();
     }
