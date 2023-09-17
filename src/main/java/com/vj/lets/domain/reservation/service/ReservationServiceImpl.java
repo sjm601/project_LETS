@@ -27,6 +27,12 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    @Transactional
+    public void cancelReservation(int id) {
+        reservationMapper.cancel(id);
+    }
+
+    @Override
     public Reservation findById(int id) {
         return reservationMapper.findById(id);
     }

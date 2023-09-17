@@ -2,7 +2,6 @@ package com.vj.lets.domain.member.service;
 
 import com.vj.lets.domain.cafe.mapper.CafeHistoryMapper;
 import com.vj.lets.domain.cafe.mapper.CafeMapper;
-import com.vj.lets.domain.common.web.Month;
 import com.vj.lets.domain.group.mapper.GroupContactMapper;
 import com.vj.lets.domain.group.mapper.GroupHistoryMapper;
 import com.vj.lets.domain.group.mapper.GroupMemberListMapper;
@@ -96,6 +95,12 @@ public class MemberServiceImpl implements MemberService {
         memberHistoryMapper.createByUpdate(member.getId(), MemberHistoryComment.UPDATE.getComment());
     }
 
+    /**
+     * 회원 정보 수정 시 수정 정보 중복 체크 용 폼 조회
+     *
+     * @param id 회원 ID
+     * @return 체크 용 폼 객체
+     */
     @Override
     public EditForm checkEdit(int id) {
         return memberMapper.readUpdateForm(id);

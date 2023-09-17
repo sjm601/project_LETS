@@ -29,39 +29,44 @@
                             <h4 class="text-center">Applying</h4>
                             <p class="text-center">Please enter the business registration form.</p>
                             <div id="login">
-                                <form method="post" action="#" id="contactform" autocomplete="off">
+                                <form th:action="@{/support/contact}" th:object="${contactForm}" method="post" action="#" id="contactform" autocomplete="off">
                                     <div class="row justify-content-center">
                                         <div class="col-md-8">
                                             <div class="form-group">
-                                                <label>Your Email</label>
-                                                <input class="form-control" type="email" required>
+                                                <label>이메일</label>
+                                                <input th:field="*{email}" class="form-control" type="email" required>
                                                 <i class="fas fa-solid fa-envelope"></i>
                                             </div>
                                             <div class="form-group">
-                                                <label>Your Name</label>
-                                                <input class="form-control" type="text" required>
+                                                <label>이름</label>
+                                                <input th:field="*{name}" class="form-control" type="text" required>
                                                 <i class="fas fa-solid fa-user"></i>
                                             </div>
                                             <div class="form-group">
-                                                <label>Your phone number</label>
-                                                <input class="form-control" type="password" required>
+                                                <label>전화번호</label>
+                                                <input th:field="*{phoneNumber}" class="form-control" type="text" required>
                                                 <i class="fas fa-solid fa-phone"></i>
                                             </div>
                                             <div class="form-group">
-                                                <label>Your Cafe Address</label>
-                                                <input class="form-control" type="text" required>
+                                                <label>카페명</label>
+                                                <input th:field="*{cafeName}" class="form-control" type="text" required>
                                                 <i class="fa-solid fa-location-dot"></i>
                                             </div>
                                             <div class="form-group">
-                                                <label>Your business number</label>
-                                                <input class="form-control" type="text" required>
+                                                <label>카페 주소</label>
+                                                <input th:field="*{address}" class="form-control" type="text" required>
+                                                <i class="fa-solid fa-location-dot"></i>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>사업자 등록번호</label>
+                                                <input th:field="*{businessNumber}" class="form-control" type="number" required>
                                                 <i class="fa-solid fa-file-contract"></i>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>RequestMessage</label>
-                                        <textarea class="form-control" id="message_contact" name="message_contact"
+                                        <textarea th:field="*{message}" class="form-control" id="message_contact" name="message_contact"
                                                   style="height:250px;" required></textarea>
                                     </div>
                                     <p class="add_top_30"><input type="submit" value="Submit" class="btn_1 rounded"

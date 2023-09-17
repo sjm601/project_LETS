@@ -1,7 +1,9 @@
 package com.vj.lets.web.cafe.controller;
 
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vj.lets.domain.cafe.dto.CafeOption;
 import com.vj.lets.domain.cafe.service.CafeService;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.reservation.dto.Reservation;
@@ -37,11 +39,17 @@ public class CafeController {
 
     @GetMapping("")
     public String cafeDetail(Model model) {
+        List<Map<String, Object>> bestCafe = cafeService.getBestCafe();
+        model.addAttribute("bestCafe", bestCafe);
         return "common/cafe/cafe_main";
     }
 
     @GetMapping("/list")
     public String cafeList(Model model) {
+        List<CafeOption> options = cafeService.getOptionList();
+        model.addAttribute("options", options);
+        List<Map<String, Object>> allCafe = cafeService.getCafeList();
+        model.addAttribute("allCafe", allCafe);
         return "common/cafe/cafe_list";
     }
 

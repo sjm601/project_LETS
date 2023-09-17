@@ -16,7 +16,7 @@
             <section class="hero_in restaurants">
                 <div class="wrapper">
                     <div class="container">
-                        <h1 class="fadeInUp"><span></span>Paris Eat &amp; Drink grid</h1>
+                        <h1 class="fadeInUp"><span></span>Study Cafe List</h1>
                     </div>
                 </div>
             </section>
@@ -25,7 +25,7 @@
             <div class="filters_listing sticky_horizontal">
                 <div class="container">
                     <ul class="clearfix">
-                        <li>
+                        <!--<li>
                             <div class="switch-field">
                                 <input type="radio" id="all" name="listing_filter" value="all" checked data-filter="*"
                                        class="selected">
@@ -37,16 +37,10 @@
                                        data-filter=".latest">
                                 <label for="latest">Latest</label>
                             </div>
-                        </li>
-                        <!--<li>
-                            <div class="layout_view">
-                                <a href="#" class="active"><i class="icon-th"></i></a>
-                                <a href="restaurants-list-sidebar.html"><i class="icon-th-list"></i></a>
-                            </div>
                         </li>-->
                         <li>
                             <a class="btn_map" data-bs-toggle="collapse" href="#collapseMap" aria-expanded="false"
-                               aria-controls="collapseMap" data-text-swap="Hide map" data-text-original="View on map">View
+                               aria-controls="collapseMap" data-text-swap="Hide map" data-text-original="View on map" onclick="relayout()">View
                                 on map</a>
                         </li>
                     </ul>
@@ -56,7 +50,7 @@
             <!-- /filters -->
 
             <div class="collapse" id="collapseMap">
-                <div id="map" class="map"></div>
+                <div id="map" style="width:100%;height:500px;"></div>
             </div>
             <!-- End Map -->
 
@@ -80,10 +74,8 @@
                             </div>
                             <div class="form-group">
                                 <select class="wide" name="searchOption">
-                                    <option>Option</option>
-                                    <option>와이파이</option>
-                                    <option>흡연구역</option>
-                                    <option>화이트보드</option>
+                                    <option value="">Option</option>
+                                    <option th:each="options:${options}" th:value="${options.id}" th:text="${options.name}">Option</option>
                                 </select>
                             </div>
                             <input type="submit" class="btn_search" value="Search">
@@ -136,163 +128,44 @@
                     <div class="col-lg-9">
                         <div class="isotope-wrapper">
                             <div class="row">
-                                <div class="col-md-6 isotope-item popular">
+                                <div class="col-md-6 isotope-item popular" th:each="allCafe : ${allCafe}">
                                     <div class="box_grid" data-cue="slideInUp">
                                         <figure>
-                                            <a href="restaurant-detail.html"><img src="img/restaurant_1.jpg"
-                                                                                  class="img-fluid" alt="" width="800"
-                                                                                  height="533">
+                                            <a th:href="@{/cafe/{id}(id=${allCafe['id']})}" href="/cafe"><img th:src="${allCafe['imagePath']}"
+                                                                                                               src="img/tour_5.jpg" class="img-fluid" alt=""
+                                                                                                               width="800"
+                                                                                                               height="533">
                                                 <div class="read_more"><span>Read more</span></div>
                                             </a>
-                                            <small>영업중</small>
+                                            <small th:if="${allCafe['startTime']} < ${#calendars.format(#calendars.createNow(),'HH')} and ${allCafe['endTime']} > ${#calendars.format(#calendars.createNow(),'HH')}">영업중</small>
+                                            <small th:unless="${allCafe['startTime']} < ${#calendars.format(#calendars.createNow(),'HH')} and ${allCafe['endTime']} > ${#calendars.format(#calendars.createNow(),'HH')}">영업종료</small>
                                         </figure>
                                         <div class="wrapper">
-                                            <h3><a href="restaurant-detail.html">이젠스터디카페</a></h3>
-                                            <p>서울특별시 노원구 동일로 500</p>
-                                            <span class="price">평균 <strong>50,000<i
-                                                class="fa-solid fa-won-sign"></i></strong> /1hour</span>
+                                            <h3><a th:href="@{/cafe/{id}(id=${allCafe['id']})}" href="/cafe/" th:text="${allCafe['cafeName']}">이젠스터디카페</a></h3>
+                                            <p th:if="${allCafe['detailAddress']} != null" th:text="${allCafe['siDoName']}+' '+${allCafe['siGunGuName']}+' '+${allCafe['roadAddress']}">
+                                                서울특별시 노원구 동일로 500</p>
+                                            <p th:unless="${allCafe['detailAddress']} != null" th:text="${allCafe['siDoName']}+' '+${allCafe['siGunGuName']}+' '+${allCafe['roadAddress']}+' '+${allCafe['detailAddress']}">
+                                                서울특별시 노원구 동일로 500</p>
+                                            <span class="price">최소 <strong th:text="${allCafe['minPrice']}">50,000<i
+                                                    class="fa-solid fa-won-sign"></i></strong>원 /1hour</span>
                                         </div>
                                         <ul>
-                                            <li><i class="icon_clock_alt"></i> 7시 ~ 20시</li>
+                                            <li><i class="icon_clock_alt"></i> <strong th:text="${allCafe['startTime']}+'시 ~ '+${allCafe['endTime']}+'시'">
+                                                7시 ~ 20시</strong></li>
                                             <li>
-                                                <div class="score">
-                                                    <span>Superb<em>30 Reviews</em></span><strong>5.0</strong></div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- /box_grid -->
-                                <div class="col-md-6 isotope-item popular">
-                                    <div class="box_grid" data-cue="slideInUp">
-                                        <figure>
-                                            <!-- <a href="#0" class="wish_bt"></a> -->
-                                            <a href="restaurant-detail.html"><img src="img/restaurant_1.jpg"
-                                                                                  class="img-fluid" alt="" width="800"
-                                                                                  height="533">
-                                                <div class="read_more"><span>Read more</span></div>
-                                            </a>
-                                            <small>영업중</small>
-                                        </figure>
-                                        <div class="wrapper">
-                                            <h3><a href="restaurant-detail.html">이젠스터디카페</a></h3>
-                                            <p>서울특별시 노원구 동일로 500</p>
-                                            <span class="price">평균 <strong>50,000<i
-                                                class="fa-solid fa-won-sign"></i></strong> /1hour</span>
-                                        </div>
-                                        <ul>
-                                            <li><i class="icon_clock_alt"></i> 7시 ~ 20시</li>
-                                            <li>
-                                                <div class="score">
-                                                    <span>Superb<em>30 Reviews</em></span><strong>5.0</strong></div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- /box_grid -->
-                                <div class="col-md-6 isotope-item popular">
-                                    <div class="box_grid" data-cue="slideInUp">
-                                        <figure>
-                                            <!-- <a href="#0" class="wish_bt"></a> -->
-                                            <a href="restaurant-detail.html"><img src="img/restaurant_1.jpg"
-                                                                                  class="img-fluid" alt="" width="800"
-                                                                                  height="533">
-                                                <div class="read_more"><span>Read more</span></div>
-                                            </a>
-                                            <small>영업중</small>
-                                        </figure>
-                                        <div class="wrapper">
-                                            <h3><a href="restaurant-detail.html">이젠스터디카페</a></h3>
-                                            <p>서울특별시 노원구 동일로 500</p>
-                                            <span class="price">평균 <strong>50,000<i
-                                                class="fa-solid fa-won-sign"></i></strong> /1hour</span>
-                                        </div>
-                                        <ul>
-                                            <li><i class="icon_clock_alt"></i> 7시 ~ 20시</li>
-                                            <li>
-                                                <div class="score">
-                                                    <span>Very Good<em>350 Reviews</em></span><strong>4.0</strong></div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- /box_grid -->
-                                <div class="col-md-6 isotope-item popular">
-                                    <div class="box_grid" data-cue="slideInUp">
-                                        <figure>
-                                            <!-- <a href="#0" class="wish_bt"></a> -->
-                                            <a href="restaurant-detail.html"><img src="img/restaurant_1.jpg"
-                                                                                  class="img-fluid" alt="" width="800"
-                                                                                  height="533">
-                                                <div class="read_more"><span>Read more</span></div>
-                                            </a>
-                                            <small>영업중</small>
-                                        </figure>
-                                        <div class="wrapper">
-                                            <h3><a href="restaurant-detail.html">이젠스터디카페</a></h3>
-                                            <p>서울특별시 노원구 동일로 500</p>
-                                            <span class="price">평균 <strong>50,000<i
-                                                class="fa-solid fa-won-sign"></i></strong> /1hour</span>
-                                        </div>
-                                        <ul>
-                                            <li><i class="icon_clock_alt"></i> 7시 ~ 20시</li>
-                                            <li>
-                                                <div class="score">
-                                                    <span>Good<em>30 Reviews</em></span><strong>3.0</strong>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- /box_grid -->
-                                <div class="col-md-6 isotope-item popular">
-                                    <div class="box_grid" data-cue="slideInUp">
-                                        <figure>
-                                            <!-- <a href="#0" class="wish_bt"></a> -->
-                                            <a href="restaurant-detail.html"><img src="img/restaurant_1.jpg"
-                                                                                  class="img-fluid" alt="" width="800"
-                                                                                  height="533">
-                                                <div class="read_more"><span>Read more</span></div>
-                                            </a>
-                                            <small>영업중</small>
-                                        </figure>
-                                        <div class="wrapper">
-                                            <h3><a href="restaurant-detail.html">이젠스터디카페</a></h3>
-                                            <p>서울특별시 노원구 동일로 500</p>
-                                            <span class="price">평균 <strong>50,000<i
-                                                class="fa-solid fa-won-sign"></i></strong> /1hour</span>
-                                        </div>
-                                        <ul>
-                                            <li><i class="icon_clock_alt"></i> 7시 ~ 20시</li>
-                                            <li>
-                                                <div class="score">
-                                                    <span>Pleasant<em>30 Reviews</em></span><strong>2.0</strong></div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- /box_grid -->
-                                <div class="col-md-6 isotope-item popular">
-                                    <div class="box_grid" data-cue="slideInUp">
-                                        <figure>
-                                            <!-- <a href="#0" class="wish_bt"></a> -->
-                                            <a href="restaurant-detail.html"><img src="img/restaurant_1.jpg"
-                                                                                  class="img-fluid" alt="" width="800"
-                                                                                  height="533">
-                                                <div class="read_more"><span>Read more</span></div>
-                                            </a>
-                                            <small>영업중</small>
-                                        </figure>
-                                        <div class="wrapper">
-                                            <h3><a href="restaurant-detail.html">이젠스터디카페</a></h3>
-                                            <p>서울특별시 노원구 동일로 500</p>
-                                            <span class="price">평균 <strong>50,000<i
-                                                class="fa-solid fa-won-sign"></i></strong> /1hour</span>
-                                        </div>
-                                        <ul>
-                                            <li><i class="icon_clock_alt"></i> 7시 ~ 20시</li>
-                                            <li>
-                                                <div class="score">
-                                                    <span>Poor<em>30 Reviews</em></span><strong>1.0</strong>
+                                                <div class="score"><span>
+                                        <em th:switch="${#numbers.formatInteger(allCafe['cafeRating'],1)}">
+                                            <em th:case="5">Superb</em>
+                                            <em th:case="4">VeryGood</em>
+                                            <em th:case="3">Good</em>
+                                            <em th:case="2">Pleasant</em>
+                                            <em th:case="1">Poor</em>
+                                            <em th:case="*">No Rating</em>
+                                        </em>
+                                        <em th:if="${allCafe['reviewCount']} != null" th:text="${allCafe['reviewCount']}+' Reviews'">30 Reviews</em>
+                                        <em th:if="${allCafe['reviewCount']} == null">0 Reviews</em></span>
+                                                    <strong th:if="${allCafe['allRating']} == null">0.0</strong>
+                                                    <strong th:unless="${allCafe['allRating']} == null" th:text="${#numbers.formatDecimal(allCafe['cafeRating'],1,1)}">5.0</strong>
                                                 </div>
                                             </li>
                                         </ul>
@@ -303,7 +176,6 @@
                             <!-- /row -->
                         </div>
                         <!-- /isotope-wrapper -->
-
                         <p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p>
                     </div>
                     <!-- /col -->
@@ -346,11 +218,25 @@
     </th:block>
 
     <th:block th:fragment="scripts">
-        <!-- Map -->
-        <script src="http://maps.googleapis.com/maps/api/js"></script>
-        <script src="/js/markerclusterer.js"></script>
-        <script src="/js/map_restaurants.js"></script>
-        <script src="/js/infobox.js"></script>
+        <!-- Kakao Map api -->
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=665c870d0cd68fefbb228c9c40d58cf1"></script>
+        <script>
+            var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                mapOption = {
+                    center: new kakao.maps.LatLng(37.658013, 127.043598), // 지도의 중심좌표
+                    level: 4 // 지도의 확대 레벨
+                };
+
+            var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+            function relayout() {
+
+                // 지도를 표시하는 div 크기를 변경한 이후 지도가 정상적으로 표출되지 않을 수도 있습니다
+                // 크기를 변경한 이후에는 반드시  map.relayout 함수를 호출해야 합니다
+                // window의 resize 이벤트에 의한 크기변경은 map.relayout 함수가 자동으로 호출됩니다
+                map.relayout();
+            }
+        </script>
 
         <!-- Masonry Filtering -->
         <script src="/js/isotope.min.js"></script>

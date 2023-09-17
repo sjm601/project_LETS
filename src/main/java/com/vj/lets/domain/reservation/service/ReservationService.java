@@ -8,7 +8,9 @@ import java.util.Map;
 
 /**
  * 예약 서비스 클래스
+ *
  * @author 박상훈
+ * @author VJ특공대 김종원
  * @version 1.0
  * @since 2023-09-10 (일)
  */
@@ -16,12 +18,22 @@ public interface ReservationService {
 
     /**
      * 예약하기 create
-     * @param reservation
+     *
+     * @param reservation 예약
      */
     public void reserve(Reservation reservation);
 
     /**
+     * 예약 취소
+     *
+     * @param id 예약 ID
+     * @see com.vj.lets.web.dashboard.controller.MypageController
+     */
+    public void cancelReservation(int id);
+
+    /**
      * 예약아이디로 예약 찾기
+     *
      * @param id
      * @return 해당 예약
      */
@@ -29,11 +41,18 @@ public interface ReservationService {
 
     /**
      * 예약 전체 리스트 조회
+     *
      * @return 예약 리스트
      */
-   public List<Reservation> getReservationList();
+    public List<Reservation> getReservationList();
 
-    //회원 Id 로 예약 전체 리스트 조회
+    /**
+     * 회원 아이디로 예약 전체 리스트 조회
+     *
+     * @param memberId 회원 ID
+     * @return 예약 목록
+     * @see com.vj.lets.web.dashboard.controller.MypageController
+     */
     public List<Map<String, Object>> getMemberResList(int memberId);
 
     //카페 id로 예약 전체 리스트 조회
@@ -43,10 +62,10 @@ public interface ReservationService {
     public List<Map<String, Object>> getCountMonthRes(int cafeId);
 
     //호스트의 모든 예약 데이터 가져오기
-    public List<Map<String,Reservation>> getTotalData(int cafeId);
+    public List<Map<String, Reservation>> getTotalData(int cafeId);
 
     //예약에 필요한 예약 정보 가져오기
-    public Map<String,Reservation> getResInfo(int id);
+    public Map<String, Reservation> getResInfo(int id);
 
     //지금 예약하려는 예약 번호 가져오기
 
@@ -55,8 +74,5 @@ public interface ReservationService {
     int checkDuplicateReservation(@Param("roomId") int roomId, @Param("bookingDate") String bookingDate, @Param("startTime") int startTime, @Param("endTime") int endTime);
 
     public List<Map<String, Object>> checkDuplicateResTime(@Param("roomId") int roomId,@Param("bookingDate") String bookingDate);
-
-
-
 
 }
