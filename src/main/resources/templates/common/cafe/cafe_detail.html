@@ -409,7 +409,7 @@
                                     <div class="panel-dropdown-content right">
                                         <div class="qtyButtons">
                                             <label>Guests</label>
-                                            <input type="number" id="headCount"  value="1"
+                                            <input type="number" id="headCount" name="headCount"  value="1"
                                                    onchange="updateQtyTotal()">
                                         </div>
                                     </div>
@@ -547,6 +547,7 @@
                        for (let i = 0; i < data.length; i++) {
                            const option = document.createElement('option');
                            option.innerText = `${data[i].name}`;
+                           option.value= `${data[i].id}`;
                            option.setAttribute('data-price', data[i].price); // 방의 가격 데이터를 저장
                            option.setAttribute('data-headCount', data[i].headCount); // 방의 수용인원 데이터를 저장
                            console.log(option);
