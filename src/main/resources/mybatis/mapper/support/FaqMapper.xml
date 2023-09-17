@@ -27,9 +27,9 @@
     <update id="update" parameterType="Faq">
         UPDATE FAQ
         <set>
-            <if test="title != null or title != ''">title = #{title},</if>
-            <if test="content != null or content != ''">content = #{content},</if>
-            <if test="categoryId != null or categoryId != ''">category_id = #{categoryId},</if>
+            <if test="title != null and title != ''">TITLE = #{title},</if>
+            <if test="content != null and content != ''">CONTENT = #{content},</if>
+            <if test="categoryId != null and categoryId != 0">CATEGORY_ID = #{categoryId},</if>
         </set>
         WHERE ID = #{id}
     </update>

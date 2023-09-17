@@ -6,12 +6,8 @@
 <mapper namespace="com.vj.lets.domain.cafe.mapper.CafeMapper">
 
     <insert id="create" parameterType="Cafe">
-        INSERT INTO CAFE (ID, EMAIL, NAME, PHONE_NUMBER, DETAIL_ADDRESS, LATITUDE, LONGITUDE,
-                          START_TIME, END_TIME, DESCRIPTION, IMAGE_PATH, BUSINESS_NUMBER,
-                          SI_GUN_GU_ID, MEMBER_ID, ROAD_ADDRESS)
-        VALUES (CAFE_ID_SEQ.NEXTVAL, #{email}, #{name}, #{phoneNumber}, #{detailAddress}, #{latitude}, #{longitude},
-                #{startTime}, #{endTime}, #{description}, #{imagePath}, #{businessNumber},
-                #{siGunGuId}, #{memberId}, #{roadAddress})
+        INSERT INTO CAFE (ID, EMAIL, NAME, BUSINESS_NUMBER, MEMBER_ID)
+        VALUES (CAFE_ID_SEQ.NEXTVAL, #{email}, #{name}, #{businessNumber}, MEMBER_ID_SEQ.CURRVAL)
     </insert>
 
     <update id="update" parameterType="Cafe">

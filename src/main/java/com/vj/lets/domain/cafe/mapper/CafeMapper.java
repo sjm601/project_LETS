@@ -18,13 +18,22 @@ import java.util.Map;
 @Mapper
 public interface CafeMapper {
 
-    /** 카페 생성 */
+    /**
+     * 카페 생성
+     *
+     * @param cafe 카페 정보
+     * @see com.vj.lets.web.dashboard.controller.AdminController
+     */
     public void create(Cafe cafe);
 
-    /** 카페정보 업데이트 */
+    /**
+     * 카페정보 업데이트
+     */
     public void update(Cafe cafe);
 
-    /** id로 카페 조회 */
+    /**
+     * id로 카페 조회
+     */
     public Map<String, Object> findById(int id);
 
     /**
@@ -41,7 +50,10 @@ public interface CafeMapper {
     /** 누적 예약이 가장 많은 카페 6개 출력 */
     public List<Map<String, Object>> findByBest();
 
-    /** 카패 검색 결과 출력 */
+
+    /**
+     * 카패 검색 결과 출력
+     */
     public List<Map<String, Object>> findBySearch(CafeSearch cafeSearch);
 
     /**
@@ -60,6 +72,8 @@ public interface CafeMapper {
      */
     public List<Map<String, Object>> readCountByRegMonth();
 
-    /** 카페삭제 */
+    /**
+     * 카페삭제
+     */
     public void delete(int id);
 }

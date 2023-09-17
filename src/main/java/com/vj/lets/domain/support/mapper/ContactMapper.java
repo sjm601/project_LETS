@@ -1,6 +1,7 @@
 package com.vj.lets.domain.support.mapper;
 
 import com.vj.lets.domain.support.dto.Contact;
+import com.vj.lets.domain.support.dto.ContactForm;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -33,9 +34,10 @@ public interface ContactMapper {
     /**
      * 이메일, 사업자 번호, 신청 날짜로 입점 신청 조회
      *
+     * @param contactForm 입점 신청 입력 폼
      * @return 입점 신청 정보
      */
-    public Contact readByMailBNumDate(Contact contact);
+    public List<Contact> readByMailBNumDate(ContactForm contactForm);
 
     /**
      * 입점 신청 상태 정보 수정

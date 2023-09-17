@@ -14,6 +14,7 @@ import lombok.*;
 @ToString
 @Builder
 public class Reservation {
+
     private int id;
     private String bookingDate;
     private int startTime;

@@ -17,10 +17,11 @@
         ORDER BY contact_date DESC
     </select>
 
-    <select id="readByMailBNumDate" parameterType="Contact" resultType="Contact">
-        SELECT ID, EMAIL, BUSINESS_NUMBER, TO_CHAR(CONTACT_DATE, 'yyyy-MM-DD') contact_date, STATUS
+    <select id="readByMailBNumDate" parameterType="ContactForm" resultType="Contact">
+        SELECT ID, EMAIL, NAME, BUSINESS_NUMBER, STATUS
         FROM CONTACT
-        WHERE (EMAIL = #{email} or BUSINESS_NUMBER = #{businessNumber}) AND TO_CHAR(CONTACT_DATE, 'yyyy-MM-DD') = TO_CHAR(SYSDATE, 'yyyy-MM-DD') AND STATUS = 'hold'
+        WHERE (EMAIL = #{email} or BUSINESS_NUMBER = #{businessNumber})
+              AND (STATUS = 'hold' or STATUS = 'approve')
     </select>
 
     <update id="update">

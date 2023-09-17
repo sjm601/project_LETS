@@ -23,6 +23,5 @@ public class EditForm {
     String phoneNumber;
     String gender;
     int age;
-    String imagePath;
 
 }
