@@ -1,5 +1,7 @@
 package com.vj.lets.web.cafe.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vj.lets.domain.cafe.service.CafeService;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.reservation.dto.Reservation;
@@ -55,6 +57,7 @@ public class CafeController {
         }
 
         model.addAttribute("Cafe", cafe);
+        log.info("카페 내용:{}",cafe);
         model.addAttribute("cafeRating", cafeRating);
 
         List<Room> roomList = roomService.getSearchCafeRoom(id);
@@ -63,6 +66,15 @@ public class CafeController {
         model.addAttribute("errorMessage", "");
 
         return "common/cafe/cafe_detail";
+    }
+
+    @RequestMapping("/selectDate/{id}")
+    @ResponseBody
+    public  String findRoom(@PathVariable int id, Model model) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<Room> roomList = roomService.getSearchCafeRoom(id);
+        log.info("룸 목록:{}",roomList);
+        return  objectMapper.writeValueAsString(roomList);
     }
 
     @PostMapping("/{id}")

@@ -92,7 +92,7 @@
             OR (START_TIME &gt;= #{startTime} AND END_TIME &lt;= #{endTime}))
     </select>
 
-    <select id="checkDuplicateResTime" parameterType="map" resultType="java.util.Map">
+    <select id="checkDuplicateResTime" resultType="map">
         SELECT START_TIME, END_TIME
         FROM reservation
         WHERE ROOM_ID = #{roomId}

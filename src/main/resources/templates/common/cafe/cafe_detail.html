@@ -400,7 +400,7 @@
                                     <div class="score"><span>Superb<em>30 Reviews</em></span><strong th:text="${#numbers.formatDecimal(cafeRating, 1, 1)}">4.0</strong></div>
                                 </div>
                                 <div class="form-group input-dates scroll-fix">
-                                    <input class="form-control" type="text" name="bookingDate" placeholder="When..">
+                                    <input class="form-control" type="text" id="bookingDate" name="bookingDate" placeholder="When..">
                                     <i class="icon_calendar"></i>
                                 </div>
 
@@ -419,8 +419,8 @@
                                     <div class="custom-select-form">
                                         <select id="roomName" class="wide" name="roomId">
                                             <option value="">룸 타입</option>
-                                            <option th:each="roomList : ${roomList}" th:value="${roomList.id}"
-                                                    th:text="${roomList.name}" ></option>
+                                            <!--<option th:each="roomList : ${roomList}" th:value="${roomList.id}"
+                                                    th:text="${roomList.name}" ></option> -->
                                         </select>
                                     </div>
                                 </div>
@@ -495,13 +495,17 @@
     </th:block>
 
     <th:block th:fragment="scripts">
+        <script>
+            const id = [[${Cafe['id']}]];
+        </script>
+        <script src="/js/custom/cafe.js"></script>
         <!-- Map -->
         <script src="http://maps.googleapis.com/maps/api/js"></script>
         <script src="/js/map_single_restaurant.js"></script>
         <script src="/js/infobox.js"></script>
 
         <!-- DATEPICKER  -->
-        <script th:inline="javascript">
+       <script th:inline="javascript">
             $(function () {
                 $('input[name="bookingDate"]').daterangepicker({
                     autoUpdateInput: true,
@@ -513,8 +517,20 @@
                     locale: {
                         format: 'YYYY-MM-DD'
                     }
-                }, function (start, end, label) {
-                    console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('DD-MM-YYYY') + ' (predefined range: ' + label + ')');
+                }, function (e,start) {
+                    const url = `/cafe/selectDate/${id}`
+                    console.log(`${id}`);
+                    fetch(url).then(response => response.json()).then(data =>{
+                        console.log(1111111111111111111);
+                        // const roomListSelected = document.querySelector('#roomName');
+                        // for (let i = 0; i < data.length; i++) {
+                        //     const option = document.createElement('option');
+                        //     option.innerText=`${data[i].name}`;
+                        //     roomListSelected.appendChild(option);
+                        //     console.log([i].name);
+                        // }
+                    }).catch(error=> alert(error));
+
                 });
             });
         </script>
@@ -560,6 +576,7 @@
         </script>
         <!-- INPUT QUANTITY  -->
         <script src="/js/input_qty.js"></script>
+
     </th:block>
 
 </th:block>

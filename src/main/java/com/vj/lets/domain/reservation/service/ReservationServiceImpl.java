@@ -81,8 +81,8 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Map<String, Integer>> checkDuplicateResTime(int roomId, String bookingDate) {
-        List<Map<String, Integer>> nonReservationTime = null;
+    public List<Map<String,Object>> checkDuplicateResTime(int roomId, String bookingDate) {
+        List<Map<String, Object>> nonReservationTime = null;
 
         nonReservationTime = reservationMapper.checkDuplicateResTime(roomId,bookingDate);
         return nonReservationTime;
