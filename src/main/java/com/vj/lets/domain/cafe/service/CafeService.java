@@ -62,6 +62,21 @@ public interface CafeService {
     public Map<String, Object> getCafe(int id);
 
     /**
+     * memberID로 카페 검색
+     *
+     * @param id memberId
+     * @return 카페 검색결과
+     */
+    public Map<String, Object> getCafeMemberId(int id);
+
+    /**
+     * 카페 id로 옵션리스트 검색
+     *
+     * @param id 카페 id
+     * @return 옵션리스트
+     */
+    public List<CafeOption> getCafeOptionCafeId(int id);
+    /**
      * 예약이 많은 카페 6개 검색
      *
      * @return 카페 리스트 6개

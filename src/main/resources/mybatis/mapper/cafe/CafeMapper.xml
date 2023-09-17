@@ -55,6 +55,30 @@
           AND STATUS = 'enabled'
     </select>
 
+    <select id="findByMemberId" parameterType="int" resultType="map">
+        SELECT caf.ID "id",
+               EMAIL "email",
+               caf.NAME "name",
+               PHONE_NUMBER "phoneNumber",
+               do.NAME "siDoName",
+               si.NAME "siGunGuName",
+               ROAD_ADDRESS "roadAddress",
+               DETAIL_ADDRESS "detailAddress",
+               LATITUDE "latitude",
+               LONGITUDE "longitude",
+               START_TIME "startTime",
+               END_TIME "endTime",
+               DESCRIPTION "description",
+               BUSINESS_NUMBER "businessNumber",
+               IMAGE_PATH "imagePath",
+               MEMBER_ID "memberId"
+        FROM CAFE caf
+                 LEFT JOIN SI_GUN_GU si ON si.ID = caf.SI_GUN_GU_ID
+                 LEFT JOIN SI_DO do ON do.ID = si.SI_DO_ID
+        Where MEMBER_ID = #{id}
+          AND STATUS = 'enabled'
+    </select>
+
     <select id="findByAll" resultType="map">
         SELECT
             caf.ID "id",
