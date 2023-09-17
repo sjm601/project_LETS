@@ -1,5 +1,6 @@
 package com.vj.lets.domain.support.mapper;
 
+import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.support.dto.Contact;
 import com.vj.lets.domain.support.dto.ContactForm;
 import org.apache.ibatis.annotations.Mapper;
@@ -25,11 +26,18 @@ public interface ContactMapper {
     public void create(Contact contact);
 
     /**
+     * 보류 중인 전체 입점 신청 갯수 조회
+     *
+     * @return 입점 신청 갯수
+     */
+    public int readCountAll(String type);
+
+    /**
      * 전체 입점 신청 목록 조회
      *
      * @return 입점 신청 목록
      */
-    public List<Contact> readAll();
+    public List<Contact> readAll(PageParams pageParams);
 
     /**
      * 이메일, 사업자 번호, 신청 날짜로 입점 신청 조회

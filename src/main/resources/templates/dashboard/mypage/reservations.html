@@ -40,7 +40,7 @@
                     </div>
                     <div class="list_general">
                         <ul>
-                            <li th:each="reservation : ${reservationList}">
+                            <li th:each="reservation, index : ${reservationList}">
                                 <figure><img src="/dashboard/img/item_2.jpg" alt=""></figure>
                                 <h4><th:block th:text="${reservation.get('cafeName')}"></th:block>
                                     <th:block th:switch="${reservation.get('reservationStatus')}">
@@ -71,14 +71,14 @@
                                 <th:block th:if="${reservation.get('reservationStatus') == 'complete'}">
                                     <ul class="buttons inline-popups">
                                         <li>
-                                            <a th:href="|#modal-cancel_${reservation.get('id')}|" href="#" class="btn_1 gray delete">
+                                            <a th:href="|#modal-cancel_${index.count}|" href="#" class="btn_1 gray delete">
                                                 <i class="fa fa-fw fa-times-circle-o mr-1"></i>
                                                 예약 취소
                                             </a>
                                         </li>
                                     </ul>
                                     <!-- reservation to delete popup -->
-                                    <div th:id="|modal-cancel_${reservation.get('id')}|" id="modal-delete"
+                                    <div th:id="|modal-cancel_${index.count}|" id="modal-delete"
                                          class="white-popup mfp-with-anim mfp-hide">
                                         <form th:action="@{/mypage/reservation}" th:method="post">
                                             <div class="small-dialog-header">
@@ -103,13 +103,13 @@
                                 <!-- reservation status is use -->
                                 <th:block th:if="${reservation.get('reservationStatus') == 'use' && reservation.get('reviewBoolean') == 'false'}">
                                     <p class="inline-popups">
-                                        <a th:href="|#modal-register_${reservation.get('id')}|" href="#modal-reply" data-effect="mfp-zoom-in" class="btn_1 gray">
+                                        <a th:href="|#modal-register_${index.count}|" href="#modal-reply" data-effect="mfp-zoom-in" class="btn_1 gray">
                                             <i class="fa fa-fw fa-pencil mr-1"></i>
                                             리뷰 작성
                                         </a>
                                     </p>
                                     <!-- register to review popup -->
-                                    <div th:id="|modal-register_${reservation.get('id')}|" id="modal-register"
+                                    <div th:id="|modal-register_${index.count}|" id="modal-register"
                                          class="white-popup mfp-with-anim mfp-hide">
                                         <form th:action="@{/mypage/reservation}" th:method="post" th:object="${reviewForm}">
                                             <div class="small-dialog-header">

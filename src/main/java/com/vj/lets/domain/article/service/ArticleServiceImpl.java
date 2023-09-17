@@ -1,10 +1,10 @@
 package com.vj.lets.domain.article.service;
 
 import com.vj.lets.domain.article.dto.Article;
-import com.vj.lets.domain.article.dto.PageParams;
 import com.vj.lets.domain.article.mapper.ArticleHistoryMapper;
 import com.vj.lets.domain.article.mapper.ArticleMapper;
 import com.vj.lets.domain.article.util.ArticleHistoryComment;
+import com.vj.lets.domain.common.web.PageParams;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

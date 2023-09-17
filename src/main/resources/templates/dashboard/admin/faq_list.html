@@ -29,29 +29,32 @@
                         <h2 class="d-inline-block">FAQ 수정 및 삭제</h2>
                         <div class="filter">
                             <div class="styled-select short">
-                                <select name="orderby">
-                                    <option value="Any time">Any time</option>
-                                    <option value="Latest">Latest</option>
-                                    <option value="Oldest">Oldest</option>
+                                <select name="type" id="orderType">
+                                    <option th:selected="${pagination.params.type == 'all'}" value="all">전체</option>
+                                    <option th:each="category : ${categoryList}"
+                                            th:value="${category.name}" th:text="${category.name}"
+                                            th:selected="${pagination.params.type == category.name}">
+                                        카테고리
+                                    </option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="list_general">
                         <ul>
-                            <li th:each="faq : ${faqList}">
+                            <li th:each="faq, index : ${faqList}">
                                 <small th:text="${faq.get('category')}">Category</small>
                                 <h4 th:text="${faq.get('title')}">Title</h4>
                                 <p th:text="${faq.get('content')}">FAQ 내용</p>
                                 <ul class="inline-popups buttons">
                                     <li>
-                                        <a th:href="|#modal-edit_${faq.get('id')}|" href="#" class="btn_1 gray">
+                                        <a th:href="|#modal-edit_${index.count}|" href="#" class="btn_1 gray">
                                             <i class="fa fa-fw fa-pencil mr-1"></i>
                                             수정
                                         </a>
                                     </li>
                                     <li>
-                                        <a th:href="|#modal-delete_${faq.get('id')}|" href="#"
+                                        <a th:href="|#modal-delete_${index.count}|" href="#"
                                            class="btn_1 gray delete">
                                             <i class="fa fa-fw fa-trash-o mr-1"></i>
                                             삭제
@@ -59,7 +62,7 @@
                                     </li>
                                 </ul>
                                 <!-- Edit to FAQ popup -->
-                                <div th:id="|modal-edit_${faq.get('id')}|" id="modal-edit"
+                                <div th:id="|modal-edit_${index.count}|" id="modal-edit"
                                      class="white-popup mfp-with-anim mfp-hide">
                                     <form th:action="@{/admin/faq}" th:method="post" th:object="${faqForm}">
                                         <div class="small-dialog-header">
@@ -96,7 +99,7 @@
                                     </form>
                                 </div>
                                 <!-- Delete to FAQ popup -->
-                                <div th:id="|modal-delete_${faq.get('id')}|" id="modal-delete"
+                                <div th:id="|modal-delete_${index.count}|" id="modal-delete"
                                      class="white-popup mfp-with-anim mfp-hide">
                                     <form th:action="@{/admin/faq}" th:method="post" th:object="${faqForm}">
                                         <div class="small-dialog-header">
@@ -124,14 +127,26 @@
                 <!-- /box_general-->
                 <nav aria-label="...">
                     <ul class="pagination pagination-sm add_bottom_30">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1">Previous</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
                         <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
+                            <a th:if="${pagination.showPrevious}"
+                               th:href="@{|?page=${pagination.previousStartPage}&type=${pagination.params.type}|}" class="page-link" href="#"
+                               tabindex="-1">Previous</a>
+                        </li>
+                        <th:block
+                            th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
+                            <li th:if="${i == pagination.params.requestPage}" class="page-item active">
+                                <a th:text="${i}" class="page-link">1</a>
+                            </li>
+                            <li th:if="${i != pagination.params.requestPage && i > 0}" class="page-item">
+                                <a th:href="@{|?page=${i}&type=${pagination.params.type}|}"
+                                   th:text="${i}" class="page-link" href="#">2
+                                </a>
+                            </li>
+                        </th:block>
+                        <li class="page-item">
+                            <a th:if="${pagination.showNext}"
+                               th:href="@{|?page=${pagination.nextStartPage}&type=${pagination.params.type}|}"
+                               class="page-link" href="#">Next</a>
                         </li>
                     </ul>
                 </nav>
@@ -144,6 +159,11 @@
     </th:block>
 
     <th:block th:fragment="scripts">
+        <script th:inline="javascript">
+            document.querySelector('#orderType').addEventListener('change', (event) => {
+                location.href=`?type=${event.target.value}`;
+            })
+        </script>
     </th:block>
 
 </th:block>

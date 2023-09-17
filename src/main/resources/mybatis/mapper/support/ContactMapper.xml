@@ -7,21 +7,63 @@
 
     <insert id="create" parameterType="Contact">
         INSERT INTO CONTACT(ID, EMAIL, NAME, CAFE_NAME, PHONE_NUMBER, ADDRESS, MESSAGE, BUSINESS_NUMBER)
-        VALUES (CONTACT_ID_SEQ.NEXTVAL, #{email}, #{name}, #{cafeName}, #{phoneNumber}, #{address}, #{message}, #{businessNumber})
+        VALUES (CONTACT_ID_SEQ.NEXTVAL, #{email}, #{name}, #{cafeName}, #{phoneNumber}, #{address}, #{message},
+                #{businessNumber})
     </insert>
 
-    <select id="readAll" resultType="Contact">
-        SELECT ID, EMAIL, NAME, CAFE_NAME, PHONE_NUMBER, ADDRESS, MESSAGE, BUSINESS_NUMBER, TO_CHAR(contact_date, 'yyyy-MM-DD') contact_date, STATUS
+    <select id="readCountAll" parameterType="string" resultType="int">
+        SELECT COUNT(ID) "count"
         FROM CONTACT
-        WHERE STATUS = 'hold'
-        ORDER BY contact_date DESC
+        <where>
+            <if test="type != null and type != ''">STATUS = #{type}</if>
+        </where>
+    </select>
+
+    <select id="readAll" parameterType="PageParams" resultType="Contact">
+        SELECT ID,
+               EMAIL,
+               NAME,
+               CAFE_NAME,
+               PHONE_NUMBER,
+               ADDRESS,
+               MESSAGE,
+               BUSINESS_NUMBER,
+               TO_CHAR(CONTACT_DATE, 'yyyy-MM-DD') "contact_date",
+               STATUS
+        FROM (SELECT CEIL(ROWNUM / #{elementSize}) "request_page",
+                     ID,
+                     EMAIL,
+                     NAME,
+                     CAFE_NAME,
+                     PHONE_NUMBER,
+                     ADDRESS,
+                     MESSAGE,
+                     BUSINESS_NUMBER,
+                     CONTACT_DATE,
+                     STATUS
+              FROM (SELECT ID,
+                           EMAIL,
+                           NAME,
+                           CAFE_NAME,
+                           PHONE_NUMBER,
+                           ADDRESS,
+                           MESSAGE,
+                           BUSINESS_NUMBER,
+                           CONTACT_DATE,
+                           STATUS
+                    FROM CONTACT
+                    <where>
+                        <if test="type != null and type != ''">STATUS = #{type}</if>
+                    </where>
+                    ORDER BY CONTACT_DATE))
+        WHERE "request_page" = #{requestPage}
     </select>
 
     <select id="readByMailBNumDate" parameterType="ContactForm" resultType="Contact">
         SELECT ID, EMAIL, NAME, BUSINESS_NUMBER, STATUS
         FROM CONTACT
         WHERE (EMAIL = #{email} or BUSINESS_NUMBER = #{businessNumber})
-              AND (STATUS = 'hold' or STATUS = 'approve')
+          AND (STATUS = 'hold' or STATUS = 'approve')
     </select>
 
     <update id="update">
