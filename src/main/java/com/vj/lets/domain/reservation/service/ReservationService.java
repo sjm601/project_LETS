@@ -73,6 +73,6 @@ public interface ReservationService {
 
     int checkDuplicateReservation(@Param("roomId") int roomId, @Param("bookingDate") String bookingDate, @Param("startTime") int startTime, @Param("endTime") int endTime);
 
-    public List<Map<String, Integer>> checkDuplicateResTime(@Param("roomId") int roomId, @Param("bookingDate") String bookingDate, @Param("startTime") int startTime, @Param("endTime") int endTime);
+    public List<Map<String, Object>> checkDuplicateResTime(@Param("roomId") int roomId,@Param("bookingDate") String bookingDate);
 
 }

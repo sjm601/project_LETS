@@ -3,6 +3,7 @@ $(document).ready(function () {
 
 	$('#deleteList').click(function () {
 		$('tbody').empty();
+
 	});
 });
 
