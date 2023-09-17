@@ -11,10 +11,11 @@
     </insert>
 
     <select id="findAll" parameterType="int">
-        SELECT GML.ID ID, GML.POSITION POSITION, M.NAME NAME, M.AGE, M.GENDER, GML.STUDY_GROUP_ID STUDYGROUPID
+        SELECT GML.ID ID, GML.POSITION POSITION, M.NAME NAME, M.AGE, M.GENDER, GML.STUDY_GROUP_ID STUDYGROUPID, M.ID MEMBERID
         FROM GROUP_MEMBER_LIST GML
             JOIN MEMBER M ON GML.MEMBER_ID = M.ID
         WHERE GML.STUDY_GROUP_ID = #{studyGroupId} AND M.STATUS = 'enabled'
+        ORDER BY GML.POSITION DESC, M.NAME
     </select>
 
     <insert id="add">
@@ -49,7 +50,7 @@
                SGG.NAME           SIGUNGUNAME
         FROM GROUP_MEMBER_LIST GML
                  JOIN STUDY_GROUP SG ON GML.STUDY_GROUP_ID = SG.ID
-                 JOIN SI_GUN_GU sgg ON SG.SI_GUN_GU_ID = SGG.ID
+                 JOIN SI_GUN_GU SGG ON SG.SI_GUN_GU_ID = SGG.ID
         WHERE MEMBER_ID = #{memberId} AND SG.STATUS = 'enabled'
     </select>
 

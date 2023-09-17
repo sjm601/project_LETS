@@ -167,7 +167,7 @@ public class StudyGroupServiceImpl implements StudyGroupService{
         // 스터디 그룹 멤버 리스트에 전달 받은 회원 id 삭제
         groupMemberListMapper.remove(id, studyGroupId);
         // 스터디 그룹 현재 회원 수 1 감소
-        studyGroupMapper.subtract(id);
+        studyGroupMapper.subtract(studyGroupId);
         // 스터디 그룹 히스토리 추가
         groupHistoryMapper.update(studyGroupId);
     }
@@ -216,7 +216,7 @@ public class StudyGroupServiceImpl implements StudyGroupService{
         // 스터디 그룹 멤버 리스트에 전달 받은 회원 id '팀원'으로 추가
         groupMemberListMapper.add(id, studyGroupId);
         // 스터디 그룹 현재 회원 수 1증가
-        studyGroupMapper.add(id);
+        studyGroupMapper.add(studyGroupId);
         // 스터디 그룹 히스토리 추가
         groupHistoryMapper.update(studyGroupId);
     }

@@ -132,215 +132,142 @@
                         </aside>
                         <!-- /사이드 바 -->
 
-                        <!-- 게시글 메인 -->
-                        <div class="col-lg-9">
-                            <!-- 게시글 -->
-                                       <div class="d-flex mb-5 justify-content-between">
-                                          <div class="d-flex">
-                                                <button th:data-bs-target="'#modifyModal_' + ${articleList.id}"
-                                                        data-bs-target="#modifyModal" class="btn btn-warning mx-2" data-bs-toggle="modal"
-                                                        style="font-size: 14px; height: 30px;">수정
-                                                </button>
-                                                <form th:action="@{/article/list/delete}" th:method="post">
-                                                    <input type="hidden" name="id" th:value="${articleList.id}" />
-                                                    <button type="submit" class="btn btn-danger mx-2" style="font-size: 14px; height: 30px;">삭제</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <h1 class="mb-3" th:text="${articleList.title}">주식 스터디</h1>
-                                        <div class="postmeta">
-                                            <p th:text="${articleList.imagePath}"><img alt="" class="img-fluid" src="img/blog-single.jpg"></p>
-                                        </div>
-                                        <!-- /post meta -->
-                                    <div class="post-content">
-                                        <p th:text="${articleList.content}">...내용입니다.</p>
-                                        <div id="comments">
-                                            <hr/>
-                                            <h5>댓글</h5>
-                                            <ul>
-                                                <li>
-                                                    <div class="avatar">
-                                                        <a href="#"><img src="img/avatar1.jpg" alt="">
-                                                        </a>
-                                                    </div>
-                                                    <div class="comment_right clearfix">
-                                                        <div class="comment_info">
-                                                            <span>Anna Smith</span><span>|</span>2023-09-06
-                                                        </div>
-                                                        <p>
-                                                            Nam cursus tellus quis magna porta adipiscing. Donec et eros
-                                                            leo, non pellentesque arcu.
-                                                            Curabitur
-                                                            vitae mi enim, at vestibulum magna.
-                                                        </p>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="avatar">
-                                                        <a href="#"><img src="img/avatar3.jpg" alt="">
-                                                        </a>
-                                                    </div>
-                                                    <div class="comment_right clearfix">
-                                                        <div class="comment_info">
-                                                            <span>Anna Smith</span><span>|</span>2023-09-06
-                                                        </div>
-                                                        <p>
-                                                            Cursus tellus quis magna porta adipiscin
-                                                        </p>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <hr/>
-                                        <h5>댓글 작성</h5>
-                                        <form>
-                                            <div class="form-group">
-                                                <textarea class="form-control" name="comments" id="comments2" rows="6"
-                                                          placeholder="댓글을 작성해주세요" style="height: 100px;"></textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <button type="submit" id="submit2"
-                                                        class="btn_1 rounded add_bottom_30">작성
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <!-- /col -->
-                                </div>
-                                <!-- Modify Modal -->
-                                <div th:id="'modifyModal_' + ${articleList.id}" class="modal fade modal-dialog-scrollable" tabindex="-1" id="modifyModal"
-                                     aria-labelledby="exampleModalLabel"
-                                     aria-hidden="true" style="margin-top: 100px;">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">게시글 수정</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <form th:action="@{/article/list/update}" th:method="post">
-                                                    <div class="modal-body">
-                                                        <!-- 수정 폼 -->
-                                                            <label for="title" class="form-label">제목</label>
-                                                            <input type="hidden" th:name="id" th:value="${articleList.id}" />
-                                                            <input th:name="title" th:id="title" class="form-control mb-2" id="title" name="title" type="text" placeholder="제목" />
-                                                            <label for="content" class="form-label">내용</label>
-                                                            <textarea th:id="content" th:name="content" class="form-control mb-2" name="content" id="content" cols="30" rows="10" placeholder="내용" style="height: 100px;">내용</textarea>
-                                                            <div class="mb-3">
-                                                                <ul class="image-preview"></ul>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label class="form-label" for="modifyImage">사진</label>
-                                                                <input th:id="modifyImage" th:name="modifyImage" type="file" class="real-upload form-control" accept="image/*" id="modifyImage" name="modifyImage"/>
-                                                            </div>
-                                                        <!-- /수정 폼 -->
-                                                    </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-primary">작성</button>
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /Modify Modal -->
+                        <!--                        &lt;!&ndash; 게시글 메인 &ndash;&gt;-->
+                        <!--                        <div class="col-lg-9">-->
+                        <!--                            &lt;!&ndash; 게시글 &ndash;&gt;-->
+                        <!--                            <div class="d-flex mb-5 justify-content-between">-->
+                        <!--                                <div class="d-flex">-->
+                        <!--                                    <button th:data-bs-target="'#modifyModal_' + ${articleList.id}"-->
+                        <!--                                            data-bs-target="#modifyModal" class="btn btn-warning mx-2"-->
+                        <!--                                            data-bs-toggle="modal"-->
+                        <!--                                            style="font-size: 14px; height: 30px;">수정-->
+                        <!--                                    </button>-->
+                        <!--                                    <form th:action="@{/article/list/delete}" th:method="post">-->
+                        <!--                                        <input type="hidden" name="id" th:value="${articleList.id}"/>-->
+                        <!--                                        <button type="submit" class="btn btn-danger mx-2"-->
+                        <!--                                                style="font-size: 14px; height: 30px;">삭제-->
+                        <!--                                        </button>-->
+                        <!--                                    </form>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                            <h1 class="mb-3" th:text="${articleList.title}">주식 스터디</h1>-->
+                        <!--                            <div class="postmeta">-->
+                        <!--                                <p th:text="${articleList.imagePath}"><img alt="" class="img-fluid"-->
+                        <!--                                                                           src="img/blog-single.jpg"></p>-->
+                        <!--                            </div>-->
+                        <!--                            &lt;!&ndash; /post meta &ndash;&gt;-->
+                        <!--                            <div class="post-content">-->
+                        <!--                                <p th:text="${articleList.content}">...내용입니다.</p>-->
+                        <!--                                <div id="comments">-->
+                        <!--                                    <hr/>-->
+                        <!--                                    <h5>댓글</h5>-->
+                        <!--                                    <ul>-->
+                        <!--                                        <li>-->
+                        <!--                                            <div class="avatar">-->
+                        <!--                                                <a href="#"><img src="img/avatar1.jpg" alt="">-->
+                        <!--                                                </a>-->
+                        <!--                                            </div>-->
+                        <!--                                            <div class="comment_right clearfix">-->
+                        <!--                                                <div class="comment_info">-->
+                        <!--                                                    <span>Anna Smith</span><span>|</span>2023-09-06-->
+                        <!--                                                </div>-->
+                        <!--                                                <p>-->
+                        <!--                                                    Nam cursus tellus quis magna porta adipiscing. Donec et eros-->
+                        <!--                                                    leo, non pellentesque arcu.-->
+                        <!--                                                    Curabitur-->
+                        <!--                                                    vitae mi enim, at vestibulum magna.-->
+                        <!--                                                </p>-->
+                        <!--                                            </div>-->
+                        <!--                                        </li>-->
+                        <!--                                        <li>-->
+                        <!--                                            <div class="avatar">-->
+                        <!--                                                <a href="#"><img src="img/avatar3.jpg" alt="">-->
+                        <!--                                                </a>-->
+                        <!--                                            </div>-->
+                        <!--                                            <div class="comment_right clearfix">-->
+                        <!--                                                <div class="comment_info">-->
+                        <!--                                                    <span>Anna Smith</span><span>|</span>2023-09-06-->
+                        <!--                                                </div>-->
+                        <!--                                                <p>-->
+                        <!--                                                    Cursus tellus quis magna porta adipiscin-->
+                        <!--                                                </p>-->
+                        <!--                                            </div>-->
+                        <!--                                        </li>-->
+                        <!--                                    </ul>-->
+                        <!--                                </div>-->
+                        <!--                                <hr/>-->
+                        <!--                                <h5>댓글 작성</h5>-->
+                        <!--                                <form>-->
+                        <!--                                    <div class="form-group">-->
+                        <!--                                                <textarea class="form-control" name="comments" id="comments2" rows="6"-->
+                        <!--                                                          placeholder="댓글을 작성해주세요" style="height: 100px;"></textarea>-->
+                        <!--                                    </div>-->
+                        <!--                                    <div class="form-group">-->
+                        <!--                                        <button type="submit" id="submit2"-->
+                        <!--                                                class="btn_1 rounded add_bottom_30">작성-->
+                        <!--                                        </button>-->
+                        <!--                                    </div>-->
+                        <!--                                </form>-->
+                        <!--                            </div>-->
+                        <!--                            &lt;!&ndash; /col &ndash;&gt;-->
+                        <!--                        </div>-->
+                        <!--                        &lt;!&ndash; Modify Modal &ndash;&gt;-->
+                        <!--                        <div th:id="'modifyModal_' + ${articleList.id}" class="modal fade modal-dialog-scrollable"-->
+                        <!--                             tabindex="-1" id="modifyModal"-->
+                        <!--                             aria-labelledby="exampleModalLabel"-->
+                        <!--                             aria-hidden="true" style="margin-top: 100px;">-->
+                        <!--                            <div class="modal-dialog">-->
+                        <!--                                <div class="modal-content">-->
+                        <!--                                    <div class="modal-header">-->
+                        <!--                                        <h1 class="modal-title fs-5" id="exampleModalLabel">게시글 수정</h1>-->
+                        <!--                                        <button type="button" class="btn-close" data-bs-dismiss="modal"-->
+                        <!--                                                aria-label="Close"></button>-->
+                        <!--                                    </div>-->
+                        <!--                                    <form th:action="@{/article/list/update}" th:method="post">-->
+                        <!--                                        <div class="modal-body">-->
+                        <!--                                            &lt;!&ndash; 수정 폼 &ndash;&gt;-->
+                        <!--                                            <label for="title" class="form-label">제목</label>-->
+                        <!--                                            <input type="hidden" th:name="id" th:value="${articleList.id}"/>-->
+                        <!--                                            <input th:name="title" th:id="title" class="form-control mb-2" id="title"-->
+                        <!--                                                   name="title" type="text" placeholder="제목"/>-->
+                        <!--                                            <label for="content" class="form-label">내용</label>-->
+                        <!--                                            <textarea th:id="content" th:name="content" class="form-control mb-2"-->
+                        <!--                                                      name="content" id="content" cols="30" rows="10" placeholder="내용"-->
+                        <!--                                                      style="height: 100px;">내용</textarea>-->
+                        <!--                                            <div class="mb-3">-->
+                        <!--                                                <ul class="image-preview"></ul>-->
+                        <!--                                            </div>-->
+                        <!--                                            <div class="mb-3">-->
+                        <!--                                                <label class="form-label" for="modifyImage">사진</label>-->
+                        <!--                                                <input th:id="modifyImage" th:name="modifyImage" type="file"-->
+                        <!--                                                       class="real-upload form-control" accept="image/*"-->
+                        <!--                                                       id="modifyImage" name="modifyImage"/>-->
+                        <!--                                            </div>-->
+                        <!--                                            &lt;!&ndash; /수정 폼 &ndash;&gt;-->
+                        <!--                                        </div>-->
+                        <!--                                        <div class="modal-footer">-->
+                        <!--                                            <button type="submit" class="btn btn-primary">작성</button>-->
+                        <!--                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소-->
+                        <!--                                            </button>-->
+                        <!--                                        </div>-->
+                        <!--                                    </form>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <!--                        &lt;!&ndash; /Modify Modal &ndash;&gt;-->
+                        <!--    </th:block>-->
+                        <!--    &lt;!&ndash; /post &ndash;&gt;-->
+                        <!--    &lt;!&ndash; /single-post &ndash;&gt;-->
+                        <!--    &lt;!&ndash;게시글 페이징 처리&ndash;&gt;-->
+                        <!--    <div>-->
+                        <!--        <ul class="pagination h-100 justify-content-center align-items-center">-->
 
-                            </th:block>
-                            <!-- /post -->
-                            <!-- /single-post -->
-                            <div class="bloglist singlepost isotope-item">
-                                <div class="d-flex mb-5 justify-content-between">
-                                    <div class="d-flex">
-                                        <div>
-                                            <img class="rounded-5" src="/img/avatar1.jpg" alt="">
-                                        </div>
-                                        <div class="ms-3 my-auto">
-                                            <h6>이희영</h6>
-                                            <span class="mb-0">2023-09-06</span>
-                                        </div>
-                                    </div>
-                                    <a class="btn btn-danger my-auto" href="#"
-                                       style="font-size: 14px; height: 30px;">삭제</a>
-                                </div>
-                                <h1 class="mb-3">주식 스터디</h1>
-                                <div class="postmeta">
-                                    <p><img alt="" class="img-fluid" src="/img/blog-single.jpg"></p>
-                                </div>
-                                <!-- /post meta -->
-                                <div class="post-content">
-                                    <p>Aorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                        Ipsum has been the
-                                        industry's standard dummy text ever since the 1500s, when an unknown printer
-                                        took a galley of type
-                                        and scrambled it to make a type specimen book. It has survived not only five
-                                        centuries, but also the
-                                        leap into electronic typesetting, remaining essentially unchanged. It was
-                                        popularised in the 1960s
-                                        with the release of Letraset sheets containing Lorem Ipsum passages, and more
-                                        recently with desktop
-                                        publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                                    <div id="comments">
-                                        <hr/>
-                                        <h5>댓글</h5>
-                                        <ul>
-                                            <li>
-                                                <div class="avatar">
-                                                    <a href="#"><img src="/img/avatar1.jpg" alt="">
-                                                    </a>
-                                                </div>
-                                                <div class="comment_right clearfix">
-                                                    <div class="comment_info">
-                                                        <span>Anna Smith</span><span>|</span>2023-09-06
-                                                    </div>
-                                                    <p>
-                                                        Nam cursus tellus quis magna porta adipiscing. Donec et eros
-                                                        leo, non pellentesque arcu.
-                                                        Curabitur
-                                                        vitae mi enim, at vestibulum magna.
-                                                    </p>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="avatar">
-                                                    <a href="#"><img src="/img/avatar3.jpg" alt="">
-                                                    </a>
-                                                </div>
-                                                <div class="comment_right clearfix">
-                                                    <div class="comment_info">
-                                                        <span>Anna Smith</span><span>|</span>2023-09-06
-                                                    </div>
-                                                    <p>
-                                                        Cursus tellus quis magna porta adipiscin
-                                                    </p>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <hr/>
-                                    <h5>댓글 작성</h5>
-                                    <form>
-                                        <div class="form-group">
-											<textarea class="form-control" name="comments" id="comments2" rows="6"
-                                                      placeholder="댓글을 작성해주세요" style="height: 100px;"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <button type="submit" id="submit2"
-                                                    class="btn_1 rounded add_bottom_30">작성
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <!-- /col -->
-                            </div>
-                            <!-- /post -->
-                            <!-- /single-post -->
-                            <!--게시글 페이징 처리-->
-                            <div>
-                                <ul class="pagination h-100 justify-content-center align-items-center">
+                        <!--        </ul>-->
+                        <!--    </div>-->
+                        <!--    &lt;!&ndash; /게시글 페이징 처리 &ndash;&gt;-->
+                        <!--    </div>-->
 
-                                </ul>
-                            </div>
-                            <!-- /게시글 페이징 처리 -->
-                        </div>
+                        <!--    </div>-->
                         <!-- /게시글 메인 -->
                     </div>
                 </div>
@@ -580,7 +507,7 @@
                             <!-- 스터디 가입 신청 내역 아코디언 -->
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button settingAccordionBtn collapsed" type="button"
+                                    <button th:id="contactListBtn" class="accordion-button settingAccordionBtn collapsed" type="button"
                                             data-bs-toggle="collapse"
                                             data-bs-target="#collapseTwo" aria-expanded="false"
                                             aria-controls="collapseTwo">
@@ -598,20 +525,20 @@
                                                 <th scope="col">성별</th>
                                                 <th scope="col">나이</th>
                                                 <th scope="col">신청일</th>
-                                                <th scope="col">승인</th>
+                                                <th th:text="'승인 / 거절'" scope="col">승인</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody th:id="tbodyContactList">
                                             <!-- 스터디 가입 신청 내역 출력 -->
                                             <!-- List<Map<String, Object>> contactList -->
-                                            <tr th:each="contact, stat : ${contactList}">
-                                                <th th:text="${stat.count}" scope="row">1</th>
-                                                <td th:text="${contact.NAME}">홍길동</td>
-                                                <td th:text="${contact.GENDER}">남자</td>
-                                                <td th:text="${contact.AGE}">20대</td>
-                                                <td th:text="${contact.REGDATE}">2023-09-14</td>
-                                                <td>@mdo</td>
-                                            </tr>
+<!--                                            <tr th:each="contact, stat : ${contactList}">-->
+<!--                                                <th th:text="${stat.count}" scope="row">1</th>-->
+<!--                                                <td th:text="${contact.NAME}">홍길동</td>-->
+<!--                                                <td th:text="${contact.GENDER}">남자</td>-->
+<!--                                                <td th:text="${contact.AGE}">20대</td>-->
+<!--                                                <td th:text="${contact.REGDATE}">2023-09-14</td>-->
+<!--                                                <td>@mdo</td>-->
+<!--                                            </tr>-->
                                             </tbody>
                                         </table>
                                     </div>
@@ -622,7 +549,7 @@
                             <!-- 스터디 멤버 관리 아코디언 -->
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button settingAccordionBtn collapsed" type="button"
+                                    <button th:id="memberListBtn" class="accordion-button settingAccordionBtn collapsed" type="button"
                                             data-bs-toggle="collapse"
                                             data-bs-target="#collapseThree" aria-expanded="false"
                                             aria-controls="collapseThree">
@@ -642,16 +569,16 @@
                                                 <th scope="col">탈퇴</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody th:id="tbodyMemberList">
                                             <!-- 스터디 멤버 출력 -->
                                             <!-- List<Map<String, Object>> memberList -->
-                                            <tr th:each="member, stat : ${memberList}">
-                                                <th th:text="${stat.count}" scope="row">1</th>
-                                                <td th:text="${member.NAME}">홍길동</td>
-                                                <td th:text="${member.GENDER}">남자</td>
-                                                <td th:text="${member.AGE}">20대</td>
-                                                <td>@mdo</td>
-                                            </tr>
+<!--                                            <tr th:each="member : ${memberList}">-->
+<!--                                                <th th:text="${member.ID}" scope="row">1</th>-->
+<!--                                                <td th:text="${member.NAME}">홍길동</td>-->
+<!--                                                <td th:text="${member.GENDER}">남자</td>-->
+<!--                                                <td th:text="${member.AGE}">20대</td>-->
+<!--                                                <td>@mdo</td>-->
+<!--                                            </tr>-->
                                             </tbody>
                                         </table>
                                     </div>
@@ -667,6 +594,7 @@
     </th:block>
 
     <th:block th:fragment="scripts">
+        <script>const studyGroupId = [[${studyGroup['ID']}]]</script>
         <script src="/js/custom/mygroup.js"></script>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script src="/js/custom/address.js"></script>
