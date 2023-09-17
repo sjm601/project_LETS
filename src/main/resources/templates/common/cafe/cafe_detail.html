@@ -396,7 +396,7 @@
                             <form th:action="@{'/cafe/' + ${id}}" action="#" th:method="post">
                             <div class="box_detail booking">
                                 <div class="price">
-                                    <span><span id="selectedRoomPrice">1000</span><small> per 1hour</small></span>
+                                    <span><span id="selectedRoomPrice">Price</span><small> per 1hour</small></span>
                                     <div class="score"><span>Superb<em>30 Reviews</em></span><strong th:text="${#numbers.formatDecimal(cafeRating, 1, 1)}">4.0</strong></div>
                                 </div>
                                 <div class="form-group input-dates scroll-fix">
@@ -409,7 +409,7 @@
                                     <div class="panel-dropdown-content right">
                                         <div class="qtyButtons">
                                             <label>Guests</label>
-                                            <input type="number" id="headCount" name="headCount" value="1"
+                                            <input type="number" id="headCount"  value="1"
                                                    onchange="updateQtyTotal()">
                                         </div>
                                     </div>
@@ -506,34 +506,69 @@
 
         <!-- DATEPICKER  -->
        <script th:inline="javascript">
-            $(function () {
-                $('input[name="bookingDate"]').daterangepicker({
-                    autoUpdateInput: true,
-                    parentEl: '.scroll-fix',
-                    singleDatePicker: true,
-                    autoApply: true,
-                    minDate: new Date(),
-                    showCustomRangeLabel: false,
-                    locale: {
-                        format: 'YYYY-MM-DD'
-                    }
-                }, function (e,start) {
-                    const url = `/cafe/selectDate/${id}`
-                    console.log(`${id}`);
-                    fetch(url).then(response => response.json()).then(data =>{
-                        console.log(1111111111111111111);
-                        // const roomListSelected = document.querySelector('#roomName');
-                        // for (let i = 0; i < data.length; i++) {
-                        //     const option = document.createElement('option');
-                        //     option.innerText=`${data[i].name}`;
-                        //     roomListSelected.appendChild(option);
-                        //     console.log([i].name);
-                        // }
-                    }).catch(error=> alert(error));
+           function updateRoomPrice() {
+               const selectedOption = $('#roomName').find('option:selected');
+               const selectedRoomPrice = selectedOption.data('price');
+               console.log(selectedRoomPrice);
+               const selectedRoomPriceElement = document.querySelector('#selectedRoomPrice');
+               selectedRoomPriceElement.innerText = selectedRoomPrice + '원';
+           }
 
-                });
-            });
+           function updateMaxHeadCount() {
+               const selectedOption = $('#roomName').find('option:selected');
+               const selectedRoomHeadCount = selectedOption.data('headcount');
+               console.log(selectedRoomHeadCount);
+               const selectedRoomHeadCountValue = document.querySelector('#headCount');
+               if (selectedRoomHeadCountValue) { // headCount 엘리먼트가 존재하는지 확인
+                   selectedRoomHeadCountValue.max = selectedRoomHeadCount;
+               }
+           }
+
+           $('input[name="bookingDate"]').daterangepicker({
+               autoUpdateInput: true,
+               parentEl: '.scroll-fix',
+               singleDatePicker: true,
+               autoApply: true,
+               minDate: new Date(),
+               showCustomRangeLabel: false,
+               locale: {
+                   format: 'YYYY-MM-DD'
+               }
+           }, function (e, start) {
+               const url = `/cafe/selectDate/${id}`;
+               console.log(`${id}`);
+               fetch(url)
+                   .then(response => response.json())
+                   .then(data => {
+                       console.log(data);
+                       const roomListSelected = document.querySelector('#roomName');
+                       roomListSelected.innerHTML = '';
+
+                       for (let i = 0; i < data.length; i++) {
+                           const option = document.createElement('option');
+                           option.innerText = `${data[i].name}`;
+                           option.setAttribute('data-price', data[i].price); // 방의 가격 데이터를 저장
+                           option.setAttribute('data-headCount', data[i].headCount); // 방의 수용인원 데이터를 저장
+                           console.log(option);
+                           roomListSelected.appendChild(option);
+                       }
+
+                       // 업데이트된 옵션을 nice-select로 변환
+                       $("#roomName").niceSelect('update');
+
+                       // 선택된 방의 가격을 업데이트
+                       updateRoomPrice();
+                       // 선택된 방의 수용인원 최대값을 업데이트
+                       updateMaxHeadCount();
+                   })
+                   .catch(error => alert(error));
+           });
+
+           // 방이 변경될 때마다 가격 업데이트
+           $('#roomName').on('change', updateRoomPrice);
+           $('#roomName').on('change', updateMaxHeadCount);
         </script>
+
         <script type="text/javascript">
             window.onload = function () {
                 var showAlertParam = new URLSearchParams(window.location.search).get("error");

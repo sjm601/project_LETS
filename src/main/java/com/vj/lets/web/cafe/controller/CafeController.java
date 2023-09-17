@@ -76,6 +76,14 @@ public class CafeController {
         return "common/cafe/cafe_detail";
     }
 
+    /**
+     * 방 정보 및 가격, 예약 가능 시간 동적 출력
+     * @param id
+     * @param model
+     * @author VJ특공대 박상훈
+     * @return json으로 변환된 룸 리스트
+     * @throws JsonProcessingException
+     */
     @RequestMapping("/selectDate/{id}")
     @ResponseBody
     public  String findRoom(@PathVariable int id, Model model) throws JsonProcessingException {
