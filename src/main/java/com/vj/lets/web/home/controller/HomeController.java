@@ -39,7 +39,7 @@ public class HomeController {
         if (loginMember == null) {
             LoginForm loginForm = LoginForm.builder().build();
 
-            if (!rememberEmail.isBlank()) {
+            if (rememberEmail != null) {
                 loginForm.setEmail(rememberEmail);
                 loginForm.setRemember(true);
             }

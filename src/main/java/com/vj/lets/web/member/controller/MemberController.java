@@ -222,17 +222,13 @@ public class MemberController {
                     .build();
 
             if (!imagePath.isEmpty()) {
-                System.out.println("=====================" + imagePath);
                 // 이미지 폴더에 저장
                 // 업로드 이미지 확장자 가져오기
                 String imageExtension = StringUtils.getFilenameExtension(imagePath.getOriginalFilename());
-                System.out.println("=====================" + imageExtension);
                 // 업로드 한 이미지 다운로드 받을 위치 설정
                 StringBuilder imageDir = new StringBuilder();
                 imageDir.append(imageLocation).append(loginMember.getId()).append(".").append(imageExtension);
-                System.out.println("=====================" + imageDir);
                 File uploadDir = new File(imageDir.toString());
-                System.out.println("=====================" + uploadDir);
                 // 폴더 없으면 생성
                 if (!uploadDir.exists()) {
                     uploadDir.mkdirs();
@@ -241,7 +237,6 @@ public class MemberController {
 
                 StringBuilder imagePathDB = new StringBuilder();
                 imagePathDB.append(imageDBPath).append(loginMember.getId()).append(".").append(imageExtension);
-                System.out.println("=====================" + imagePathDB);
                 editMember.setImagePath(imagePathDB.toString());
             }
 

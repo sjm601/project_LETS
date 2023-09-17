@@ -111,6 +111,18 @@ common:
 member:
   imageLocation: C:/ezen-fullstack/workspace/final_project_lets/src/main/resources/static/upload_image/member/
   imageDBPath: /upload_image/member/
+cafe:
+  imageLocation: C:/ezen-fullstack/workspace/final_project_lets/src/main/resources/static/upload_image/cafe/
+  imageDBPath: /upload_image/cafe/
+room:
+  imageLocation: C:/ezen-fullstack/workspace/final_project_lets/src/main/resources/static/upload_image/room/
+  imageDBPath: /upload_image/room/
+group:
+  imageLocation: C:/ezen-fullstack/workspace/final_project_lets/src/main/resources/static/upload_image/group/
+  imageDBPath: /upload_image/group/
+article:
+  imageLocation: C:/ezen-fullstack/workspace/final_project_lets/src/main/resources/static/upload_image/article/
+  imageDBPath: /upload_image/article/
 
   
   
