@@ -1,9 +1,9 @@
-package com.vj.lets.domain.common.web;
+package com.vj.lets.domain.support.dto;
 
 import lombok.*;
 
 /**
- * 공통 사용 성별 객체
+ * FAQ 신규 등록 폼 객체
  *
  * @author VJ특공대 김종원
  * @version 1.0
@@ -15,10 +15,11 @@ import lombok.*;
 @Getter
 @ToString
 @Builder
-public class Gender {
+public class FaqForm {
 
-    String male;
-    String female;
-    String others;
+    int faqId;
+    String title;
+    int category;
+    String content;
 
 }

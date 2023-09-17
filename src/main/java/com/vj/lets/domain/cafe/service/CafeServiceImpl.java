@@ -31,14 +31,7 @@ public class CafeServiceImpl implements CafeService{
     private final CafeHistoryMapper cafeHistoryMapper;
     private final CafeOptionMapper cafeOptionMapper;
     private final CafeOptionListMapper cafeOptionListMapper;
-
-    @Override
-    @Transactional
-    public void register(Cafe cafe){
-        cafeMapper.create(cafe);
-        cafeHistoryMapper.create();
-    }
-
+    
     @Override
     @Transactional
     public void cafeOptionRegister(List<CafeOptionList> cafeOptionLists) {

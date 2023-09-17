@@ -11,18 +11,12 @@ import java.util.Map;
 /**
  * Cafe 관련 비즈니스 로직 처리 및 트랜잭션 관리
  *
- * @author 강소영
+ * @author VJ특공대 강소영
+ * @author VJ특공대 김종원
  * @version 1.0
  * @since 2023-09-08 (금)
  */
 public interface CafeService {
-
-    /**
-     * 카페 등록
-     *
-     * @param cafe 카페
-     */
-    public void register(Cafe cafe);
 
     /**
      * 카페 옵션 등록
@@ -86,7 +80,7 @@ public interface CafeService {
      * 관리자 용 전체 카페 목록 조회
      *
      * @return 카페 목록
-     * @see com.vj.lets.web.cafe.controller.CafeController
+     * @see com.vj.lets.web.dashboard.controller.AdminController
      */
     public List<Map<String, Object>> getCafeListForAdmin();
 
@@ -94,14 +88,15 @@ public interface CafeService {
      * 최근 1년간 월별 신규 카페 수 조회
      *
      * @return 신규 카페 수 목록
+     * @see com.vj.lets.web.dashboard.controller.AdminController
      */
     public List<Map<String, Object>> getCountByRegMonth();
 
     /**
      * 카페 정보 수정
      *
-     * @param cafe 카페
-     * @param comment 정보 변경 사유
+     * @param cafe            카페
+     * @param comment         정보 변경 사유
      * @param cafeOptionLists 카페 옵션 리스트
      */
     public void editCafe(Cafe cafe, String comment, List<CafeOptionList> cafeOptionLists);
@@ -116,7 +111,7 @@ public interface CafeService {
     /**
      * 카페 옵션 리스트 객체 생성
      *
-     * @param cafeId 카페 ID
+     * @param cafeId    카페 ID
      * @param optionIds 카페 옵션 아이디 리스트
      * @return 카페 옵션 리스트 객체
      */

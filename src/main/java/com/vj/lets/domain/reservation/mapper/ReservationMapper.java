@@ -10,6 +10,7 @@ import java.util.Map;
 /**
  * 예약 Mapper 클래스
  * 작성일 (2023-09-07)
+ *
  * @author 박상훈
  */
 @Mapper
@@ -17,6 +18,13 @@ public interface ReservationMapper {
 
     //예약 생성
     public void create(Reservation reservation);
+
+    /**
+     * 예약 취소 시 비활성화
+     *
+     * @param id 예약 ID
+     */
+    public void cancel(int id);
 
 
     // 결제에 필요한 예약 정보 받아오기
@@ -50,11 +58,10 @@ public interface ReservationMapper {
     public int findNowRes(int memberId);
 
     //예약 중복 방지
-    public int checkDuplicateReservation(@Param("roomId") int roomId,@Param("bookingDate") String bookingDate,@Param("startTime") int startTime,@Param("endTime") int endTime);
+    public int checkDuplicateReservation(@Param("roomId") int roomId, @Param("bookingDate") String bookingDate, @Param("startTime") int startTime, @Param("endTime") int endTime);
 
     //예약 중복 방지
-    public List<Map<String, Integer>> checkDuplicateResTime(@Param("roomId") int roomId,@Param("bookingDate") String bookingDate,@Param("startTime") int startTime,@Param("endTime") int endTime);
-
+    public List<Map<String, Integer>> checkDuplicateResTime(@Param("roomId") int roomId, @Param("bookingDate") String bookingDate, @Param("startTime") int startTime, @Param("endTime") int endTime);
 
 
 }

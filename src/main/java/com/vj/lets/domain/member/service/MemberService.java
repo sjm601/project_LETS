@@ -1,6 +1,5 @@
 package com.vj.lets.domain.member.service;
 
-import com.vj.lets.domain.common.web.Month;
 import com.vj.lets.domain.member.dto.EditForm;
 import com.vj.lets.domain.member.dto.Member;
 
@@ -36,6 +35,7 @@ public interface MemberService {
      * 전체 회원 목록 조회
      *
      * @return 회원 목록
+     * @see com.vj.lets.web.dashboard.controller.AdminController
      */
     public List<Member> getMemberList();
 
@@ -51,6 +51,7 @@ public interface MemberService {
      * 최근 1년간 월별 신규 회원 수 조회
      *
      * @return 신규 회원 수 목록
+     * @see com.vj.lets.web.dashboard.controller.AdminController
      */
     public List<Map<String, Object>> getCountByRegMonth();
 
@@ -58,6 +59,7 @@ public interface MemberService {
      * 현재 가입 된 회원 성별 수 조회
      *
      * @return 회원 성별 수 목록
+     * @see com.vj.lets.web.dashboard.controller.AdminController
      */
     public List<Map<String, Object>> getCountByGender();
 
