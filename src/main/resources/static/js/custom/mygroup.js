@@ -1,15 +1,11 @@
 // fetch를 이용해 서버와 통신 후 스터디 그룹 회원 관리하는 javascript (희영)
 
 
+// 모달 닫기 버튼 클릭 시 이벤트 처리
 const closeBtn = document.querySelector('#settingModalCloseBtn');
 const accordionBtns = document.querySelectorAll('.settingAccordionBtn');
 const collapses = document.querySelectorAll('.accordion-collapse');
-const memberListBtn = document.querySelector('#memberListBtn');
-const tbodyMemberList = document.querySelector('#tbodyMemberList');
-const contactListBtn = document.querySelector('#contactListBtn');
-const tbodyContactList = document.querySelector('#tbodyContactList');
 
-// 모달 닫기 버튼 클릭 시 이벤트 처리
 closeBtn.addEventListener('click', e => {
     accordionBtns.forEach(btn => {
         btn.classList.add("collapsed");
@@ -20,17 +16,15 @@ closeBtn.addEventListener('click', e => {
     });
 });
 
+
 // 스터기 그룹 멤버 관리 버튼 클릭 시 이벤트 처리
+const memberListBtn = document.querySelector('#memberListBtn');
+const tbodyMemberList = document.querySelector('#tbodyMemberList');
+
 memberListBtn.addEventListener('click', e => {
     const url = `/group/groupSetting/${studyGroupId}`;
     viewMemberList(url);
 });
-
-// 스터기 그룹 가입 신천 내역 버튼 클릭 시 이벤트 처리
-contactListBtn.addEventListener('click', e => {
-    const url = `/group/contactSetting/${studyGroupId}`;
-    viewContactList(url);
-})
 
 // 스터디 그룹 멤버 관리 화면
 //  fetch를 이용해 서버에서 스터디 그룹 멤버 리스트 호출 후 테이블 완성
@@ -86,6 +80,16 @@ function groupMemberAddRow(data, i) {
              <td><button type="button" class="btn btn-danger memberRemoveBtn" onclick="deleteMember(${data[i].MEMBERID})" style="font-size: 14px;">탈퇴</button></td>`
     }
 }
+
+
+// 스터기 그룹 가입 신청 내역 버튼 클릭 시 이벤트 처리
+const contactListBtn = document.querySelector('#contactListBtn');
+const tbodyContactList = document.querySelector('#tbodyContactList');
+
+contactListBtn.addEventListener('click', e => {
+    const url = `/group/contactSetting/${studyGroupId}`;
+    viewContactList(url);
+});
 
 // 스터디 그룹 가입 신청 내역 화면
 // fetch를 이용해 서버에서 스터디 그룹 가입 신청 내역 리스트 호출 후 테이블 완성
@@ -151,3 +155,47 @@ function contactMember(id, type) {
             });
     }
 }
+
+
+// 스터기 그룹 가입 가입하기 버튼 클릭 시 이벤트 처리
+const contactSubmitBtn = document.querySelector('#contactSubmit');
+const inputName = document.querySelector('#name');
+const selectGender = document.querySelector('#gender');
+const inputAge = document.querySelector('#age');
+
+contactSubmitBtn.addEventListener('click', e => {
+    const url = `/group/join/${studyGroupId}`;
+
+    const obj = {
+        name: inputName.value,
+        gender: selectGender.options[selectGender.selectedIndex].value,
+        age: inputAge.value
+    }
+
+    console.log(obj);
+
+    if (obj.name === null || obj.gender === null || obj.age < 1) {
+        alert("항목을 모두 입력해주세요.");
+    } else {
+        if (!confirm("스터디에 가입 하시겠습니까?")) return;
+
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(obj),
+        }).then(response => response.text())
+            .then(msg => {
+                if (msg === 'contact-success') {
+                    alert("스터디 가입 신청이 완료되었습니다.");
+                } else {
+                    alert("이미 가입 신청한 스터디 입니다.");
+                }
+            });
+    }
+});
+
+// 스터디 그룹 가입 신청
+// fetch를 이용해 서버에서 이미 가입 신청 내역이 있는지 확인 후 가입 신청 완료
+

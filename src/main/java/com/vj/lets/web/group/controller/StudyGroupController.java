@@ -13,6 +13,7 @@ import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -170,7 +171,7 @@ public class StudyGroupController {
      * @author VJ특공대 이희영
      */
     @ResponseBody
-    @PutMapping("memberContact/{studyGroupId}/{id}")
+    @PutMapping("/memberContact/{studyGroupId}/{id}")
     public String groupContactApprove(@PathVariable int studyGroupId, @PathVariable int id) {
         studyGroupService.approveStudyContact(id, studyGroupId);
         GroupMemberList groupMemberList = studyGroupService.isGroupMember(id, studyGroupId);
@@ -191,7 +192,7 @@ public class StudyGroupController {
      * @author VJ특공대 이희영
      */
     @ResponseBody
-    @DeleteMapping("memberContact/{studyGroupId}/{id}")
+    @DeleteMapping("/memberContact/{studyGroupId}/{id}")
     public String groupContactRefuse(@PathVariable int studyGroupId, @PathVariable int id) {
         studyGroupService.refuseStudyContact(id, studyGroupId);
         GroupMemberList groupMemberList = studyGroupService.isGroupMember(id, studyGroupId);
@@ -293,15 +294,27 @@ public class StudyGroupController {
      * @return 스터디 그룹 상세 화면
      * @author VJ특공대 이희영
      */
+    @ResponseBody
     @PostMapping("/join/{id}")
-    public String joinGroup(@PathVariable int id, @SessionAttribute Member loginMember, HttpServletResponse response) {
+    @Transactional
+    public String joinGroup(@PathVariable int id, @SessionAttribute Member loginMember, @RequestBody String contact) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        ContactInfo contactInfo = objectMapper.readValue(contact, ContactInfo.class);
+        Member member = memberService.getMember(loginMember.getId());
+
+        if (member.getGender() == null || member.getAge() == 0) {
+            member.setGender(contactInfo.getGender());
+            member.setAge(contactInfo.getAge());
+            memberService.editMember(member);
+        }
+
         GroupContact groupContact = studyGroupService.contactStudy(loginMember.getId(), id);
 
         if (groupContact == null) {
-            // fetch 통신 해야 함
-            return new StringBuilder().append("/group/").append(id).toString();
+            return "contact-success";
         } else {
-            return "redirect:/group/{id}";
+            return "contact-failure";
         }
     }
 
