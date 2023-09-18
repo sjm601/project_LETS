@@ -43,7 +43,7 @@
                     </div>
                     <div class="list_general">
                         <ul>
-                            <li th:each="reservation, index : ${reservationList}">
+                            <li th:each="reservation, index : ${reservationList}" class="reservations">
                                 <figure><img src="/dashboard/img/item_2.jpg" alt=""></figure>
                                 <h4>
                                     <th:block th:text="${reservation.get('cafeName')}"></th:block>
@@ -87,7 +87,7 @@
                                 <th:block th:if="${reservation.get('reservationStatus') == 'complete'}">
                                     <ul class="buttons inline-popups">
                                         <li>
-                                            <a th:href="|#modal-cancel_${index.count}|" href="#"
+                                            <a th:href="|#modal_cancel_${index.count}|" href="#"
                                                class="btn_1 gray delete">
                                                 <i class="fa fa-fw fa-times-circle-o mr-1"></i>
                                                 예약 취소
@@ -95,27 +95,22 @@
                                         </li>
                                     </ul>
                                     <!-- reservation to delete popup -->
-                                    <div th:id="|modal-cancel_${index.count}|" id="modal-delete"
-                                         class="white-popup mfp-with-anim mfp-hide">
-                                        <form th:action="@{/mypage/reservation}" th:method="post">
-                                            <div class="small-dialog-header">
-                                                <h3>예약 취소</h3>
+                                    <div th:id="|modal_cancel_${index.count}|" id="modal_cancel"
+                                         class="white-popup mfp-with-anim mfp-hide modal_cancel">
+                                        <div class="small-dialog-header">
+                                            <h3>예약 취소</h3>
+                                        </div>
+                                        <div class="row justify-content-center message-reply margin-top-0">
+                                            <div class="col-8 align-self-center">
+                                                <p class="m-0">정말로 해당 예약를 취소하시겠습니까</p>
                                             </div>
-                                            <div class="row justify-content-center message-reply margin-top-0">
-                                                <div class="col-8 align-self-center">
-                                                    <p class="m-0">정말로 해당 예약를 취소하시겠습니까</p>
-                                                </div>
-                                                <input th:name="reservationId" th:value="${reservation.get('id')}"
-                                                       readonly hidden>
-                                                <div class="col-auto align-self-center">
-                                                    <button th:name="requestType" th:value="cancel" type="submit"
-                                                            class="btn_1 gray delete">
-                                                        <i class="fa fa-fw fa-times-circle-o mr-1"></i>
-                                                        예약 취소
-                                                    </button>
-                                                </div>
+                                            <div class="col-auto align-self-center">
+                                                <button class="btn_1 gray delete cancel_btn">
+                                                    <i class="fa fa-fw fa-times-circle-o mr-1"></i>
+                                                    예약 취소
+                                                </button>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </th:block>
 
@@ -123,22 +118,22 @@
                                 <th:block
                                     th:if="${reservation.get('reservationStatus') == 'use' && reservation.get('reviewBoolean') == 'false'}">
                                     <p class="inline-popups">
-                                        <a th:href="|#modal-register_${index.count}|" href="#modal-reply"
+                                        <a th:href="|#modal_review_${index.count}|" href="#modal_review"
                                            data-effect="mfp-zoom-in" class="btn_1 gray">
                                             <i class="fa fa-fw fa-pencil mr-1"></i>
                                             리뷰 작성
                                         </a>
                                     </p>
                                     <!-- register to review popup -->
-                                    <div th:id="|modal-register_${index.count}|" id="modal-register"
-                                         class="white-popup mfp-with-anim mfp-hide">
-                                        <form th:action="@{/mypage/reservation}" th:method="post"
-                                              th:object="${reviewForm}">
-                                            <div class="small-dialog-header">
-                                                <h3>리뷰 작성</h3>
-                                            </div>
-                                            <div>
-                                                <div class="form-group">
+                                    <div th:id="|modal_review_${index.count}|" id="modal_review"
+                                         class="white-popup mfp-with-anim mfp-hide modal_review">
+                                        <div class="small-dialog-header">
+                                            <h3>리뷰 작성</h3>
+                                        </div>
+                                        <div>
+                                            <div class="form-group">
+                                                <label for="rating">별점</label>
+                                                <div class="styled-select">
                                                     <select id="rating" name="rating" required>
                                                         <option th:value="1">1</option>
                                                         <option th:value="2">2</option>
@@ -148,20 +143,18 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="message-reply margin-top-0">
-                                                <div class="form-group">
-                                                <textarea th:field="*{content}"
+                                        </div>
+                                        <div class="message-reply margin-top-0">
+                                            <div class="form-group">
+                                                <label for="content">내용</label>
+                                                <textarea id="content" name="content"
                                                           cols="40" rows="3" class="form-control" required></textarea>
-                                                </div>
-                                                <input th:name="reservationId" th:value="${reservation.get('id')}"
-                                                       readonly hidden>
-                                                <button th:name="requestType" th:value="review" type="submit"
-                                                        class="btn_1">
-                                                    <i class="fa fa-fw fa-pencil mr-1"></i>
-                                                    리뷰 작성
-                                                </button>
                                             </div>
-                                        </form>
+                                            <button class="btn_1 review_btn">
+                                                <i class="fa fa-fw fa-pencil mr-1"></i>
+                                                리뷰 작성
+                                            </button>
+                                        </div>
                                     </div>
                                 </th:block>
 
@@ -211,8 +204,69 @@
 
     <th:block th:fragment="scripts">
         <script th:inline="javascript">
+            const reservationList = [[${reservationList}]];
+            const url = "/mypage/reservation";
+
             document.querySelector('#orderType').addEventListener('change', (event) => {
                 location.href = `?type=${event.target.value}`;
+            })
+        </script>
+
+        <script th:inline="javascript">
+            const reservations = document.querySelectorAll("li.reservations");
+            reservations.forEach((e, i) => {
+                const cancelBtn = e.querySelector("button.cancel_btn");
+                const reviewBtn = e.querySelector("button.review_btn");
+                const rating = e.querySelector("select#rating");
+                const content = e.querySelector("textarea#content");
+
+                cancelBtn.addEventListener('click', event => {
+                    event.preventDefault();
+                    let reservationId = reservationList[i].id;
+
+                    fetch(url, {
+                        method: 'DELETE',
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(reservationId),
+                    }).then(response => {
+                        return response.text();
+                    }).then(message => {
+                        if (message === "success") {
+                            alert("예약 취소가 완료되었습니다.");
+                            location.href = url;
+                        }
+                    }).catch(error => {
+                        alert(error);
+                    })
+                })
+
+                reviewBtn.addEventListener('click', event => {
+                    event.preventDefault();
+                    const reviewForm = {
+                        reservationId: reservationList[i].id,
+                        rating: rating.value,
+                        content: content.value
+                    }
+
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(reviewForm),
+                    }).then(response => {
+                        return response.text();
+                    }).then(message => {
+                        if (message === "success") {
+                            alert("리뷰 작성이 완료되었습니다.");
+                            location.href = url;
+                        }
+                    }).catch(error => {
+                        alert(error);
+                    })
+                })
             })
         </script>
     </th:block>

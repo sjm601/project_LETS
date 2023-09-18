@@ -43,7 +43,8 @@ public class MypageController {
     /**
      * 마이페이지 메인 화면 출력
      *
-     * @param model 모델 객체
+     * @param request 서블릿 리퀘스트 객체
+     * @param model   모델 객체
      * @return 논리적 뷰 이름
      */
     @GetMapping("")
@@ -63,6 +64,8 @@ public class MypageController {
     /**
      * 예약 확인 및 리뷰 작성 화면 출력
      *
+     * @param page    선택된 페이지
+     * @param type    검색 타입
      * @param request 서블릿 리퀘스트 객체
      * @param model   모델 객체
      * @return 논리적 뷰 이름
@@ -104,38 +107,46 @@ public class MypageController {
     }
 
     /**
-     * 예약 취소 및 리뷰 작성 기능
+     * 예약 취소 기능
      *
-     * @param requestType   요청 종류
      * @param reservationId 예약 ID
-     * @param reviewForm    리뷰 작성 폼 객체
      * @param model         모델 객체
-     * @return 논리적 뷰 이름
+     * @return 성공시 반환 값
+     */
+    @DeleteMapping("/reservation")
+    @ResponseBody
+    public Object cancelReservation(@RequestBody int reservationId, Model model) {
+        reservationService.cancelReservation(reservationId);
+
+        return "success";
+    }
+
+    /**
+     * 리뷰 작성 기능
+     *
+     * @param reviewForm 리뷰 폼 객체
+     * @param model      모델 객체
+     * @return 성공 시 반환 값
      */
     @PostMapping("/reservation")
-    public String cancleReservation(@RequestParam("requestType") String requestType,
-                                    @RequestParam("reservationId") int reservationId,
-                                    @ModelAttribute ReviewForm reviewForm,
-                                    Model model) {
+    @ResponseBody
+    public Object reviewRegist(@RequestBody ReviewForm reviewForm, Model model) {
+        Review review = Review.builder()
+                .content(reviewForm.getContent())
+                .rating(reviewForm.getRating())
+                .reservationId(reviewForm.getReservationId())
+                .build();
 
-        if (requestType.equals("review")) {
-            Review review = Review.builder()
-                    .content(reviewForm.getContent())
-                    .rating(reviewForm.getRating())
-                    .reservationId(reviewForm.getReservationId())
-                    .build();
+        reviewService.register(review);
 
-            reviewService.register(review);
-        } else if (requestType.equals("cancel")) {
-            reservationService.cancelReservation(reservationId);
-        }
-
-        return "redirect:/mypage/reservation";
+        return "success";
     }
 
     /**
      * 리뷰 확인 화면 출력
      *
+     * @param page    선택된 페이지
+     * @param type    검색 타입
      * @param request 서블릿 리퀘스트 객체
      * @param model   모델 객체
      * @return 논리적 뷰 이름
@@ -177,43 +188,15 @@ public class MypageController {
     }
 
     /**
-     * 리뷰 수정 및 삭제 기능
-     *
-     * @param reviewRequest 리뷰 관련 요청 종류
-     * @param reviewForm    리뷰 폼 객체
-     * @param model         모델 객체
-     * @return 논리적 뷰 이름
-     */
-    @PostMapping("/review")
-    public String reviewEditAndRemove(@RequestParam("reviewRequest") String reviewRequest,
-                                      @ModelAttribute ReviewForm reviewForm, Model model) {
-        if (reviewRequest.equals("edit")) {
-            Review review = Review.builder()
-                    .id(reviewForm.getReviewId())
-                    .content(reviewForm.getContent())
-                    .rating(reviewForm.getRating())
-                    .build();
-
-            reviewService.editReview(review);
-        } else if (reviewRequest.equals("remove")) {
-            reviewService.removeReview(reviewForm.getReviewId());
-        }
-
-        return "redirect:/mypage/review";
-    }
-
-    /**
      * 리뷰 수정 기능
      *
-     * @param reviewRequest 리뷰 관련 요청 종류
-     * @param reviewForm    리뷰 폼 객체
-     * @param model         모델 객체
-     * @return 논리적 뷰 이름
+     * @param reviewForm 리뷰 폼 객체
+     * @param model      모델 객체
+     * @return 성공 시 반환 값
      */
     @PutMapping("/review")
     @ResponseBody
-    public Object reviewEdit(@RequestParam("reviewRequest") String reviewRequest,
-                             @ModelAttribute ReviewForm reviewForm, Model model) {
+    public Object reviewEdit(@RequestBody ReviewForm reviewForm, Model model) {
 
         Review review = Review.builder()
                 .id(reviewForm.getReviewId())
@@ -222,6 +205,21 @@ public class MypageController {
                 .build();
 
         reviewService.editReview(review);
+
+        return "success";
+    }
+
+    /**
+     * 리뷰 삭제 기능
+     *
+     * @param reviewId 리뷰 ID
+     * @param model    모델 객체
+     * @return 성공 시 반환 값
+     */
+    @DeleteMapping("/review")
+    @ResponseBody
+    public Object removeEdit(@RequestBody int reviewId, Model model) {
+        reviewService.removeReview(reviewId);
 
         return "success";
     }
