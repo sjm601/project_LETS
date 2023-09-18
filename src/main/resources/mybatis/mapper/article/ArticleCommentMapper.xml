@@ -7,8 +7,8 @@
 
     <!-- 댓글 생성 -->
     <insert id="create" parameterType="ArticleComment">
-        INSERT INTO article_comment (id, content, ARTICLE_ID, MEMBER_ID)
-        VALUES (article_history_id_seq.NEXTVAL, #{content}, #{articleId}, #{memberId});
+        INSERT INTO ARTICLE_COMMENT (id, ARTICLE_ID, CONTENT, MEMBER_ID)
+        VALUES (ARTICLE_COMMENT_ID_SEQ.NEXTVAL, #{articleId}, #{content}, #{memberId})
     </insert>
 
     <!-- 댓글 삭제 -->
@@ -18,19 +18,13 @@
         WHERE ID = #{id}
     </update>
 
-    <!--해당 게시글의 댓글 목록-->
-    <select id="findCommentAll" resultType="ArticleComment" >
-        SELECT
-            ac.id,
-            ac.content,
-            TO_CHAR(ac.regdate, 'YYYY-MM-DD HH24:MI') regdate,
-            a.id AS article_Id,
-            m.id AS member_Id
-        FROM ARTICLE_COMMENT ac
-        JOIN article a ON ac.ARTICLE_ID= a.ID
-        JOIN member m ON a.MEMBER_ID = m.ID
-        WHERE a.ID = #{Id, jdbcType=NULL} AND ac.STATUS='enabled'
-        ORDER BY ac.REGDATE DESC
+    <!-- 댓글 삭제를 위한 댓글 찾기-->
+    <select id="findById" parameterType="int" resultType="ArticleComment">
+        SELECT ID,
+               REGDATE,
+               content
+        FROM ARTICLE_COMMENT
+        WHERE id = #{id}
     </select>
 
 </mapper>
