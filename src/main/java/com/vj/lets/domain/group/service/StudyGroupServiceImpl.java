@@ -1,5 +1,6 @@
 package com.vj.lets.domain.group.service;
 
+import com.vj.lets.domain.group.dto.GroupContact;
 import com.vj.lets.domain.group.dto.GroupMemberList;
 import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
@@ -179,8 +180,16 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @param studyGroupId 스터디 그룹 아이디
      */
     @Override
-    public void contactStudy(int id, int studyGroupId) {
-        groupContactMapper.contactGroup(id, studyGroupId);
+    @Transactional
+    public GroupContact contactStudy(int id, int studyGroupId) {
+        GroupContact groupContact = null;
+
+        groupContact = groupContactMapper.isAlreadyContact(id, studyGroupId);
+        if (groupContact == null) {
+            groupContactMapper.contactGroup(id, studyGroupId);
+        }
+
+        return groupContact;
     }
 
     /**

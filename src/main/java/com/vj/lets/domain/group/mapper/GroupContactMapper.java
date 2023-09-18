@@ -1,5 +1,6 @@
 package com.vj.lets.domain.group.mapper;
 
+import com.vj.lets.domain.group.dto.GroupContact;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -59,4 +60,13 @@ public interface GroupContactMapper {
      * @param studyGroupId 스터디 그룹 아이디
      */
     public void deleteContact(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
+
+    /**
+     * 스터디 가입 신청 내역 존재 여부 확인
+     *
+     * @author VJ특공대 이희영
+     * @param id 회원 아이디
+     * @param studyGroupId 스터디 그룹 아이디
+     */
+    public GroupContact isAlreadyContact(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
 }

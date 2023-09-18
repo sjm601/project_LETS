@@ -95,4 +95,19 @@ class GroupContactMapperTest {
         // then
         log.info("가입 신청 삭제");
     }
+
+    @Test
+    @Transactional
+    void isAlreadyContactTest() {
+        // given
+        int id = 30;
+        int studyGroupId = 1;
+
+        // when
+        GroupContact groupContact = groupContactMapper.isAlreadyContact(id, studyGroupId);
+
+        // then
+        log.info("스터디 가입 신청 내역 존재 여부 확인 : {}", groupContact);
+        assertThat(groupContact).isNull();
+    }
 }

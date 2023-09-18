@@ -158,10 +158,11 @@ class StudyGroupServiceTest {
         int studyGroupId = 1;
 
         // when
-        studyGroupService.contactStudy(id, studyGroupId);
+        GroupContact groupContact = studyGroupService.contactStudy(id, studyGroupId);
 
         // then
-        log.info("스터디 가입 신청");
+        log.info("스터디 가입 신청 내역 존재 여부 확인 : {}", groupContact);
+        assertThat(groupContact).isNull();
     }
 
     @Test
@@ -203,7 +204,7 @@ class StudyGroupServiceTest {
         studyGroupService.refuseStudyContact(id, studyGroupId);
 
         // then
-        log.info("스터디 가입 승인");
+        log.info("스터디 가입 거절");
     }
 
     @Test

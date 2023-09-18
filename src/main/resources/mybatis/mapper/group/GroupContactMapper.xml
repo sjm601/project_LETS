@@ -10,6 +10,12 @@
         VALUES (GROUP_CONTACT_ID_SEQ.NEXTVAL, #{id}, #{studyGroupId})
     </insert>
 
+    <select id="isAlreadyContact" resultType="GroupContact">
+        SELECT ID
+        FROM GROUP_CONTACT
+        WHERE MEMBER_ID = #{id} AND STUDY_GROUP_ID = #{studyGroupId}
+    </select>
+
     <select id="findAllGroupContactList" parameterType="int">
         SELECT GC.ID ID, TO_CHAR(GC.REGDATE, 'yyyy-MM-dd') REGDATE, M.NAME NAME, M.GENDER GENDER, M.AGE AGE, M.ID MEMBERID
         FROM GROUP_CONTACT GC

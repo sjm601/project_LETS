@@ -1,5 +1,6 @@
 package com.vj.lets.domain.group.service;
 
+import com.vj.lets.domain.group.dto.GroupContact;
 import com.vj.lets.domain.group.dto.GroupMemberList;
 import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
@@ -94,7 +95,7 @@ public interface StudyGroupService {
      * @param id 회원 아이디
      * @param studyGroupId 스터디 그룹 아이디
      */
-    public void contactStudy(int id, int studyGroupId);
+    public GroupContact contactStudy(int id, int studyGroupId);
 
     /**
      * 스터디 그룹 가입 신청 리스트 조회

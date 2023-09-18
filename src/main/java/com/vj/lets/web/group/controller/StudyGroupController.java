@@ -8,6 +8,7 @@ import com.vj.lets.domain.location.dto.SiGunGu;
 import com.vj.lets.domain.location.service.SiGunGuService;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.service.MemberService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -38,11 +40,11 @@ public class StudyGroupController {
     /**
      * 스터디 전체 리스트 화면 출력
      *
-     * @author VJ특공대 이희영
      * @param keyword 검색 키워드
      * @param subject 검색 주제
-     * @param model 모델 인터페이스
+     * @param model   모델 인터페이스
      * @return 스터디 리스트 화면
+     * @author VJ특공대 이희영
      */
     @GetMapping("")
     public String studyGroup(@PathParam("keyword") String keyword, @PathParam("subject") String subject, Model model) {
@@ -72,11 +74,11 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 상세보기
      *
-     * @author VJ특공대 이희영
      * @param id          스터디 그룹 아이디
      * @param loginMember 로그인 회원 정보
-     * @param model 모델 인터페이스
+     * @param model       모델 인터페이스
      * @return 스터디 그룹 상세
+     * @author VJ특공대 이희영
      */
     @GetMapping("/{id}")
     public String readGroup(@PathVariable int id, @SessionAttribute Member loginMember, Model model) {
@@ -105,15 +107,15 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 멤버 관리 화면 출력
      *
-     * @author VJ특공대 이희영
      * @param id 스터디 그룹 아이디
      * @return 스터디 그룹 회원 리스트
      * @throws JsonProcessingException Json 데이터 예외
+     * @author VJ특공대 이희영
      */
     @ResponseBody
     @RequestMapping("/groupSetting/{id}")
     public String groupMemberModal(@PathVariable int id) throws JsonProcessingException {
-        ObjectMapper objectMapper= new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper();
 
         List<Map<String, Object>> memberList = studyGroupService.getStudyMemberList(id);
 
@@ -123,10 +125,10 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 멤버 탈퇴
      *
-     * @author VJ특공대 이희영
-     * @param id 스터디 그룹 아이디
+     * @param id       스터디 그룹 아이디
      * @param memberId 회원 아이디
      * @return 탈퇴 성공 유무
+     * @author VJ특공대 이희영
      */
     @ResponseBody
     @DeleteMapping("/{id}/{memberId}")
@@ -144,15 +146,15 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 신청 내역 화면 출력
      *
-     * @author VJ특공대 이희영
      * @param id 스터디 그룹 아이디
      * @return 스터디 그룹 가입 신청 리스트
      * @throws JsonProcessingException Json 데이터 예외
+     * @author VJ특공대 이희영
      */
     @ResponseBody
     @RequestMapping("/contactSetting/{id}")
     public String groupContactModal(@PathVariable int id) throws JsonProcessingException {
-        ObjectMapper objectMapper= new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper();
 
         List<Map<String, Object>> contactList = studyGroupService.getStudyContactList(id);
 
@@ -162,10 +164,10 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 가입 신청 승인
      *
-     * @author VJ특공대 이희영
      * @param studyGroupId 스터디 그룹 아이디
-     * @param id 회원 아이디
+     * @param id           회원 아이디
      * @return 가입 승인 성공 / 실패 메세지
+     * @author VJ특공대 이희영
      */
     @ResponseBody
     @PutMapping("memberContact/{studyGroupId}/{id}")
@@ -183,10 +185,10 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 가입 신청 거절
      *
-     * @author VJ특공대 이희영
      * @param studyGroupId 스터디 그룹 아이디
-     * @param id 회원 아이디
+     * @param id           회원 아이디
      * @return 가입 거절 성공 / 실패 메세지
+     * @author VJ특공대 이희영
      */
     @ResponseBody
     @DeleteMapping("memberContact/{studyGroupId}/{id}")
@@ -204,9 +206,9 @@ public class StudyGroupController {
     /**
      * 내 스터디 리스트 조회 화면
      *
-     * @author VJ특공대 이희영
      * @param model 모델 인터페이스
      * @return 가입한 스터디 그룹 리스트
+     * @author VJ특공대 이희영
      */
     @GetMapping("/mygroup")
     public String myGroup(@SessionAttribute Member loginMember, Model model) {
@@ -220,9 +222,9 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 생성
      *
-     * @author VJ특공대 이희영
      * @param loginMember 로그인 회원 정보
      * @return 스터디 그룹 상세
+     * @author VJ특공대 이희영
      */
     @PostMapping("/create")
     public String createGroup(@ModelAttribute CreateForm createForm, @SessionAttribute Member loginMember) {
@@ -243,10 +245,10 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 정보 수정
      *
-     * @author VJ특공대 이희영
      * @param createForm 정보 수정 Form에서 입력된 객체
      * @param id         스터디 그룹 아이디
      * @return 스터디 그룹 상세 화면
+     * @author VJ특공대 이희영
      */
     @PostMapping("/update/{id}")
     public String updateGroup(@ModelAttribute CreateForm createForm, @PathVariable int id) {
@@ -272,9 +274,9 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 삭제
      *
-     * @author VJ특공대 이희영
-     * @param id    스터디 그룹 아이디
+     * @param id 스터디 그룹 아이디
      * @return 내 스터디 그룹 리스트 화면
+     * @author VJ특공대 이희영
      */
     @PostMapping("/delete/{id}")
     public String deleteGroup(@PathVariable int id) {
@@ -286,24 +288,29 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 가입
      *
-     * @author VJ특공대 이희영
      * @param id          스터디 그룹 아이디
      * @param loginMember 로그인 멤버
      * @return 스터디 그룹 상세 화면
+     * @author VJ특공대 이희영
      */
     @PostMapping("/join/{id}")
-    public String joinGroup(@PathVariable int id, @SessionAttribute Member loginMember) {
-        studyGroupService.contactStudy(loginMember.getId(), id);
+    public String joinGroup(@PathVariable int id, @SessionAttribute Member loginMember, HttpServletResponse response) {
+        GroupContact groupContact = studyGroupService.contactStudy(loginMember.getId(), id);
 
-        return "redirect:/group/{id}";
+        if (groupContact == null) {
+            // fetch 통신 해야 함
+            return new StringBuilder().append("/group/").append(id).toString();
+        } else {
+            return "redirect:/group/{id}";
+        }
     }
 
     /**
      * 스터디 그룹 생성 및 수정 기능에서 사용할 스터디 그룹 주제 변환 기능
      *
-     * @author VJ특공대 이희영
      * @param selectedSubject Form에서 선택된 스터디 그룹 주제 옵션
      * @return DB에 입력될 스터디 그룹 주제
+     * @author VJ특공대 이희영
      */
     private String subjectChange(String selectedSubject) {
         selectedSubject = switch (selectedSubject) {
@@ -318,6 +325,7 @@ public class StudyGroupController {
             case "study" -> "공부";
             default -> "기타";
         };
+
         return selectedSubject;
     }
 }
