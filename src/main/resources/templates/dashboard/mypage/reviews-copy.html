@@ -83,59 +83,62 @@
                                 </p>
                                 <!-- Edit to review popup -->
                                 <div th:id="|modal-edit_${index.count}|" id="modal-edit"
-                                     class="white-popup mfp-with-anim mfp-hide modal-edit">
-                                    <!--                                    <form th:action="@{/mypage/review}" th:method="post" th:object="${reviewForm}">-->
-                                    <div class="small-dialog-header">
-                                        <h3>리뷰 수정</h3>
-                                    </div>
-                                    <div class="form-group">
-                                        <label th:for="rating">별점</label>
-                                        <div class="styled-select">
-                                            <select th:id="rating" th:name="rating" required>
-                                                <option th:value="1" th:selected="${review.get('rating') == 1}">1
-                                                </option>
-                                                <option th:value="2" th:selected="${review.get('rating') == 2}">2
-                                                </option>
-                                                <option th:value="3" th:selected="${review.get('rating') == 3}">3
-                                                </option>
-                                                <option th:value="4" th:selected="${review.get('rating') == 4}">4
-                                                </option>
-                                                <option th:value="5" th:selected="${review.get('rating') == 5}">5
-                                                </option>
-                                            </select>
+                                     class="white-popup mfp-with-anim mfp-hide">
+                                    <form th:action="@{/mypage/review}" th:method="post" th:object="${reviewForm}">
+                                        <div class="small-dialog-header">
+                                            <h3>리뷰 수정</h3>
                                         </div>
-                                    </div>
-                                    <div class="form-group message-reply margin-top-0">
-                                        <label th:for="content">내용</label>
-                                        <textarea th:id="content" th:name="content"
-                                                  th:text="${review.get('content')}"
-                                                  cols="40" rows="3" class="form-control"></textarea>
-                                    </div>
-                                    <button type="submit" class="btn_1 edit-btn">
-                                        <i class="fa fa-fw fa-pencil mr-1"></i>
-                                        리뷰 수정
-                                    </button>
-                                    <!--                                    </form>-->
+                                        <div class="form-group">
+                                            <label th:for="rating">별점</label>
+                                            <div class="styled-select">
+                                                <select id="rating" name="rating" required>
+                                                    <option th:value="1" th:selected="${review.get('rating') == 1}">1
+                                                    </option>
+                                                    <option th:value="2" th:selected="${review.get('rating') == 2}">2
+                                                    </option>
+                                                    <option th:value="3" th:selected="${review.get('rating') == 3}">3
+                                                    </option>
+                                                    <option th:value="4" th:selected="${review.get('rating') == 4}">4
+                                                    </option>
+                                                    <option th:value="5" th:selected="${review.get('rating') == 5}">5
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group message-reply margin-top-0">
+                                            <label th:for="content">내용</label>
+                                            <textarea th:id="content" th:name="content"
+                                                      th:text="${review.get('content')}"
+                                                      cols="40" rows="3" class="form-control"></textarea>
+                                        </div>
+                                        <input th:name="reviewId" th:value="${review.get('id')}" readonly hidden>
+                                        <button th:name="reviewRequest" th:value="edit" type="submit" class="btn_1">
+                                            <i class="fa fa-fw fa-pencil mr-1"></i>
+                                            리뷰 수정
+                                        </button>
+                                    </form>
                                 </div>
                                 <!-- delete to review popup -->
                                 <div th:id="|modal-delete_${index.count}|" id="modal-delete"
-                                     class="white-popup mfp-with-anim mfp-hide modal-delete">
-                                    <!--                                    <form th:action="@{/mypage/review}" th:method="post" th:object="${reviewForm}">-->
-                                    <div class="small-dialog-header">
-                                        <h3>리뷰 삭제</h3>
-                                    </div>
-                                    <div class="row justify-content-center message-reply margin-top-0">
-                                        <div class="col-8 align-self-center">
-                                            <p class="m-0">정말로 해당 리뷰를 삭제하시겠습니까</p>
+                                     class="white-popup mfp-with-anim mfp-hide">
+                                    <form th:action="@{/mypage/review}" th:method="post" th:object="${reviewForm}">
+                                        <div class="small-dialog-header">
+                                            <h3>리뷰 삭제</h3>
                                         </div>
-                                        <div class="col-auto align-self-center">
-                                            <button type="submit" class="btn_1 gray delete delete-btn">
-                                                <i class="fa fa-fw fa-times-circle-o mr-1"></i>
-                                                리뷰 삭제
-                                            </button>
+                                        <input th:name="reviewId" th:value="${review.get('id')}" readonly hidden>
+                                        <div class="row justify-content-center message-reply margin-top-0">
+                                            <div class="col-8 align-self-center">
+                                                <p class="m-0">정말로 해당 리뷰를 삭제하시겠습니까</p>
+                                            </div>
+                                            <div class="col-auto align-self-center">
+                                                <button th:name="reviewRequest" th:value="remove" type="submit"
+                                                        class="btn_1 gray delete">
+                                                    <i class="fa fa-fw fa-times-circle-o mr-1"></i>
+                                                    리뷰 삭제
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <!--                                    </form>-->
+                                    </form>
                                 </div>
                             </li>
                         </ul>
@@ -178,54 +181,13 @@
 
     <th:block th:fragment="scripts">
         <script th:inline="javascript">
-            const reviewList = [[${reviewList}]];
-            const url = "/mypage/review";
-
             document.querySelector('#orderType').addEventListener('change', (event) => {
                 location.href = `?type=${event.target.value}`;
             })
-        </script>
 
-        <script th:inline="javascript">
-            const ratings = document.querySelectorAll("select#rating");
-            const contents = document.querySelectorAll("textarea#content");
+            const removeBtn = "";
+            const editBtn = "";
 
-            const editModals = document.querySelectorAll("button.edit-btn");
-            editModals.forEach((e, i) => {
-                e.addEventListener('click', event => {
-                    event.preventDefault();
-                    let reviewForm = {
-                        id: reviewList[i].id,
-                        rating: ratings[i].value,
-                        content: contents[i].value
-                    }
-                    fetch(url, {
-                        method: 'PUT',
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(reviewForm),
-                    }).then(response => {
-                        return response.json();
-                    })
-                        .then(object => {
-                            location.href = url;
-                        })
-                        .catch(error => {
-                            alert(error);
-                        })
-                })
-            })
-        </script>
-
-        <script th:inline="javascript">
-            const deleteModals = document.querySelectorAll("button.delete-btn");
-            deleteModals.forEach((e, i) => {
-                e.addEventListener('click', event => {
-                    event.preventDefault();
-                    console.log(reviewList[i].id);
-                })
-            })
         </script>
     </th:block>
 

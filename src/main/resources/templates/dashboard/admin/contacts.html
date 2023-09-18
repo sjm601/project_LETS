@@ -31,8 +31,10 @@
                             <div class="styled-select short">
                                 <select name="type" id="orderType">
                                     <option th:selected="${pagination.params.type == 'hold'}" value="hold">보류</option>
-                                    <option th:selected="${pagination.params.type == 'approve'}" value="approve">승인</option>
-                                    <option th:selected="${pagination.params.type == 'refuse'}" value="refuse">거부</option>
+                                    <option th:selected="${pagination.params.type == 'approve'}" value="approve">승인
+                                    </option>
+                                    <option th:selected="${pagination.params.type == 'refuse'}" value="refuse">거부
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -185,7 +187,8 @@
                     <ul class="pagination pagination-sm add_bottom_30">
                         <li class="page-item">
                             <a th:if="${pagination.showPrevious}"
-                               th:href="@{|?page=${pagination.previousStartPage}&type=${pagination.params.type}|}" class="page-link" href="#"
+                               th:href="@{|?page=${pagination.previousStartPage}&type=${pagination.params.type}|}"
+                               class="page-link" href="#"
                                tabindex="-1">&lt;&lt;</a>
                         </li>
                         <th:block
@@ -217,8 +220,8 @@
     <th:block th:fragment="scripts">
         <script th:inline="javascript">
             document.querySelector('#orderType').addEventListener('change', (event) => {
-                location.href=`?type=${event.target.value}`;
-                })
+                location.href = `?type=${event.target.value}`;
+            })
         </script>
     </th:block>
 

@@ -9,10 +9,10 @@ import com.vj.lets.domain.reservation.service.ReservationService;
 import com.vj.lets.domain.review.dto.Review;
 import com.vj.lets.domain.review.dto.ReviewForm;
 import com.vj.lets.domain.review.service.ReviewService;
-import com.vj.lets.domain.support.util.ContactStatus;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +30,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/mypage")
 @RequiredArgsConstructor
+@Slf4j
 public class MypageController {
 
     private final MemberService memberService;
@@ -199,6 +200,30 @@ public class MypageController {
         }
 
         return "redirect:/mypage/review";
+    }
+
+    /**
+     * 리뷰 수정 기능
+     *
+     * @param reviewRequest 리뷰 관련 요청 종류
+     * @param reviewForm    리뷰 폼 객체
+     * @param model         모델 객체
+     * @return 논리적 뷰 이름
+     */
+    @PutMapping("/review")
+    @ResponseBody
+    public Object reviewEdit(@RequestParam("reviewRequest") String reviewRequest,
+                             @ModelAttribute ReviewForm reviewForm, Model model) {
+
+        Review review = Review.builder()
+                .id(reviewForm.getReviewId())
+                .content(reviewForm.getContent())
+                .rating(reviewForm.getRating())
+                .build();
+
+        reviewService.editReview(review);
+
+        return "success";
     }
 
 }
