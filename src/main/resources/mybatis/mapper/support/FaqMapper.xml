@@ -15,7 +15,7 @@
         FROM FAQ f
             JOIN FAQ_CATEGORY c ON f.CATEGORY_ID = c.ID
         <where>
-            <if test="type != null and type != '' and type != 'all'">c.NAME = #{type}</if>
+            <if test="type != null and type != '' and type != 'all'">AND c.NAME = #{type}</if>
         </where>
     </select>
 

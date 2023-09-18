@@ -213,13 +213,13 @@
         </if>
     </select>
 
-    <select id="readCountAllForAdmin" parameterType="string" resultType="int">
+    <select id="readCountAllForAdmin" resultType="int">
         SELECT COUNT(ID) "count"
         FROM CAFE
         WHERE STATUS = 'enabled'
     </select>
 
-    <select id="readAllForAdmin" resultType="map">
+    <select id="readAllForAdmin" parameterType="PageParams" resultType="map">
         SELECT "id",
                "email",
                "cafeName",

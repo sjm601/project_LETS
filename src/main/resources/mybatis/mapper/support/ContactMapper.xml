@@ -15,7 +15,7 @@
         SELECT COUNT(ID) "count"
         FROM CONTACT
         <where>
-            <if test="type != null and type != ''">STATUS = #{type}</if>
+            <if test="type != null and type != ''">AND STATUS = #{type}</if>
         </where>
     </select>
 

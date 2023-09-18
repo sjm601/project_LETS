@@ -1,5 +1,6 @@
 package com.vj.lets.domain.reservation.service;//import static org.junit.jupiter.api.Assertions.*;
 
+import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.reservation.dto.Reservation;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -75,7 +76,7 @@ class ReservationServiceTest {
         // given
         int memberId = 21;
         // when
-        List<Map<String, Object>> list = reservationService.getMemberResList(memberId);
+        List<Map<String, Object>> list = reservationService.getMemberResList(memberId, PageParams.builder().build());
         // then
         log.info("해당 회원의 전체 예약 리스트 : {}", list);
         assertThat(list).isNotNull();

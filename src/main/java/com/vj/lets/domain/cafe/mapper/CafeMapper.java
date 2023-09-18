@@ -59,7 +59,8 @@ public interface CafeMapper {
 
     /**
      * 전체 입점 카페 수 조회
-     *
+     * 
+     * @param type 검색 조건
      * @return 전체 입점 카페 수
      * @see com.vj.lets.web.dashboard.controller.AdminController
      */
@@ -68,6 +69,7 @@ public interface CafeMapper {
     /**
      * 전체 카페 목록 조회 (관리자용)
      *
+     * @param pageParams 페이징 객체
      * @return 카페 목록
      * @see com.vj.lets.web.dashboard.controller.AdminController
      */

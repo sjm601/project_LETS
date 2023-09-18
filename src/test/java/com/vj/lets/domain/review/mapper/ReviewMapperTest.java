@@ -1,5 +1,6 @@
 package com.vj.lets.domain.review.mapper;
 
+import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.review.dto.Review;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -68,7 +69,7 @@ class ReviewMapperTest {
         // given
         int memberId = 1;
         // when
-        List<Map<String, Object>> list = reviewMapper.readByMember(memberId);
+        List<Map<String, Object>> list = reviewMapper.readByMember(memberId, PageParams.builder().build());
         // then
         assertThat(list).isNotNull();
     }

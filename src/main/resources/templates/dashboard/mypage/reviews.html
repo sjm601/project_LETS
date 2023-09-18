@@ -29,10 +29,9 @@
                         <h2 class="d-inline-block">나의 리뷰</h2>
                         <div class="filter">
                             <div class="styled-select short">
-                                <select name="orderby">
-                                    <option value="Any time">Any time</option>
-                                    <option value="Latest">Latest</option>
-                                    <option value="Oldest">Oldest</option>
+                                <select name="type" id="orderType">
+                                    <option th:selected="${pagination.params.type == 'latest'}" value="latest">최근 순</option>
+                                    <option th:selected="${pagination.params.type == 'oldest'}" value="oldest">오래된 순</option>
                                 </select>
                             </div>
                         </div>
@@ -146,14 +145,26 @@
                 <!-- /box_general-->
                 <nav aria-label="...">
                     <ul class="pagination pagination-sm add_bottom_30">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1">Previous</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
                         <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
+                            <a th:if="${pagination.showPrevious}"
+                               th:href="@{|?page=${pagination.previousStartPage}&type=${pagination.params.type}|}" class="page-link" href="#"
+                               tabindex="-1">&lt;&lt;</a>
+                        </li>
+                        <th:block
+                            th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
+                            <li th:if="${i == pagination.params.requestPage}" class="page-item active">
+                                <a th:text="${i}" class="page-link">1</a>
+                            </li>
+                            <li th:if="${i != pagination.params.requestPage && i > 0}" class="page-item">
+                                <a th:href="@{|?page=${i}&type=${pagination.params.type}|}"
+                                   th:text="${i}" class="page-link" href="#">2
+                                </a>
+                            </li>
+                        </th:block>
+                        <li class="page-item">
+                            <a th:if="${pagination.showNext}"
+                               th:href="@{|?page=${pagination.nextStartPage}&type=${pagination.params.type}|}"
+                               class="page-link" href="#">&gt;&gt;</a>
                         </li>
                     </ul>
                 </nav>

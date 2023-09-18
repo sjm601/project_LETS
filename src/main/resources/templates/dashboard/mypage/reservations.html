@@ -29,11 +29,11 @@
                         <h2 class="d-inline-block">예약확인 및 리뷰작성</h2>
                         <div class="filter">
                             <div class="styled-select short">
-                                <select name="orderby">
-                                    <option value="Any status">Any status</option>
-                                    <option value="Approved">Approved</option>
-                                    <option value="Pending">Pending</option>
-                                    <option value="Cancelled">Cancelled</option>
+                                <select name="type" id="orderType">
+                                    <option th:selected="${pagination.params.type == 'all'}" value="all">전체</option>
+                                    <option th:selected="${pagination.params.type == 'complete'}" value="complete">예약 완료</option>
+                                    <option th:selected="${pagination.params.type == 'cancel'}" value="cancel">예약 취소</option>
+                                    <option th:selected="${pagination.params.type == 'use'}" value="use">이용 완료</option>
                                 </select>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                                 </h4>
                                 <ul class="booking_list">
                                     <li><strong>예약 날짜</strong> <th:block th:text="${reservation.get('bookingDate')}"></th:block></li>
-                                    <li><strong>예약 시간</strong> <th:block th:text="${reservation.get('startTime')}"></th:block> - <th:block th:text="${reservation.get('endTime')}"></th:block></li>
+                                    <li><strong>예약 시간</strong> <th:block th:text="|${reservation.get('startTime')}시 - ${reservation.get('endTime')}시|"></th:block></li>
                                     <li><strong>예약 인원수</strong> <th:block th:text="${reservation.get('headCount')}"></th:block> 명</li>
                                     <li><strong>룸 정보</strong> <th:block th:text="${reservation.get('roomName')}"></th:block></li>
                                     <li><strong>결제 방법</strong>
@@ -152,14 +152,26 @@
                 <!-- /box_general-->
                 <nav aria-label="...">
                     <ul class="pagination pagination-sm add_bottom_30">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1">Previous</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
                         <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
+                            <a th:if="${pagination.showPrevious}"
+                               th:href="@{|?page=${pagination.previousStartPage}&type=${pagination.params.type}|}" class="page-link" href="#"
+                               tabindex="-1">&lt;&lt;</a>
+                        </li>
+                        <th:block
+                            th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
+                            <li th:if="${i == pagination.params.requestPage}" class="page-item active">
+                                <a th:text="${i}" class="page-link">1</a>
+                            </li>
+                            <li th:if="${i != pagination.params.requestPage && i > 0}" class="page-item">
+                                <a th:href="@{|?page=${i}&type=${pagination.params.type}|}"
+                                   th:text="${i}" class="page-link" href="#">2
+                                </a>
+                            </li>
+                        </th:block>
+                        <li class="page-item">
+                            <a th:if="${pagination.showNext}"
+                               th:href="@{|?page=${pagination.nextStartPage}&type=${pagination.params.type}|}"
+                               class="page-link" href="#">&gt;&gt;</a>
                         </li>
                     </ul>
                 </nav>
@@ -172,6 +184,11 @@
     </th:block>
 
     <th:block th:fragment="scripts">
+        <script th:inline="javascript">
+            document.querySelector('#orderType').addEventListener('change', (event) => {
+                location.href=`?type=${event.target.value}`;
+            })
+        </script>
     </th:block>
 
 </th:block>

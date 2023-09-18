@@ -1,5 +1,7 @@
 package com.vj.lets.web.dashboard.controller;
 
+import com.vj.lets.domain.common.web.PageParams;
+import com.vj.lets.domain.common.web.Pagination;
 import com.vj.lets.domain.member.dto.EditForm;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.service.MemberService;
@@ -7,6 +9,7 @@ import com.vj.lets.domain.reservation.service.ReservationService;
 import com.vj.lets.domain.review.dto.Review;
 import com.vj.lets.domain.review.dto.ReviewForm;
 import com.vj.lets.domain.review.service.ReviewService;
+import com.vj.lets.domain.support.util.ContactStatus;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +35,9 @@ public class MypageController {
     private final MemberService memberService;
     private final ReservationService reservationService;
     private final ReviewService reviewService;
+
+    private static final int ELEMENT_SIZE = 3;
+    private static final int PAGE_SIZE = 3;
 
     /**
      * 마이페이지 메인 화면 출력
@@ -61,15 +67,37 @@ public class MypageController {
      * @return 논리적 뷰 이름
      */
     @GetMapping("/reservation")
-    public String reservationView(HttpServletRequest request, Model model) {
+    public String reservationView(@RequestParam(value = "page", required = false) String page,
+                                  @RequestParam(value = "type", required = false) String type,
+                                  HttpServletRequest request,
+                                  Model model) {
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
-        List<Map<String, Object>> reservationList = reservationService.getMemberResList(loginMember.getId());
+
+        if (page == null || page.isBlank()) {
+            page = "1";
+        }
+        if (type == null || type.isBlank()) {
+            type = "all";
+        }
+        int selectPage = Integer.parseInt(page);
+        int count = reservationService.getCountResByMember(loginMember.getId(), type);
+        PageParams pageParams = PageParams.builder()
+                .elementSize(ELEMENT_SIZE)
+                .pageSize(PAGE_SIZE)
+                .requestPage(selectPage)
+                .rowCount(count)
+                .type(type)
+                .build();
+        Pagination pagination = new Pagination(pageParams);
+
+        List<Map<String, Object>> reservationList = reservationService.getMemberResList(loginMember.getId(), pageParams);
 
         ReviewForm reviewForm = ReviewForm.builder().build();
 
         model.addAttribute("reviewForm", reviewForm);
         model.addAttribute("reservationList", reservationList);
+        model.addAttribute("pagination", pagination);
 
         return "dashboard/mypage/reservations";
     }
@@ -86,7 +114,8 @@ public class MypageController {
     @PostMapping("/reservation")
     public String cancleReservation(@RequestParam("requestType") String requestType,
                                     @RequestParam("reservationId") int reservationId,
-                                    @ModelAttribute ReviewForm reviewForm, Model model) {
+                                    @ModelAttribute ReviewForm reviewForm,
+                                    Model model) {
 
         if (requestType.equals("review")) {
             Review review = Review.builder()
@@ -111,14 +140,37 @@ public class MypageController {
      * @return 논리적 뷰 이름
      */
     @GetMapping("/review")
-    public String reviewView(HttpServletRequest request, Model model) {
+    public String reviewView(@RequestParam(value = "page", required = false) String page,
+                             @RequestParam(value = "type", required = false) String type,
+                             HttpServletRequest request,
+                             Model model) {
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
-        List<Map<String, Object>> reviewList = reviewService.getReviewListByMember(loginMember.getId());
+
+        if (page == null || page.isBlank()) {
+            page = "1";
+        }
+        if (type == null || type.isBlank()) {
+            type = "latest";
+        }
+        int selectPage = Integer.parseInt(page);
+        int count = reviewService.getCountReviewByMember(loginMember.getId());
+        PageParams pageParams = PageParams.builder()
+                .elementSize(ELEMENT_SIZE)
+                .pageSize(PAGE_SIZE)
+                .requestPage(selectPage)
+                .rowCount(count)
+                .type(type)
+                .build();
+        Pagination pagination = new Pagination(pageParams);
+
+        List<Map<String, Object>> reviewList = reviewService.getReviewListByMember(loginMember.getId(), pageParams);
+
         ReviewForm reviewForm = ReviewForm.builder().build();
 
         model.addAttribute("reviewForm", reviewForm);
         model.addAttribute("reviewList", reviewList);
+        model.addAttribute("pagination", pagination);
 
         return "dashboard/mypage/reviews";
     }

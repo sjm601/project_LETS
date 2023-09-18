@@ -37,9 +37,7 @@ public class AdminController {
     private final CafeService cafeService;
     private final FaqService faqService;
 
-    // 한 페이지에 보여지는 목록 갯수 설정
     private static final int ELEMENT_SIZE = 3;
-    // 한페이지에 보여지는 페이지 갯수 설정
     private static final int PAGE_SIZE = 3;
 
     /**
@@ -82,7 +80,9 @@ public class AdminController {
                 .type(type)
                 .build();
         Pagination pagination = new Pagination(pageParams);
+
         List<Contact> contactList = contactService.getContactList(pageParams);
+
         ContactForm contactForm = ContactForm.builder().build();
 
         model.addAttribute("contactList", contactList);
@@ -179,6 +179,7 @@ public class AdminController {
                               @RequestParam(value = "type", required = false) String type,
                               Model model) {
         List<FaqCategory> categoryList = faqService.getFaqCategoryList();
+
         if (page == null || page.isBlank()) {
             page = "1";
         }
@@ -195,7 +196,9 @@ public class AdminController {
                 .type(type)
                 .build();
         Pagination pagination = new Pagination(pageParams);
+
         List<Map<String, Object>> faqList = faqService.getFaqListForAdmin(pageParams);
+
         FaqForm faqForm = FaqForm.builder().build();
 
         model.addAttribute("faqForm", faqForm);
@@ -280,6 +283,7 @@ public class AdminController {
                 .type(type)
                 .build();
         Pagination pagination = new Pagination(pageParams);
+
         List<Map<String, Object>> cafeList = cafeService.getCafeListForAdmin(pageParams);
 
         model.addAttribute("cafeList", cafeList);
