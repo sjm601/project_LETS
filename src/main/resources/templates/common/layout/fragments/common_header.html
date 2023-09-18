@@ -36,16 +36,31 @@
                 <li><span><a th:href="@{/support/help}" href="/help.html">Support</a></span></li>
                 <th:block th:if="${session.loginMember} == null">
                     <li>
-                        <span>
-                            <a data-bs-toggle="modal" data-bs-target="#loginModal" title="LOG IN">
-                                <i class="fa-regular fa-circle-user fa-2xl"></i>
-                            </a>
-                        </span>
+                    <span>
+                        <a data-bs-toggle="modal" data-bs-target="#loginModal" href="#" title="LOG IN">
+                            <i class="fa-solid fa-arrow-right-to-bracket fa-2xl me-1"></i>
+                            LOGIN
+                        </a>
+                    </span>
                     </li>
                 </th:block>
                 <th:block th:if="${session.loginMember} != null">
-                    <li><span><a th:href="@{/member/logout}" title="LOG OUT">LOG OUT</a></span></li>
-                    <li><span><a th:href="@{/mypage}" title="LOG OUT">마이페이지</a></span></li>
+                    <li>
+                        <span>
+                            <a th:href="@{/mypage}" title="MY PAGE">
+                                <i class="fa-regular fa-circle-user fa-2xl me-1"></i>
+                                MyPage
+                            </a>
+                        </span>
+                    </li>
+                    <li>
+                        <span>
+                            <a th:href="@{/member/logout}" title="LOG OUT">
+                                <i class="fa-solid fa-arrow-right-from-bracket fa-2xl me-1"></i>
+                                LOGOUT
+                            </a>
+                        </span>
+                    </li>
                 </th:block>
             </ul>
         </nav>

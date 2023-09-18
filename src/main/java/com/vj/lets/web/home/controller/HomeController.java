@@ -37,13 +37,6 @@ public class HomeController {
         Member loginMember = (Member) session.getAttribute("loginMember");
 
         if (loginMember == null) {
-            LoginForm loginForm = LoginForm.builder().build();
-
-            if (rememberEmail != null) {
-                loginForm.setEmail(rememberEmail);
-                loginForm.setRemember(true);
-            }
-
             return "index";
         }
 

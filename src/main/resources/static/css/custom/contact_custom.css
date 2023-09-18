@@ -1,0 +1,31 @@
+/*============================================================================================*/
+/* Your custom styles below */
+/*============================================================================================*/
+
+#contact .form-group i {
+    font-size: 21px;
+    font-size: 1.3125rem;
+    position: absolute;
+    left: 12px;
+    top: 37px;
+    color: #ccc;
+    width: 25px;
+    height: 25px;
+    display: block;
+}
+
+#contact form {
+    margin-bottom: 60px;
+    display: block;
+}
+
+#contact .form-group input {
+    padding-left: 40px !important;
+}
+
+a.btn_1.outline:hover,
+.btn_1.outline:hover {
+    background: #fc5b62;
+    color: #fff;
+    border-color: #fc5b62 !important;
+}

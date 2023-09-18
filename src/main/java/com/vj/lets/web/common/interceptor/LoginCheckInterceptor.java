@@ -1,5 +1,6 @@
 package com.vj.lets.web.common.interceptor;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2023. 9. 4.
  * @version 1.0
  */
+@Component
 @Slf4j
 public class LoginCheckInterceptor implements HandlerInterceptor {
 	@Override
@@ -25,6 +27,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 			String queryString = request.getQueryString();
 			String redirectURI = queryString == null ? requestURI : requestURI + "?" + queryString;
 			session.setAttribute("redirectURI", redirectURI);
+			log.info("=================={}", redirectURI);
 			response.sendRedirect("/member/login");
 			return false;
 		}
