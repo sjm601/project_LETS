@@ -97,7 +97,17 @@ public class CafeServiceImpl implements CafeService{
 
     @Override
     @Transactional
-    public void editCafe(Cafe cafe, String comment, List<CafeOptionList> cafeOptionLists) {
+    public void editCafe(int cafeId, Cafe cafe, String comment, List<Integer> optionIds) {
+        List<CafeOptionList> cafeOptionLists = new ArrayList<>();
+        for (int optionId : optionIds) {
+            CafeOptionList makeList = CafeOptionList
+                    .builder()
+                    .cafeId(cafeId)
+                    .optionId(optionId)
+                    .build();
+            cafeOptionLists.add(makeList);
+        }
+
         cafeMapper.update(cafe);
         cafeHistoryMapper.update(comment, cafe.getId());
         cafeOptionListMapper.delete(cafe.getId());
@@ -114,17 +124,8 @@ public class CafeServiceImpl implements CafeService{
     }
 
     @Override
-    public List<CafeOptionList> makeCafeOptionList(int cafeId, List<Integer> optionIds) {
-        List<CafeOptionList> cafeOptionLists = new ArrayList<>();
-        for (int optionId : optionIds) {
-            CafeOptionList makeList = CafeOptionList
-                    .builder()
-                    .cafeId(cafeId)
-                    .optionId(optionId)
-                    .build();
-            cafeOptionLists.add(makeList);
-        }
-        return cafeOptionLists;
+    public boolean cafeOptionCheck(int cafeId, int optionId) {
+        return cafeOptionListMapper.findByOptionCheckCafeId(cafeId, optionId);
     }
 
 

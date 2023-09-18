@@ -164,8 +164,8 @@
                                         </em>
                                         <em th:if="${allCafe['reviewCount']} != null" th:text="${allCafe['reviewCount']}+' Reviews'">30 Reviews</em>
                                         <em th:if="${allCafe['reviewCount']} == null">0 Reviews</em></span>
-                                                    <strong th:if="${allCafe['allRating']} == null">0.0</strong>
-                                                    <strong th:unless="${allCafe['allRating']} == null" th:text="${#numbers.formatDecimal(allCafe['cafeRating'],1,1)}">5.0</strong>
+                                                    <strong th:if="${allCafe['cafeRating']} == null">0.0</strong>
+                                                    <strong th:unless="${allCafe['cafeRating']} == null" th:text="${#numbers.formatDecimal(allCafe['cafeRating'],1,1)}">5.0</strong>
                                                 </div>
                                             </li>
                                         </ul>
