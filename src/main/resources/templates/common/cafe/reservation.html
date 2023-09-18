@@ -98,8 +98,8 @@
                                 </table>
                                 <div class="cart-options clearfix">
                                     <div class="float-end fix_mobile">
-                                        <button type="button" id="deleteList" class="btn_1 outline">Cancel Booking
-                                        </button>
+                                        <a th:href="@{/reservation/cancle/{id} (id=${reservation.ID})}" id="deleteList" class="btn_1 outline">Cancel Booking
+                                        </a>
                                     </div>
                                 </div>
                                 <!-- /cart-options -->

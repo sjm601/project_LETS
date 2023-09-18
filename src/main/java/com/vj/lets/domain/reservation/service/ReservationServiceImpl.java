@@ -87,11 +87,14 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Map<String,Object>> checkDuplicateResTime(int roomId, String bookingDate) {
-        List<Map<String, Object>> nonReservationTime = null;
+    public List<Reservation> checkDuplicateResTime(int roomId, String bookingDate) {
+        return reservationMapper.checkDuplicateResTime(roomId, bookingDate);
+    }
 
-        nonReservationTime = reservationMapper.checkDuplicateResTime(roomId,bookingDate);
-        return nonReservationTime;
+    @Override
+    @Transactional
+    public void delete(int id, int memberId) {
+        reservationMapper.delete(id, memberId);
     }
 
 

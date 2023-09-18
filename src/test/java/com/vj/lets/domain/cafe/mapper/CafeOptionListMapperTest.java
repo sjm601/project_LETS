@@ -1,5 +1,6 @@
 package com.vj.lets.domain.cafe.mapper;//import static org.junit.jupiter.api.Assertions.*;
 
+import com.vj.lets.domain.cafe.dto.CafeOption;
 import com.vj.lets.domain.cafe.dto.CafeOptionList;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
@@ -76,7 +77,7 @@ class CafeOptionListMapperTest {
         //given
         int id = 1;
         //when
-        List<CafeOptionList> list = cafeOptionListMapper.findByOptionCafeId(id);
+        List<CafeOption> list = cafeOptionListMapper.findByOptionCafeId(id);
         //then
         log.info("카페 아이디로 검색한 옵션 리스트 : {}", list);
         assertThat(list).isNotNull();

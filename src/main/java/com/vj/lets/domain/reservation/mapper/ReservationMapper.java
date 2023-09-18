@@ -61,6 +61,8 @@ public interface ReservationMapper {
     public int checkDuplicateReservation(@Param("roomId") int roomId, @Param("bookingDate") String bookingDate, @Param("startTime") int startTime, @Param("endTime") int endTime);
 
     //예약 중복 방지
-    public List<Map<String,Object>> checkDuplicateResTime(@Param("roomId") int roomId,@Param("bookingDate") String bookingDate);
+    public List<Reservation> checkDuplicateResTime(@Param("roomId") int roomId, @Param("bookingDate") String bookingDate);
 
+    //예약 삭제
+    public void delete(@Param("id") int id, @Param("memberId") int memberId);
 }

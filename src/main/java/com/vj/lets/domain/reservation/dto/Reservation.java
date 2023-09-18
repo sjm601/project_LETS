@@ -23,5 +23,6 @@ public class Reservation {
     private int memberId;
     private int cafeId;
     private int roomId;
+    private String status;
 
 }
