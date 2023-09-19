@@ -13,7 +13,7 @@ import lombok.*;
 @Getter
 @ToString
 @Builder
-public class PageParams1 {
+public class PageParams {
 
     // 페이지에 보여지는 목록 갯수
     private int elementSize;
@@ -26,9 +26,6 @@ public class PageParams1 {
 
     // 테이블 목록 갯수
     private int rowCount;
-
-    // 게시판 아이디
-    private int boardId;
 
     // 검색 타입
     private String type;

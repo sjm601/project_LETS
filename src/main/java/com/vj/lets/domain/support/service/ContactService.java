@@ -1,6 +1,7 @@
 package com.vj.lets.domain.support.service;
 
 import com.vj.lets.domain.cafe.dto.Cafe;
+import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.support.dto.Contact;
 import com.vj.lets.domain.support.dto.ContactForm;
@@ -24,11 +25,18 @@ public interface ContactService {
     public void register(Contact contact);
 
     /**
+     * 보류 중인 전체 입점 신청 갯수 조회
+     *
+     * @return 입점 신청 갯수
+     */
+    public int getCountContact(String type);
+
+    /**
      * 전체 입점 신청 목록 조회
      *
      * @return 입점 신청 목록
      */
-    public List<Contact> getContactList();
+    public List<Contact> getContactList(PageParams pageParams);
 
     /**
      * 입점 신청 시 이메일, 사업자 번호, 신청 날짜로 중복 신청 조회

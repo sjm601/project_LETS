@@ -2,6 +2,7 @@ package com.vj.lets.domain.cafe.mapper;
 
 import com.vj.lets.domain.cafe.dto.Cafe;
 import com.vj.lets.domain.cafe.dto.CafeSearch;
+import com.vj.lets.domain.common.web.PageParams;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -57,12 +58,22 @@ public interface CafeMapper {
     public List<Map<String, Object>> findBySearch(CafeSearch cafeSearch);
 
     /**
+     * 전체 입점 카페 수 조회
+     * 
+     * @param type 검색 조건
+     * @return 전체 입점 카페 수
+     * @see com.vj.lets.web.dashboard.controller.AdminController
+     */
+    public int readCountAllForAdmin(String type);
+
+    /**
      * 전체 카페 목록 조회 (관리자용)
      *
+     * @param pageParams 페이징 객체
      * @return 카페 목록
      * @see com.vj.lets.web.dashboard.controller.AdminController
      */
-    public List<Map<String, Object>> readAllForAdmin();
+    public List<Map<String, Object>> readAllForAdmin(PageParams pageParams);
 
     /**
      * 최근 1년간 월별 신규 카페 수 조회

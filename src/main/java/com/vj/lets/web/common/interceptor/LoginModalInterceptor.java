@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
  * @version 1.0
  * @since 2023-09-08 (금)
  */
+@Component
 @Slf4j
 public class LoginModalInterceptor implements HandlerInterceptor {
 

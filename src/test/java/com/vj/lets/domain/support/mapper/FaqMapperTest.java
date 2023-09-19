@@ -1,5 +1,6 @@
 package com.vj.lets.domain.support.mapper;
 
+import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.support.dto.Faq;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -45,7 +46,7 @@ class FaqMapperTest {
     void readAllTest() {
         // given
         // when
-        List<Map<String, Object>> list = faqMapper.readAll();
+        List<Map<String, Object>> list = faqMapper.readAll(PageParams.builder().build());
         // then
         assertThat(list).isNotNull();
     }

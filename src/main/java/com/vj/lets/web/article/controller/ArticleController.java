@@ -2,10 +2,10 @@ package com.vj.lets.web.article.controller;
 
 import com.vj.lets.domain.article.dto.Article;
 import com.vj.lets.domain.article.dto.ArticleComment;
-import com.vj.lets.domain.article.dto.PageParams;
-import com.vj.lets.domain.article.dto.Pagination;
 import com.vj.lets.domain.article.service.ArticleCommentService;
 import com.vj.lets.domain.article.service.ArticleService;
+import com.vj.lets.domain.common.web.PageParams;
+import com.vj.lets.domain.common.web.Pagination;
 import com.vj.lets.domain.member.dto.Member;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

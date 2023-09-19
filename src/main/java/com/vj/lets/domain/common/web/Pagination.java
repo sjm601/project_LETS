@@ -12,10 +12,10 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class Pagination1 {
+public class Pagination {
 	
 	// 페이징 계산 위한 파라메터
-	private PageParams1 params;
+	private PageParams params;
 	
 	// 계산 결과 저장을 위한 필드
 	// 전체 페이지 수
@@ -31,7 +31,7 @@ public class Pagination1 {
 	// 다음 페이지 시작 번호
 	private int nextStartPage;
 	
-	public Pagination1(PageParams1 params) {
+	public Pagination(PageParams params) {
 		this.params = params;
 		compute();
 	}

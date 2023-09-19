@@ -4,12 +4,13 @@ import com.vj.lets.domain.cafe.dto.Cafe;
 import com.vj.lets.domain.cafe.dto.CafeOption;
 import com.vj.lets.domain.cafe.dto.CafeOptionList;
 import com.vj.lets.domain.cafe.dto.CafeSearch;
+import com.vj.lets.domain.common.web.PageParams;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * Cafe 관련 비즈니스 로직 처리 및 트랜잭션 관리
+ * Cafe 관련 비즈니스 로직 처리 및 트랜잭션 관리 서비스
  *
  * @author VJ특공대 강소영
  * @author VJ특공대 김종원
@@ -92,12 +93,20 @@ public interface CafeService {
     public List<Map<String, Object>> getSearchCafe(CafeSearch cafeSearch);
 
     /**
+     * 전체 입점 카페 수 조회
+     *
+     * @return 전체 입점 카페 수
+     * @see com.vj.lets.web.dashboard.controller.AdminController
+     */
+    public int getCountCafeForAdmin(String type);
+
+    /**
      * 관리자 용 전체 카페 목록 조회
      *
      * @return 카페 목록
      * @see com.vj.lets.web.dashboard.controller.AdminController
      */
-    public List<Map<String, Object>> getCafeListForAdmin();
+    public List<Map<String, Object>> getCafeListForAdmin(PageParams pageParams);
 
     /**
      * 최근 1년간 월별 신규 카페 수 조회

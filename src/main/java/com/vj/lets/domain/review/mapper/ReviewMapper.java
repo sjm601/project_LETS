@@ -1,5 +1,6 @@
 package com.vj.lets.domain.review.mapper;
 
+import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.review.dto.Review;
 import jakarta.annotation.Priority;
 import org.apache.ibatis.annotations.Mapper;
@@ -41,12 +42,23 @@ public interface ReviewMapper {
     public List<Map<String, Object>> readByCafe(int cafeId);
 
     /**
-     * 회원 ID로 리뷰 목록 조회
+     * 회원 ID로 리뷰 작성 수 조회
      *
      * @param memberId 회원 ID
-     * @return 리뷰 목록
+     * @return 리뷰 작성 수
+     * @see com.vj.lets.web.dashboard.controller.MypageController
      */
-    public List<Map<String, Object>> readByMember(int memberId);
+    public int readCountByMember(int memberId);
+
+    /**
+     * 회원 ID로 리뷰 목록 조회
+     *
+     * @param memberId   회원 ID
+     * @param pageParams 페이징 객체
+     * @return 리뷰 목록
+     * @see com.vj.lets.web.dashboard.controller.MypageController
+     */
+    public List<Map<String, Object>> readByMember(@Param("memberId") int memberId, @Param("pageParams") PageParams pageParams);
 
     /**
      * 예약 ID로 리뷰 댓글 조회

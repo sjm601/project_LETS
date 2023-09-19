@@ -1,5 +1,6 @@
 package com.vj.lets.domain.support.mapper;
 
+import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.support.dto.Faq;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -24,11 +25,18 @@ public interface FaqMapper {
     public void create(Faq faq);
 
     /**
+     * 전체 FAQ 수 조회
+     *
+     * @return 전체 FAQ 갯수
+     */
+    public int readCountAll(String type);
+
+    /**
      * 전체 FAQ 목록 조회
      *
      * @return FAQ 목록
      */
-    public List<Map<String, Object>> readAll();
+    public List<Map<String, Object>> readAll(PageParams pageParams);
 
     /**
      * 카테고리 별 FAQ 목록 조회

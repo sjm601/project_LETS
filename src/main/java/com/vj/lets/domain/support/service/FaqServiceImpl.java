@@ -1,5 +1,6 @@
 package com.vj.lets.domain.support.service;
 
+import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.support.dto.Faq;
 import com.vj.lets.domain.support.dto.FaqCategory;
 import com.vj.lets.domain.support.mapper.FaqCategoryMapper;
@@ -48,6 +49,26 @@ public class FaqServiceImpl implements FaqService {
     }
 
     /**
+     * 전체 FAQ 수 조회
+     *
+     * @return 전체 FAQ 갯수
+     */
+    @Override
+    public int getCountFaq(String type) {
+        return faqMapper.readCountAll(type);
+    }
+
+    /**
+     * 전체 FAQ 목록 조회 (관리자용)
+     *
+     * @return FAQ 목록
+     */
+    @Override
+    public List<Map<String, Object>> getFaqListForAdmin(PageParams pageParams) {
+        return faqMapper.readAll(pageParams);
+    }
+
+    /**
      * 카테고리 별로 정렬하여 전체 FAQ 목록 조회
      *
      * @return FAQ 목록
@@ -64,16 +85,6 @@ public class FaqServiceImpl implements FaqService {
         }
 
         return faqListMap;
-    }
-
-    /**
-     * 전체 FAQ 목록 조회 (관리자용)
-     *
-     * @return FAQ 목록
-     */
-    @Override
-    public List<Map<String, Object>> getFaqListForAdmin() {
-        return faqMapper.readAll();
     }
 
     /**

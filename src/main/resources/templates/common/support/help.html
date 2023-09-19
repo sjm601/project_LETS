@@ -16,15 +16,7 @@
             <section class="hero_in general">
                 <div class="wrapper">
                     <div class="container">
-                        <h1 class="fadeInUp"><span></span>How we can help?</h1>
-                        <form class="fadeInUp">
-                            <div id="custom-search-input">
-                                <div class="input-group">
-                                    <input type="text" class=" search-query" placeholder="Ask a question...">
-                                    <input type="submit" class="btn_search" value="Search">
-                                </div>
-                            </div>
-                        </form>
+                        <h1 class="fadeInUp"><span></span>어떻게 도와드릴까요?</h1>
                     </div>
                 </div>
             </section>
@@ -32,7 +24,7 @@
             <div class="container margin_60_35">
                 <div class="main_title_2">
                     <span><em></em></span>
-                    <h2>Select a topic</h2>
+                    <h2>원하시는 질문을 고르세요</h2>
                     <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
                 </div>
 
@@ -40,7 +32,7 @@
                 <div class="row">
                     <th:block th:each="category : ${categoryList}">
                         <div class="col-lg-4 col-md-6">
-                            <a th:href="@{|/support/faq#${category.name}|}" class="box_topic" href="faq.html">
+                            <a th:href="@{|/support/faq|}" class="box_topic" href="faq.html">
                                 <span><i class="pe-7s-study"></i></span>
                                 <h3 th:text="${category.description}">회원 관련</h3>
                                 <hr>

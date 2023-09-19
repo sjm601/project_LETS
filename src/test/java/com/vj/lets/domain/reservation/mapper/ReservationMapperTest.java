@@ -1,5 +1,6 @@
 package com.vj.lets.domain.reservation.mapper;
 
+import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.reservation.dto.Reservation;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -80,7 +81,7 @@ class ReservationMapperTest {
         // given
         int memberId = 21;
         // when
-        List<Map<String, Object>> memberReservation = reservationMapper.findByMember(memberId);
+        List<Map<String, Object>> memberReservation = reservationMapper.findByMember(memberId, PageParams.builder().build());
         // then
         log.info("회원의 예약 목록:{}", memberReservation);
         assertThat(memberReservation).isNotNull();
@@ -164,7 +165,9 @@ class ReservationMapperTest {
         int roomId = 26;
         String bookDate="23/09/26";
         // when
-//        List<Map<String, Integer>>  result = reservationMapper.checkDuplicateResTime(roomId,bookDate);
+
+        List<Map<String, Object>>  result = reservationMapper.checkDuplicateResTime(roomId,bookDate);
+
         // then
 //        log.info("결과:{}",result);
 //        assertThat(result).isNotNull();

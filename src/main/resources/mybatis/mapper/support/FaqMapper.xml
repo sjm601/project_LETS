@@ -10,11 +10,36 @@
         VALUES (FAQ_ID_SEQ.NEXTVAL, #{title}, #{content}, #{categoryId})
     </insert>
 
-    <select id="readAll" resultType="map">
-        SELECT f.ID "id", TITLE "title", CONTENT "content", c.NAME "category"
+    <select id="readCountAll" parameterType="string" resultType="int">
+        SELECT COUNT(f.ID) "count"
         FROM FAQ f
-                 JOIN FAQ_CATEGORY c ON f.CATEGORY_ID = c.ID
-        ORDER BY CATEGORY_ID
+            JOIN FAQ_CATEGORY c ON f.CATEGORY_ID = c.ID
+        <where>
+            <if test="type != null and type != '' and type != 'all'">AND c.NAME = #{type}</if>
+        </where>
+    </select>
+
+    <select id="readAll" parameterType="PageParams" resultType="map">
+        SELECT "id",
+               "title",
+               "content",
+               "category"
+        FROM (SELECT CEIL(ROWNUM / #{elementSize}) "request_page",
+                     "id",
+                     "title",
+                     "content",
+                     "category"
+              FROM (SELECT f.ID    "id",
+                           TITLE   "title",
+                           CONTENT "content",
+                           c.NAME  "category"
+                    FROM FAQ f
+                             JOIN FAQ_CATEGORY c ON f.CATEGORY_ID = c.ID
+                    <where>
+                       <if test="type != null and type != '' and type != 'all'">c.NAME = #{type}</if>
+                    </where>
+                    ORDER BY CATEGORY_ID))
+        WHERE "request_page" = #{requestPage}
     </select>
 
 

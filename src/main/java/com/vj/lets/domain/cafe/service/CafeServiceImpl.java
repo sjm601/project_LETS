@@ -8,6 +8,7 @@ import com.vj.lets.domain.cafe.mapper.CafeHistoryMapper;
 import com.vj.lets.domain.cafe.mapper.CafeMapper;
 import com.vj.lets.domain.cafe.mapper.CafeOptionListMapper;
 import com.vj.lets.domain.cafe.mapper.CafeOptionMapper;
+import com.vj.lets.domain.common.web.PageParams;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ import java.util.Map;
  * Cafe Service 구현체
  *
  * @author 강소영
+ * @author VJ특공대 김종원
  * @version 1.0
  * @since 2023-09-08 (금)
  */
@@ -86,8 +88,13 @@ public class CafeServiceImpl implements CafeService{
     }
 
     @Override
-    public List<Map<String, Object>> getCafeListForAdmin() {
-        return cafeMapper.readAllForAdmin();
+    public int getCountCafeForAdmin(String type) {
+        return cafeMapper.readCountAllForAdmin(type);
+    }
+
+    @Override
+    public List<Map<String, Object>> getCafeListForAdmin(PageParams pageParams) {
+        return cafeMapper.readAllForAdmin(pageParams);
     }
 
     @Override

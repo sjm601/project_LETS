@@ -1,5 +1,6 @@
 package com.vj.lets.domain.support.service;
 
+import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.support.dto.Faq;
 import com.vj.lets.domain.support.dto.FaqCategory;
 
@@ -30,18 +31,25 @@ public interface FaqService {
     public List<FaqCategory> getFaqCategoryList();
 
     /**
-     * 카테고리 별로 정렬하여 전체 FAQ 목록 조회
+     * 전체 FAQ 수 조회
      *
-     * @return FAQ 목록
+     * @return 전체 FAQ 갯수
      */
-    public Map<String, List<Faq>> getFaqList();
+    public int getCountFaq(String type);
 
     /**
      * 전체 FAQ 목록 조회 (관리자용)
      *
      * @return FAQ 목록
      */
-    public List<Map<String, Object>> getFaqListForAdmin();
+    public List<Map<String, Object>> getFaqListForAdmin(PageParams pageParams);
+
+    /**
+     * 카테고리 별로 정렬하여 전체 FAQ 목록 조회
+     *
+     * @return FAQ 목록
+     */
+    public Map<String, List<Faq>> getFaqList();
 
     /**
      * FAQ 수정

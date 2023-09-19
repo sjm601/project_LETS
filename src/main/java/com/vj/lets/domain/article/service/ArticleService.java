@@ -2,7 +2,7 @@ package com.vj.lets.domain.article.service;
 
 
 import com.vj.lets.domain.article.dto.Article;
-import com.vj.lets.domain.article.dto.PageParams;
+import com.vj.lets.domain.common.web.PageParams;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -44,13 +44,13 @@
                                 <div th:each="faq, index : ${faqList.value}" class="card">
                                     <div class="card-header" role="tab">
                                         <h5 class="mb-0">
-                                            <a th:href="|#${faqList.key}${index.count}|"
+                                            <a th:href="|#${faqList.key}_${index.count}|"
                                                data-bs-toggle="collapse" href="#collapseOne_terms" aria-expanded="true">
                                                 <i class="indicator ti-plus"></i><th:block th:text="${faq.title}">예약</th:block></a>
                                         </h5>
                                     </div>
 
-                                    <div th:id="|${faqList.key}${index.count}|" th:data-bs-parent="|#${faqList.key}|"
+                                    <div th:id="|${faqList.key}_${index.count}|" th:data-bs-parent="|#${faqList.key}|"
                                          id="collapseOne_terms" class="collapse" role="tabpanel"
                                          data-bs-parent="#book_payment">
                                         <div class="card-body">

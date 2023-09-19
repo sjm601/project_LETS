@@ -1,5 +1,6 @@
 package com.vj.lets.domain.review.service;
 
+import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.review.dto.Review;
 import com.vj.lets.domain.review.mapper.ReviewHistoryMapper;
 import com.vj.lets.domain.review.mapper.ReviewMapper;
@@ -62,6 +63,11 @@ public class ReviewServiceImpl implements ReviewService {
         return addMaps(guestReviewList);
     }
 
+    @Override
+    public int getCountReviewByMember(int memberId) {
+        return reviewMapper.readCountByMember(memberId);
+    }
+
     /**
      * 특정 회원이 작성한 전체 리뷰 목록 조회
      *
@@ -69,8 +75,8 @@ public class ReviewServiceImpl implements ReviewService {
      * @return 리뷰 목록
      */
     @Override
-    public List<Map<String, Object>> getReviewListByMember(int memberId) {
-        List<Map<String, Object>> guestReviewList = reviewMapper.readByMember(memberId);
+    public List<Map<String, Object>> getReviewListByMember(int memberId, PageParams pageParams) {
+        List<Map<String, Object>> guestReviewList = reviewMapper.readByMember(memberId, pageParams);
         return addMaps(guestReviewList);
     }
 

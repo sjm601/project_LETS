@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,7 @@ import java.io.PrintWriter;
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
+@Slf4j
 public class MemberController {
 
     private final MemberService memberService;
@@ -186,6 +188,7 @@ public class MemberController {
         }
 
         String redirectURI = (String) session.getAttribute("redirectURI");
+        log.warn("======================{}", redirectURI);
         String uri = redirectURI == null ? "/" : redirectURI;
         return "redirect:" + uri;
     }

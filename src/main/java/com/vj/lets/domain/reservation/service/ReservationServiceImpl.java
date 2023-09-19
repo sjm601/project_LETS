@@ -1,5 +1,6 @@
 package com.vj.lets.domain.reservation.service;
 
+import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.reservation.dto.Reservation;
 import com.vj.lets.domain.reservation.mapper.ReservationMapper;
 import com.vj.lets.domain.review.mapper.ReviewMapper;
@@ -44,9 +45,14 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Map<String, Object>> getMemberResList(int memberId) {
+    public int getCountResByMember(int memberId, String type) {
+        return reservationMapper.readCountByMember(memberId, type);
+    }
+
+    @Override
+    public List<Map<String, Object>> getMemberResList(int memberId, PageParams pageParams) {
         List<Map<String, Object>> resList = new ArrayList<>();
-        List<Map<String, Object>> list = reservationMapper.findByMember(memberId);
+        List<Map<String, Object>> list = reservationMapper.findByMember(memberId, pageParams);
         for (Map<String, Object> map : list) {
             int reservationId = Integer.parseInt(map.get("id").toString());
             boolean reviewBoolean = reviewMapper.readCountByReservationId(reservationId);
