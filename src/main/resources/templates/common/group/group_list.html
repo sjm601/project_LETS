@@ -8,7 +8,6 @@
         <meta name="author" content="VJCommando">
         <meta name="description" content="LETS | 페이지 설명">
         <title>LETS | 페이지 타이틀</title>
-
         <link href="/css/blog.css" rel="stylesheet">
     </th:block>
 
@@ -139,7 +138,7 @@
                     <!-- 스터디 리스트 -->
                     <div class="col-lg-9">
                         <div class="isotope-wrapper">
-                            <div class="row">
+                            <div class="row" id="studyGroupList">
                                 <th:block th:each="studyGroup : ${studyGroupList}">
                                     <div class="col-md-6 isotope-item popular">
                                         <div class="box_grid" data-cue="slideInUp">
@@ -178,7 +177,7 @@
                                 </th:block>
                             </div>
                         </div>
-                        <p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p>
+                        <p class="text-center"><button id="searchBtn" class="btn_1 rounded add_top_30">Load more</button></p>
                     </div>
                     <!-- /스터디 리스트 -->
                 </div>

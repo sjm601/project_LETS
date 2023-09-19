@@ -46,12 +46,10 @@ public class ArticleController {
     @GetMapping("/list/{page}")
     public String articleList(@PathVariable String page, @PathParam("keyword") String keyword,Model model) {
         int count = articleService.getCountAll(keyword);
-//        log.info("갯수{}",count);
         if (page == null || page.isEmpty()) {
             page = "1";
         }
         int selectPage = Integer.parseInt(page);
-//        log.info("페이지 : {}" , selectPage);
         PageParams pageParams = PageParams.builder()
                 .elementSize(ELEMENT_SIZE)
                 .pageSize(PAGE_SIZE)
@@ -60,22 +58,16 @@ public class ArticleController {
                 .keyword(keyword)
                 .build();
         Pagination pagination = new Pagination(pageParams);
-//        log.info("페이징 검색포함{}",pagination);
         model.addAttribute(pagination);
         List<Map<String, Object>> articleList = articleService.findByPage(pageParams);
-        log.info("페이징 된 리스트{}", articleList);
         model.addAttribute("articleList", articleList);
-        log.info("모델에 저장된 리스트{}", articleList);
 
         List<Integer> articleIds = new ArrayList<>();
         for (Map<String, Object> articleMap : articleList) {
-            log.info("{}", articleMap);
             Integer articleId = ((BigDecimal) articleMap.get("ID")).intValue();
             articleIds.add(articleId);
         }
-        log.info("아티클번호들 ------{}", articleIds);
         List<Map<String, Object>> articleComments = articleService.findComment(articleIds);
-        log.info("=============={}", articleComments);
         model.addAttribute("commentList", articleComments);
 
         return "common/group/mygroup";

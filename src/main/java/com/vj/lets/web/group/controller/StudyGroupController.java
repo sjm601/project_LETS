@@ -8,7 +8,6 @@ import com.vj.lets.domain.location.dto.SiGunGu;
 import com.vj.lets.domain.location.service.SiGunGuService;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.service.MemberService;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -92,12 +90,8 @@ public class StudyGroupController {
 
         if (studyGroupService.isGroupMember(loginMember.getId(), id) != null && studyGroupService.isGroupMember(loginMember.getId(), id).getPosition().equals("팀장")) {
             contactList = studyGroupService.getStudyContactList(id);
-
         }
         Member member = memberService.getMember(loginMember.getId());
-
-
-
 
 
         model.addAttribute("member", member);
