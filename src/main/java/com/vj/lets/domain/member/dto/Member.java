@@ -21,7 +21,7 @@ public class Member {
     private String name;
     private String password;
     private String phoneNumber;
-    private int age;
+    private String birthday;
     private String gender;
     private String regdate;
     private String type;

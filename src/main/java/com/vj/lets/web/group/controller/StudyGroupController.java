@@ -8,7 +8,6 @@ import com.vj.lets.domain.location.dto.SiGunGu;
 import com.vj.lets.domain.location.service.SiGunGuService;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.service.MemberService;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -306,9 +304,9 @@ public class StudyGroupController {
         ContactInfo contactInfo = objectMapper.readValue(contact, ContactInfo.class);
         Member member = memberService.getMember(loginMember.getId());
 
-        if (member.getGender() == null || member.getAge() == 0) {
+        if (member.getGender() == null || member.getBirthday() == null) {
             member.setGender(contactInfo.getGender());
-            member.setAge(contactInfo.getAge());
+            member.setBirthday(contactInfo.getBirthday());
             memberService.editMember(member);
         }
 

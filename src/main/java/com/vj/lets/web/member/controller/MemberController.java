@@ -220,7 +220,7 @@ public class MemberController {
                     .password(editForm.getPassword())
                     .name(editForm.getName())
                     .gender(editForm.getGender())
-                    .age(editForm.getAge())
+                    .birthday(editForm.getBirthday())
                     .phoneNumber(editForm.getPhoneNumber())
                     .build();
 
@@ -269,22 +269,26 @@ public class MemberController {
      *
      * @param request 서블릿 리퀘스트 객체
      * @param model   모델 객체
-     * @return 논리적 뷰 이름
+     * @return 성공시 반환 값
      */
-    @PostMapping("/delete")
-    public String delete(HttpServletRequest request, @RequestParam String password, Model model) {
+    @DeleteMapping("/delete")
+    @ResponseBody
+    public String delete(@RequestBody String password, HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
 
         if (memberService.isMember(loginMember.getEmail(), password) != null) {
             memberService.removeMember(loginMember.getId());
-        }
 
-        if (session != null) {
-            session.invalidate();
-        }
+            if (session != null) {
+                session.invalidate();
+            }
 
-        return "redirect:/";
+            return "success";
+
+        } else {
+            return "fail";
+        }
     }
 
     /**

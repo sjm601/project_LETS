@@ -18,10 +18,10 @@ import lombok.*;
 @Builder
 public class EditForm {
 
-    String password;
-    String name;
-    String phoneNumber;
-    String gender;
-    int age;
+    private String password;
+    private String name;
+    private String phoneNumber;
+    private String gender;
+    private String birthday;
 
 }
