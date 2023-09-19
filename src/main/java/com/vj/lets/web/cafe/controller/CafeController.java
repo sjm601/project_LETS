@@ -4,12 +4,15 @@ package com.vj.lets.web.cafe.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vj.lets.domain.cafe.dto.CafeOption;
+import com.vj.lets.domain.cafe.dto.CafeSearch;
 import com.vj.lets.domain.cafe.service.CafeService;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.reservation.dto.Reservation;
 import com.vj.lets.domain.reservation.service.ReservationService;
 import com.vj.lets.domain.room.dto.Room;
 import com.vj.lets.domain.room.service.RoomService;
+import com.vj.lets.domain.support.dto.FaqCategory;
+import com.vj.lets.domain.support.service.FaqService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -37,6 +40,7 @@ public class CafeController {
     private final ReservationService reservationService;
     private final CafeService cafeService;
     private final RoomService roomService;
+    private final FaqService faqService;
 
     @GetMapping("")
     public String cafeDetail(Model model) {
@@ -46,11 +50,17 @@ public class CafeController {
     }
 
     @GetMapping("/list")
-    public String cafeList(Model model) {
+    public String cafeList(@ModelAttribute CafeSearch cafeSearch, Model model) {
+        List<FaqCategory> categoryList = faqService.getFaqCategoryList();
+        model.addAttribute("categoryList", categoryList);
         List<CafeOption> options = cafeService.getOptionList();
         model.addAttribute("options", options);
         List<Map<String, Object>> allCafe = cafeService.getCafeList();
         model.addAttribute("allCafe", allCafe);
+        cafeSearch.setMinDuration(cafeSearch.getMinDuration()/1000);
+        cafeSearch.setMaxDuration(cafeSearch.getMaxDuration()/1000);
+        List<Map<String, Object>> searchCafes = cafeService.getSearchCafe(cafeSearch);
+        model.addAttribute("searchCafes", searchCafes);
         return "common/cafe/cafe_list";
     }
 
@@ -60,14 +70,8 @@ public class CafeController {
                              @ModelAttribute Reservation reservation,
                              Model model) {
         Map<String, Object> cafe = cafeService.getCafe(id);
-        Object cafeRating = cafe.get("cafeRating");
-        if (cafeRating == null) {
-            cafeRating = 5;
-        }
-
         model.addAttribute("Cafe", cafe);
-        log.info("카페 내용:{}",cafe);
-        model.addAttribute("cafeRating", cafeRating);
+
 
         List<Room> roomList = roomService.getSearchCafeRoom(id);
         model.addAttribute("roomList", roomList);

@@ -82,22 +82,22 @@
                 <div class="form-group">
                     <label th:for="name">룸이름</label>
                     <input th:id="name" th:name="name" th:value="${room.name}"
-                           type="text" class="form-control">
+                           type="text" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label th:for="headCount">최대수용인원</label>
                     <input th:id="headCount" th:name="headCount" th:value="${room.headCount}"
-                           type="number" class="form-control">
+                           type="number" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label th:for="price">시간당 가격</label>
                     <input th:id="price" th:name="price" th:value="${room.price}"
-                           type="number" class="form-control">
+                           type="number" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label th:for="description">룸설명</label>
                     <input th:id="description" th:name="description" th:value="${room.description}"
-                           type="text" class="form-control">
+                           type="text" class="form-control" required>
                 </div>
                 <button type="submit" class="btn_1 my-2">
                     <i class="fa fa-fw fa-pencil mr-1"></i>
