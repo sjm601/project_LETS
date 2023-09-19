@@ -52,7 +52,6 @@ public class StudyGroupController {
         Search search = null;
 
         if (subject != null) {
-            log.info("전체 확인 : {}", subject);
             String changedSubject = subjectChange(subject);
             search = Search.builder()
                     .keyword(keyword)
