@@ -158,10 +158,10 @@ class CafeServiceTest {
                 .longitude(127.112322)
                 .startTime(8)
                 .endTime(16)
-//                .description("홈카페는 집처럼 좋습니다")
+                .description("홈카페는 집처럼 좋습니다")
 //                .imagePath("/image/06홈카페")
 //                .businessNumber(1111111116)
-                .siGunGuId(10010)
+//                .siGunGuId(10010)
                 .memberId(6)
                 .build();
         log.info("업데이트 할 카페 정보 : {}", cafe);
@@ -173,39 +173,8 @@ class CafeServiceTest {
         optionLists.add(3);
         log.info("카페 옵션 리스트 : {}", optionLists);
         //when
-        List<CafeOptionList> list = cafeService.makeCafeOptionList(cafe.getId(), optionLists);
-        cafeService.editCafe(cafe, comment, list);
+        cafeService.editCafe(5,"중구", "서울특별시", cafe, comment, optionLists);
         //then
     }
 
-    @Test
-    @DisplayName("카페 삭제")
-    @Disabled
-    @Transactional
-    void deleteCafeTest() {
-        //given
-        int id = 5;
-        //when
-        cafeService.deleteCafe(id);
-        //then
-    }
-
-    @Test
-    @DisplayName("카페옵션리스트 숫자 배열 생성")
-    @Disabled
-    void makeCafeOptionListTest() {
-        //given
-        int id = 5;
-        List<Integer> optionIds = new ArrayList<>();
-        optionIds.add(1);
-        optionIds.add(2);
-        optionIds.add(3);
-        log.info("옵션리스트 : {}", optionIds);
-        //결과 옵션리스트 : [1, 2, 3]
-        //when
-        List<CafeOptionList> list = cafeService.makeCafeOptionList(id, optionIds);
-        //then
-        log.info("생성된 카페 옵션 리스트 객체 : {}", list);
-        assertThat(list).isNotNull();
-    }
 }

@@ -1,6 +1,9 @@
 package com.vj.lets.web.dashboard.controller;
 
-import com.vj.lets.domain.cafe.dto.*;
+import com.vj.lets.domain.cafe.dto.Cafe;
+import com.vj.lets.domain.cafe.dto.CafeEditForm;
+import com.vj.lets.domain.cafe.dto.CafeOption;
+import com.vj.lets.domain.cafe.dto.OptionListForm;
 import com.vj.lets.domain.cafe.service.CafeService;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.room.dto.Room;
@@ -82,6 +85,7 @@ public class HostController {
         if(loginMember != null){
             Map<String, Object> cafes = cafeService.getCafeMemberId(loginMember.getId());
             int cafeId = Integer.parseInt(cafes.get("id").toString());
+            log.info("cafeEditForm:{}", cafeEditForm);
             Cafe cafeRe = Cafe.builder()
                     .id(cafeId)
 //                    .imagePath(imagePath)
@@ -90,17 +94,16 @@ public class HostController {
                     .phoneNumber(cafeEditForm.getPhoneNumber())
                     .roadAddress(cafeEditForm.getRoadAddress())
                     .detailAddress(cafeEditForm.getDetailAddress())
-//                    .latitude(cafeEdit.getLatitude())
-//                    .longitude(cafeEdit.getLongitude())
+                    .latitude(cafeEditForm.getLatitude())
+                    .longitude(cafeEditForm.getLongitude())
                     .startTime(cafeEditForm.getStartTime())
                     .endTime(cafeEditForm.getEndTime())
                     .description(cafeEditForm.getDescription())
                     .build();
-            log.info("변경할 카페 속성 : {}", cafeRe);
             String comment = "host";
-            log.info("변경사유 : {}", comment);
-            log.info("옴션아이디s : {}", cafeEditForm.getOptions());
-            cafeService.editCafe(cafeId, cafeRe, comment, cafeEditForm.getOptions());
+            String siGunGu = cafeEditForm.getSiGunGuName();
+            String siDo = cafeEditForm.getSiDoName();
+            cafeService.editCafe(cafeId, siGunGu, siDo, cafeRe, comment, cafeEditForm.getOptions());
         }
         return "redirect:/host/cafe";
     }

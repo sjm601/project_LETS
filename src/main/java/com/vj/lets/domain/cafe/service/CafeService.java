@@ -123,14 +123,8 @@ public interface CafeService {
      * @param comment 수정 사유
      * @param optionIds 수정한 옵션 리스트
      */
-    public void editCafe(int cafeId, Cafe cafe, String comment, List<Integer> optionIds);
+    public void editCafe(int cafeId, String siGunGu, String siDo, Cafe cafe, String comment, List<Integer> optionIds);
 
-    /**
-     * 카페 삭제
-     *
-     * @param id 카페 ID
-     */
-    public void deleteCafe(int id);
 
     /**
      * 카페 옵션 여부 체크

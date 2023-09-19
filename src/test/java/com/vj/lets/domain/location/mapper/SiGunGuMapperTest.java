@@ -1,13 +1,11 @@
 package com.vj.lets.domain.location.mapper;//import static org.junit.jupiter.api.Assertions.*;
+
 import com.vj.lets.domain.location.dto.SiGunGu;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * 시,군,구 매퍼 테스트
@@ -34,5 +32,16 @@ class SiGunGuMapperTest {
 
         // then
         log.info("시,군,구 id : {}", siGunGu.getId());
+    }
+
+    @Test
+    void getSiGunGuDoTest(){
+        //given
+        String siGunGuName = "중구";
+        String siDoName = "서울특별시";
+        //when
+        int siGunGuId=siGunGuMapper.getSiGunGuDo(siGunGuName, siDoName);
+        //then
+        log.info("시, 군, 구 id :{}", siGunGuId);
     }
 }
