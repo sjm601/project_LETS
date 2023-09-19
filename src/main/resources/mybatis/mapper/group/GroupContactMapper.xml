@@ -5,12 +5,18 @@
 
 <mapper namespace="com.vj.lets.domain.group.mapper.GroupContactMapper">
 
-    <insert id="register">
+    <insert id="contactGroup">
         INSERT INTO GROUP_CONTACT(ID, MEMBER_ID, STUDY_GROUP_ID)
         VALUES (GROUP_CONTACT_ID_SEQ.NEXTVAL, #{id}, #{studyGroupId})
     </insert>
 
-    <select id="findAll" parameterType="int">
+    <select id="isAlreadyContact" resultType="GroupContact">
+        SELECT ID
+        FROM GROUP_CONTACT
+        WHERE MEMBER_ID = #{id} AND STUDY_GROUP_ID = #{studyGroupId}
+    </select>
+
+    <select id="findAllGroupContactList" parameterType="int">
         SELECT GC.ID ID, TO_CHAR(GC.REGDATE, 'yyyy-MM-dd') REGDATE, M.NAME NAME, M.GENDER GENDER, M.AGE AGE, M.ID MEMBERID
         FROM GROUP_CONTACT GC
                  JOIN MEMBER M ON GC.MEMBER_ID = M.ID
@@ -20,19 +26,19 @@
         ORDER BY GC.REGDATE
     </select>
 
-    <update id="approve">
+    <update id="approveGroupContact">
         UPDATE GROUP_CONTACT
         SET STATUS = 'approve'
         WHERE MEMBER_ID = #{id} AND STUDY_GROUP_ID = #{studyGroupId}
     </update>
 
-    <update id="refuse">
+    <update id="refuseGroupContact">
         UPDATE GROUP_CONTACT
         SET STATUS = 'refuse'
         WHERE MEMBER_ID = #{id} AND STUDY_GROUP_ID = #{studyGroupId}
     </update>
 
-    <delete id="delete">
+    <delete id="deleteContact">
         DELETE FROM GROUP_CONTACT
         WHERE MEMBER_ID = #{id} AND STUDY_GROUP_ID = #{studyGroupId}
     </delete>

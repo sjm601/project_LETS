@@ -10,6 +10,8 @@
         <title>LETS - Host Dashboard</title>
 
         <link href="/dashboard/vendor/dropzone.css" rel="stylesheet">
+        <link href="/dashboard/vendor/animate.min.css" rel="stylesheet">
+        <link href="/dashboard/vendor/magnific-popup.css" rel="stylesheet">
     </th:block>
 
     <th:block th:fragment="content">
@@ -19,157 +21,109 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="/dashboard/host/host_dashboard.html">대시보드</a>
+                        <a th:href="@{/host}" href="/dashboard/host/host_dashboard.html">대시보드</a>
                     </li>
-                    <li class="breadcrumb-item active">Add Room</li>
+                    <li class="breadcrumb-item active">룸 정보</li>
                 </ol>
                 <div class="box_general padding_bottom">
                     <div class="header_box version_2">
-                        <h2><i class="fa fa-file"></i>룸 등록</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="cafeName">스터디카페 이름</label>
-                                <input type="text" class="form-control" id="cafeName" placeholder="홍길동" name="cafeName" disabled>
-                            </div>
-                        </div>
+                        <h2><i class="fa fa-file"></i>룸 정보</h2>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-group">
-                                <label>룸 대표사진</label>
-                                <form action="/file-upload" class="dropzone" name="roomPhoto"></form>
-                            </div>
+                            <label>룸 대표사진</label>
+                            <p th:text="${room.imagePath}"></p>
                         </div>
                     </div>
                     <!-- /row-->
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="roomName">룸 이름</label>
-                                <input type="text" class="form-control" id="roomName" placeholder="Name" name="roomName">
-                            </div>
+                            <label>룸 이름</label>
+                            <p th:text="${room.name}"></p>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="headCount">최대인원</label>
-                                <input type="number" class="form-control" id="headCount" placeholder="최대 수용 인원을 숫자로 입력하세요" name="peopleNum">
-                            </div>
+                            <label>최대수용인원</label>
+                            <p th:text="${room.headCount}"></p>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="price">시간당 가격</label>
-                                <input type="number" class="form-control" id="price" placeholder="시간당 이용 금액을 숫자로 입력하세요" name="peopleNum">
-                            </div>
+                            <label>시간당 가격</label>
+                            <p th:text="${#numbers.formatInteger(room.price, 3, 'COMMA') + '원'}"></p>
                         </div>
                     </div>
                     <!-- /row-->
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="description">룸 상세설명</label>
-                                <textarea style="height:200px;" class="form-control" id="description" placeholder="설명을 입력해주세요"
-                                          name="cafeDescription"></textarea>
-                            </div>
+                            <label>룸 상세설명</label>
+                            <p th:text="${room.description}"></p>
                         </div>
                     </div>
                     <!-- /row-->
                 </div>
                 <!-- /box_general-->
-
-                <div class="box_general padding_bottom">
-                    <div class="header_box version_2">
-                        <h2><i class="fa fa-clock-o"></i>운영시간</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1">
-                            <label class="fix_spacing">카페시작시간</label>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <div class="styled-select">
-                                    <select>
-                                        <option>Opening Time</option>
-                                        <option>Closed</option>
-                                        <option>01:00</option>
-                                        <option>02:00</option>
-                                        <option>03:00</option>
-                                        <option>04:00</option>
-                                        <option>05:00</option>
-                                        <option>06:00</option>
-                                        <option>07:00</option>
-                                        <option>08:00</option>
-                                        <option>09:00</option>
-                                        <option>10:00</option>
-                                        <option>11:00</option>
-                                        <option>12:00</option>
-                                        <option>13:00</option>
-                                        <option>14:00</option>
-                                        <option>15:00</option>
-                                        <option>16:00</option>
-                                        <option>17:00</option>
-                                        <option>18:00</option>
-                                        <option>19:00</option>
-                                        <option>20:00</option>
-                                        <option>21:00</option>
-                                        <option>22:00</option>
-                                        <option>23:00</option>
-                                        <option>24:00</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                            <label class="fix_spacing">카페종료시간</label>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <div class="styled-select">
-                                    <select>
-                                        <option>Closing Time</option>
-                                        <option>Closed</option>
-                                        <option>01:00</option>
-                                        <option>02:00</option>
-                                        <option>03:00</option>
-                                        <option>04:00</option>
-                                        <option>05:00</option>
-                                        <option>06:00</option>
-                                        <option>07:00</option>
-                                        <option>08:00</option>
-                                        <option>09:00</option>
-                                        <option>10:00</option>
-                                        <option>11:00</option>
-                                        <option>12:00</option>
-                                        <option>13:00</option>
-                                        <option>14:00</option>
-                                        <option>15:00</option>
-                                        <option>16:00</option>
-                                        <option>17:00</option>
-                                        <option>18:00</option>
-                                        <option>19:00</option>
-                                        <option>20:00</option>
-                                        <option>21:00</option>
-                                        <option>22:00</option>
-                                        <option>23:00</option>
-                                        <option>24:00</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /row-->
-                </div>
                 <!-- /box_general-->
-
-                <div class="float-right mr-3">
-                    <p><a href="room-table.html" class="btn_1 medium">등록</a></p>
-                    <!-- <p><a href="#0" class="btn_1 medium">수정</a></p> -->
+                <div class="d-flex flex-row-reverse inline-popups">
+                    <a href="#modal-delete" class="btn_1 medium mx-1">삭제</a>
+                    <a href="#modal-edit" class="btn_1 medium mx-1">수정</a>
                 </div>
             </div>
             <!-- /.container-fluid -->
         </div>
         <!-- /.container-wrapper -->
+        <!-- Edit to room popup -->
+        <div id="modal-edit" class="white-popup mfp-with-anim mfp-hide">
+            <form th:action="@{/host/room/{id}/edit(id=${room.id})}" th:object="${roomForm}" th:method="post" enctype="multipart/form-data">
+                <div class="small-dialog-header">
+                    <h3>룸 수정</h3>
+                </div>
+<!--                <div class="form-group">-->
+<!--                    <label>Your photo</label>-->
+<!--                    <input th:id="imagePath" th:name="imagePath" type="file" name="uploadfile" accept="image/*"><br>-->
+<!--                </div>-->
+                <div class="form-group">
+                    <label th:for="name">룸이름</label>
+                    <input th:id="name" th:name="name" th:value="${room.name}"
+                           type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label th:for="headCount">최대수용인원</label>
+                    <input th:id="headCount" th:name="headCount" th:value="${room.headCount}"
+                           type="number" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label th:for="price">시간당 가격</label>
+                    <input th:id="price" th:name="price" th:value="${room.price}"
+                           type="number" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label th:for="description">룸설명</label>
+                    <input th:id="description" th:name="description" th:value="${room.description}"
+                           type="text" class="form-control">
+                </div>
+                <button type="submit" class="btn_1 my-2">
+                    <i class="fa fa-fw fa-pencil mr-1"></i>
+                    룸 정보 수정
+                </button>
+            </form>
+        </div>
+
+        <!-- delete to member popup -->
+        <div id="modal-delete"
+             class="white-popup mfp-with-anim mfp-hide">
+            <div class="small-dialog-header">
+                <h3>룸 삭제</h3>
+            </div>
+            <div class="form-group message-reply margin-top-0">
+                <label th:for="password">비밀번호</label>
+                <input type="password" th:id="password" th:name="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn_1 gray delete">
+                <i class="fa fa-fw fa-times-circle-o mr-1"></i>
+                룸 삭제
+            </button>
+        </div>
+
+
+
         <!-- /Content -->
     </th:block>
 

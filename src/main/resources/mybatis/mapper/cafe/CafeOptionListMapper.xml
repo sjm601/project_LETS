@@ -29,6 +29,13 @@
         WHERE CAFE_ID = #{cafeId}
     </select>
 
+    <select id="findByOptionCheckCafeId" parameterType="int" resultType="boolean">
+        SELECT COUNT(ID)
+        FROM CAFE_OPTION_LIST
+        WHERE CAFE_ID = #{cafeId}
+            AND OPTION_ID = #{optionId}
+    </select>
+
     <delete id="delete" parameterType="int">
         DELETE FROM CAFE_OPTION_LIST
         WHERE CAFE_ID = #{cafeId}

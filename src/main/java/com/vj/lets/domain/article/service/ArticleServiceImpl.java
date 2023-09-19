@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
 * 클래스 설명 : Article 서비스 구현체
@@ -49,12 +50,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> findAll() {
-        return articleMapper.findAll();
-    }
-
-    @Override
-    public List<Article> findByPage(PageParams pageParams) {
+    public List<Map<String, Object>> findByPage(PageParams pageParams) {
         return articleMapper.findByPage(pageParams);
     }
 
@@ -68,6 +64,10 @@ public class ArticleServiceImpl implements ArticleService {
         return articleMapper.findById(id);
     }
 
+    @Override
+    public List<Map<String, Object>> findComment(int articleId) {
+        return articleMapper.findComment(articleId);
+    }
 
 
 }

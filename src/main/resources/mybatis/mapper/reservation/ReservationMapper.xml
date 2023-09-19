@@ -140,7 +140,7 @@
     </select>
 
     <select id="checkDuplicateResTime" resultType="map">
-        SELECT START_TIME, END_TIME
+        SELECT ID, START_TIME, END_TIME
         FROM reservation
         WHERE ROOM_ID = #{roomId}
         AND BOOKING_DATE = #{bookingDate}

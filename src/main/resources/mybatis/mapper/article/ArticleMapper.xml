@@ -28,21 +28,6 @@
         WHERE ID = #{id}
     </update>
 
-    <!--게시글 목록-->
-    <select id="findAll" resultType="Article" >
-        SELECT
-            a.id,
-            a.title,
-            a.content,
-            TO_CHAR(a.regdate, 'YYYY-MM-DD HH24:MI') regdate,
-            m.NAME
-        FROM
-            article a JOIN MEMBER m ON a.MEMBER_ID = m.ID
-        WHERE a.STATUS = 'enabled'
-        ORDER BY a.regdate desc
-
-    </select>
-
     <!-- 페이징 계산(검색값 포함)에 필요한 게시글 전체 갯수 -->
     <select id="getCountAll" parameterType="object" resultType="int">
         SELECT COUNT(a.id) AS "cnt"
@@ -58,8 +43,8 @@
         </if>
     </select>
 
-    <!-- 게시글 목록 (페이징) -->
-    <select id="findByPage" parameterType="PageParams" resultType="Article">
+    <!-- 게시글 목록 (페이징 처리 및 검색값 , 댓글 포함) -->
+    <select id="findByPage" parameterType="PageParams" resultType="map">
         SELECT
         id,
         title,
@@ -112,7 +97,15 @@
             id = #{id}
     </select>
 
-
-
+    <!--해당 게시글의 댓글 찾기-->
+    <select id="findComment" parameterType="int" resultType="map">
+        SELECT ac.id,
+               ac.content,
+               TO_CHAR(ac.regdate, 'YYYY-MM-DD HH24:MI') AS regdate,
+               a.id                                      AS articleId
+        FROM article_comment ac
+                 JOIN article a ON a.id = ac.article_id
+        where a.id = #{articleId};
+    </select>
 
 </mapper>

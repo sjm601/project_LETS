@@ -3,6 +3,7 @@ package com.vj.lets.domain.cafe.mapper;
 import com.vj.lets.domain.cafe.dto.CafeOption;
 import com.vj.lets.domain.cafe.dto.CafeOptionList;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -46,6 +47,14 @@ public interface CafeOptionListMapper {
      */
     public List<CafeOption> findByOptionCafeId(int cafeId);
 
+    /**
+     * 카페아이디로 옵션 체크여부
+     *
+     * @param cafeId 카페 아이디
+     * @param optionId 옵션 아이디
+     * @return 체크여부
+     */
+    public boolean findByOptionCheckCafeId(@Param("cafeId") int cafeId, @Param("optionId") int optionId);
     /**
      * 카페 옵션리스트 삭제
      *

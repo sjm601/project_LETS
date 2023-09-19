@@ -23,7 +23,7 @@ public interface StudyGroupMapper {
      * @author VJ특공대 이희영
      * @param studyGroup 생성할 스터디 그룹 정보
      */
-    public void create(StudyGroup studyGroup);
+    public void createStudy(StudyGroup studyGroup);
 
     /**
      * 스터디 그룹 아이디 조회
@@ -31,7 +31,7 @@ public interface StudyGroupMapper {
      * @author VJ특공대 이희영
      * @return 스터디 그룹 아이디
      */
-    public int findId();
+    public int findByStudyId();
 
     /**
      * 스터디 그룹 전체 리스트 조회
@@ -39,7 +39,7 @@ public interface StudyGroupMapper {
      * @author VJ특공대 이희영
      * @return 스터디 그룹 리스트
      */
-    public List<Map<String, Object>> findAll(Search search);
+    public List<Map<String, Object>> findAllStudyList(Search search);
 
     /**
      * 스터디 그룹 조회
@@ -48,7 +48,7 @@ public interface StudyGroupMapper {
      * @param studyGroupId 스터디 그룹 아이디
      * @return 조회된 스터디 그룹 정보
      */
-    public Map<String, Object> read(int studyGroupId);
+    public Map<String, Object> readStudy(int studyGroupId);
 
     /**
      * 스터디 그룹 변경
@@ -56,7 +56,7 @@ public interface StudyGroupMapper {
      * @author VJ특공대 이희영
      * @param studyGroup 변경할 스터디 그룹 정보
      */
-    public void update(StudyGroup studyGroup);
+    public void updateStudy(StudyGroup studyGroup);
 
     /**
      * 스터디 그룹 삭제
@@ -64,7 +64,7 @@ public interface StudyGroupMapper {
      * @author VJ특공대 이희영
      * @param studyGroupId 스터디 그룹 아이디
      */
-    public void delete(int studyGroupId);
+    public void deleteStudy(int studyGroupId);
 
     /**
      * 스터디 그룹 현재 회원수 1 증가
@@ -72,7 +72,7 @@ public interface StudyGroupMapper {
      * @author VJ특공대 이희영
      * @param studyGroupId 스터디 그룹 아이디
      */
-    public void add(int studyGroupId);
+    public void plusCurrentCount(int studyGroupId);
 
     /**
      * 스터디 그룹 현재 회원수 1 감소
@@ -80,7 +80,7 @@ public interface StudyGroupMapper {
      * @author VJ특공대 이희영
      * @param studyGroupId 스터디 그룹 아이디
      */
-    public void subtract(int studyGroupId);
+    public void minusCurrentCount(int studyGroupId);
 
     /**
      * 신규 스터디 그룹 리스트 3개 조회

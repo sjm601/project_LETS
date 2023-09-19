@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 /**
 * 클래스 설명 : ArticleComment 서비스 구현체
 * 작성일 : 2023-09-08
@@ -23,8 +21,8 @@ public class ArticleCommentServiceImpl implements ArticleCommentService {
 
     @Override
     @Transactional
-    public void create(ArticleComment articleComment, int id) {
-        articleCommentMapper.create(articleComment, id);
+    public void create(ArticleComment articleComment) {
+        articleCommentMapper.create(articleComment);
         articleCommentHistoryMapper.create();
     }
 
@@ -36,7 +34,7 @@ public class ArticleCommentServiceImpl implements ArticleCommentService {
     }
 
     @Override
-    public List<ArticleComment> findCommentAll() {
-        return articleCommentMapper.findCommentAll();
+    public ArticleComment findById(int id) {
+        return articleCommentMapper.findById(id);
     }
 }

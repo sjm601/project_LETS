@@ -118,12 +118,12 @@ public interface CafeService {
 
     /**
      * 카페 정보 수정
-     *
-     * @param cafe            카페
-     * @param comment         정보 변경 사유
-     * @param cafeOptionLists 카페 옵션 리스트
+     * @param cafeId 카페 아이디
+     * @param cafe 카페 정보
+     * @param comment 수정 사유
+     * @param optionIds 수정한 옵션 리스트
      */
-    public void editCafe(Cafe cafe, String comment, List<CafeOptionList> cafeOptionLists);
+    public void editCafe(int cafeId, Cafe cafe, String comment, List<Integer> optionIds);
 
     /**
      * 카페 삭제
@@ -133,11 +133,11 @@ public interface CafeService {
     public void deleteCafe(int id);
 
     /**
-     * 카페 옵션 리스트 객체 생성
+     * 카페 옵션 여부 체크
      *
-     * @param cafeId    카페 ID
-     * @param optionIds 카페 옵션 아이디 리스트
-     * @return 카페 옵션 리스트 객체
+     * @param cafeId 카페아이디
+     * @param optionId 옵션아이디
+     * @return 옵션여부체크
      */
-    public List<CafeOptionList> makeCafeOptionList(int cafeId, List<Integer> optionIds);
+    public boolean cafeOptionCheck(int cafeId, int optionId);
 }

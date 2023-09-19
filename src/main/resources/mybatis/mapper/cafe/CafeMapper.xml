@@ -15,7 +15,9 @@
     <set>
         <if test="name != null and name != ''">NAME = #{name},</if>
         <if test="phoneNumber != null and phoneNumber != ''">PHONE_NUMBER= #{phoneNumber},</if>
+        <if test="roadAddress != null and roadAddress != ''">ROAD_ADDRESS = #{roadAddress},</if>
         <if test="detailAddress != null and detailAddress != ''">DETAIL_ADDRESS = #{detailAddress},</if>
+        <if test="roadAddress != null and roadAddress != ''">SI_GUN_GU_ID = #{siGunGuId},</if>
         <if test="roadAddress != null and roadAddress != ''">LATITUDE = #{latitude},</if>
         <if test="roadAddress != null and roadAddress != ''">LONGITUDE = #{longitude},</if>
         <if test="startTime != null and startTime != ''">START_TIME = #{startTime},</if>
@@ -23,8 +25,6 @@
         <if test="description != null and description != ''">DESCRIPTION = #{description},</if>
         <if test="imagePath != null and imagePath != ''">IMAGE_PATH = #{imagePath},</if>
         <if test="businessNumber != null and businessNumber != ''">BUSINESS_NUMBER = #{businessNumber},</if>
-        <if test="roadAddress != null and roadAddress != ''">SI_GUN_GU_ID = #{siGunGuId},</if>
-        <if test="roadAddress != null and roadAddress != ''">ROAD_ADDRESS = #{roadAddress},</if>
     </set>
     </update>
 
