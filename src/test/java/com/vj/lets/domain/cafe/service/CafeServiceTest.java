@@ -176,5 +176,4 @@ class CafeServiceTest {
         cafeService.editCafe(5,"중구", "서울특별시", cafe, comment, optionLists);
         //then
     }
-
 }

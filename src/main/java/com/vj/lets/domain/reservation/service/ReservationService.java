@@ -92,5 +92,17 @@ public interface ReservationService {
     //예약 삭제
     public void delete(int id, int memberId);
 
+    //호스트의 매달 예약 건수 그래프 출력
+    public List<Map<String,Object>> getCountByResMonth(int cafeId);
+
+    //호스트의 매달 월 매출 그래프 출력
+    public List<Map<String, Object>> getMonthlySales(int cafeId);
+
+    //호스트의 카페에 대한 예약 횟수 조회
+    public int getCountResByHost(int cafeId, String type);
+
+    public List<Map<String, Object>> getHostResList(int cafeId, PageParams pageParams);
+
+
 
 }
