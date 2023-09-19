@@ -198,4 +198,3 @@ contactSubmitBtn.addEventListener('click', e => {
 
 // 스터디 그룹 가입 신청
 // fetch를 이용해 서버에서 이미 가입 신청 내역이 있는지 확인 후 가입 신청 완료
-
