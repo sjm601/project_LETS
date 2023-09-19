@@ -194,7 +194,7 @@ public class MypageController {
      * @param model      모델 객체
      * @return 성공 시 반환 값
      */
-    @PutMapping("/review")
+    @PatchMapping("/review")
     @ResponseBody
     public Object reviewEdit(@RequestBody ReviewForm reviewForm, Model model) {
 
