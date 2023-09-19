@@ -5,17 +5,17 @@
 
 <mapper namespace="com.vj.lets.domain.group.mapper.StudyGroupMapper">
 
-    <insert id="create" parameterType="StudyGroup">
+    <insert id="createStudy" parameterType="StudyGroup">
         INSERT INTO STUDY_GROUP (ID, NAME, TOTAL_COUNT, SUBJECT, IMAGE_PATH, SI_GUN_GU_ID)
         VALUES (STUDY_GROUP_ID_SEQ.NEXTVAL, #{name}, #{totalCount}, #{subject}, #{imagePath}, #{siGunGuId})
     </insert>
 
-    <select id="findId" resultType="int">
+    <select id="findByStudyId" resultType="int">
         SELECT STUDY_GROUP_ID_SEQ.CURRVAL
         FROM DUAL
     </select>
 
-    <select id="findAll" resultType="map">
+    <select id="findAllStudyList" resultType="map">
         SELECT SG.ID            ID,
                SG.NAME          NAME,
                SG.TOTAL_COUNT   TOTALCOUNT,
@@ -37,7 +37,7 @@
         ORDER BY REGDATE DESC
     </select>
 
-    <select id="read" parameterType="int" resultType="map">
+    <select id="readStudy" parameterType="int" resultType="map">
         SELECT SG.ID            ID,
                SG.NAME          NAME,
                SG.TOTAL_COUNT   TOTALCOUNT,
@@ -56,7 +56,7 @@
           AND SG.STATUS = 'enabled'
     </select>
 
-    <update id="update" parameterType="StudyGroup">
+    <update id="updateStudy" parameterType="StudyGroup">
         UPDATE STUDY_GROUP
         <set>
             <if test="name != null and name != ''">NAME = #{name},</if>
@@ -68,19 +68,19 @@
         WHERE ID = #{id}
     </update>
 
-    <update id="delete" parameterType="int">
+    <update id="deleteStudy" parameterType="int">
         UPDATE STUDY_GROUP
         SET status = 'disabled'
         WHERE ID = #{id}
     </update>
 
-    <update id="add" parameterType="int">
+    <update id="plusCurrentCount" parameterType="int">
         UPDATE STUDY_GROUP
         SET CURRENT_COUNT = CURRENT_COUNT + 1
         WHERE ID = #{id}
     </update>
 
-    <update id="subtract" parameterType="int">
+    <update id="minusCurrentCount" parameterType="int">
         UPDATE STUDY_GROUP
         SET CURRENT_COUNT = CURRENT_COUNT - 1
         WHERE ID = #{id}

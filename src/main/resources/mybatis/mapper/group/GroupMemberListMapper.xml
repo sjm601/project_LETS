@@ -5,12 +5,12 @@
 
 <mapper namespace="com.vj.lets.domain.group.mapper.GroupMemberListMapper">
 
-    <insert id="create" parameterType="int">
+    <insert id="createGroupMemberList" parameterType="int">
         INSERT INTO GROUP_MEMBER_LIST(ID, POSITION, MEMBER_ID, STUDY_GROUP_ID)
         VALUES (GROUP_MEMBER_LIST_ID_SEQ.NEXTVAL, '팀장', #{id}, STUDY_GROUP_ID_SEQ.CURRVAL)
     </insert>
 
-    <select id="findAll" parameterType="int">
+    <select id="findAllGroupMemberList" parameterType="int">
         SELECT GML.ID ID, GML.POSITION POSITION, M.NAME NAME, M.AGE, M.GENDER, GML.STUDY_GROUP_ID STUDYGROUPID, M.ID MEMBERID
         FROM GROUP_MEMBER_LIST GML
             JOIN MEMBER M ON GML.MEMBER_ID = M.ID
@@ -18,12 +18,12 @@
         ORDER BY GML.POSITION DESC, M.NAME
     </select>
 
-    <insert id="add">
+    <insert id="addMember">
         INSERT INTO GROUP_MEMBER_LIST(ID, POSITION, MEMBER_ID, STUDY_GROUP_ID)
         VALUES (GROUP_MEMBER_LIST_ID_SEQ.NEXTVAL, '팀원', #{id}, #{studyGroupId})
     </insert>
 
-    <delete id="remove">
+    <delete id="removeMember">
         DELETE
         FROM GROUP_MEMBER_LIST
         WHERE MEMBER_ID = #{id}
@@ -37,7 +37,7 @@
           AND STUDY_GROUP_ID = #{studyGroupId}
     </select>
 
-    <select id="myGroupList" parameterType="int" resultType="map">
+    <select id="findMyGroupList" parameterType="int" resultType="map">
         SELECT GML.ID             ID,
                GML.POSITION       POSTITION,
                GML.MEMBER_ID      MEMBERID,

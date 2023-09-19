@@ -80,6 +80,7 @@ public class CafeController {
     @ResponseBody
     public  String findRoom(@PathVariable int id, Model model) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
+
         List<Room> roomList = roomService.getSearchCafeRoom(id);
         log.info("룸 목록:{}",roomList);
         return  objectMapper.writeValueAsString(roomList);

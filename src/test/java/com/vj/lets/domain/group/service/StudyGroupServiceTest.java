@@ -45,7 +45,7 @@ class StudyGroupServiceTest {
         int id = 30;
 
         // when
-        int studyGroupId = studyGroupService.createStudyGroup(studyGroup, id, siGunGuName);
+        int studyGroupId = studyGroupService.generateStudy(studyGroup, id, siGunGuName);
 
         // then
         log.info("생성한 스터디 그룹 아이디 : {}", studyGroupId);
@@ -58,7 +58,7 @@ class StudyGroupServiceTest {
         Search search = Search.builder().build();
 
         // when
-        List<Map<String, Object>> list = studyGroupService.getStudyGroupList(search);
+        List<Map<String, Object>> list = studyGroupService.getStudyList(search);
 
         // then
         log.info("스터디 그룹 리스트 : {}", list);
@@ -72,7 +72,7 @@ class StudyGroupServiceTest {
         int studyGroupId = 1;
 
         // when
-        Map<String, Object> studyGroup = studyGroupService.viewStudyGroup(studyGroupId);
+        Map<String, Object> studyGroup = studyGroupService.viewStudy(studyGroupId);
 
         // then
         log.info("스터디 그룹 조회 : {}", studyGroup);
@@ -89,7 +89,7 @@ class StudyGroupServiceTest {
                 .build();
 
         // when
-        studyGroupService.editStudyGroup(studyGroup);
+        studyGroupService.editStudy(studyGroup);
 
         // then
         log.info("스터디 그룹 정보 수정 : {}", studyGroup);
@@ -102,7 +102,7 @@ class StudyGroupServiceTest {
         int studyGroupId = 1;
 
         // when
-        studyGroupService.deleteStudyGroup(studyGroupId);
+        studyGroupService.removeStudy(studyGroupId);
 
         // then
         log.info("스터디 그룹 삭제");
@@ -115,7 +115,7 @@ class StudyGroupServiceTest {
         int StudyGroupId = 1;
 
         // when
-        List<Map<String, Object>> list = studyGroupService.findByAllMember(StudyGroupId);
+        List<Map<String, Object>> list = studyGroupService.getStudyMemberList(StudyGroupId);
 
         // then
         log.info("스터디 그룹 회원 리스트 조회 : {}", list);
@@ -130,7 +130,7 @@ class StudyGroupServiceTest {
         int studyGroupId = 1;
 
         // when
-        studyGroupService.addMember(id, studyGroupId);
+        studyGroupService.studyAddMember(id, studyGroupId);
 
         // then
         log.info("스터디 그룹 회원 추가");
@@ -144,7 +144,7 @@ class StudyGroupServiceTest {
         int studyGroupId = 1;
 
         // when
-        studyGroupService.removeMember(id, studyGroupId);
+        studyGroupService.studySubtractMember(id, studyGroupId);
 
         // then
         log.info("스터디 그룹 회원 제거");
@@ -158,10 +158,11 @@ class StudyGroupServiceTest {
         int studyGroupId = 1;
 
         // when
-        studyGroupService.registerStudy(id, studyGroupId);
+        GroupContact groupContact = studyGroupService.contactStudy(id, studyGroupId);
 
         // then
-        log.info("스터디 가입 신청");
+        log.info("스터디 가입 신청 내역 존재 여부 확인 : {}", groupContact);
+        assertThat(groupContact).isNull();
     }
 
     @Test
@@ -171,7 +172,7 @@ class StudyGroupServiceTest {
         int studyGroupId = 1;
 
         // when
-        List<Map<String, Object>> list = studyGroupService.findByAllRegist(studyGroupId);
+        List<Map<String, Object>> list = studyGroupService.getStudyContactList(studyGroupId);
 
         // then
         log.info("스터디 가입 신청 회원 리스트 : {}", list);
@@ -186,7 +187,7 @@ class StudyGroupServiceTest {
         int studyGroupId = 1;
 
         // when
-        studyGroupService.approve(id, studyGroupId);
+        studyGroupService.approveStudyContact(id, studyGroupId);
 
         // then
         log.info("스터디 가입 승인");
@@ -200,10 +201,10 @@ class StudyGroupServiceTest {
         int studyGroupId = 1;
 
         // when
-        studyGroupService.refuse(id, studyGroupId);
+        studyGroupService.refuseStudyContact(id, studyGroupId);
 
         // then
-        log.info("스터디 가입 승인");
+        log.info("스터디 가입 거절");
     }
 
     @Test
@@ -228,7 +229,7 @@ class StudyGroupServiceTest {
         int id = 32;
 
         // when
-        List<Map<String, Object>> list = studyGroupService.myGroupList(id);
+        List<Map<String, Object>> list = studyGroupService.getMyStudyList(id);
 
         // then
         log.info("가입한 스터디 그룹 리스트 조회 : {}", list);

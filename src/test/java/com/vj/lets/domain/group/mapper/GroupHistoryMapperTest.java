@@ -35,8 +35,8 @@ class GroupHistoryMapperTest {
                 .build();
 
         // when
-        studyGroupMapper.create(studyGroup);
-        groupHistoryMapper.create();
+        studyGroupMapper.createStudy(studyGroup);
+        groupHistoryMapper.createGroupHistory();
 
         // then
         log.info("스터디 그룹 히스토리 생성");
@@ -49,7 +49,7 @@ class GroupHistoryMapperTest {
         int studyGroupId = 1;
 
         // when
-        groupHistoryMapper.update(studyGroupId);
+        groupHistoryMapper.updateGroupHistory(studyGroupId);
 
         // then
         log.info("스터디 그룹 히스토리 update로 생성");
@@ -62,7 +62,7 @@ class GroupHistoryMapperTest {
         int studyGroupId = 1;
 
         // when
-        groupHistoryMapper.delete(studyGroupId);
+        groupHistoryMapper.deleteGroupHistory(studyGroupId);
 
         // then
         log.info("스터디 그룹 히스토리 delete로 생성");

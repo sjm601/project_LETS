@@ -42,10 +42,10 @@ class GroupMemberListMapperTest {
                 .subject("주제")
                 .siGunGuId(10020)
                 .build();
-        studyGroupMapper.create(studyGroup);
+        studyGroupMapper.createStudy(studyGroup);
 
         // when
-        groupMemberListMapper.create(id);
+        groupMemberListMapper.createGroupMemberList(id);
 
         // then
         log.info("스터디 그룹 멤버 리스트 생성");
@@ -58,7 +58,7 @@ class GroupMemberListMapperTest {
         int studyGroupId = 1;
 
         // when
-        List<Map<String, Object>> list = groupMemberListMapper.findAll(studyGroupId);
+        List<Map<String, Object>> list = groupMemberListMapper.findAllGroupMemberList(studyGroupId);
 
         // then
         log.info("스터디 멤버 리스트 : {}", list);
@@ -73,7 +73,7 @@ class GroupMemberListMapperTest {
         int studyGroupId = 1;
 
         // when
-        groupMemberListMapper.add(id, studyGroupId);
+        groupMemberListMapper.addMember(id, studyGroupId);
 
         // then
         log.info("스터디 멤버 추가");
@@ -87,7 +87,7 @@ class GroupMemberListMapperTest {
         int studyGroupId = 1;
 
         // when
-        groupMemberListMapper.remove(id, studyGroupId);
+        groupMemberListMapper.removeMember(id, studyGroupId);
 
         // then
         log.info("스터디 멤버 삭제");
@@ -115,7 +115,7 @@ class GroupMemberListMapperTest {
         int id = 32;
 
         // when
-        List<Map<String, Object>> list = groupMemberListMapper.myGroupList(id);
+        List<Map<String, Object>> list = groupMemberListMapper.findMyGroupList(id);
 
         // then
         log.info("가입된 스터디 그룹 리스트 : {}", list);
