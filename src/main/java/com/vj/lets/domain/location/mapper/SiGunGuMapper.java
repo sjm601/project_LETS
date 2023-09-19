@@ -2,6 +2,7 @@ package com.vj.lets.domain.location.mapper;
 
 import com.vj.lets.domain.location.dto.SiGunGu;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 시,군,구 매퍼
@@ -21,4 +22,14 @@ public interface SiGunGuMapper {
      * @return 조회된 시,군,구 정보
      */
     public SiGunGu getSiGunGu(String siGunGuName);
+
+    /**
+     * 이름으로 시군구 아이디 조회
+     *
+     * @author VJ특공대 강소영
+     * @param siGunGuName 시군구 이름
+     * @param siDoName 시도 이름
+     * @return 시군구 아이디
+     */
+    public int getSiGunGuDo(@Param("siGunGuName") String siGunGuName,@Param("siDoName") String siDoName);
 }

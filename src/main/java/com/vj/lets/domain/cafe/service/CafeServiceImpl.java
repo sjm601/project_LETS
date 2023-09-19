@@ -9,6 +9,7 @@ import com.vj.lets.domain.cafe.mapper.CafeMapper;
 import com.vj.lets.domain.cafe.mapper.CafeOptionListMapper;
 import com.vj.lets.domain.cafe.mapper.CafeOptionMapper;
 import com.vj.lets.domain.common.web.PageParams;
+import com.vj.lets.domain.location.mapper.SiGunGuMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +34,7 @@ public class CafeServiceImpl implements CafeService{
     private final CafeHistoryMapper cafeHistoryMapper;
     private final CafeOptionMapper cafeOptionMapper;
     private final CafeOptionListMapper cafeOptionListMapper;
+    private final SiGunGuMapper siGunGuMapper;
     
     @Override
     @Transactional
@@ -104,7 +106,7 @@ public class CafeServiceImpl implements CafeService{
 
     @Override
     @Transactional
-    public void editCafe(int cafeId, Cafe cafe, String comment, List<Integer> optionIds) {
+    public void editCafe(int cafeId, String siGunGu, String siDo, Cafe cafe, String comment, List<Integer> optionIds) {
         List<CafeOptionList> cafeOptionLists = new ArrayList<>();
         for (int optionId : optionIds) {
             CafeOptionList makeList = CafeOptionList
@@ -114,20 +116,16 @@ public class CafeServiceImpl implements CafeService{
                     .build();
             cafeOptionLists.add(makeList);
         }
-
+        if (siGunGu != null){
+            int sggId = siGunGuMapper.getSiGunGuDo(siGunGu, siDo);
+            cafe.setSiGunGuId(sggId);
+        }
         cafeMapper.update(cafe);
         cafeHistoryMapper.update(comment, cafe.getId());
         cafeOptionListMapper.delete(cafe.getId());
         for (CafeOptionList list : cafeOptionLists) {
             cafeOptionListMapper.create(list);
         }
-    }
-
-    @Override
-    @Transactional
-    public void deleteCafe(int id) {
-        cafeMapper.delete(id);
-        cafeHistoryMapper.delete(id);
     }
 
     @Override
