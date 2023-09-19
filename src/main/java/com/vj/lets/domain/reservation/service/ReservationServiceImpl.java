@@ -103,5 +103,33 @@ public class ReservationServiceImpl implements ReservationService {
         reservationMapper.delete(id, memberId);
     }
 
+    @Override
+    public List<Map<String, Object>> getCountByResMonth(int cafeId) {
+        return reservationMapper.readCountByResMonth(cafeId);
+    }
+
+    @Override
+    public List<Map<String, Object>> getMonthlySales(int cafeId) {
+        return reservationMapper.readMonthlySales(cafeId);
+    }
+
+    @Override
+    public int getCountResByHost(int cafeId, String type) {
+        return reservationMapper.readCountByHost(cafeId,type);
+    }
+
+    @Override
+    public List<Map<String, Object>> getHostResList(int cafeId, PageParams pageParams) {
+        List<Map<String, Object>> resList = new ArrayList<>();
+        List<Map<String, Object>> list = reservationMapper.findByHost(cafeId, pageParams);
+        for (Map<String, Object> map : list) {
+            int reservationId = Integer.parseInt(map.get("id").toString());
+            boolean reviewBoolean = reviewMapper.readCountByReservationId(reservationId);
+            map.put("reviewBoolean", reviewBoolean);
+            resList.add(map);
+        }
+        return resList;
+    }
+
 
 }

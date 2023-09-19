@@ -43,7 +43,8 @@
                END_TIME "endTime",
                DESCRIPTION "description",
                IMAGE_PATH "imagePath",
-               "cafeRating"
+               "cafeRating",
+               "reviewCount"
         FROM CAFE caf
                  LEFT JOIN (SELECT res.CAFE_ID, AVG(rev.RATING) "cafeRating"
                             FROM REVIEW rev
@@ -51,6 +52,10 @@
                             GROUP BY res.CAFE_ID) a ON a.CAFE_ID = caf.ID
                  LEFT JOIN SI_GUN_GU si ON si.ID = caf.SI_GUN_GU_ID
                  LEFT JOIN SI_DO do ON do.ID = si.SI_DO_ID
+                 LEFT JOIN (SELECT res.CAFE_ID, COUNT(res.id) "reviewCount"
+                            FROM RESERVATION res
+                                     JOIN review rv ON res.id = rv.reservation_id
+                            GROUP BY res.CAFE_ID) c ON c.CAFE_ID = caf.ID
         Where caf.ID = #{id}
           AND STATUS = 'enabled'
     </select>

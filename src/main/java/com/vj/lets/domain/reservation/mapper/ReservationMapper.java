@@ -83,4 +83,27 @@ public interface ReservationMapper {
 
     //예약 삭제
     public void delete(@Param("id") int id, @Param("memberId") int memberId);
+    
+    //호스트 예약건수 달마다 출력
+    public List<Map<String, Object>> readCountByResMonth(int cafeId);
+    
+    //호스트의 매달 매출 출력
+    public List<Map<String, Object>> readMonthlySales(int cafeId);
+
+    /**
+     * cafe 아이디로 카페의 총 예약 수 조회
+     * @param cafeId
+     * @param type
+     * @return
+     */
+    public int readCountByHost(@Param("cafeId") int cafeId, @Param("type") String type);
+
+    /**
+     * 회원 ID로 예약 목록 조회
+     *
+     * @param cafeId   카페 ID
+     * @param pageParams 페이징 객체
+     * @return 예약 목록
+     */
+    public List<Map<String, Object>> findByHost(@Param("cafeId") int cafeId, @Param("pageParams") PageParams pageParams);
 }
