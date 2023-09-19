@@ -171,4 +171,26 @@ class ReservationMapperTest {
 //        log.info("결과:{}",result);
 //        assertThat(result).isNotNull();
     }
+
+    @Test
+    void readCountByResMonthTest() {
+        // given
+        int cafeId = 2;
+        // when
+        List<Map<String,Object>> result = reservationMapper.readCountByResMonth(cafeId);
+        // then
+        log.info("결과:{}", result);
+        assertThat(result).isNotNull();
+    }
+
+    @Test
+    void readMonthlySalesTest() {
+        // given
+        int cafeId =2;
+        // when
+        List<Map<String,Object>> result = reservationMapper.readMonthlySales(cafeId);
+        // then
+        log.info("결과:{}",result);
+        assertThat(result).isNotNull();
+    }
 }

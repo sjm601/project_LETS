@@ -60,14 +60,8 @@ public class CafeController {
                              @ModelAttribute Reservation reservation,
                              Model model) {
         Map<String, Object> cafe = cafeService.getCafe(id);
-        Object cafeRating = cafe.get("cafeRating");
-        if (cafeRating == null) {
-            cafeRating = 5;
-        }
-
         model.addAttribute("Cafe", cafe);
-        log.info("카페 내용:{}",cafe);
-        model.addAttribute("cafeRating", cafeRating);
+
 
         List<Room> roomList = roomService.getSearchCafeRoom(id);
         model.addAttribute("roomList", roomList);

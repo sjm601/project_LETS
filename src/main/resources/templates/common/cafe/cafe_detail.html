@@ -397,8 +397,23 @@
                                 <div class="box_detail booking">
                                     <div class="price">
                                         <span><span id="selectedRoomPrice">Price</span><small> per 1hour</small></span>
-                                        <div class="score"><span>Superb<em>30 Reviews</em></span><strong
-                                                th:text="${#numbers.formatDecimal(cafeRating, 1, 1)}">4.0</strong></div>
+                                        <div class="score"><span
+                                                th:switch="${#numbers.formatInteger(Cafe['cafeRating'],1)}">
+                                            <em th:case="5">Superb</em>
+                                            <em th:case="4">VeryGood</em>
+                                            <em th:case="3">Good</em>
+                                            <em th:case="2">Pleasant</em>
+                                            <em th:case="1">Poor</em>
+                                            <em th:case="*">No Rating</em>
+
+                                            <em th:if="${Cafe['reviewCount']} != null"
+                                                th:text="${Cafe['reviewCount']}+' Reviews'">30 Reviews</em>
+                                            <em th:if="${Cafe['reviewCount']} == null">0 Reviews</em>
+                                            </span>
+                                            <strong th:if="${Cafe['cafeRating']} == null">0.0</strong>
+                                            <strong th:unless="${Cafe['cafeRating']} == null"
+                                                    th:text="${#numbers.formatDecimal(Cafe['cafeRating'],1,1)}">5.0</strong>
+                                        </div>
                                     </div>
                                     <div class="form-group input-dates scroll-fix">
                                         <input class="form-control" type="text" id="bookingDate" name="bookingDate"
@@ -421,8 +436,6 @@
                                         <div class="custom-select-form">
                                             <select id="roomName" class="wide" name="roomId">
                                                 <option value="">룸 타입</option>
-                                                <!--<option th:each="roomList : ${roomList}" th:value="${roomList.id}"
-                                                        th:text="${roomList.name}" ></option> -->
                                             </select>
                                         </div>
                                     </div>
@@ -451,33 +464,10 @@
                                         </div>
                                     </div>
 
-                                    <!--
-                                                                <div class="form-group clearfix">
-                                                                    <div class="customSelect">
-                                                                        <select class="wide d-flex" name="startTime" id="startTimeSelect" >
-                                                                            <option>시작시간</option>
-                                                                            <option th:each="hour : ${#numbers.sequence(Cafe.startTime, Cafe.endTime - 1)}"
-                                                                                    th:value="${hour}"
-                                                                                    th:text="${#strings.concat(hour, ':00')}"></option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group clearfix">
-                                                                    <div class="customSelect">
-                                                                        <select class="wide d-flex" name="endTime" id="endTimeSelect">
-                                                                            <option>종료시간</option>
-                                                                            <option  th:each="hour : ${#numbers.sequence(Cafe.startTime +1, Cafe.endTime)}"
-                                                                                     th:value="${hour}"
-                                                                                     th:text="${#strings.concat(hour, ':00')}"
-                                                                            ></option>
-                                                                        </select>
-                                                                </div>
-                                                            </div>
-                                -->
 
                                     <div class="price text-end">
-                                        <strong class="me-2">Total</strong><small><span id="calculateRoomPrice">시간 당 가격</span><i
+                                        <strong class="me-2">Total</strong><small><span
+                                            id="calculateRoomPrice">시간 당 가격</span><i
                                             class="fa-solid fa-xmark me-1 ms-1"></i><span id="calculateTime"></span>시간<i
                                             class="fa-solid fa-equals me-2 ms-1"></i></small>
                                         <strong class="price-text"><span id="totalPrice">Total Price</span><i
@@ -720,7 +710,7 @@
                     selectCalculTime.innerHTML = '';
                     selectCalculTime.innerHTML += endTimmmme.value - startTimmmme.value;
                     const totalPrice = document.querySelector('#totalPrice');
-                    totalPrice.innerHTML='';
+                    totalPrice.innerHTML = '';
                     totalPrice.innerHTML += document.querySelector('#calculateRoomPrice').innerHTML * selectCalculTime.innerHTML;
 
                 });

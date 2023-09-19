@@ -44,15 +44,15 @@
                     </a>
                     <ul class="sidenav-second-level collapse" id="collapseMyBooking">
                         <li>
-                            <a href="bookings.html"><i class="fa fa-fw fa-list mr-1"></i>예약 목록</a>
+                            <a th:href="@{/host/bookings}" href="bookings.html"><i class="fa fa-fw fa-list mr-1"></i>예약 목록</a>
                         </li>
                         <li>
-                            <a href="reviews.html"><i class="fa fa-fw fa-star mr-1"></i>고객 리뷰</a>
+                            <a th:href="@{/host/reviews}" href="reviews.html"><i class="fa fa-fw fa-star mr-1"></i>고객 리뷰</a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Bookmarks">
-                    <a class="nav-link" href="tables.html">
+                    <a th:href="@{/host/stats}" class="nav-link" href="tables.html">
                         <i class="fa fa-fw fa-gear mr-1"></i>
                         <span class="nav-link-text">전체 예약 데이터</span>
                     </a>
