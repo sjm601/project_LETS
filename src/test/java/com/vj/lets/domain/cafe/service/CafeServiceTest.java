@@ -158,10 +158,10 @@ class CafeServiceTest {
                 .longitude(127.112322)
                 .startTime(8)
                 .endTime(16)
-//                .description("홈카페는 집처럼 좋습니다")
+                .description("홈카페는 집처럼 좋습니다")
 //                .imagePath("/image/06홈카페")
 //                .businessNumber(1111111116)
-                .siGunGuId(10010)
+//                .siGunGuId(10010)
                 .memberId(6)
                 .build();
         log.info("업데이트 할 카페 정보 : {}", cafe);
@@ -173,20 +173,7 @@ class CafeServiceTest {
         optionLists.add(3);
         log.info("카페 옵션 리스트 : {}", optionLists);
         //when
-        cafeService.editCafe(5, cafe, comment, optionLists);
+        cafeService.editCafe(5,"중구", "서울특별시", cafe, comment, optionLists);
         //then
     }
-
-    @Test
-    @DisplayName("카페 삭제")
-    @Disabled
-    @Transactional
-    void deleteCafeTest() {
-        //given
-        int id = 5;
-        //when
-        cafeService.deleteCafe(id);
-        //then
-    }
-
 }

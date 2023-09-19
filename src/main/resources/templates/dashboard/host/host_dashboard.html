@@ -87,7 +87,25 @@
 
     <th:block th:fragment="scripts">
         <!-- Custom scripts for this page -->
-        <script>
+        <script th:inline="javascript">
+            let countRes = [[${countRes}]];
+            let monthResKey = [];
+            let monthResValue = [];
+            for (const countElement of countRes) {
+                monthResKey.push(countElement.month);
+                monthResValue.push(countElement.reserveCount);
+            }
+
+            let monthlySales = [[${monthlySales}]];
+            console.log(monthlySales);
+            let monthlySalesKey = [];
+            console.log(monthlySalesKey);
+            let monthlySalesValue = [];
+            console.log(monthlySalesValue);
+            for (const countElement of monthlySales) {
+                monthlySalesKey.push(countElement.month);
+                monthlySalesValue.push(countElement.monthlyRevenue);
+            }
             // Chart.js scripts
             // -- Set new default font family and font color to mimic Bootstrap's default styling
             Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
@@ -97,7 +115,7 @@
             var myLineChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                    labels: monthlySalesKey,
                     datasets: [{
                         label: "Monthly sales",
                         lineTension: 0.3,
@@ -110,7 +128,7 @@
                         pointHoverBackgroundColor: "rgba(2,117,216,1)",
                         pointHitRadius: 20,
                         pointBorderWidth: 2,
-                        data: [10000, 30162, 26263, 18394, 18287, 28682, 31274, 33259, 25849, 24159, 32651, 31984],
+                        data: monthlySalesValue,
                     }],
                 },
                 options: {
@@ -129,7 +147,7 @@
                         yAxes: [{
                             ticks: {
                                 min: 0,
-                                max: 40000,
+                                max: Math.max(...monthlySalesValue) + (Math.max(...monthlySalesValue) * 0.1),
                                 maxTicksLimit: 5
                             },
                             gridLines: {
@@ -148,12 +166,12 @@
             var myLineChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                    labels: monthResKey,
                     datasets: [{
                         label: "Reservation",
                         backgroundColor: "rgba(2,117,216,1)",
                         borderColor: "rgba(2,117,216,1)",
-                        data: [30, 50, 33, 57, 88, 109, 66, 77, 99, 123, 69, 170],
+                        data: monthResValue,
                     }],
                 },
                 options: {
@@ -172,7 +190,7 @@
                         yAxes: [{
                             ticks: {
                                 min: 0,
-                                max: 300,
+                                max: Math.max(...monthResValue) + (Math.max(...monthResValue) * 0.1),
                                 maxTicksLimit: 5
                             },
                             gridLines: {

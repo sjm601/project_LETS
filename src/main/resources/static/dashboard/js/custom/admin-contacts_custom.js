@@ -1,33 +1,26 @@
-const url = "/mypage/review";
+const url = "/admin/contact";
 
-const reviews = document.querySelectorAll("li.reviews");
-reviews.forEach((e, i) => {
-    const editBtn = e.querySelector("button.edit_btn");
-    const removeBtn = e.querySelector("button.remove_btn");
-    const rating = e.querySelector("select#rating");
-    const content = e.querySelector("textarea#content");
-    const reviewId = reviewList[i].id;
+const contacts = document.querySelectorAll("li.contacts");
+contacts.forEach((e, i) => {
+    const approveBtn = e.querySelector("button.approve_btn");
+    const refuseBtn = e.querySelector("button.refuse_btn");
+    const contactId = contactList[i].id;
 
-    if (editBtn) {
-        editBtn.addEventListener('click', event => {
+    if (approveBtn) {
+        approveBtn.addEventListener('click', event => {
             event.preventDefault();
-            const reviewForm = {
-                reviewId: reviewId,
-                rating: rating.value,
-                content: content.value
-            }
 
             fetch(url, {
-                method: 'PATCH',
+                method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(reviewForm),
+                body: JSON.stringify(contactId),
             }).then(response => {
                 return response.text();
             }).then(message => {
                 if (message === "success") {
-                    alert("리뷰 수정이 완료되었습니다.");
+                    alert("입점 신청 승인이 완료되었습니다.");
                     location.href = url;
                 }
             }).catch(error => {
@@ -36,8 +29,8 @@ reviews.forEach((e, i) => {
         })
     }
 
-    if (removeBtn) {
-        removeBtn.addEventListener('click', event => {
+    if (refuseBtn) {
+        refuseBtn.addEventListener('click', event => {
             event.preventDefault();
 
             fetch(url, {
@@ -45,12 +38,12 @@ reviews.forEach((e, i) => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(reviewId),
+                body: JSON.stringify(contactId),
             }).then(response => {
                 return response.text();
             }).then(message => {
                 if (message === "success") {
-                    alert("리뷰 삭제가 완료되었습니다.");
+                    alert("입점 신청 거부가 완료되었습니다.");
                     location.href = url;
                 }
             }).catch(error => {

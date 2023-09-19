@@ -54,4 +54,25 @@
         WHERE MEMBER_ID = #{memberId} AND SG.STATUS = 'enabled'
     </select>
 
+    <select id="readGroupMemberCount" parameterType="int" resultType="boolean">
+        SELECT count(ID)
+        FROM GROUP_MEMBER_LIST
+        WHERE POSITION = '팀원' and STUDY_GROUP_ID = #{studyGroupId}
+    </select>
+
+    <select id="readOldestMemberByGroupId" parameterType="int" resultType="int">
+        SELECT MIN(id) "id"
+        FROM GROUP_MEMBER_LIST
+        WHERE POSITION = '팀원'
+          and STUDY_GROUP_ID = #{studyGroupId}
+    </select>
+
+    <update id="updateMemberPosition">
+        UPDATE GROUP_MEMBER_LIST
+        <set>
+            POSITION = '팀장'
+        </set>
+        WHERE MEMBER_ID = #{memberId} and STUDY_GROUP_ID = #{studyGroupId}
+    </update>
+
 </mapper>

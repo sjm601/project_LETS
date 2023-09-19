@@ -140,4 +140,15 @@ class ReservationServiceTest {
         log.info("결과:{}",result);
         assertThat(result).isNotNull();
     }
+
+    @Test
+    void getCountByResMonthTest() {
+        // given
+        int cafeId =2;
+        // when
+        List<Map<String,Object>> list = reservationService.getCountByResMonth(cafeId);
+        // then
+        log.info("리스트값:{}",list);
+        assertThat(list).isNotNull();
+    }
 }

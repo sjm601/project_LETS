@@ -59,6 +59,12 @@
         WHERE "request_page" = #{requestPage}
     </select>
 
+    <select id="readById" parameterType="int" resultType="Contact">
+        SELECT ID, EMAIL, NAME, CAFE_NAME, BUSINESS_NUMBER, STATUS
+        FROM CONTACT
+        WHERE ID = #{id}
+    </select>
+
     <select id="readByMailBNumDate" parameterType="ContactForm" resultType="Contact">
         SELECT ID, EMAIL, NAME, BUSINESS_NUMBER, STATUS
         FROM CONTACT

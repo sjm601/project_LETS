@@ -93,42 +93,47 @@ public class AdminController {
     }
 
     /**
-     * 입점 신청 승인 및 거부 기능
+     * 입점 신청 승인 기능
      *
-     * @param contactRequest 입점 신청 승인 여부 요청
-     * @param contactForm    입점 신청 정보 폼 객체
-     * @param model          모델 객체
-     * @return 논리적 뷰 이름
+     * @param id    입점 신청 ID
+     * @param model 모델 객체
+     * @return 실행 후 반환 값
      */
     @PostMapping("/contact")
-    public String contactApprove(@RequestParam("contactRequest") String contactRequest,
-                                 @ModelAttribute ContactForm contactForm,
-                                 Model model) {
-        List<Contact> checkContactList = contactService.checkContact(contactForm);
-        int contactId = 0;
-        for (Contact refuseContact : checkContactList) {
-            contactId = refuseContact.getId();
-        }
+    @ResponseBody
+    public String contactApprove(@RequestBody int id, Model model) {
+        Contact contact = contactService.getContact(id);
 
-        if (contactRequest.equals(ContactStatus.APPROVE.getStatus())) {
-            Member member = Member.builder()
-                    .email(contactForm.getEmail())
-                    .name(contactForm.getName())
-                    .password(DefaultPassword.DEFAULT.getPassword())
-                    .type(MemberType.HOST.getType())
-                    .build();
-            Cafe cafe = Cafe.builder()
-                    .email(contactForm.getEmail())
-                    .name(contactForm.getCafeName())
-                    .businessNumber(contactForm.getBusinessNumber())
-                    .build();
+        Member member = Member.builder()
+                .email(contact.getEmail())
+                .name(contact.getName())
+                .password(DefaultPassword.DEFAULT.getPassword())
+                .type(MemberType.HOST.getType())
+                .build();
+        Cafe cafe = Cafe.builder()
+                .email(contact.getEmail())
+                .name(contact.getCafeName())
+                .businessNumber(contact.getBusinessNumber())
+                .build();
 
-            contactService.approveContact(contactId, member, cafe);
-        } else if (contactRequest.equals(ContactStatus.REFUSE.getStatus())) {
-            contactService.refuseContact(contactId);
-        }
+        contactService.approveContact(id, member, cafe);
 
-        return "redirect:/admin/contact";
+        return "success";
+    }
+
+    /**
+     * 입점 신청 거부 기능
+     *
+     * @param id    입점 신청 ID
+     * @param model 모델 객체
+     * @return 실행 후 반환 값
+     */
+    @DeleteMapping("/contact")
+    @ResponseBody
+    public String contactRefuse(@RequestBody int id, Model model) {
+        contactService.refuseContact(id);
+
+        return "success";
     }
 
     /**
@@ -145,7 +150,7 @@ public class AdminController {
         model.addAttribute("faqForm", faqForm);
         model.addAttribute("categoryList", categoryList);
 
-        return "dashboard/admin/faq_add";
+        return "dashboard/admin/faq_register";
     }
 
     /**
@@ -207,35 +212,44 @@ public class AdminController {
         model.addAttribute("pagination", pagination);
 
 
-        return "dashboard/admin/faq_list";
+        return "dashboard/admin/faqs";
     }
 
     /**
-     * FAQ 수정 및 삭제 기능
+     * FAQ 수정 기능
      *
-     * @param faqRequest FAQ 수정 및 삭제 요청
-     * @param faqForm    FAQ 폼
-     * @param model      모델 객체
-     * @return 논리적 뷰 이름
+     * @param faqForm FAQ 폼 객체
+     * @param model   모델 객체
+     * @return 실행 후 반환 값
      */
-    @PostMapping("/faq")
-    public String faqEditAndRemove(@RequestParam("faqRequest") String faqRequest,
-                                   @ModelAttribute FaqForm faqForm,
-                                   Model model) {
-        if (faqRequest.equals("edit")) {
-            Faq faq = Faq.builder()
-                    .id(faqForm.getFaqId())
-                    .title(faqForm.getTitle())
-                    .content(faqForm.getContent())
-                    .categoryId(faqForm.getCategory())
-                    .build();
+    @PatchMapping("/faq")
+    @ResponseBody
+    public String faqEdit(@RequestBody FaqForm faqForm, Model model) {
+        Faq faq = Faq.builder()
+                .id(faqForm.getFaqId())
+                .title(faqForm.getTitle())
+                .content(faqForm.getContent())
+                .categoryId(faqForm.getCategory())
+                .build();
 
-            faqService.edit(faq);
-        } else if (faqRequest.equals("remove")) {
-            faqService.remove(faqForm.getFaqId());
-        }
+        faqService.edit(faq);
 
-        return "redirect:/admin/faq";
+        return "success";
+    }
+
+    /**
+     * FAQ 삭제 기능
+     *
+     * @param faqId FAQ ID
+     * @param model 모델 객체
+     * @return 실행 후 반환 값
+     */
+    @DeleteMapping("/faq")
+    @ResponseBody
+    public String faqRemove(@RequestBody int faqId, Model model) {
+        faqService.remove(faqId);
+
+        return "success";
     }
 
     /**

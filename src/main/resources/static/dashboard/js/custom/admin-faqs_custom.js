@@ -1,20 +1,22 @@
-const url = "/mypage/review";
+const url = "/admin/faq";
 
-const reviews = document.querySelectorAll("li.reviews");
-reviews.forEach((e, i) => {
+const faqs = document.querySelectorAll("li.faqs");
+faqs.forEach((e, i) => {
     const editBtn = e.querySelector("button.edit_btn");
     const removeBtn = e.querySelector("button.remove_btn");
-    const rating = e.querySelector("select#rating");
+    const category = e.querySelector("select#category");
+    const title = e.querySelector("input#title");
     const content = e.querySelector("textarea#content");
-    const reviewId = reviewList[i].id;
+    const faqId = faqList[i].id;
 
     if (editBtn) {
         editBtn.addEventListener('click', event => {
             event.preventDefault();
-            const reviewForm = {
-                reviewId: reviewId,
-                rating: rating.value,
-                content: content.value
+            const faqForm = {
+                faqId: faqId,
+                title: title.value,
+                content: content.value,
+                category: category.value,
             }
 
             fetch(url, {
@@ -22,12 +24,12 @@ reviews.forEach((e, i) => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(reviewForm),
+                body: JSON.stringify(faqForm),
             }).then(response => {
                 return response.text();
             }).then(message => {
                 if (message === "success") {
-                    alert("리뷰 수정이 완료되었습니다.");
+                    alert("FAQ 수정이 완료되었습니다.");
                     location.href = url;
                 }
             }).catch(error => {
@@ -45,12 +47,12 @@ reviews.forEach((e, i) => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(reviewId),
+                body: JSON.stringify(faqId),
             }).then(response => {
                 return response.text();
             }).then(message => {
                 if (message === "success") {
-                    alert("리뷰 삭제가 완료되었습니다.");
+                    alert("FAQ 삭제가 완료되었습니다.");
                     location.href = url;
                 }
             }).catch(error => {

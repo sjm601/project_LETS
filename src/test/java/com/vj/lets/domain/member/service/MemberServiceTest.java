@@ -93,9 +93,9 @@ class MemberServiceTest {
 
     @Test
     @Transactional
-    void deleteMemberTest() {
+    void removeMemberTest() {
         // given
-        int id = 1;
+        int id = 82;
         // when
         memberService.removeMember(id);
         // then

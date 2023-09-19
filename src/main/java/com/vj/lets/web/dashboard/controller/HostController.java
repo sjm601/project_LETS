@@ -1,8 +1,16 @@
 package com.vj.lets.web.dashboard.controller;
 
-import com.vj.lets.domain.cafe.dto.*;
+import com.vj.lets.domain.cafe.dto.Cafe;
+import com.vj.lets.domain.cafe.dto.CafeEditForm;
+import com.vj.lets.domain.cafe.dto.CafeOption;
+import com.vj.lets.domain.cafe.dto.OptionListForm;
 import com.vj.lets.domain.cafe.service.CafeService;
+import com.vj.lets.domain.common.web.PageParams;
+import com.vj.lets.domain.common.web.Pagination;
 import com.vj.lets.domain.member.dto.Member;
+import com.vj.lets.domain.reservation.dto.Reservation;
+import com.vj.lets.domain.reservation.service.ReservationService;
+import com.vj.lets.domain.review.service.ReviewService;
 import com.vj.lets.domain.room.dto.Room;
 import com.vj.lets.domain.room.service.RoomService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,6 +41,11 @@ public class HostController {
 
     private final CafeService cafeService;
     private final RoomService roomService;
+    private final ReservationService reservationService;
+    private final ReviewService reviewService;
+
+    private static final int ELEMENT_SIZE = 5;
+    private static final int PAGE_SIZE = 5;
 
     /**
      * 호스트 대시보드 메인 화면 출력
@@ -41,7 +54,15 @@ public class HostController {
      * @return 논리적 뷰 이름
      */
     @GetMapping("")
-    public String hostMain(Model model) {
+    public String hostMain(HttpServletRequest request,Model model) {
+        HttpSession session = request.getSession();
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        Map<String, Object> cafe = cafeService.getCafeMemberId(loginMember.getId());
+        int cafeId = Integer.parseInt(cafe.get("id").toString());
+        List<Map<String, Object>> countRes = reservationService.getCountByResMonth(cafeId);
+        model.addAttribute("countRes", countRes);
+        List<Map<String, Object>> monthlySales = reservationService.getMonthlySales(cafeId);
+        model.addAttribute("monthlySales", monthlySales);
         return "dashboard/host/host_dashboard";
     }
 
@@ -82,6 +103,7 @@ public class HostController {
         if(loginMember != null){
             Map<String, Object> cafes = cafeService.getCafeMemberId(loginMember.getId());
             int cafeId = Integer.parseInt(cafes.get("id").toString());
+            log.info("cafeEditForm:{}", cafeEditForm);
             Cafe cafeRe = Cafe.builder()
                     .id(cafeId)
 //                    .imagePath(imagePath)
@@ -90,17 +112,16 @@ public class HostController {
                     .phoneNumber(cafeEditForm.getPhoneNumber())
                     .roadAddress(cafeEditForm.getRoadAddress())
                     .detailAddress(cafeEditForm.getDetailAddress())
-//                    .latitude(cafeEdit.getLatitude())
-//                    .longitude(cafeEdit.getLongitude())
+                    .latitude(cafeEditForm.getLatitude())
+                    .longitude(cafeEditForm.getLongitude())
                     .startTime(cafeEditForm.getStartTime())
                     .endTime(cafeEditForm.getEndTime())
                     .description(cafeEditForm.getDescription())
                     .build();
-            log.info("변경할 카페 속성 : {}", cafeRe);
             String comment = "host";
-            log.info("변경사유 : {}", comment);
-            log.info("옴션아이디s : {}", cafeEditForm.getOptions());
-            cafeService.editCafe(cafeId, cafeRe, comment, cafeEditForm.getOptions());
+            String siGunGu = cafeEditForm.getSiGunGuName();
+            String siDo = cafeEditForm.getSiDoName();
+            cafeService.editCafe(cafeId, siGunGu, siDo, cafeRe, comment, cafeEditForm.getOptions());
         }
         return "redirect:/host/cafe";
     }
@@ -164,5 +185,61 @@ public class HostController {
             roomService.register(roomNew);
         }
         return "redirect:/host/room";
+    }
+
+    @GetMapping("/bookings")
+    public String hostBookingList(@RequestParam(value = "page", required = false) String page,
+                                  @RequestParam(value = "type", required = false) String type,
+                                  HttpServletRequest request,
+                                  Model model){
+        HttpSession session = request.getSession();
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        Map<String, Object> cafe = cafeService.getCafeMemberId(loginMember.getId());
+        int cafeId = Integer.parseInt(cafe.get("id").toString());
+        if (page == null || page.isBlank()) {
+            page = "1";
+        }
+        if (type == null || type.isBlank()) {
+            type = "all";
+        }
+        int selectPage = Integer.parseInt(page);
+        int count = reservationService.getCountResByHost(cafeId, type);
+        PageParams pageParams = PageParams.builder()
+                .elementSize(ELEMENT_SIZE)
+                .pageSize(PAGE_SIZE)
+                .requestPage(selectPage)
+                .rowCount(count)
+                .type(type)
+                .build();
+
+        Pagination pagination = new Pagination(pageParams);
+
+        List<Map<String, Object>> hostReservationList = reservationService.getHostResList(cafeId, pageParams);
+
+        model.addAttribute("hostReservationList", hostReservationList);
+        model.addAttribute("pagination", pagination);
+
+        return "dashboard/host/bookings";
+    }
+
+
+    @GetMapping("/reviews")
+    public String hostreviewList(HttpServletRequest request,
+                                 Model model){
+
+        return "dashboard/host/reviews";
+    }
+
+    @GetMapping("/stats")
+    public String hostTotalData(HttpServletRequest request, Model model){
+        HttpSession session = request.getSession();
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        if(loginMember != null){
+            Map<String, Object> cafe = cafeService.getCafeMemberId(loginMember.getId());
+            int cafeId = Integer.parseInt(cafe.get("id").toString());
+            List<Map<String,Reservation>>  reserveList = reservationService.getTotalData(cafeId);
+            model.addAttribute("reserveList", reserveList);
+        }
+        return "dashboard/host/tables";
     }
 }

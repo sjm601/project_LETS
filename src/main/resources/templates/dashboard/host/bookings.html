@@ -8,6 +8,9 @@
         <meta name="author" content="VJCommando">
         <meta name="description" content="LETS - Host Dashboard">
         <title>LETS - Host Dashboard</title>
+
+        <link href="/dashboard/vendor/animate.min.css" rel="stylesheet">
+        <link href="/dashboard/vendor/magnific-popup.css" rel="stylesheet">
     </th:block>
 
     <th:block th:fragment="content">
@@ -17,35 +20,72 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="/dashboard/host/host_dashboard.html">My page</a>
+                        <a th:href="@{/host}" href="/dashboard/host/host_dashboard.html">My page</a>
                     </li>
                     <li class="breadcrumb-item active">Bookings list</li>
                 </ol>
                 <div class="box_general">
                     <div class="header_box">
                         <h2 class="d-inline-block">예약 목록</h2>
+                        <div class="filter">
+                            <div class="styled-select short">
+                                <select name="type" id="orderType">
+                                    <option th:selected="${pagination.params.type == 'all'}" value="all">전체</option>
+                                    <option th:selected="${pagination.params.type == 'complete'}" value="complete">예약
+                                        완료
+                                    </option>
+                                    <option th:selected="${pagination.params.type == 'cancel'}" value="cancel">예약 취소
+                                    </option>
+                                    <option th:selected="${pagination.params.type == 'use'}" value="use">이용 완료</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="list_general">
                         <ul>
-                            <li>
-                                <figure><img src="/dashboard/img/item_2.jpg" alt=""></figure>
-                                <h4>룸 이름 <i class="approved">결제완료</i></h4>
+                            <li th:each="reservation, index : ${hostReservationList}" class="reservations">
+                                <figure><img th:src="@{../static/upload_image/room/}+${reservation.get('image')}" src="/dashboard/img/item_2.jpg" alt=""></figure>
+                                <h4>
+                                    <th:block th:text="${reservation.get('roomName')}"></th:block>
+                                    <th:block th:switch="${reservation.get('reservationStatus')}">
+                                        <i th:case="complete" class="approved ml-1">예약 완료</i>
+                                        <i th:case="cancel" class="cancel ml-1">예약 취소</i>
+                                        <i th:case="use" class="approved ml-1" style="background-color: gray;">이용 완료</i>
+                                    </th:block>
+                                </h4>
                                 <ul class="booking_list">
-                                    <li><strong>예약 날짜</strong> 11 November 2017</li>
-                                    <li><strong>예약 시간</strong> 12:00 - 15:00</li>
-                                    <li><strong>예약 인원수</strong> 2 People</li>
-                                    <li><strong>결제 방법</strong> 신용 카드 (결제완료)</li>
+                                    <li><strong>예약자명</strong>
+                                        <th:block th:text="${reservation.get('memberName')}"></th:block>
+                                    </li>
+                                    <li><strong>예약자 연락처</strong>
+                                        <th:block th:text="${reservation.get('phoneNum')}"></th:block>
+                                    </li>
+                                    <li><strong>예약 날짜</strong>
+                                        <th:block th:text="${reservation.get('bookingDate')}"></th:block>
+                                    </li>
+                                    <li><strong>예약 시간</strong>
+                                        <th:block
+                                                th:text="|${reservation.get('startTime')}시 - ${reservation.get('endTime')}시|"></th:block>
+                                    </li>
+                                    <li><strong>예약 인원수</strong>
+                                        <th:block th:text="${reservation.get('headCount')}"></th:block>
+                                        명
+                                    </li>
+                                    <li><strong>결제 방법</strong>
+                                        <th:block th:switch="${reservation.get('paymentType')}">
+                                            <th:block th:case="card">신용카드</th:block>
+                                            <th:block th:case="transfer">계좌이체</th:block>
+                                            <th:block th:case="noBankbook">무통장입금</th:block>
+                                        </th:block>
+                                        (
+                                        <th:block th:switch="${reservation.get('payStatus')}">
+                                            <th:block th:case="success">결제 완료</th:block>
+                                            <th:block th:case="fail">결제 실패</th:block>
+                                        </th:block>
+                                        )
+                                    </li>
                                 </ul>
-                            </li>
-                            <li>
-                                <figure><img src="/dashboard/img/item_3.jpg" alt=""></figure>
-                                <h4>룸 이름 <i class="approved">결제완료</i></h4>
-                                <ul class="booking_list">
-                                    <li><strong>예약 날짜</strong> 11 November 2017</li>
-                                    <li><strong>예약 시간</strong> 12:00 - 15:00</li>
-                                    <li><strong>예약 인원수</strong> 2 People</li>
-                                    <li><strong>결제 방법</strong> 신용 카드 (결제완료)</li>
-                                </ul>
+
                             </li>
                         </ul>
                     </div>
@@ -53,14 +93,27 @@
                 <!-- /box_general-->
                 <nav aria-label="...">
                     <ul class="pagination pagination-sm add_bottom_30">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1">Previous</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
                         <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
+                            <a th:if="${pagination.showPrevious}"
+                               th:href="@{|?page=${pagination.previousStartPage}&type=${pagination.params.type}|}"
+                               class="page-link" href="#"
+                               tabindex="-1">&lt;&lt;</a>
+                        </li>
+                        <th:block
+                                th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
+                            <li th:if="${i == pagination.params.requestPage}" class="page-item active">
+                                <a th:text="${i}" class="page-link">1</a>
+                            </li>
+                            <li th:if="${i != pagination.params.requestPage && i > 0}" class="page-item">
+                                <a th:href="@{|?page=${i}&type=${pagination.params.type}|}"
+                                   th:text="${i}" class="page-link" href="#">2
+                                </a>
+                            </li>
+                        </th:block>
+                        <li class="page-item">
+                            <a th:if="${pagination.showNext}"
+                               th:href="@{|?page=${pagination.nextStartPage}&type=${pagination.params.type}|}"
+                               class="page-link" href="#">&gt;&gt;</a>
                         </li>
                     </ul>
                 </nav>
@@ -73,12 +126,12 @@
     </th:block>
 
     <th:block th:fragment="scripts">
-        <!-- Custom scripts for this page -->
-        <script src="/dashboard/vendor/bootstrap-datepicker.js"></script>
         <script th:inline="javascript">
-            $('input.date-pick').datepicker();
+            const reservationList = [[${reservationList}]];
+            document.querySelector('#orderType').addEventListener('change', (event) => {
+                location.href = `?type=${event.target.value}`;
+            })
         </script>
-        <!-- /custom scripts -->
     </th:block>
 
 </th:block>

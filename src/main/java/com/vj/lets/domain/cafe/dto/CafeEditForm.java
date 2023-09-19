@@ -26,14 +26,14 @@ public class CafeEditForm {
     private String detailAddress;
     private double latitude;
     private double longitude;
+    private String siDoName;
+    private String siGunGuName;
     private int startTime;
     private int endTime;
     private String description;
     private String imagePath;
-    private String regdate;
     private int businessNumber;
     private String status;
-    private int siGunGuId;
     private int memberId;
     private List<Integer> options;
 }
