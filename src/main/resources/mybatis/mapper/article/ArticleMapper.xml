@@ -98,14 +98,19 @@
     </select>
 
     <!--해당 게시글의 댓글 찾기-->
-    <select id="findComment" parameterType="int" resultType="map">
+    <select id="findComment" parameterType="java.util.List" resultType="map">
         SELECT ac.id,
-               ac.content,
-               TO_CHAR(ac.regdate, 'YYYY-MM-DD HH24:MI') AS regdate,
-               a.id                                      AS articleId
+        ac.content,
+        TO_CHAR(ac.regdate, 'YYYY-MM-DD HH24:MI') AS commentRegDate,
+        m.NAME AS commentWriter,
+        a.ID AS articleId
         FROM article_comment ac
-                 JOIN article a ON a.id = ac.article_id
-        where a.id = #{articleId};
+        JOIN article a ON a.id = ac.article_id
+        JOIN member m ON m.id = ac.MEMBER_ID
+        WHERE ac.STATUS='enabled' AND a.id IN
+        <foreach collection="list" item="articleId" open="(" close=")" separator=",">
+            #{articleId}
+        </foreach>
     </select>
 
 </mapper>

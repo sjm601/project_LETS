@@ -173,8 +173,7 @@ class CafeServiceTest {
         optionLists.add(3);
         log.info("카페 옵션 리스트 : {}", optionLists);
         //when
-        List<CafeOptionList> list = cafeService.makeCafeOptionList(cafe.getId(), optionLists);
-        cafeService.editCafe(cafe, comment, list);
+        cafeService.editCafe(5, cafe, comment, optionLists);
         //then
     }
 
@@ -190,22 +189,4 @@ class CafeServiceTest {
         //then
     }
 
-    @Test
-    @DisplayName("카페옵션리스트 숫자 배열 생성")
-    @Disabled
-    void makeCafeOptionListTest() {
-        //given
-        int id = 5;
-        List<Integer> optionIds = new ArrayList<>();
-        optionIds.add(1);
-        optionIds.add(2);
-        optionIds.add(3);
-        log.info("옵션리스트 : {}", optionIds);
-        //결과 옵션리스트 : [1, 2, 3]
-        //when
-        List<CafeOptionList> list = cafeService.makeCafeOptionList(id, optionIds);
-        //then
-        log.info("생성된 카페 옵션 리스트 객체 : {}", list);
-        assertThat(list).isNotNull();
-    }
 }

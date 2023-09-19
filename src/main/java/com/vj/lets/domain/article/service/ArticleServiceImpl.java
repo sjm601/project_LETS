@@ -65,8 +65,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Map<String, Object>> findComment(int articleId) {
-        return articleMapper.findComment(articleId);
+    public List<Map<String, Object>> findComment(List<Integer> articleIds) {
+        return articleMapper.findComment(articleIds);
     }
 
 

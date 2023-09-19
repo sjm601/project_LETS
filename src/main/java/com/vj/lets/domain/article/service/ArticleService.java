@@ -39,6 +39,6 @@ public interface ArticleService {
     public Article findById(int id);
 
     /** 해당게시글의 댓글 찾기*/
-    public List<Map<String, Object>> findComment (int articleId);
+    public List<Map<String, Object>> findComment (List<Integer> articleIds);
 
 }
