@@ -1,5 +1,6 @@
 package com.vj.lets.web.reservation.controller;
 
+import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.payment.dto.Payment;
 import com.vj.lets.domain.payment.service.PaymentService;
 import com.vj.lets.domain.reservation.dto.Reservation;
@@ -34,6 +35,12 @@ public class ReservationController {
         Map<String, Reservation> reservation = reservationService.getResInfo(id);
         model.addAttribute("reservation", reservation);
         return "common/cafe/reservation";
+    }
+
+    @GetMapping("/cancle/{id}")
+    public String CancleRes(@PathVariable int id, @SessionAttribute Member loginMember,Model model){
+        reservationService.delete(id,loginMember.getId());
+        return "redirect:/cafe/list";
     }
 
     @GetMapping("/{id}/payment")

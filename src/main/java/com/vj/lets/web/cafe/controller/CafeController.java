@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -76,6 +77,15 @@ public class CafeController {
         return "common/cafe/cafe_detail";
     }
 
+    
+    /**
+     * 방 정보 및 가격, 예약 가능 시간 동적 출력
+     * @param id
+     * @param model
+     * @author VJ특공대 박상훈
+     * @return json으로 변환된 룸 리스트
+     * @throws JsonProcessingException
+     */
     @RequestMapping("/selectDate/{id}")
     @ResponseBody
     public  String findRoom(@PathVariable int id, Model model) throws JsonProcessingException {
@@ -86,6 +96,34 @@ public class CafeController {
         return  objectMapper.writeValueAsString(roomList);
     }
 
+
+    @PostMapping("/selectRoom/{roomId}")
+    @ResponseBody
+    public  String findReservedTime(@PathVariable int roomId, Model model, @RequestBody Object bookingDate) throws JsonProcessingException, ParseException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        log.info("asdasdasdasd:{}", roomId);
+        log.info("bookingDate:{}", bookingDate);
+        String bookDate = bookingDate.toString();
+        log.info("bookingDate:{}", bookDate);
+        List<Reservation> reservedTime =reservationService.checkDuplicateResTime(roomId, bookDate);
+        log.info("reservedTime:{}", reservedTime);
+        return objectMapper.writeValueAsString(reservedTime);
+    }
+
+    /**
+     * 예약 생성하기
+     * @param id
+     * @param bookingDate
+     * @param headCount
+     * @param startTime
+     * @param endTime
+     * @param roomId
+     * @param reservation
+     * @param loginMember
+     * @param model
+     * @author VJ 특공대 박상훈
+     * @return 예약 ~결제 페이지
+     */
     @PostMapping("/{id}")
     public String bookCafe(@PathVariable("id") int id,
                            @RequestParam("bookingDate") String bookingDate,

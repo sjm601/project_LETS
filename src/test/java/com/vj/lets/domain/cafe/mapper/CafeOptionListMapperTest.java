@@ -79,7 +79,7 @@ class CafeOptionListMapperTest {
       
         //when
         List<CafeOption> list = cafeOptionListMapper.findByOptionCafeId(id);
-
+      
         //then
 //        log.info("카페 아이디로 검색한 옵션 리스트 : {}", list);
 //        assertThat(list).isNotNull();

@@ -80,10 +80,17 @@ public interface ReservationService {
 
     //지금 예약하려는 예약 번호 가져오기
 
+    //지금 예약하려는 페이지 불러오기
     public int getNowRes(int memberId);
 
+    //조작으로 중복예약도 불가
     int checkDuplicateReservation(@Param("roomId") int roomId, @Param("bookingDate") String bookingDate, @Param("startTime") int startTime, @Param("endTime") int endTime);
 
-    public List<Map<String, Object>> checkDuplicateResTime(@Param("roomId") int roomId, @Param("bookingDate") String bookingDate);
+    //예약 완료된 시간 불러오기
+    public List<Reservation> checkDuplicateResTime(int roomId, String  bookingDate);
+
+    //예약 삭제
+    public void delete(int id, int memberId);
+
 
 }

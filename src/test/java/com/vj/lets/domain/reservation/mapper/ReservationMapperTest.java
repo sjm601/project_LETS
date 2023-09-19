@@ -162,11 +162,10 @@ class ReservationMapperTest {
     @Test
     void checkDuplicateResTimeTest() {
         // given
-        int roomId = 26;
-        String bookDate="23/09/26";
+        int roomId = 7;
+        String bookDate="2023-09-26";
         // when
-
-        List<Map<String, Object>>  result = reservationMapper.checkDuplicateResTime(roomId,bookDate);
+        List<Reservation>  result = reservationMapper.checkDuplicateResTime(roomId,bookDate);
 
         // then
 //        log.info("결과:{}",result);

@@ -394,94 +394,98 @@
 
                         <aside class="col-lg-4" id="sidebar">
                             <form th:action="@{'/cafe/' + ${id}}" action="#" th:method="post">
-                            <div class="box_detail booking">
-                                <div class="price">
-                                    <span><span id="selectedRoomPrice">1000</span><small> per 1hour</small></span>
-                                    <div class="score"><span>Superb<em>30 Reviews</em></span><strong th:text="${#numbers.formatDecimal(cafeRating, 1, 1)}">4.0</strong></div>
-                                </div>
-                                <div class="form-group input-dates scroll-fix">
-                                    <input class="form-control" type="text" id="bookingDate" name="bookingDate" placeholder="When..">
-                                    <i class="icon_calendar"></i>
-                                </div>
+                                <div class="box_detail booking">
+                                    <div class="price">
+                                        <span><span id="selectedRoomPrice">Price</span><small> per 1hour</small></span>
+                                        <div class="score"><span>Superb<em>30 Reviews</em></span><strong
+                                                th:text="${#numbers.formatDecimal(cafeRating, 1, 1)}">4.0</strong></div>
+                                    </div>
+                                    <div class="form-group input-dates scroll-fix">
+                                        <input class="form-control" type="text" id="bookingDate" name="bookingDate"
+                                               placeholder="When..">
+                                        <i class="icon_calendar"></i>
+                                    </div>
 
-                                <div class="panel-dropdown">
-                                    <a href="#">Guests <span class="qtyTotal">1</span></a>
-                                    <div class="panel-dropdown-content right">
-                                        <div class="qtyButtons">
-                                            <label>Guests</label>
-                                            <input type="number" id="headCount" name="headCount" value="1"
-                                                   onchange="updateQtyTotal()">
+                                    <div class="panel-dropdown">
+                                        <a href="#">Guests <span class="qtyTotal">1</span></a>
+                                        <div class="panel-dropdown-content right">
+                                            <div class="qtyButtons">
+                                                <label>Guests</label>
+                                                <input type="number" id="headCount" name="headCount" value="1"
+                                                       onchange="updateQtyTotal()">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="form-group clearfix">
-                                    <div class="custom-select-form">
-                                        <select id="roomName" class="wide" name="roomId">
-                                            <option value="">룸 타입</option>
-                                            <!--<option th:each="roomList : ${roomList}" th:value="${roomList.id}"
-                                                    th:text="${roomList.name}" ></option> -->
-                                        </select>
+                                    <div class="form-group clearfix">
+                                        <div class="custom-select-form">
+                                            <select id="roomName" class="wide" name="roomId">
+                                                <option value="">룸 타입</option>
+                                                <!--<option th:each="roomList : ${roomList}" th:value="${roomList.id}"
+                                                        th:text="${roomList.name}" ></option> -->
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
 
 
-                                <div class="form-group clearfix">
-                                    <div class="custom-select-form">
-                                        <select class="wide" name="startTime" id="startTimeSelect" >
-                                            <option>시작시간</option>
-                                            <option th:each="hour : ${#numbers.sequence(Cafe.startTime, Cafe.endTime - 1)}"
-                                                    th:value="${hour}"
-                                                    th:text="${#strings.concat(hour, ':00')}"></option>
-                                        </select>
+                                    <div class="form-group clearfix">
+                                        <div class="custom-select-form">
+                                            <select class="wide" name="startTime" id="startTimeSelect">
+                                                <option>시작시간</option>
+                                                <option th:each="hour : ${#numbers.sequence(Cafe.startTime, Cafe.endTime - 1)}"
+                                                        th:value="${hour}"
+                                                        th:text="${#strings.concat(hour, ':00')}"></option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="form-group clearfix">
-                                    <div class="custom-select-form">
-                                        <select class="wide" name="endTime" id="endTimeSelect">
-                                            <option>종료시간</option>
-                                            <option  th:each="hour : ${#numbers.sequence(Cafe.startTime +1, Cafe.endTime)}"
-                                                     th:value="${hour}"
-                                                     th:text="${#strings.concat(hour, ':00')}"
-                                            ></option>
-                                        </select>
+                                    <div class="form-group clearfix">
+                                        <div class="custom-select-form">
+                                            <select class="wide" name="endTime" id="endTimeSelect">
+                                                <option>종료시간</option>
+                                                <option th:each="hour : ${#numbers.sequence(Cafe.startTime +1, Cafe.endTime)}"
+                                                        th:value="${hour}"
+                                                        th:text="${#strings.concat(hour, ':00')}"
+                                                ></option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
 
-    <!--
-                                <div class="form-group clearfix">
-                                    <div class="customSelect">
-                                        <select class="wide d-flex" name="startTime" id="startTimeSelect" >
-                                            <option>시작시간</option>
-                                            <option th:each="hour : ${#numbers.sequence(Cafe.startTime, Cafe.endTime - 1)}"
-                                                    th:value="${hour}"
-                                                    th:text="${#strings.concat(hour, ':00')}"></option>
-                                        </select>
+                                    <!--
+                                                                <div class="form-group clearfix">
+                                                                    <div class="customSelect">
+                                                                        <select class="wide d-flex" name="startTime" id="startTimeSelect" >
+                                                                            <option>시작시간</option>
+                                                                            <option th:each="hour : ${#numbers.sequence(Cafe.startTime, Cafe.endTime - 1)}"
+                                                                                    th:value="${hour}"
+                                                                                    th:text="${#strings.concat(hour, ':00')}"></option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group clearfix">
+                                                                    <div class="customSelect">
+                                                                        <select class="wide d-flex" name="endTime" id="endTimeSelect">
+                                                                            <option>종료시간</option>
+                                                                            <option  th:each="hour : ${#numbers.sequence(Cafe.startTime +1, Cafe.endTime)}"
+                                                                                     th:value="${hour}"
+                                                                                     th:text="${#strings.concat(hour, ':00')}"
+                                                                            ></option>
+                                                                        </select>
+                                                                </div>
+                                                            </div>
+                                -->
+
+                                    <div class="price text-end">
+                                        <strong class="me-2">Total</strong><small><span id="calculateRoomPrice">시간 당 가격</span><i
+                                            class="fa-solid fa-xmark me-1 ms-1"></i><span id="calculateTime"></span>시간<i
+                                            class="fa-solid fa-equals me-2 ms-1"></i></small>
+                                        <strong class="price-text"><span id="totalPrice">Total Price</span><i
+                                                class="fa-solid fa-won-sign ms-1"></i></strong>
                                     </div>
-                                </div>
-
-                                <div class="form-group clearfix">
-                                    <div class="customSelect">
-                                        <select class="wide d-flex" name="endTime" id="endTimeSelect">
-                                            <option>종료시간</option>
-                                            <option  th:each="hour : ${#numbers.sequence(Cafe.startTime +1, Cafe.endTime)}"
-                                                     th:value="${hour}"
-                                                     th:text="${#strings.concat(hour, ':00')}"
-                                            ></option>
-                                        </select>
-                                </div>
-                            </div>
--->
-
-                            <div class="price text-end">
-                                <strong class="me-2">Total</strong><small>20,000<i
-                                    class="fa-solid fa-xmark me-1 ms-1"></i>4시간<i
-                                    class="fa-solid fa-equals me-2 ms-1"></i></small>
-                                <strong class="price-text">80,000<i class="fa-solid fa-won-sign ms-1"></i></strong>
-                            </div>
-                            <button type="submit"  class=" add_top_30 btn_1 full-width purchase">Book now</button>
-                            <div class="text-center"><small>No money charged in this step</small></div>
+                                    <button type="submit" class=" add_top_30 btn_1 full-width purchase">Book now
+                                    </button>
+                                    <div class="text-center"><small>No money charged in this step</small></div>
                             </form>
                         </aside>
                     </div>
@@ -497,6 +501,22 @@
     <th:block th:fragment="scripts">
         <script>
             const id = [[${Cafe['id']}]];
+            const startTime = [[${Cafe['startTime']}]];
+            const endTime = [[${Cafe['endTime']}]];
+
+            let array = [];
+
+            let startTimes = [];
+            let endTimes = [];
+
+            for (let i = startTime; i < endTime; i++) {
+                startTimes.push(i);
+                endTimes.push(i + 1);
+            }
+
+            let selectedStartTime = "";
+            let availableEndTime = [];
+            let selectDate = "";
         </script>
         <script src="/js/custom/cafe.js"></script>
         <!-- Map -->
@@ -505,36 +525,209 @@
         <script src="/js/infobox.js"></script>
 
         <!-- DATEPICKER  -->
-       <script th:inline="javascript">
-            $(function () {
-                $('input[name="bookingDate"]').daterangepicker({
-                    autoUpdateInput: true,
-                    parentEl: '.scroll-fix',
-                    singleDatePicker: true,
-                    autoApply: true,
-                    minDate: new Date(),
-                    showCustomRangeLabel: false,
-                    locale: {
-                        format: 'YYYY-MM-DD'
+        <script th:inline="javascript">
+
+
+            //예약일 체크 달력
+            $('input[name="bookingDate"]').daterangepicker({
+                autoUpdateInput: true,
+                parentEl: '.scroll-fix',
+                singleDatePicker: true,
+                autoApply: true,
+                minDate: new Date(),
+                showCustomRangeLabel: false,
+                locale: {
+                    format: 'YYYY-MM-DD'
+                }
+            }, function (e, start) {
+                selectDate = start.format('YYYY-MM-DD');
+                const url = `/cafe/selectDate/${id}`;
+                console.log(`${id}`);
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        const roomListSelected = document.querySelector('#roomName');
+                        roomListSelected.innerHTML = '';
+
+
+                        for (let i = 0; i < data.length; i++) {
+                            const option = document.createElement('option');
+                            option.innerText = `${data[i].name}`;
+                            option.value = `${data[i].id}`;
+                            option.setAttribute('data-price', data[i].price); // 방의 가격 데이터를 저장
+                            option.setAttribute('data-headCount', data[i].headCount); // 방의 수용인원 데이터를 저장
+                            roomListSelected.appendChild(option);
+                        }
+
+                        // 업데이트된 옵션을 nice-select로 변환
+                        $("#roomName").niceSelect('update');
+
+                        // 선택된 방의 가격을 업데이트
+                        updateRoomPrice();
+                        // 선택된 방의 수용인원 최대값을 업데이트
+                        updateMaxHeadCount();
+                    })
+                    .catch(error => alert(error));
+            });
+
+
+            //룸 선택에 따른 가격 업데이트
+            function updateRoomPrice() {
+                const selectedOption = $('#roomName').find('option:selected');
+                const selectedRoomPrice = selectedOption.data('price');
+                console.log(selectedRoomPrice);
+                const selectedRoomPriceElement = document.querySelector('#selectedRoomPrice');
+                const selectedRoomPriceElement2 = document.querySelector('#calculateRoomPrice');
+                selectedRoomPriceElement.innerText = selectedRoomPrice + '원';
+                selectedRoomPriceElement2.innerText = selectedRoomPrice;
+            }
+
+            //룸 선택에 따른 최대 인원수로 MAX
+            function updateMaxHeadCount() {
+                const selectedOption = $('#roomName').find('option:selected');
+                const selectedRoomHeadCount = selectedOption.data('headcount');
+                const selectedRoomHeadCountValue = document.querySelector('#headCount');
+                if (selectedRoomHeadCountValue) {
+                    selectedRoomHeadCountValue.max = selectedRoomHeadCount;
+                }
+            }
+
+            //예약된 시간 disabled
+            function updateSelectRoomResTime() {
+                const roomListSelected = document.querySelector('#roomName');
+                const url = `/cafe/selectRoom/${roomListSelected.value}`
+                fetch(url, {
+                    method: "POST",          //메소드 지정
+                    headers: {               //데이터 타입 지정
+                        "Content-Type": "application/json; charset=utf-8"
+                    },
+                    body: JSON.stringify(selectDate)   //실제 데이터 파싱하여 body에 저장
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        startTimes = [];
+                        endTimes = [];
+
+                        for (let i = startTime; i < endTime; i++) {
+                            startTimes.push(i);
+                            endTimes.push(i + 1);
+                        }
+
+                        selectedStartTime = "";
+                        availableEndTime = [];
+                        selectDate = "";
+
+                        array = [];
+                        for (let i = 0; i < data.length; i++) {
+                            array.push(data[i].startTime);
+                            array.push(data[i].endTime);
+                        }
+                        availableStartTimes(array);
+
+                        $("#startTimeSelect").niceSelect();
+
+                        $("#startTimeSelect").find("option").each(function () {
+                            let optionValue = parseInt($(this).val());
+                            if (startTimes.includes(optionValue)) {
+                                $(this).prop("disabled", false);
+                            } else {
+                                $(this).prop("disabled", true);
+                            }
+                        });
+
+                        $("#startTimeSelect").niceSelect("update");
+
+                    })
+                    .catch(error => alert(error));
+            }
+
+            function availableStartTimes(array) {
+                for (let i = 0; i < startTimes.length; i++) {
+                    for (let j = 0; j < array.length; j += 2) {
+                        if (startTimes[i] >= array[j] && startTimes[i] < array[j + 1]) {
+                            startTimes.splice(i, 1);
+                            endTimes.splice(i, 1);
+                            i--;
+                        }
                     }
-                }, function (e,start) {
-                    const url = `/cafe/selectDate/${id}`
-                    console.log(`${id}`);
-                    fetch(url).then(response => response.json()).then(data =>{
-                        console.log(1111111111111111111);
-                        // const roomListSelected = document.querySelector('#roomName');
-                        // for (let i = 0; i < data.length; i++) {
-                        //     const option = document.createElement('option');
-                        //     option.innerText=`${data[i].name}`;
-                        //     roomListSelected.appendChild(option);
-                        //     console.log([i].name);
+                }
+                return startTimes;
+            }
+
+            function availableEndTimes(selectedStartTime, endTimes) {
+                let sample = [...endTimes];
+                availableEndTime = [];
+                for (let i = 0; i < sample.length; i++) {
+
+                    if (sample[i] <= selectedStartTime) {
+                        sample.splice(i, 1);
+                        i--;
+
+                    }
+                    if (sample[i] > selectedStartTime) {
+                        if (sample[i] - (selectedStartTime + i) === 1) {
+                            availableEndTime.push(sample[i]);
+                        }
+                    }
+                }
+                return availableEndTime;
+            }
+
+            // 방이 변경될 때마다 함수 실행 및 업데이트
+            $('#roomName').on('change', updateRoomPrice);
+            $('#roomName').on('change', updateMaxHeadCount);
+            $('#roomName').on('change', updateSelectRoomResTime);
+
+            $(document).ready(function () {
+                // startTimeSelect와 endTimeSelect를 nice-select로 변환
+                $("#startTimeSelect").niceSelect();
+                $("#endTimeSelect").niceSelect();
+
+                // 시작 시간 선택 이벤트 처리
+                $("#startTimeSelect").on("change", function () {
+                    selectedStartTime = parseInt($(this).val());
+
+                    availableStartTimes(array);
+                    availableEndTimes(selectedStartTime, endTimes);
+
+                    // 시작 시간에 따른 종료 시간 옵션 비활성화
+                    $("#endTimeSelect").find("option").each(function () {
+                        let optionValue = parseInt($(this).val());
+                        $(this).prop("disabled", true);
+                        // if (availableEndTime.includes(optionValue)) {
+                        //     $(this).prop("disabled", false);
+                        // } else {
+                        //     $(this).prop("disabled", true);
                         // }
-                    }).catch(error=> alert(error));
+                    });
+
+                    $("#endTimeSelect").find("option").each(function () {
+                        let optionValue = parseInt($(this).val());
+                        if (availableEndTime.includes(optionValue)) {
+                            $(this).prop("disabled", false);
+                        }
+                    });
+                    // nice-select 업데이트
+                    $("#endTimeSelect").niceSelect("update");
+                });
+
+                $("#endTimeSelect").on("change", function () {
+
+                    const startTimmmme = document.querySelector('#startTimeSelect');
+                    const endTimmmme = document.querySelector('#endTimeSelect');
+                    const selectCalculTime = document.querySelector('#calculateTime');
+                    selectCalculTime.innerHTML = '';
+                    selectCalculTime.innerHTML += endTimmmme.value - startTimmmme.value;
+                    const totalPrice = document.querySelector('#totalPrice');
+                    totalPrice.innerHTML='';
+                    totalPrice.innerHTML += document.querySelector('#calculateRoomPrice').innerHTML * selectCalculTime.innerHTML;
 
                 });
             });
         </script>
-        <script type="text/javascript">
+
+        <script th:inline="javascript">
             window.onload = function () {
                 var showAlertParam = new URLSearchParams(window.location.search).get("error");
                 if (showAlertParam === "true") {
@@ -549,30 +742,6 @@
                     text: '다른 시간을 선택하세요.'
                 });
             }
-
-            $(document).ready(function() {
-                // startTimeSelect와 endTimeSelect를 nice-select로 변환
-                $("#startTimeSelect").niceSelect();
-                $("#endTimeSelect").niceSelect();
-
-                // 시작 시간 선택 이벤트 처리
-                $("#startTimeSelect").on("change", function() {
-                    let selectedStartTime = parseInt($(this).val());
-
-                    // 시작 시간에 따른 종료 시간 옵션 비활성화
-                    $("#endTimeSelect").find("option").each(function() {
-                        let optionValue = parseInt($(this).val());
-                        if (optionValue <= selectedStartTime) {
-                            $(this).prop("disabled", true);
-                        } else {
-                            $(this).prop("disabled", false);
-                        }
-                    });
-
-                    // nice-select 업데이트
-                    $("#endTimeSelect").niceSelect("update");
-                });
-            });
         </script>
         <!-- INPUT QUANTITY  -->
         <script src="/js/input_qty.js"></script>
