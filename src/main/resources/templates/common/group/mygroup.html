@@ -176,14 +176,14 @@
                                     <div class="accordion-item">
                                         <h2 class="accordion-header">
                                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseOne" aria-expanded="true"
+                                                    th:data-bs-target="|#commentaccordion_${articleList['ID']}|" aria-expanded="true"
                                                     aria-controls="collapseOne">
                                                 댓글 보기
                                             </button>
                                         </h2>
                                         <th:block th:each="comment : ${commentList}">
                                             <div id="collapseOne" class="accordion-collapse collapse show"
-                                                 data-bs-parent="#accordionExample">
+                                                th:id="|commentaccordion_${comment['ARTICLEID']}|">
                                                 <div class="accordion-body">
                                                     <div class="card card-body">
                                                         <ul th:if="${articleList.ID == comment.ARTICLEID}">
