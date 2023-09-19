@@ -224,8 +224,36 @@ public class HostController {
 
 
     @GetMapping("/reviews")
-    public String hostreviewList(HttpServletRequest request,
+    public String hostreviewList(@RequestParam(value = "page", required = false) String page,
+                                 @RequestParam(value = "type", required = false) String type,
+                                 HttpServletRequest request,
                                  Model model){
+        HttpSession session = request.getSession();
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        Map<String, Object> cafe = cafeService.getCafeMemberId(loginMember.getId());
+        int cafeId = Integer.parseInt(cafe.get("id").toString());
+        if (page == null || page.isBlank()) {
+            page = "1";
+        }
+        if (type == null || type.isBlank()) {
+            type = "latest";
+        }
+        int selectPage = Integer.parseInt(page);
+        int count = reviewService.getCountByHost(cafeId);
+        log.info("카운트:{}",count);
+        PageParams pageParams = PageParams.builder()
+                .elementSize(ELEMENT_SIZE)
+                .pageSize(PAGE_SIZE)
+                .requestPage(selectPage)
+                .rowCount(count)
+                .type(type)
+                .build();
+        Pagination pagination = new Pagination(pageParams);
+
+        List<Map<String, Object>> hostReviewList = reviewService.getByHost(cafeId, pageParams);
+        log.info("리뷰리스트:{}",hostReviewList);
+        model.addAttribute("hostReviewList", hostReviewList);
+        model.addAttribute("pagination", pagination);
 
         return "dashboard/host/reviews";
     }

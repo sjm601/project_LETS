@@ -2,7 +2,6 @@ package com.vj.lets.domain.review.mapper;
 
 import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.review.dto.Review;
-import jakarta.annotation.Priority;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -90,4 +89,19 @@ public interface ReviewMapper {
      */
     public void disabled(int id);
 
+    /**
+     * 호스트의 카페에 대한 리뷰 정보 출력
+     * @param cafeId
+     * @return 리뷰 수
+     */
+    public int readCountByHost(int cafeId);
+
+    /**
+     * 카페 ID로 호스트의 카페 리뷰 목록 조회
+     *
+     * @param cafeId   카페 ID
+     * @param pageParams 페이징 객체
+     * @return 리뷰 목록
+     */
+    public List<Map<String, Object>> readByHost(@Param("cafeId") int cafeId, @Param("pageParams") PageParams pageParams);
 }

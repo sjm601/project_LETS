@@ -2,6 +2,7 @@ package com.vj.lets.domain.review.service;
 
 import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.review.dto.Review;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -68,4 +69,19 @@ public interface ReviewService {
      */
     public void removeReview(int id);
 
+    /**
+     * 호스트의 카페에 대한 리뷰 수 출력
+     * @param cafeId
+     * @return 리뷰 갯수
+     */
+    public int getCountByHost(int cafeId);
+
+    /**
+     * 카페 ID로 호스트의 카페 리뷰 목록 조회
+     *
+     * @param cafeId   카페 ID
+     * @param pageParams 페이징 객체
+     * @return 리뷰 목록
+     */
+    public List<Map<String, Object>> getByHost(@Param("cafeId") int cafeId, @Param("pageParams") PageParams pageParams);
 }
