@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +44,7 @@ public class ArticleController {
 
     //게시글 목록 (페이징,검색값,게시글)화면 , 수정 , 등록 , 삭제 다 이 페이지에서 실행
     @GetMapping("/list/{page}")
-    public String articleList(@PathVariable String page, @PathParam("keyword") String keyword,@PathParam("articleId") Integer articleId ,Model model) {
+    public String articleList(@PathVariable String page, @PathParam("keyword") String keyword,Model model) {
         int count = articleService.getCountAll(keyword);
 //        log.info("갯수{}",count);
         if (page == null || page.isEmpty()) {
@@ -61,12 +63,20 @@ public class ArticleController {
 //        log.info("페이징 검색포함{}",pagination);
         model.addAttribute(pagination);
         List<Map<String, Object>> articleList = articleService.findByPage(pageParams);
-        log.info("페이징 된 리스트{}",articleList);
+        log.info("페이징 된 리스트{}", articleList);
         model.addAttribute("articleList", articleList);
-        log.info("모델에 저장된 리스트{}",articleList);
-        log.info("제발 아티클 Id{}", articleId);
+        log.info("모델에 저장된 리스트{}", articleList);
 
-//        List<Map<String, Object>> articleComment = articleService.findComment(articleId);
+        List<Integer> articleIds = new ArrayList<>();
+        for (Map<String, Object> articleMap : articleList) {
+            log.info("{}", articleMap);
+            Integer articleId = ((BigDecimal) articleMap.get("ID")).intValue();
+            articleIds.add(articleId);
+        }
+        log.info("아티클번호들 ------{}", articleIds);
+        List<Map<String, Object>> articleComments = articleService.findComment(articleIds);
+        log.info("=============={}", articleComments);
+        model.addAttribute("commentList", articleComments);
 
         return "common/group/mygroup";
     }
@@ -111,7 +121,6 @@ public class ArticleController {
         articleService.delete(id);
         return "redirect:/article/list/1";
     }
-
 
     //댓글 등록
     @PostMapping("/list/{page}/{articleId}/commentCreate")
