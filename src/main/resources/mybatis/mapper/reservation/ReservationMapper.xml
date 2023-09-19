@@ -147,10 +147,13 @@
         AND TO_CHAR(BOOKING_DATE, 'YYYY-MM-DD') = #{bookingDate}
     </select>
 
-    <delete id="delete">
-        DELETE FROM RESERVATION
+    <update id="delete">
+        UPDATE RESERVATION
+        <set>
+            STATUS = 'cancel'
+        </set>
         WHERE ID = #{id} AND MEMBER_ID = #{memberId}
-    </delete>
+    </update>
 
     <select id="readCountByResMonth" parameterType="int" resultType="map">
     SELECT "month",

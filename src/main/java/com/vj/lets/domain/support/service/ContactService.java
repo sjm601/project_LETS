@@ -39,6 +39,14 @@ public interface ContactService {
     public List<Contact> getContactList(PageParams pageParams);
 
     /**
+     * 입점 신청 ID로 특정 입점 신청 정보 조회
+     *
+     * @param id 입점 신청 ID
+     * @return 입점 신청 정보
+     */
+    public Contact getContact(int id);
+
+    /**
      * 입점 신청 시 이메일, 사업자 번호, 신청 날짜로 중복 신청 조회
      *
      * @param contactForm 입점 신청 입력 폼

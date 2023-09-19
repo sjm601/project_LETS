@@ -1,17 +1,23 @@
 package com.vj.lets.domain.member.service;
 
+import com.vj.lets.domain.article.dto.ArticleComment;
 import com.vj.lets.domain.cafe.mapper.CafeHistoryMapper;
 import com.vj.lets.domain.cafe.mapper.CafeMapper;
+import com.vj.lets.domain.cafe.mapper.CafeOptionListMapper;
+import com.vj.lets.domain.group.dto.GroupMemberList;
 import com.vj.lets.domain.group.mapper.GroupContactMapper;
 import com.vj.lets.domain.group.mapper.GroupHistoryMapper;
 import com.vj.lets.domain.group.mapper.GroupMemberListMapper;
 import com.vj.lets.domain.group.mapper.StudyGroupMapper;
+import com.vj.lets.domain.group.util.PositionType;
 import com.vj.lets.domain.member.dto.EditForm;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.mapper.MemberHistoryMapper;
 import com.vj.lets.domain.member.mapper.MemberMapper;
 import com.vj.lets.domain.member.util.MemberHistoryComment;
+import com.vj.lets.domain.member.util.MemberType;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,11 +33,13 @@ import java.util.Map;
  */
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class MemberServiceImpl implements MemberService {
 
     private final MemberMapper memberMapper;
     private final MemberHistoryMapper memberHistoryMapper;
     private final CafeMapper cafeMapper;
+    private final CafeOptionListMapper cafeOptionListMapper;
     private final CafeHistoryMapper cafeHistoryMapper;
     private final StudyGroupMapper studyGroupMapper;
     private final GroupHistoryMapper groupHistoryMapper;
@@ -137,21 +145,39 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberMapper.readById(id);
         String memberType = member.getType();
 
-        if (memberType.equals("host")) {
-            // 멤버 ID로 카페 찾기
-//            cafeMapper.delete(cafeId);
-//            cafeHistoryMapper.delete(cafeId);
-        } else if (memberType.equals("guest")) {
-//             멤버 아이디로 스터디 그룹 전체 찾기
-//             if (포지션 = 팀장) {
-//             groupMemberListMapper.removeMember(studygroupid);
-//            studyGroupMapper.delete(studygroupid);
-//            groupHistoryMapper.delete(studygroupid);
-//             } else if ( 포지션 = 팀원) {
-//            groupMemberListMapper.removeMember(id, studygroupid);
-//            studyGroupMapper.decrease(studygroupid);
-//            groupHistoryMapper.update(studygroupid);
-//             }
+        if (memberType.equals(MemberType.HOST.getType())) {
+            Map<String, Object> cafe = cafeMapper.findByMemberId(id);
+            int cafeId = Integer.parseInt(cafe.get("id").toString());
+            cafeMapper.delete(cafeId);
+            cafeOptionListMapper.delete(cafeId);
+            cafeHistoryMapper.delete(cafeId);
+        } else if (memberType.equals(MemberType.GUEST.getType())) {
+             List<Map<String, Object>> myGroupList = groupMemberListMapper.findMyGroupList(id);
+            for (Map<String, Object> map : myGroupList) {
+                int groupId = Integer.parseInt(map.get("STUDYGROUPID").toString());
+                GroupMemberList memberList = groupMemberListMapper.isGroupMember(id, groupId);
+                String position = memberList.getPosition();
+
+                groupMemberListMapper.removeMember(id, groupId);
+                studyGroupMapper.minusCurrentCount(groupId);
+
+                if (position.equals(PositionType.LEADER.getType() )) {
+
+                    if (groupMemberListMapper.readGroupMemberCount(groupId)) {
+                        int oldestMemberId = groupMemberListMapper.readOldestMemberByGroupId(groupId);
+                        groupMemberListMapper.updateMemberPosition(oldestMemberId, groupId);
+                        groupHistoryMapper.updateGroupHistory(groupId);
+                    } else {
+                        studyGroupMapper.deleteStudy(groupId);
+                        groupHistoryMapper.deleteGroupHistory(groupId);
+                    }
+
+                } else if (position.equals(PositionType.MEMBER.getType())) {
+                    groupHistoryMapper.updateGroupHistory(groupId);
+                }
+
+            }
+
         }
 
         memberMapper.disabled(id);

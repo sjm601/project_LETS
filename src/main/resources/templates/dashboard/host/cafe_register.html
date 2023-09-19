@@ -77,10 +77,10 @@
                     </div>
                     <!-- /row-->
                     <div class="row">
-                        <div class="col-md-12" >
+                        <div class="col-md-12">
                             <label>카페 옵션</label>
                             <ul class="list-unstyled">
-                                <li th:each="cafeOption:${cafeOptions}" >
+                                <li th:each="cafeOption:${cafeOptions}">
                                     <th:block><i th:class="|${cafeOption.imagePath} mr-2|"></i></th:block>
                                     <th:block th:text="${cafeOption.name}"></th:block>
                                 </li>
@@ -106,10 +106,10 @@
                 <div class="small-dialog-header">
                     <h3>카페 수정</h3>
                 </div>
-<!--                <div class="form-group">-->
-<!--                    <label>Your photo</label>-->
-<!--                    <input th:id="imagePath" th:name="imagePath" type="file" name="uploadfile" accept="image/*"><br>-->
-<!--                </div>-->
+                <!--                <div class="form-group">-->
+                <!--                    <label>Your photo</label>-->
+                <!--                    <input th:id="imagePath" th:name="imagePath" type="file" name="uploadfile" accept="image/*"><br>-->
+                <!--                </div>-->
                 <div class="form-group">
                     <label th:for="name">카페이름</label>
                     <input th:id="name" th:name="name" th:value="${cafe.get('name')}"
@@ -123,7 +123,8 @@
                 <div class="form-group">
                     <label th:for="address">주소</label>
                     <input type="text" class="form-control" id="address_kakao_all"
-                           th:value="|${cafe.get('siDoName')} ${cafe.get('siGunGuName')} ${cafe.get('roadAddress')}|" placeholder="주소"/>
+                           th:value="|${cafe.get('siDoName')} ${cafe.get('siGunGuName')} ${cafe.get('roadAddress')}|"
+                           placeholder="주소"/>
                     <button type="button" class="form-control btn_1 gray mt-2" id="address_kakao_btn"
                             name="address">주소검색
                     </button>
@@ -169,16 +170,16 @@
                 </div>
                 <div class="form-group">
                     <label>카페옵션</label>
-                        <ul class="list-unstyled">
-                            <li th:each="option : ${optionListForms}">
-                                <label class="fix_spacing mr-2">
-                                    <th:block><i th:class="|${option.imagePath} mr-2|"></i></th:block>
-                                    <th:block th:text="${option.optionName}"></th:block>
-                                </label>
-                                <input type="checkbox" th:value="${option.optionId}" th:name="options"
-                                       th:checked="${option.optionCheck}">
-                            </li>
-                        </ul>
+                    <ul class="list-unstyled">
+                        <li th:each="option : ${optionListForms}">
+                            <label class="fix_spacing mr-2">
+                                <th:block><i th:class="|${option.imagePath} mr-2|"></i></th:block>
+                                <th:block th:text="${option.optionName}"></th:block>
+                            </label>
+                            <input type="checkbox" th:value="${option.optionId}" th:name="options"
+                                   th:checked="${option.optionCheck}">
+                        </li>
+                    </ul>
                 </div>
 
                 <button type="submit" class="btn_1 my-2">
@@ -203,7 +204,6 @@
                 회원 탈퇴
             </button>
         </div>
-
 
 
         <!-- /Content -->
@@ -250,8 +250,6 @@
                 }
             };
         </script>
-
-
         <!-- /custom scripts -->
     </th:block>
 

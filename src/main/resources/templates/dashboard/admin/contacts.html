@@ -41,7 +41,7 @@
                     </div>
                     <div class="list_general">
                         <ul>
-                            <li th:each="contact, index : ${contactList}">
+                            <li th:each="contact, index : ${contactList}" class="contacts">
                                 <h4>
                                     <th:block th:text="${contact.cafeName}">Hotel Mariott</th:block>
                                     <th:block th:switch="${contact.status}">
@@ -78,14 +78,14 @@
                                 <th:block th:if="${contact.status} == 'hold'">
                                     <ul class="buttons inline-popups">
                                         <li>
-                                            <a th:href="|#modal-approve_${index.count}|" href="#"
+                                            <a th:href="|#modal_approve_${index.count}|" href="#"
                                                class="btn_1 gray approve">
                                                 <i class="fa fa-fw fa-check-circle-o mr-1"></i>
                                                 승인
                                             </a>
                                         </li>
                                         <li>
-                                            <a th:href="|#modal-refuse_${index.count}|" href="#"
+                                            <a th:href="|#modal_refuse_${index.count}|" href="#"
                                                class="btn_1 gray delete">
                                                 <i class="fa fa-fw fa-times-circle-o mr-1"></i>
                                                 거부
@@ -93,89 +93,71 @@
                                         </li>
                                     </ul>
                                     <!-- contact to approve popup -->
-                                    <div th:id="|modal-approve_${index.count}|" id="modal-approve"
-                                         class="white-popup mfp-with-anim mfp-hide">
-                                        <form th:action="@{/admin/contact}" th:method="post">
-                                            <div class="small-dialog-header">
-                                                <h3>입점 승인</h3>
+                                    <div th:id="|modal_approve_${index.count}|" id="modal_approve"
+                                         class="white-popup mfp-with-anim mfp-hide modal_approve">
+                                        <div class="small-dialog-header">
+                                            <h3>입점 승인</h3>
+                                        </div>
+                                        <div>
+                                            <ul class="booking_list">
+                                                <li><strong>카페명</strong>
+                                                    <th:block th:text="${contact.cafeName}">카페명</th:block>
+                                                </li>
+                                                <li><strong>사업자명</strong>
+                                                    <th:block th:text="${contact.name}">홍길동</th:block>
+                                                </li>
+                                                <li><strong>이메일</strong>
+                                                    <th:block th:text="${contact.email}">hong@gmail.com</th:block>
+                                                </li>
+                                                <li><strong>전화번호</strong>
+                                                    <th:block th:text="${contact.phoneNumber}">010-0000-0000</th:block>
+                                                </li>
+                                                <li><strong>주소</strong>
+                                                    <th:block th:text="${contact.address}">서울시 노원구</th:block>
+                                                </li>
+                                                <li><strong>사업자 등록번호</strong>
+                                                    <th:block th:text="${contact.businessNumber}">000-00-000000</th:block>
+                                                </li>
+                                                <li><strong>입점 신청 날짜</strong>
+                                                    <th:block th:text="${contact.contactDate}">2023-01-01</th:block>
+                                                </li>
+                                                <li><strong>업체설명</strong></li>
+                                                <li>
+                                                    <p th:text="${contact.message}">======================= 업체 설명
+                                                        =======================</p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="row justify-content-center message-reply margin-top-0">
+                                            <div class="col-8 align-self-center">
+                                                <p class="m-0">정말로 해당 입점 신청을 승인하시겠습니까</p>
                                             </div>
-                                            <div class="form-group">
-                                                <label th:for="cafeName">카페명</label>
-                                                <input th:id="cafeName" th:name="cafeName"
-                                                       th:value="${contact.cafeName}" type="text"
-                                                       class="form-control" readonly>
+                                            <div class="col-auto align-self-center">
+                                                <button class="btn_1 gray approve approve_btn">
+                                                    <i class="fa fa-fw fa-check-circle-o mr-1"></i>
+                                                    입점 승인
+                                                </button>
                                             </div>
-                                            <div class="form-group">
-                                                <label th:for="name">사업자명</label>
-                                                <input th:id="name" th:name="name" th:value="${contact.name}"
-                                                       type="text"
-                                                       class="form-control" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label th:for="name">이메일</label>
-                                                <input th:id="email" th:name="email" th:value="${contact.email}"
-                                                       type="text"
-                                                       class="form-control" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label th:for="name">사업자 등록번호</label>
-                                                <input th:id="businessNumber" th:name="businessNumber"
-                                                       th:value="${contact.businessNumber}" type="text"
-                                                       class="form-control" readonly>
-                                            </div>
-                                            <div class="row justify-content-center message-reply margin-top-0">
-                                                <div class="col-8 align-self-center">
-                                                    <p class="m-0">정말로 해당 입점 신청을 승인하시겠습니까</p>
-                                                </div>
-                                                <div class="col-auto align-self-center">
-                                                    <button th:name="contactRequest" th:value="approve" type="submit"
-                                                            class="btn_1 gray approve">
-                                                        <i class="fa fa-fw fa-check-circle-o mr-1"></i>
-                                                        입점 승인
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
+                                        </div>
                                     </div>
 
                                     <!-- contact to refuse popup -->
-                                    <div th:id="|modal-refuse_${index.count}|" id="modal-refuse"
-                                         class="white-popup mfp-with-anim mfp-hide">
-                                        <form th:action="@{/admin/contact}" th:method="post">
-                                            <div class="small-dialog-header">
-                                                <h3>입점 거부</h3>
+                                    <div th:id="|modal_refuse_${index.count}|" id="modal_refuse"
+                                         class="white-popup mfp-with-anim mfp-hide modal_refuse">
+                                        <div class="small-dialog-header">
+                                            <h3>입점 거부</h3>
+                                        </div>
+                                        <div class="row justify-content-center message-reply margin-top-0">
+                                            <div class="col-8 align-self-center">
+                                                <p class="m-0">정말로 해당 입점 신청을 거부하시겠습니까</p>
                                             </div>
-                                            <div class="form-group">
-                                                <label th:for="name">사업자명</label>
-                                                <input th:id="name" th:name="name" th:value="${contact.name}"
-                                                       type="text"
-                                                       class="form-control" readonly>
+                                            <div class="col-auto align-self-center">
+                                                <button class="btn_1 gray delete refuse_btn">
+                                                    <i class="fa fa-fw fa-times-circle-o mr-1"></i>
+                                                    입점 거부
+                                                </button>
                                             </div>
-                                            <div class="form-group">
-                                                <label th:for="name">이메일</label>
-                                                <input th:id="email" th:name="email" th:value="${contact.email}"
-                                                       type="text"
-                                                       class="form-control" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label th:for="name">사업자 등록번호</label>
-                                                <input th:id="businessNumber" th:name="businessNumber"
-                                                       th:value="${contact.businessNumber}" type="text"
-                                                       class="form-control" readonly>
-                                            </div>
-                                            <div class="row justify-content-center message-reply margin-top-0">
-                                                <div class="col-8 align-self-center">
-                                                    <p class="m-0">정말로 해당 입점 신청을 거부하시겠습니까</p>
-                                                </div>
-                                                <div class="col-auto align-self-center">
-                                                    <button th:name="contactRequest" th:value="refuse" type="submit"
-                                                            class="btn_1 gray delete">
-                                                        <i class="fa fa-fw fa-times-circle-o mr-1"></i>
-                                                        입점 거부
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </th:block>
                             </li>
@@ -187,9 +169,8 @@
                     <ul class="pagination pagination-sm add_bottom_30">
                         <li class="page-item">
                             <a th:if="${pagination.showPrevious}"
-                               th:href="@{|?page=${pagination.previousStartPage}&type=${pagination.params.type}|}"
-                               class="page-link" href="#"
-                               tabindex="-1">&lt;&lt;</a>
+                               th:href="@{|?page=${pagination.previousStartPage}&type=${pagination.params.type}|}" class="page-link" href="#"
+                               tabindex="-1"><i class="fa-solid fa-angles-left" style="color: #000000;"></i></a>
                         </li>
                         <th:block
                             th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
@@ -205,7 +186,7 @@
                         <li class="page-item">
                             <a th:if="${pagination.showNext}"
                                th:href="@{|?page=${pagination.nextStartPage}&type=${pagination.params.type}|}"
-                               class="page-link" href="#">&gt;&gt;</a>
+                               class="page-link" href="#"><i class="fa-solid fa-angles-right" style="color: #000000;"></i></a>
                         </li>
                     </ul>
                 </nav>
@@ -219,10 +200,12 @@
 
     <th:block th:fragment="scripts">
         <script th:inline="javascript">
+            const contactList = [[${contactList}]];
             document.querySelector('#orderType').addEventListener('change', (event) => {
                 location.href = `?type=${event.target.value}`;
             })
         </script>
+        <script src="/dashboard/js/custom/admin-contacts_custom.js"></script>
     </th:block>
 
 </th:block>

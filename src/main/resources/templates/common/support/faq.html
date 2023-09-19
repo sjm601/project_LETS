@@ -28,8 +28,13 @@
                     <aside class="col-lg-3" id="sidebar">
                         <div class="box_style_cat" id="faq_box">
                             <ul th:each="category, index : ${categoryList}" id="cat_nav">
-                                <li><a th:href="|#${category.name}|" th:text="${category.description}" href="#studygroup"
-                                       class="active"><i class="icon_document_alt"></i>스터디그룹 이용안내</a></li>
+                                <li>
+                                    <a th:href="|#${category.name}|" th:text="${category.name}"
+                                       href="#studygroup" class="active">
+                                        <i class="icon_document_alt"></i>
+                                        스터디그룹 이용안내
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                         <!--/sticky -->
@@ -46,15 +51,17 @@
                                         <h5 class="mb-0">
                                             <a th:href="|#${faqList.key}_${index.count}|"
                                                data-bs-toggle="collapse" href="#collapseOne_terms" aria-expanded="true">
-                                                <i class="indicator ti-plus"></i><th:block th:text="${faq.title}">예약</th:block></a>
+                                                <i class="indicator ti-plus"></i>
+                                                <th:block th:text="${faq.title}">예약</th:block>
+                                            </a>
                                         </h5>
                                     </div>
-
                                     <div th:id="|${faqList.key}_${index.count}|" th:data-bs-parent="|#${faqList.key}|"
                                          id="collapseOne_terms" class="collapse" role="tabpanel"
                                          data-bs-parent="#book_payment">
                                         <div class="card-body">
-                                            <p th:text="${faq.content}">Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                                            <p th:text="${faq.content}">Nihil anim keffiyeh helvetica, craft beer labore
+                                                wes anderson cred
                                                 nesciunt
                                                 sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
                                                 occaecat

@@ -265,6 +265,29 @@ public class MemberController {
     }
 
     /**
+     * 회원 탈퇴
+     *
+     * @param request 서블릿 리퀘스트 객체
+     * @param model   모델 객체
+     * @return 논리적 뷰 이름
+     */
+    @PostMapping("/delete")
+    public String delete(HttpServletRequest request, @RequestParam String password, Model model) {
+        HttpSession session = request.getSession();
+        Member loginMember = (Member) session.getAttribute("loginMember");
+
+        if (memberService.isMember(loginMember.getEmail(), password) != null) {
+            memberService.removeMember(loginMember.getId());
+        }
+
+        if (session != null) {
+            session.invalidate();
+        }
+
+        return "redirect:/";
+    }
+
+    /**
      * 로그아웃 기능
      *
      * @param session 세션 객체
