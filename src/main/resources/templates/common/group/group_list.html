@@ -118,8 +118,6 @@
                             <div class="widget-title">
                                 <h4 th:text="'신규 스터디'">인기 스터디</h4>
                             </div>
-                            <!-- 신규 스터디 리스트 출력 -->
-                            <!-- List<StudyGroup> newStudyList -->
                             <ul class="comments-list">
                                 <li th:each="newStudy : ${newStudyList}">
                                     <div class="d-flex">
@@ -142,8 +140,6 @@
                     <div class="col-lg-9">
                         <div class="isotope-wrapper">
                             <div class="row">
-                                <!-- 스터디 리스트 출력 -->
-                                <!-- List<Map<String, Object>> studyGroupList -->
                                 <th:block th:each="studyGroup : ${studyGroupList}">
                                     <div class="col-md-6 isotope-item popular">
                                         <div class="box_grid" data-cue="slideInUp">

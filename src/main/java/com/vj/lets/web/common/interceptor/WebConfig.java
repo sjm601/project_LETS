@@ -22,7 +22,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     public final List<String> loginEssential = Arrays.asList("/**");
 
-    public final List<String> loginNotEssential = Arrays.asList("/", "/**/*.ttf", "/**/*.woff", "/**/*.mp4", "/**/*.ico", "/**/*.html", "/**/images/**", "/**/img/**", "/**/css/**", "/**/sass/**", "/**/scss/**", "/**/js/**", "/**/vendor/**",
+    public final List<String> loginNotEssential = Arrays.asList("/", "/**/*.ttf", "/**/*.woff", "/**/*.mp4", "/**/*.ico", "/**/*.html",
+            "/**/assets/**", "/**/css/**", "/**/images/**", "/**/image/**", "/**/img/**", "/**/js/**", "/**/sass/**", "/**/upload_image/**", "/**/vendor/**",
             "/member/register", "/member/login", "/member/logout", "/cafe", "/cafe/*", "/group", "/contact", "/support/**", "/error");
 
     public final List<String> loginModalNotEssential = Arrays.asList("/mypage/**", "/host/**", "/admin/**");

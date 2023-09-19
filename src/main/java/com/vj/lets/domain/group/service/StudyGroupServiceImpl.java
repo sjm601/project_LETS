@@ -45,19 +45,19 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      */
     @Override
     @Transactional
-    public int createStudyGroup(StudyGroup studyGroup, int id, String siGunGuName) {
+    public int generateStudy(StudyGroup studyGroup, int id, String siGunGuName) {
         // 전달 받은 시,군,구 이름을 시,군,구 아이디로 변환
         SiGunGu siGunGu = siGunGuMapper.getSiGunGu(siGunGuName);
         studyGroup.setSiGunGuId(siGunGu.getId());
 
         // 스터디 그룹 생성
-        studyGroupMapper.create(studyGroup);
+        studyGroupMapper.createStudy(studyGroup);
         // 현재 생성된 스터디 그룹 아이디 조회
-        int studyGroupId = studyGroupMapper.findId();
+        int studyGroupId = studyGroupMapper.findByStudyId();
         // 스터디 그룹 멤버 리스트에 전달 받은 회원을 팀장으로 추가
-        groupMemberListMapper.create(id);
+        groupMemberListMapper.createGroupMemberList(id);
         // 스터디 그룹 히스토리 추가
-        groupHistoryMapper.create();
+        groupHistoryMapper.createGroupHistory();
 
         return studyGroupId;
     }
@@ -69,10 +69,10 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @return 스터디 그룹 리스트
      */
     @Override
-    public List<Map<String, Object>> getStudyGroupList(Search search) {
+    public List<Map<String, Object>> getStudyList(Search search) {
         List<Map<String, Object>> list = null;
 
-        list = studyGroupMapper.findAll(search);
+        list = studyGroupMapper.findAllStudyList(search);
         return list;
     }
 
@@ -84,10 +84,10 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @return 조회된 스터디 그룹 정보
      */
     @Override
-    public Map<String, Object> viewStudyGroup(int studyGroupId) {
+    public Map<String, Object> viewStudy(int studyGroupId) {
         Map<String, Object> studyGroup = null;
 
-        studyGroup = studyGroupMapper.read(studyGroupId);
+        studyGroup = studyGroupMapper.readStudy(studyGroupId);
         return studyGroup;
     }
 
@@ -99,11 +99,11 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      */
     @Override
     @Transactional
-    public void editStudyGroup(StudyGroup studyGroup) {
+    public void editStudy(StudyGroup studyGroup) {
         // 스터디 그룹 정보 수정
-        studyGroupMapper.update(studyGroup);
+        studyGroupMapper.updateStudy(studyGroup);
         // 스터디 그룹 히스토리 추가
-        groupHistoryMapper.update(studyGroup.getId());
+        groupHistoryMapper.updateGroupHistory(studyGroup.getId());
     }
 
     /**
@@ -114,11 +114,11 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      */
     @Override
     @Transactional
-    public void deleteStudyGroup(int id) {
+    public void removeStudy(int id) {
         // 스터디 그룹 정보 삭제 -> DB에 정보는 남기고 상태를 disabled로 변경
-        studyGroupMapper.delete(id);
+        studyGroupMapper.deleteStudy(id);
         // 스터디 그룹 히스토리 추가
-        groupHistoryMapper.delete(id);
+        groupHistoryMapper.deleteGroupHistory(id);
     }
 
     /**
@@ -129,10 +129,10 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @return 조회된 회원 리스트
      */
     @Override
-    public List<Map<String, Object>> findByAllMember(int studyGroupId) {
+    public List<Map<String, Object>> getStudyMemberList(int studyGroupId) {
         List<Map<String, Object>> list = null;
 
-        list = groupMemberListMapper.findAll(studyGroupId);
+        list = groupMemberListMapper.findAllGroupMemberList(studyGroupId);
         return list;
     }
 
@@ -145,13 +145,13 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      */
     @Override
     @Transactional
-    public void addMember(int id, int studyGroupId) {
+    public void studyAddMember(int id, int studyGroupId) {
         // 스터디 그룹 멤버 리스트에 전달 받은 회원 id '팀원'으로 추가
-        groupMemberListMapper.add(id, studyGroupId);
+        groupMemberListMapper.addMember(id, studyGroupId);
         // 스터디 그룹 현재 회원 수 1 증가
-        studyGroupMapper.add(id);
+        studyGroupMapper.plusCurrentCount(id);
         // 스터디 그룹 히스토리 추가
-        groupHistoryMapper.update(studyGroupId);
+        groupHistoryMapper.updateGroupHistory(studyGroupId);
     }
 
     /**
@@ -163,13 +163,13 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      */
     @Override
     @Transactional
-    public void removeMember(int id, int studyGroupId) {
+    public void studySubtractMember(int id, int studyGroupId) {
         // 스터디 그룹 멤버 리스트에 전달 받은 회원 id 삭제
-        groupMemberListMapper.remove(id, studyGroupId);
+        groupMemberListMapper.removeMember(id, studyGroupId);
         // 스터디 그룹 현재 회원 수 1 감소
-        studyGroupMapper.subtract(studyGroupId);
+        studyGroupMapper.minusCurrentCount(studyGroupId);
         // 스터디 그룹 히스토리 추가
-        groupHistoryMapper.update(studyGroupId);
+        groupHistoryMapper.updateGroupHistory(studyGroupId);
     }
 
     /**
@@ -180,8 +180,16 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @param studyGroupId 스터디 그룹 아이디
      */
     @Override
-    public void registerStudy(int id, int studyGroupId) {
-        groupContactMapper.register(id, studyGroupId);
+    @Transactional
+    public GroupContact contactStudy(int id, int studyGroupId) {
+        GroupContact groupContact = null;
+
+        groupContact = groupContactMapper.isAlreadyContact(id, studyGroupId);
+        if (groupContact == null) {
+            groupContactMapper.contactGroup(id, studyGroupId);
+        }
+
+        return groupContact;
     }
 
     /**
@@ -192,10 +200,10 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @return 가입 신청한 회원 리스트
      */
     @Override
-    public List<Map<String, Object>> findByAllRegist(int studyGroupId) {
+    public List<Map<String, Object>> getStudyContactList(int studyGroupId) {
         List<Map<String, Object>> list = null;
 
-        list = groupContactMapper.findAll(studyGroupId);
+        list = groupContactMapper.findAllGroupContactList(studyGroupId);
         return list;
     }
 
@@ -208,17 +216,17 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      */
     @Override
     @Transactional
-    public void approve(int id, int studyGroupId) {
+    public void approveStudyContact(int id, int studyGroupId) {
         // 스터디 그룹 가입 신청 승인
-        groupContactMapper.approve(id, studyGroupId);
+        groupContactMapper.approveGroupContact(id, studyGroupId);
         // 스터디 그룹 가입 신청 리스트에서 신청 내역 삭제
-        groupContactMapper.delete(id, studyGroupId);
+        groupContactMapper.deleteContact(id, studyGroupId);
         // 스터디 그룹 멤버 리스트에 전달 받은 회원 id '팀원'으로 추가
-        groupMemberListMapper.add(id, studyGroupId);
+        groupMemberListMapper.addMember(id, studyGroupId);
         // 스터디 그룹 현재 회원 수 1증가
-        studyGroupMapper.add(studyGroupId);
+        studyGroupMapper.plusCurrentCount(studyGroupId);
         // 스터디 그룹 히스토리 추가
-        groupHistoryMapper.update(studyGroupId);
+        groupHistoryMapper.updateGroupHistory(studyGroupId);
     }
 
     /**
@@ -230,11 +238,11 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      */
     @Override
     @Transactional
-    public void refuse(int id, int studyGroupId) {
+    public void refuseStudyContact(int id, int studyGroupId) {
         // 스터디 그룹 가입 거절
-        groupContactMapper.refuse(id, studyGroupId);
+        groupContactMapper.refuseGroupContact(id, studyGroupId);
         // 스터디 그룹 가입 신청 리스트에서 신청 내역 삭제
-        groupContactMapper.delete(id, studyGroupId);
+        groupContactMapper.deleteContact(id, studyGroupId);
     }
 
     /**
@@ -261,10 +269,10 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @return 가입한 스터디 그룹 리스트
      */
     @Override
-    public List<Map<String, Object>> myGroupList(int memberId) {
+    public List<Map<String, Object>> getMyStudyList(int memberId) {
         List<Map<String, Object>> studyList = null;
 
-        studyList = groupMemberListMapper.myGroupList(memberId);
+        studyList = groupMemberListMapper.findMyGroupList(memberId);
         return studyList;
     }
 

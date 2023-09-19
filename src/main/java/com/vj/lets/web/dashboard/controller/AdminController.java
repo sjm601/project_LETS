@@ -1,9 +1,9 @@
 package com.vj.lets.web.dashboard.controller;
 
-
-
 import com.vj.lets.domain.cafe.dto.Cafe;
 import com.vj.lets.domain.cafe.service.CafeService;
+import com.vj.lets.domain.common.web.PageParams;
+import com.vj.lets.domain.common.web.Pagination;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.service.MemberService;
 import com.vj.lets.domain.member.util.DefaultPassword;
@@ -37,6 +37,9 @@ public class AdminController {
     private final CafeService cafeService;
     private final FaqService faqService;
 
+    private static final int ELEMENT_SIZE = 3;
+    private static final int PAGE_SIZE = 3;
+
     /**
      * 관리자 대시보드 메인 화면 출력
      *
@@ -58,12 +61,33 @@ public class AdminController {
      * @return 논리적 뷰 이름
      */
     @GetMapping("/contact")
-    public String contactView(Model model) {
-        List<Contact> contactList = contactService.getContactList();
+    public String contactView(@RequestParam(value = "page", required = false) String page,
+                              @RequestParam(value = "type", required = false) String type,
+                              Model model) {
+        if (page == null || page.isBlank()) {
+            page = "1";
+        }
+        if (type == null || type.isBlank()) {
+            type = ContactStatus.HOLD.getStatus();
+        }
+        int selectPage = Integer.parseInt(page);
+        int count = contactService.getCountContact(type);
+        PageParams pageParams = PageParams.builder()
+                .elementSize(ELEMENT_SIZE)
+                .pageSize(PAGE_SIZE)
+                .requestPage(selectPage)
+                .rowCount(count)
+                .type(type)
+                .build();
+        Pagination pagination = new Pagination(pageParams);
+
+        List<Contact> contactList = contactService.getContactList(pageParams);
+
         ContactForm contactForm = ContactForm.builder().build();
 
         model.addAttribute("contactList", contactList);
         model.addAttribute("contactForm", contactForm);
+        model.addAttribute("pagination", pagination);
 
         return "dashboard/admin/contacts";
     }
@@ -77,7 +101,9 @@ public class AdminController {
      * @return 논리적 뷰 이름
      */
     @PostMapping("/contact")
-    public String contactApprove(@RequestParam("contactRequest") String contactRequest, @ModelAttribute ContactForm contactForm, Model model) {
+    public String contactApprove(@RequestParam("contactRequest") String contactRequest,
+                                 @ModelAttribute ContactForm contactForm,
+                                 Model model) {
         List<Contact> checkContactList = contactService.checkContact(contactForm);
         int contactId = 0;
         for (Contact refuseContact : checkContactList) {
@@ -149,14 +175,37 @@ public class AdminController {
      * @return 논리적 뷰 이름
      */
     @GetMapping("/faq")
-    public String faqListView(Model model) {
-        List<Map<String, Object>> faqList = faqService.getFaqListForAdmin();
+    public String faqListView(@RequestParam(value = "page", required = false) String page,
+                              @RequestParam(value = "type", required = false) String type,
+                              Model model) {
         List<FaqCategory> categoryList = faqService.getFaqCategoryList();
+
+        if (page == null || page.isBlank()) {
+            page = "1";
+        }
+        if (type == null || type.isBlank()) {
+            type = "all";
+        }
+        int selectPage = Integer.parseInt(page);
+        int count = faqService.getCountFaq(type);
+        PageParams pageParams = PageParams.builder()
+                .elementSize(ELEMENT_SIZE)
+                .pageSize(PAGE_SIZE)
+                .requestPage(selectPage)
+                .rowCount(count)
+                .type(type)
+                .build();
+        Pagination pagination = new Pagination(pageParams);
+
+        List<Map<String, Object>> faqList = faqService.getFaqListForAdmin(pageParams);
+
         FaqForm faqForm = FaqForm.builder().build();
 
         model.addAttribute("faqForm", faqForm);
         model.addAttribute("faqList", faqList);
         model.addAttribute("categoryList", categoryList);
+        model.addAttribute("pagination", pagination);
+
 
         return "dashboard/admin/faq_list";
     }
@@ -170,7 +219,9 @@ public class AdminController {
      * @return 논리적 뷰 이름
      */
     @PostMapping("/faq")
-    public String faqEditAndRemove(@RequestParam("faqRequest") String faqRequest, @ModelAttribute FaqForm faqForm, Model model) {
+    public String faqEditAndRemove(@RequestParam("faqRequest") String faqRequest,
+                                   @ModelAttribute FaqForm faqForm,
+                                   Model model) {
         if (faqRequest.equals("edit")) {
             Faq faq = Faq.builder()
                     .id(faqForm.getFaqId())
@@ -213,10 +264,30 @@ public class AdminController {
      * @return 논리적 뷰 이름
      */
     @GetMapping("/host")
-    public String hostView(Model model) {
-        List<Map<String, Object>> cafeList = cafeService.getCafeListForAdmin();
+    public String hostView(@RequestParam(value = "page", required = false) String page,
+                           @RequestParam(value = "type", required = false) String type,
+                           Model model) {
+        if (page == null || page.isBlank()) {
+            page = "1";
+        }
+        if (type == null || type.isBlank()) {
+            type = "latest";
+        }
+        int selectPage = Integer.parseInt(page);
+        int count = cafeService.getCountCafeForAdmin(type);
+        PageParams pageParams = PageParams.builder()
+                .elementSize(ELEMENT_SIZE)
+                .pageSize(PAGE_SIZE)
+                .requestPage(selectPage)
+                .rowCount(count)
+                .type(type)
+                .build();
+        Pagination pagination = new Pagination(pageParams);
+
+        List<Map<String, Object>> cafeList = cafeService.getCafeListForAdmin(pageParams);
 
         model.addAttribute("cafeList", cafeList);
+        model.addAttribute("pagination", pagination);
 
         return "dashboard/admin/hosts";
     }

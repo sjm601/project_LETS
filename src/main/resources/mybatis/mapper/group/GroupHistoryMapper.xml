@@ -5,17 +5,17 @@
 
 <mapper namespace="com.vj.lets.domain.group.mapper.GroupHistoryMapper">
 
-    <insert id="create">
+    <insert id="createGroupHistory">
         INSERT INTO GROUP_HISTORY(ID, STUDY_GROUP_ID)
         VALUES (GROUP_HISTORY_ID_SEQ.NEXTVAL, STUDY_GROUP_ID_SEQ.CURRVAL)
     </insert>
 
-    <insert id="update" parameterType="int">
+    <insert id="updateGroupHistory" parameterType="int">
         INSERT INTO GROUP_HISTORY(ID, MODIFY_COMMENT, STUDY_GROUP_ID)
         VALUES (GROUP_HISTORY_ID_SEQ.nextval, 'update', #{studyGroupId})
     </insert>
 
-    <insert id="delete" parameterType="int">
+    <insert id="deleteGroupHistory" parameterType="int">
         INSERT INTO GROUP_HISTORY(ID, MODIFY_COMMENT, STUDY_GROUP_ID)
         VALUES (GROUP_HISTORY_ID_SEQ.nextval, 'delete', #{studyGroupId})
     </insert>

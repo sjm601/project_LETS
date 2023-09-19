@@ -3,6 +3,7 @@ package com.vj.lets.domain.support.service;
 import com.vj.lets.domain.cafe.dto.Cafe;
 import com.vj.lets.domain.cafe.mapper.CafeHistoryMapper;
 import com.vj.lets.domain.cafe.mapper.CafeMapper;
+import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.mapper.MemberHistoryMapper;
 import com.vj.lets.domain.member.mapper.MemberMapper;
@@ -44,13 +45,23 @@ public class ContactServiceImpl implements ContactService {
     }
 
     /**
+     * 보류 중인 전체 입점 신청 갯수 조회
+     *
+     * @return 입점 신청 갯수
+     */
+    @Override
+    public int getCountContact(String type) {
+        return contactMapper.readCountAll(type);
+    }
+
+    /**
      * 전체 입점 신청 목록 조회
      *
      * @return 입점 신청 목록
      */
     @Override
-    public List<Contact> getContactList() {
-        return contactMapper.readAll();
+    public List<Contact> getContactList(PageParams pageParams) {
+        return contactMapper.readAll(pageParams);
     }
 
     /**

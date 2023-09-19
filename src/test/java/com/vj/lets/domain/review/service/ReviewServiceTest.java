@@ -1,5 +1,6 @@
 package com.vj.lets.domain.review.service;
 
+import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.review.dto.Review;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -67,7 +68,7 @@ class ReviewServiceTest {
         // given
         int memberId = 27;
         // when
-        List<Map<String, Object>> list = reviewService.getReviewListByMember(memberId);
+        List<Map<String, Object>> list = reviewService.getReviewListByMember(memberId, PageParams.builder().build());
         // then
         log.info("====================={}", list);
         assertThat(list).isNotNull();

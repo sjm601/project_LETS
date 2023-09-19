@@ -1,5 +1,6 @@
 package com.vj.lets.domain.review.service;
 
+import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.review.dto.Review;
 
 import java.util.List;
@@ -37,12 +38,21 @@ public interface ReviewService {
     public List<Map<String, Object>> getReviewListByCafe(int cafeId);
 
     /**
+     * 특정 회원이 작성한 리뷰 갯수 조회
+     *
+     * @param memberId 회원 ID
+     * @return 리뷰 갯수
+     * @see com.vj.lets.web.dashboard.controller.MypageController
+     */
+    public int getCountReviewByMember(int memberId);
+
+    /**
      * 특정 회원이 작성한 전체 리뷰 목록 조회
      *
      * @param memberId 회원 ID
      * @return 리뷰 목록
      */
-    public List<Map<String, Object>> getReviewListByMember(int memberId);
+    public List<Map<String, Object>> getReviewListByMember(int memberId, PageParams pageParams);
 
     /**
      * 리뷰 수정

@@ -1,5 +1,6 @@
 package com.vj.lets.domain.reservation.mapper;
 
+import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.reservation.dto.Reservation;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -37,9 +38,25 @@ public interface ReservationMapper {
      */
     public List<Reservation> findByAll();
 
+    /**
+     * 회원 ID로 예약 횟수 조회
+     *
+     * @param memberId 회원 아이디
+     * @param type     검색 조건
+     * @return 예약 횟수
+     * @see com.vj.lets.web.dashboard.controller.MypageController
+     */
+    public int readCountByMember(@Param("memberId") int memberId, @Param("type") String type);
 
-    //회원 Id 로 예약 전체 리스트 조회
-    public List<Map<String, Object>> findByMember(int memberId);
+    /**
+     * 회원 ID로 예약 목록 조회
+     *
+     * @param memberId   회원 ID
+     * @param pageParams 페이징 객체
+     * @return 예약 목록
+     * @see com.vj.lets.web.dashboard.controller.MypageController
+     */
+    public List<Map<String, Object>> findByMember(@Param("memberId") int memberId, @Param("pageParams") PageParams pageParams);
 
     //카페 id로 예약 전체 리스트 조회
     public List<Reservation> findCafeResList(int cafeId);
@@ -62,6 +79,7 @@ public interface ReservationMapper {
 
     //예약 중복 방지
     public List<Reservation> checkDuplicateResTime(@Param("roomId") int roomId, @Param("bookingDate") String bookingDate);
+
 
     //예약 삭제
     public void delete(@Param("id") int id, @Param("memberId") int memberId);

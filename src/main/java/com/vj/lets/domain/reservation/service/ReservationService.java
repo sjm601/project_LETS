@@ -1,5 +1,6 @@
 package com.vj.lets.domain.reservation.service;
 
+import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.reservation.dto.Reservation;
 import org.apache.ibatis.annotations.Param;
 
@@ -47,13 +48,23 @@ public interface ReservationService {
     public List<Reservation> getReservationList();
 
     /**
+     * 특정 회원이 예약한 횟수 조회
+     *
+     * @param memberId 회원 ID
+     * @param type     검색 조건
+     * @return 예약 횟수
+     * @see com.vj.lets.web.dashboard.controller.MypageController
+     */
+    public int getCountResByMember(int memberId, String type);
+
+    /**
      * 회원 아이디로 예약 전체 리스트 조회
      *
      * @param memberId 회원 ID
      * @return 예약 목록
      * @see com.vj.lets.web.dashboard.controller.MypageController
      */
-    public List<Map<String, Object>> getMemberResList(int memberId);
+    public List<Map<String, Object>> getMemberResList(int memberId, PageParams pageParams);
 
     //카페 id로 예약 전체 리스트 조회
     public List<Reservation> getCafeResList(int cafeId);
@@ -80,5 +91,6 @@ public interface ReservationService {
 
     //예약 삭제
     public void delete(int id, int memberId);
+
 
 }
