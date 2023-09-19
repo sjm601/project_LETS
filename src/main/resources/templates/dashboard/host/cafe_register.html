@@ -76,10 +76,10 @@
                     </div>
                     <!-- /row-->
                     <div class="row">
-                        <div class="col-md-12" >
+                        <div class="col-md-12">
                             <label>카페 옵션</label>
                             <ul class="list-unstyled">
-                                <li th:each="cafeOption:${cafeOptions}" >
+                                <li th:each="cafeOption:${cafeOptions}">
                                     <th:block><i th:class="|${cafeOption.imagePath} mr-2|"></i></th:block>
                                     <th:block th:text="${cafeOption.name}"></th:block>
                                 </li>
@@ -105,10 +105,10 @@
                 <div class="small-dialog-header">
                     <h3>카페 수정</h3>
                 </div>
-<!--                <div class="form-group">-->
-<!--                    <label>Your photo</label>-->
-<!--                    <input th:id="imagePath" th:name="imagePath" type="file" name="uploadfile" accept="image/*"><br>-->
-<!--                </div>-->
+                <!--                <div class="form-group">-->
+                <!--                    <label>Your photo</label>-->
+                <!--                    <input th:id="imagePath" th:name="imagePath" type="file" name="uploadfile" accept="image/*"><br>-->
+                <!--                </div>-->
                 <div class="form-group">
                     <label th:for="businessNumber">사업자 번호</label>
                     <input th:id="businessNumber" th:name="businessNumber" th:value="${cafe.get('businessNumber')}"
@@ -127,25 +127,29 @@
                 <div class="form-group">
                     <label th:for="address">주소</label>
                     <input type="text" class="form-control" id="address_kakao_all"
-                           th:value="|${cafe.get('siDoName')} ${cafe.get('siGunGuName')} ${cafe.get('roadAddress')}|" placeholder="주소"/>
+                           th:value="|${cafe.get('siDoName')} ${cafe.get('siGunGuName')} ${cafe.get('roadAddress')}|"
+                           placeholder="주소"/>
                     <button type="button" class="form-control btn_1 gray mt-2" id="address_kakao_btn"
                             name="address">주소검색
                     </button>
                 </div>
                 <div class="form-group">
                     <label th:for="phoneNumber">상세주소</label>
-                    <input type="text" class="form-control" name="address_detail" th:value="${cafe.get('detailAddress')}" placeholder="상세 주소"/>
+                    <input type="text" class="form-control" name="address_detail"
+                           th:value="${cafe.get('detailAddress')}" placeholder="상세 주소"/>
                 </div>
                 <div class="form-group">
                     <input type="hidden" class="form-control" id="address_kakao_do" th:value="${cafe.get('siDoName')}"
                            placeholder="ex. 서울특별시 또는 도(강원특별자치도)">
                 </div>
                 <div class="form-group">
-                    <input type="hidden" class="form-control" id="address_kakao_gun" th:value="${cafe.get('siGunGuName')}"
+                    <input type="hidden" class="form-control" id="address_kakao_gun"
+                           th:value="${cafe.get('siGunGuName')}"
                            placeholder="ex. 구(서초구) 또는 군(구례군)">
                 </div>
                 <div class="form-group">
-                    <input type="hidden" class="form-control" id="address_kakao_detail" th:value="${cafe.get('roadAddress')}"
+                    <input type="hidden" class="form-control" id="address_kakao_detail"
+                           th:value="${cafe.get('roadAddress')}"
                            placeholder="ex. 도로명 주소">
                 </div>
                 <div class="form-group">
@@ -173,16 +177,16 @@
                 </div>
                 <div class="form-group">
                     <label>카페옵션</label>
-                        <ul class="list-unstyled">
-                            <li th:each="option : ${optionListForms}">
-                                <label class="fix_spacing mr-2">
-                                    <th:block><i th:class="|${option.imagePath} mr-2|"></i></th:block>
-                                    <th:block th:text="${option.optionName}"></th:block>
-                                </label>
-                                <input type="checkbox" th:value="${option.optionId}" th:name="options"
-                                       th:checked="${option.optionCheck}">
-                            </li>
-                        </ul>
+                    <ul class="list-unstyled">
+                        <li th:each="option : ${optionListForms}">
+                            <label class="fix_spacing mr-2">
+                                <th:block><i th:class="|${option.imagePath} mr-2|"></i></th:block>
+                                <th:block th:text="${option.optionName}"></th:block>
+                            </label>
+                            <input type="checkbox" th:value="${option.optionId}" th:name="options"
+                                   th:checked="${option.optionCheck}">
+                        </li>
+                    </ul>
                 </div>
 
                 <button type="submit" class="btn_1 my-2">
@@ -198,16 +202,17 @@
             <div class="small-dialog-header">
                 <h3>회원 탈퇴</h3>
             </div>
-            <div class="form-group message-reply margin-top-0">
-                <label th:for="password">비밀번호</label>
-                <input type="password" th:id="password" th:name="password" class="form-control" required>
-            </div>
-            <button type="submit" class="btn_1 gray delete">
-                <i class="fa fa-fw fa-times-circle-o mr-1"></i>
-                회원 탈퇴
-            </button>
+            <form th:action="@{/member/delete}" method="post">
+                <div class="form-group message-reply margin-top-0">
+                    <label th:for="password">비밀번호</label>
+                    <input type="password" th:id="password" th:name="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn_1 gray delete">
+                    <i class="fa fa-fw fa-times-circle-o mr-1"></i>
+                    회원 탈퇴
+                </button>
+            </form>
         </div>
-
 
 
         <!-- /Content -->
@@ -243,11 +248,11 @@
             }
         </script>
         <!-- 카카오 rest api -->
-<!--        <script src=`//dapi.kakao.com/v2/maps/sdk.js?appkey=cb012615ac3e26203e6c22234575b18c&libraries=services,clusterer&autoload=false`></script>-->
-<!--        <script th:inline="javascript">-->
-<!--            const geoCoder = new kakao.maps.services.Geocoder();-->
+        <!--        <script src=`//dapi.kakao.com/v2/maps/sdk.js?appkey=cb012615ac3e26203e6c22234575b18c&libraries=services,clusterer&autoload=false`></script>-->
+        <!--        <script th:inline="javascript">-->
+        <!--            const geoCoder = new kakao.maps.services.Geocoder();-->
 
-<!--        </script>-->
+        <!--        </script>-->
         <!-- /custom scripts -->
     </th:block>
 

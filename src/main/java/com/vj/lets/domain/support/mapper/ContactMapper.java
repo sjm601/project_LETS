@@ -40,6 +40,14 @@ public interface ContactMapper {
     public List<Contact> readAll(PageParams pageParams);
 
     /**
+     * 입점 신청 ID로 입점 신청 정보 조회
+     *
+     * @param id 입점 신청 ID
+     * @return 입점 신청 정보
+     */
+    public Contact readById(int id);
+
+    /**
      * 이메일, 사업자 번호, 신청 날짜로 입점 신청 조회
      *
      * @param contactForm 입점 신청 입력 폼

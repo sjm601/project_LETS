@@ -96,6 +96,10 @@ public class StudyGroupController {
         }
         Member member = memberService.getMember(loginMember.getId());
 
+
+
+
+
         model.addAttribute("member", member);
         model.addAttribute("studyGroup", studyGroup);
         model.addAttribute("groupMember", groupMember);

@@ -126,7 +126,7 @@ public class MypageController {
      *
      * @param reviewForm 리뷰 폼 객체
      * @param model      모델 객체
-     * @return 성공 시 반환 값
+     * @return 실행 후 반환 값
      */
     @PostMapping("/reservation")
     @ResponseBody
@@ -192,7 +192,7 @@ public class MypageController {
      *
      * @param reviewForm 리뷰 폼 객체
      * @param model      모델 객체
-     * @return 성공 시 반환 값
+     * @return 실행 후 반환 값
      */
     @PatchMapping("/review")
     @ResponseBody
@@ -214,7 +214,7 @@ public class MypageController {
      *
      * @param reviewId 리뷰 ID
      * @param model    모델 객체
-     * @return 성공 시 반환 값
+     * @return 실행 후 반환 값
      */
     @DeleteMapping("/review")
     @ResponseBody

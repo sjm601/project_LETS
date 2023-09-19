@@ -29,7 +29,7 @@ public class Cafe {
     private String description;
     private String imagePath;
     private String regdate;
-    private int businessNumber;
+    private long businessNumber;
     private String status;
     private int siGunGuId;
     private int memberId;

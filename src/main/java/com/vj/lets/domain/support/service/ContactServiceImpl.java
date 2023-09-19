@@ -65,6 +65,17 @@ public class ContactServiceImpl implements ContactService {
     }
 
     /**
+     * 입점 신청 ID로 특정 입점 신청 정보 조회
+     *
+     * @param id 입점 신청 ID
+     * @return 입점 신청 정보
+     */
+    @Override
+    public Contact getContact(int id) {
+        return contactMapper.readById(id);
+    }
+
+    /**
      * 입점 신청 시 이메일, 사업자 번호, 신청 날짜로 중복 신청 조회
      *
      * @param contactForm 입점 신청 입력 폼
@@ -91,7 +102,7 @@ public class ContactServiceImpl implements ContactService {
     }
 
     /**
-     * 입점 거절 시 상태 정보 수정
+     * 입점 거부 시 상태 정보 수정
      *
      * @param id 입점 신청 ID
      */
