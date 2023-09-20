@@ -1,7 +1,7 @@
 package com.vj.lets.domain.article.mapper;
 
 import com.vj.lets.domain.article.dto.Article;
-import com.vj.lets.domain.common.web.PageParams;
+import com.vj.lets.domain.group.util.PageParams;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

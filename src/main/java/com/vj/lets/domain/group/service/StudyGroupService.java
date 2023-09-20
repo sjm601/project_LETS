@@ -4,6 +4,7 @@ import com.vj.lets.domain.group.dto.GroupContact;
 import com.vj.lets.domain.group.dto.GroupMemberList;
 import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
+import com.vj.lets.domain.group.util.PageParams;
 
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,7 @@ public interface StudyGroupService {
      * @author VJ특공대 이희영
      * @return 스터디 그룹 리스트
      */
-    public List<Map<String, Object>> getStudyList(Search search);
+    public List<Map<String, Object>> getStudyList(PageParams pageParams);
 
     /**
      * 스터디 그룹 화면 출력
@@ -151,4 +152,13 @@ public interface StudyGroupService {
      * @return 신규 스터디 그룹 리스트
      */
     public List<StudyGroup> getNewStudyList();
+
+    /**
+     * 스터디 그룹 검색 수 조회
+     *
+     * @author VJ특공대 이희영
+     * @param keyword 검색 키워드
+     * @return 검색 결과 수
+     */
+    public int getSearchCount(String keyword);
 }

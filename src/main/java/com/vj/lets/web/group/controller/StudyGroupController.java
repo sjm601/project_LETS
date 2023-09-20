@@ -6,10 +6,10 @@ import com.vj.lets.domain.article.dto.Article;
 import com.vj.lets.domain.article.dto.ArticleComment;
 import com.vj.lets.domain.article.service.ArticleCommentService;
 import com.vj.lets.domain.article.service.ArticleService;
-import com.vj.lets.domain.common.web.PageParams;
-import com.vj.lets.domain.common.web.Pagination;
 import com.vj.lets.domain.group.dto.*;
 import com.vj.lets.domain.group.service.StudyGroupService;
+import com.vj.lets.domain.group.util.PageParams;
+import com.vj.lets.domain.group.util.Pagination;
 import com.vj.lets.domain.location.dto.SiGunGu;
 import com.vj.lets.domain.location.service.SiGunGuService;
 import com.vj.lets.domain.member.dto.Member;
@@ -24,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -49,36 +48,46 @@ public class StudyGroupController {
 
     private final ArticleService articleService;
     private final ArticleCommentService articleCommentService;
-    private static final int ELEMENT_SIZE = 5;
-    private static final int PAGE_SIZE = 5;
 
     /**
      * 스터디 전체 리스트 화면 출력
      *
      * @author VJ특공대 이희영
+     * @param page 페이지
      * @param keyword 검색 키워드
-     * @param subject 검색 주제
      * @param model   모델 인터페이스
      * @return 스터디 리스트 화면
      */
     @GetMapping("")
-    public String studyGroup(@PathParam("keyword") String keyword, @PathParam("subject") String subject, Model model) {
-        Search search = null;
+    public String studyGroup(@PathParam("page") String page, @PathParam("keyword") String keyword, @PathParam("subject") String subject, @PathParam("siGunGuName") String siGunGuName, Model model) {
+        int count = studyGroupService.getSearchCount(keyword);
+        int elementSize = 8;
+        int pageSize = 5;
 
-        if (subject != null) {
-            String changedSubject = subjectChange(subject);
-            search = Search.builder()
-                    .keyword(keyword)
-                    .subject(changedSubject)
-                    .build();
-        } else {
-            search = Search.builder()
-                    .keyword(keyword)
-                    .build();
+        if (page == null || page.isEmpty()) {
+            page = "1";
         }
 
-        List<Map<String, Object>> studyGroupList = studyGroupService.getStudyList(search);
+        int selectPage = Integer.parseInt(page);
+        log.info("셀렉트 페이지 : {}", selectPage);
+
+        PageParams pageParams = PageParams.builder()
+                .elementSize(elementSize)
+                .pageSize(pageSize)
+                .requestPage(selectPage)
+                .rowCount(count)
+                .keyword(keyword)
+                .subject(subject)
+                .siGunGuName(siGunGuName)
+                .build();
+
+        Pagination pagination = new Pagination(pageParams);
+        log.info("페이지네이션 : {}", pagination);
+
+        List<Map<String, Object>> studyGroupList = studyGroupService.getStudyList(pageParams);
+        log.info("스터디 그룹 리스트 : {}", studyGroupList);
         List<StudyGroup> newStudyList = studyGroupService.getNewStudyList();
+        model.addAttribute("pagination", pagination);
         model.addAttribute("studyGroupList", studyGroupList);
         model.addAttribute("newStudyList", newStudyList);
 
@@ -119,6 +128,9 @@ public class StudyGroupController {
         model.addAttribute("contactList", contactList);
 
         // 이한솔
+        int elementSize = 5;
+        int pageSize = 5;
+
         int count = articleService.getCountAll(keyword);
 
         if (page == null || page.isEmpty()) {
@@ -127,8 +139,8 @@ public class StudyGroupController {
 
         int selectPage = Integer.parseInt(page);
         PageParams pageParams = PageParams.builder()
-                .elementSize(ELEMENT_SIZE)
-                .pageSize(PAGE_SIZE)
+                .elementSize(elementSize)
+                .pageSize(pageSize)
                 .requestPage(selectPage)
                 .rowCount(count)
                 .keyword(keyword)

@@ -2,6 +2,7 @@ package com.vj.lets.domain.group.mapper;
 
 import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
+import com.vj.lets.domain.group.util.PageParams;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public interface StudyGroupMapper {
      * @author VJ특공대 이희영
      * @return 스터디 그룹 리스트
      */
-    public List<Map<String, Object>> findAllStudyList(Search search);
+    public List<Map<String, Object>> findAllStudyList(PageParams pageParams);
 
     /**
      * 스터디 그룹 조회
@@ -89,4 +90,12 @@ public interface StudyGroupMapper {
      * @return 신규 스터디 그룹 리스트
      */
     public List<StudyGroup> findNewStudyList();
+
+    /**
+     * 스터디 검색 결과 수 조회
+     *
+     * @author VJ특공대 이희영
+     * @return 검색된 수
+     */
+    public int studySearchCount(String keyword);
 }

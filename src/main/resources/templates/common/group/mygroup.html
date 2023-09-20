@@ -293,35 +293,36 @@
                                 <ul class="pagination h-100 justify-content-center align-items-center">
 
                                     <th:block th:if="${pagination.showFirst}">
-                                        <li class="page-item"><a th:href="@{/article/list/{page}(page=1)}"
-                                                                 class="page-link">처음으로</a></li>
+                                        <li class="page-item">
+                                            <a th:href="@{|/group/${studyGroup['ID']}?page=1|}" class="page-link">처음으로</a>
+                                        </li>
                                     </th:block>
                                     <th:block th:if="${pagination.showPrevious}">
-                                        <li class="page-item"><a
-                                                th:href="@{/article/list/{page}(page=${pagination.previousStartPage})}"
-                                                class="page-link">이전목록</a></li>
+                                        <li class="page-item">
+                                            <a th:href="@{|/group/${studyGroup['ID']}?page=${pagination.previousStartPage}|}" class="page-link">이전목록</a>
+                                        </li>
                                     </th:block>
-                                    <th:block
-                                            th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
+                                    <th:block th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
                                         <th:block th:if="${i == pagination.params.requestPage}">
-                                            <li class="page-item active"><a th:text="${i}" class="page-link"
-                                                                            href="#">1</a></li>
+                                            <li class="page-item active">
+                                                <a th:text="${i}" class="page-link" href="#">1</a>
+                                            </li>
                                         </th:block>
                                         <th:block th:if="${i != pagination.params.requestPage}">
-                                            <li class="page-item"><a th:text="${i}"
-                                                                     th:href="@{/article/list/{page}(page=${i})}"
-                                                                     class="page-link" href="#">2</a></li>
+                                            <li class="page-item">
+                                                <a th:text="${i}" th:href="@{|/group/${studyGroup['ID']}?page=${i}|}" class="page-link" href="#">2</a>
+                                            </li>
                                         </th:block>
                                     </th:block>
                                     <th:block th:if="${pagination.showNext}">
-                                        <li class="page-item"><a
-                                                th:href="@{/article/list/{page}(page=${pagination.nextStartPage})}"
-                                                class="page-link">다음목록</a></li>
+                                        <li class="page-item">
+                                            <a th:href="@{|/group/${studyGroup['ID']}?page=${pagination.nextStartPage}|}" class="page-link">다음목록</a>
+                                        </li>
                                     </th:block>
                                     <th:block th:if="${pagination.showLast}">
-                                        <li class="page-item"><a
-                                                th:href="@{/article/list/{page}(page=${pagination.totalPages})}"
-                                                class="page-link">끝으로</a></li>
+                                        <li class="page-item">
+                                            <a th:href="@{|/group/${studyGroup['ID']}?page=${pagination.totalPages}|}" class="page-link">끝으로</a>
+                                        </li>
                                     </th:block>
                                 </ul>
                             </div>

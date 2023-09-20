@@ -8,6 +8,7 @@ import com.vj.lets.domain.group.mapper.GroupContactMapper;
 import com.vj.lets.domain.group.mapper.GroupHistoryMapper;
 import com.vj.lets.domain.group.mapper.GroupMemberListMapper;
 import com.vj.lets.domain.group.mapper.StudyGroupMapper;
+import com.vj.lets.domain.group.util.PageParams;
 import com.vj.lets.domain.location.dto.SiGunGu;
 import com.vj.lets.domain.location.mapper.SiGunGuMapper;
 import lombok.RequiredArgsConstructor;
@@ -69,10 +70,10 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @return 스터디 그룹 리스트
      */
     @Override
-    public List<Map<String, Object>> getStudyList(Search search) {
+    public List<Map<String, Object>> getStudyList(PageParams pageParams) {
         List<Map<String, Object>> list = null;
 
-        list = studyGroupMapper.findAllStudyList(search);
+        list = studyGroupMapper.findAllStudyList(pageParams);
         return list;
     }
 
@@ -288,5 +289,16 @@ public class StudyGroupServiceImpl implements StudyGroupService{
 
         newStudyList = studyGroupMapper.findNewStudyList();
         return newStudyList;
+    }
+
+    /**
+     * 스터디 그룹 검색 수 조회
+     *
+     * @author VJ특공대 이희영
+     * @param keyword 검색 키워드
+     * @return 검색 결과 수
+     */
+    public int getSearchCount(String keyword) {
+        return studyGroupMapper.studySearchCount(keyword);
     }
 }
