@@ -16,7 +16,7 @@ import lombok.*;
 @ToString
 @Builder
 public class CreateForm {
-    private String imagePath;
+//    private String imagePath;
     private String name;
     private int totalCount;
     private String subject;

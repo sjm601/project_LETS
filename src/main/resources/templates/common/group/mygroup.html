@@ -16,7 +16,7 @@
         <!-- 메인 -->
         <main>
             <!-- 메인 베너 -->
-            <section class="hero_in general">
+            <section th:style="|background-image: url(${studyGroup['IMAGEPATH']});|" class="hero_in general img-fluid">
                 <div class="wrapper">
                     <div class="container">
                         <h1 th:text="${studyGroup['NAME']}" class="fadeInUp"><span></span>주식 스터디</h1>
@@ -86,7 +86,8 @@
                                 <div class="widget-title">
                                     <h4>게시글 검색</h4>
                                 </div>
-                                <form th:action="@{/group/{id}(id=${studyGroup['ID']})}" action="#" method="get" id="searchForm">
+                                <form th:action="@{/group/{id}(id=${studyGroup['ID']})}" action="#" method="get"
+                                      id="searchForm">
                                     <div class="form-group">
                                         <input type="search" name="keyword" id="search" class="form-control"
                                                placeholder="검색어를 입력해주세요">
@@ -149,7 +150,8 @@
                                                     data-bs-toggle="modal" style="font-size: 14px; height: 30px;">수정
                                             </button>
                                             <!-- 현재 게시글 작성자가 아닌 사람도 삭제 시킬 수 있음 -->
-                                            <form th:action="@{/group/{id}/article/delete(id=${studyGroup['ID']})}" th:method="post">
+                                            <form th:action="@{/group/{id}/article/delete(id=${studyGroup['ID']})}"
+                                                  th:method="post">
                                                 <input type="hidden" name="id" th:value="${articleList.ID}"/>
                                                 <button type="submit" class="btn btn-danger mx-2"
                                                         style="font-size: 14px; height: 30px;">삭제
@@ -247,7 +249,7 @@
                                                         aria-label="Close"></button>
                                             </div>
                                             <form th:action="@{/group/{id}/article/update(id=${studyGroup['ID']})}"
-                                                  th:method="post">
+                                                  th:method="post" enctype="multipart/form-data">
                                                 <div class="modal-body">
                                                     <!-- 수정 폼 -->
                                                     <label for="title" class="form-label">제목</label>
@@ -294,15 +296,18 @@
 
                                     <th:block th:if="${pagination.showFirst}">
                                         <li class="page-item">
-                                            <a th:href="@{|/group/${studyGroup['ID']}?page=1|}" class="page-link">처음으로</a>
+                                            <a th:href="@{|/group/${studyGroup['ID']}?page=1|}"
+                                               class="page-link">처음으로</a>
                                         </li>
                                     </th:block>
                                     <th:block th:if="${pagination.showPrevious}">
                                         <li class="page-item">
-                                            <a th:href="@{|/group/${studyGroup['ID']}?page=${pagination.previousStartPage}|}" class="page-link">이전목록</a>
+                                            <a th:href="@{|/group/${studyGroup['ID']}?page=${pagination.previousStartPage}|}"
+                                               class="page-link">이전목록</a>
                                         </li>
                                     </th:block>
-                                    <th:block th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
+                                    <th:block
+                                            th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
                                         <th:block th:if="${i == pagination.params.requestPage}">
                                             <li class="page-item active">
                                                 <a th:text="${i}" class="page-link" href="#">1</a>
@@ -310,18 +315,21 @@
                                         </th:block>
                                         <th:block th:if="${i != pagination.params.requestPage}">
                                             <li class="page-item">
-                                                <a th:text="${i}" th:href="@{|/group/${studyGroup['ID']}?page=${i}|}" class="page-link" href="#">2</a>
+                                                <a th:text="${i}" th:href="@{|/group/${studyGroup['ID']}?page=${i}|}"
+                                                   class="page-link" href="#">2</a>
                                             </li>
                                         </th:block>
                                     </th:block>
                                     <th:block th:if="${pagination.showNext}">
                                         <li class="page-item">
-                                            <a th:href="@{|/group/${studyGroup['ID']}?page=${pagination.nextStartPage}|}" class="page-link">다음목록</a>
+                                            <a th:href="@{|/group/${studyGroup['ID']}?page=${pagination.nextStartPage}|}"
+                                               class="page-link">다음목록</a>
                                         </li>
                                     </th:block>
                                     <th:block th:if="${pagination.showLast}">
                                         <li class="page-item">
-                                            <a th:href="@{|/group/${studyGroup['ID']}?page=${pagination.totalPages}|}" class="page-link">끝으로</a>
+                                            <a th:href="@{|/group/${studyGroup['ID']}?page=${pagination.totalPages}|}"
+                                               class="page-link">끝으로</a>
                                         </li>
                                     </th:block>
                                 </ul>
@@ -447,13 +455,13 @@
                                      data-bs-parent="#accordionSetting">
                                     <div class="accordion-body">
                                         <form th:action="@{/group/update/{id}(id=${studyGroup['ID']})}" th:method="post"
-                                              action="">
+                                              action="" enctype="multipart/form-data">
                                             <div class="mb-3">
                                                 <ul class="image-preview"></ul>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="settingImage">대표 이미지</label>
-                                                <input th:text="${studyGroup['IMAGEPATH']}" type="file"
+                                                <input th:value="${studyGroup['IMAGEPATH']}" type="file"
                                                        class="real-upload form-control"
                                                        accept="image/*" id="settingImage"
                                                        name="settingImage"/>
@@ -502,34 +510,34 @@
                                             <div class="mb-3">
                                                 <label class="form-label" for="subject">스터디 주제</label>
                                                 <select class="form-select" name="subject" id="subject">
-                                                    <option th:selected="'stock' == ${studyGroup['SUBJECT']}"
+                                                    <option th:selected="'주식 / 코인' == ${studyGroup['SUBJECT']}"
                                                             value="stock">주식 / 코인
                                                     </option>
-                                                    <option th:selected="'econo' == ${studyGroup['SUBJECT']}"
+                                                    <option th:selected="'경제 / 부동산' == ${studyGroup['SUBJECT']}"
                                                             value="econo">경제 / 부동산
                                                     </option>
-                                                    <option th:selected="'emplo' == ${studyGroup['SUBJECT']}"
+                                                    <option th:selected="'취업' == ${studyGroup['SUBJECT']}"
                                                             value="emplo">취업
                                                     </option>
-                                                    <option th:selected="'inter' == ${studyGroup['SUBJECT']}"
+                                                    <option th:selected="'면접' == ${studyGroup['SUBJECT']}"
                                                             value="inter">면접
                                                     </option>
-                                                    <option th:selected="'essay' == ${studyGroup['SUBJECT']}"
+                                                    <option th:selected="'논술' == ${studyGroup['SUBJECT']}"
                                                             value="essay">논술
                                                     </option>
-                                                    <option th:selected="'langu' == ${studyGroup['SUBJECT']}"
+                                                    <option th:selected="'언어' == ${studyGroup['SUBJECT']}"
                                                             value="langu">언어
                                                     </option>
-                                                    <option th:selected="'it' == ${studyGroup['SUBJECT']}" value="it">
+                                                    <option th:selected="'IT' == ${studyGroup['SUBJECT']}" value="it">
                                                         IT
                                                     </option>
-                                                    <option th:selected="'certi' == ${studyGroup['SUBJECT']}"
+                                                    <option th:selected="'자격증' == ${studyGroup['SUBJECT']}"
                                                             value="certi">자격증
                                                     </option>
-                                                    <option th:selected="'study' == ${studyGroup['SUBJECT']}"
+                                                    <option th:selected="'공부' == ${studyGroup['SUBJECT']}"
                                                             value="study">공부
                                                     </option>
-                                                    <option th:selected="'all' == ${studyGroup['SUBJECT']}" value="all">
+                                                    <option th:selected="'기타' == ${studyGroup['SUBJECT']}" value="all">
                                                         기타
                                                     </option>
                                                 </select>

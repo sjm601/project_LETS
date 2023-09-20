@@ -19,15 +19,20 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 스터디 그룹 컨트롤러
@@ -49,6 +54,18 @@ public class StudyGroupController {
 
     private final ArticleService articleService;
     private final ArticleCommentService articleCommentService;
+
+    /**
+     * 실제 회원 이미지 경로
+     */
+    @Value("${group.imageLocation}")
+    private String imageLocation;
+
+    /**
+     * DB에 입력할 회원 이미지 경로
+     */
+    @Value("${group.imageDBPath}")
+    private String imageDBPath;
 
     /**
      * 스터디 전체 리스트 화면 출력
@@ -305,16 +322,41 @@ public class StudyGroupController {
      * @return 스터디 그룹 상세
      */
     @PostMapping("/create")
-    public String createGroup(@ModelAttribute CreateForm createForm, @SessionAttribute Member loginMember) {
+    public String createGroup(@ModelAttribute CreateForm createForm, MultipartFile imagePath, @SessionAttribute Member loginMember) throws IOException {
         String selectedSubject = createForm.getSubject();
         String subject = subjectChange(selectedSubject);
 
         StudyGroup studyGroup = StudyGroup.builder()
                 .name(createForm.getName())
                 .totalCount(createForm.getTotalCount())
-                .imagePath(createForm.getImagePath())
                 .subject(subject)
                 .build();
+
+        if (!imagePath.isEmpty()) {
+            // 이미지 폴더에 저장
+            // 업로드 이미지 확장자 가져오기
+            String imageExtension = StringUtils.getFilenameExtension(imagePath.getOriginalFilename());
+            // 업로드 한 이미지 다운로드 받을 위치 설정
+            StringBuilder imageDir = new StringBuilder();
+            String uuid = UUID.randomUUID().toString();
+            String imageName = createForm.getName() + uuid;
+
+            imageDir.append(imageLocation).append(imageName).append(".").append(imageExtension);
+
+            File uploadDir = new File(imageDir.toString());
+            // 폴더 없으면 생성
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs();
+            }
+            imagePath.transferTo(uploadDir);
+
+            StringBuilder imagePathDB = new StringBuilder();
+            imagePathDB.append(imageDBPath).append(imageName).append(".").append(imageExtension);
+
+            studyGroup.setImagePath(imagePathDB.toString());
+        } else {
+            studyGroup.setImagePath("");
+        }
 
         int studyGroupId = studyGroupService.generateStudy(studyGroup, loginMember.getId(), createForm.getSiGunGuName(), createForm.getSiDoName());
         return "redirect:/group/" + studyGroupId;
@@ -329,7 +371,7 @@ public class StudyGroupController {
      * @return 스터디 그룹 상세 화면
      */
     @PostMapping("/update/{id}")
-    public String updateGroup(@ModelAttribute CreateForm createForm, @PathVariable int id) {
+    public String updateGroup(@ModelAttribute CreateForm createForm, MultipartFile settingImage, @PathVariable int id) throws IOException {
         String siGunGuName = createForm.getSiGunGuName();
         SiGunGu siGunGu = siGunGuService.findById(siGunGuName);
 
@@ -340,12 +382,36 @@ public class StudyGroupController {
                 .id(id)
                 .name(createForm.getName())
                 .totalCount(createForm.getTotalCount())
-                .imagePath(createForm.getImagePath())
                 .subject(subject)
                 .siGunGuId(siGunGu.getId())
                 .build();
 
+        if (!settingImage.isEmpty()) {
+            // 이미지 폴더에 저장
+            // 업로드 이미지 확장자 가져오기
+            String imageExtension = StringUtils.getFilenameExtension(settingImage.getOriginalFilename());
+            // 업로드 한 이미지 다운로드 받을 위치 설정
+            StringBuilder imageDir = new StringBuilder();
+            String uuid = UUID.randomUUID().toString();
+            String imageName = createForm.getName() + uuid;
+
+            imageDir.append(imageLocation).append(imageName).append(".").append(imageExtension);
+            File uploadDir = new File(imageDir.toString());
+            // 폴더 없으면 생성
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs();
+            }
+            settingImage.transferTo(uploadDir);
+
+            StringBuilder imagePathDB = new StringBuilder();
+            imagePathDB.append(imageDBPath).append(imageName).append(".").append(imageExtension);
+            studyGroup.setImagePath(imagePathDB.toString());
+        } else {
+            studyGroup.setImagePath("");
+        }
+
         studyGroupService.editStudy(studyGroup);
+
         return "redirect:/group/{id}";
     }
 

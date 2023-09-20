@@ -121,7 +121,7 @@
                                 <li th:each="newStudy : ${newStudyList}">
                                     <div class="d-flex">
                                         <a th:href="@{/group/{id}(id=${newStudy.id})}" href="#">
-                                            <img class="rounded-5 bg-danger" src="" alt="" width="50px"
+                                            <img th:src="${newStudy.imagePath} != null ? ${newStudy.imagePath} : '/assets/upload_image/group/default.png'" class="rounded-5 bg-danger" src="" alt="" width="50px"
                                                  height="50px">
                                         </a>
                                         <h3 class="ms-2 my-auto">
@@ -143,10 +143,9 @@
                                     <div class="col-md-6 isotope-item popular">
                                         <div class="box_grid" data-cue="slideInUp">
                                             <figure>
-                                                <a th:href="@{/group/{id}(id=${studyGroup.ID})}" href="#"><img
-                                                        src="img/restaurant_1.jpg" class="img-fluid" alt=""
-                                                        width="800" height="533">
-                                                    <div class="read_more"><span>열기</span></div>
+                                                <a th:href="@{/group/{id}(id=${studyGroup.ID})}" href="#">
+                                                    <img th:src="${studyGroup['IMAGEPATH']} != null ? ${studyGroup['IMAGEPATH']} : '/assets/upload_image/group/default.png'" src="img/restaurant_1.jpg" class="img-fluid" alt=""
+                                                        width="800" height="533" />
                                                 </a>
                                             </figure>
                                             <div class="wrapper pb-2 text-end">
