@@ -86,8 +86,7 @@
                                 <div class="widget-title">
                                     <h4>게시글 검색</h4>
                                 </div>
-                                <form th:action="@{/group/{id}(id=${studyGroup['ID']})}" action="#" method="get"
-                                      id="searchForm">
+                                <form th:action="@{/group/{id}(id=${studyGroup['ID']})}" action="#" method="get" id="searchForm">
                                     <div class="form-group">
                                         <input type="search" name="keyword" id="search" class="form-control"
                                                placeholder="검색어를 입력해주세요">
@@ -143,13 +142,11 @@
                                                 <h6 th:text="${articleList['WRITER']}">이희영</h6>
                                                 <span class="mb-0" th:text="${articleList.REGDATE}">2023-09-06</span>
                                             </div>
-
                                         </div>
                                         <div class="d-flex">
                                             <button th:data-bs-target="'#modifyModal_' + ${articleList.ID}"
                                                     data-bs-target="#modifyModal" class="btn btn-warning mx-2"
-                                                    data-bs-toggle="modal"
-                                                    style="font-size: 14px; height: 30px;">수정
+                                                    data-bs-toggle="modal" style="font-size: 14px; height: 30px;">수정
                                             </button>
                                             <!-- 현재 게시글 작성자가 아닌 사람도 삭제 시킬 수 있음 -->
                                             <form th:action="@{/group/{id}/article/delete(id=${studyGroup['ID']})}" th:method="post">
@@ -219,7 +216,7 @@
                                             <!--/댓글 collaspe-->
                                         </div>
                                         <h5>댓글 작성</h5>
-                                        <form th:action="@{/article/list/{page}/{articleId}/commentCreate(page=${pagination.params.requestPage}, articleId=${articleList['ID']})}"
+                                        <form th:action="@{/group/{id}/{articleId}/commentCreate(id=${studyGroup['ID']}, articleId=${articleList['ID']})}"
                                               th:method="post">
                                             <div class="form-group">
                                                 <textarea class="form-control" th:name="content"

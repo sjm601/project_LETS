@@ -3,6 +3,8 @@ package com.vj.lets.web.group.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vj.lets.domain.article.dto.Article;
+import com.vj.lets.domain.article.dto.ArticleComment;
+import com.vj.lets.domain.article.service.ArticleCommentService;
 import com.vj.lets.domain.article.service.ArticleService;
 import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.common.web.Pagination;
@@ -46,6 +48,7 @@ public class StudyGroupController {
     private final MemberService memberService;
 
     private final ArticleService articleService;
+    private final ArticleCommentService articleCommentService;
     private static final int ELEMENT_SIZE = 5;
     private static final int PAGE_SIZE = 5;
 
@@ -446,6 +449,31 @@ public class StudyGroupController {
         articleService.update(article);
         model.addAttribute("article", article);
         
+        return "redirect:/group/{id}";
+    }
+
+    /**
+     * 게시글 댓글 등록
+     * 
+     * @author VJ특공대 이한솔
+     * @param articleComment 게시글 댓글
+     * @param articleId 게시글 아이디
+     * @param request HttpServletRequest 객체
+     * @param model model 인터페이스
+     * @return 스터디 그룹 화면
+     */
+    @PostMapping("/{id}/{articleId}/commentCreate")
+    public String commentCreate(@ModelAttribute ArticleComment articleComment, @PathVariable int articleId , HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        Member loginMember = (Member) session.getAttribute("loginMember");
+
+        if (loginMember != null) {
+            int memberId = loginMember.getId();
+            articleComment.setMemberId(memberId);
+            articleComment.setArticleId(articleId);
+            articleCommentService.create(articleComment);
+        }
+
         return "redirect:/group/{id}";
     }
 }
