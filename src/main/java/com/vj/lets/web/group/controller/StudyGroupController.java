@@ -411,4 +411,23 @@ public class StudyGroupController {
         }
         return "redirect:/group/{id}";
     }
+
+    /**
+     * 게시글 삭제
+     * 
+     * @author VJ특공대 이한솔
+     * @param id 게시글 아이디
+     * @param article 게시글
+     * @param model model 인터페이스
+     * @return 스터디 그룹 화면
+     */
+    @PostMapping("/{id}/article/delete")
+    public String delete(@PathParam("id") int id, @ModelAttribute Article article, Model model) {
+        Article targetArticle = articleService.findById(id);
+
+        model.addAttribute("article", targetArticle);
+        articleService.delete(id);
+
+        return "redirect:/group/{id}";
+    }
 }
