@@ -430,4 +430,22 @@ public class StudyGroupController {
 
         return "redirect:/group/{id}";
     }
+
+    /**
+     * 게시글 수정
+     * 
+     * @author VJ특공대 이한솔
+     * @param article 게시글
+     * @param model model 인터페이스
+     * @return 스터디 그룹 화면
+     */
+    @PostMapping("/{id}/article/update")
+    public String update(@ModelAttribute Article article, Model model) {
+        model.addAttribute("targetArticle", article);
+        
+        articleService.update(article);
+        model.addAttribute("article", article);
+        
+        return "redirect:/group/{id}";
+    }
 }

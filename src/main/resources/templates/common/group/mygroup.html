@@ -151,6 +151,7 @@
                                                     data-bs-toggle="modal"
                                                     style="font-size: 14px; height: 30px;">수정
                                             </button>
+                                            <!-- 현재 게시글 작성자가 아닌 사람도 삭제 시킬 수 있음 -->
                                             <form th:action="@{/group/{id}/article/delete(id=${studyGroup['ID']})}" th:method="post">
                                                 <input type="hidden" name="id" th:value="${articleList.ID}"/>
                                                 <button type="submit" class="btn btn-danger mx-2"
@@ -248,7 +249,7 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
-                                            <form th:action="@{/article/list/{page}/update(page=${pagination.params.requestPage})}"
+                                            <form th:action="@{/group/{id}/article/update(id=${studyGroup['ID']})}"
                                                   th:method="post">
                                                 <div class="modal-body">
                                                     <!-- 수정 폼 -->
