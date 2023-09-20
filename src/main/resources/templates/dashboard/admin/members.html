@@ -34,7 +34,7 @@
                                     <th>이메일</th>
                                     <th>이름</th>
                                     <th>전화번호</th>
-                                    <th>나이</th>
+                                    <th>생년월일</th>
                                     <th>성별</th>
                                     <th>가입날짜</th>
                                 </tr>
@@ -44,7 +44,7 @@
                                     <td th:text="${member.email}">aaaaaa@bbbbb.ccc</td>
                                     <td th:text="${member.name}">이름</td>
                                     <td th:text="${member.phoneNumber}">000-000-0000</td>
-                                    <td th:text="${member.age}">10</td>
+                                    <td th:text="${member.birthday}">1900-01-01</td>
                                     <td>
                                         <th:block th:if="${member.gender} == 'male'">남성</th:block>
                                         <th:block th:if="${member.gender} == 'female'">여성</th:block>
@@ -56,7 +56,6 @@
                             </table>
                         </div>
                     </div>
-                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                 </div>
                 <!-- /tables-->
             </div>

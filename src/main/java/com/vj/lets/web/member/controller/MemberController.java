@@ -77,15 +77,18 @@ public class MemberController {
      * @return 논리적 뷰 이름
      */
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute RegisterForm registerForm,
+    @ResponseBody
+    public Object register(@Valid @RequestBody RegisterForm registerForm,
                            BindingResult bindingResult,
                            HttpServletResponse response, Model model) {
 
+        log.warn("=============={}", registerForm);
+
         if (bindingResult.hasErrors()) {
-            return "redirect:/member/register";
+            return "fail";
         }
 
-        // 데이터 검증 처리 과정 추가 예정
+//         데이터 검증 처리 과정 추가 예정
 
         Member member = Member.builder()
                 .email(registerForm.getEmail())
@@ -93,20 +96,11 @@ public class MemberController {
                 .password(registerForm.getPassword())
                 .type(MemberType.GUEST.getType())
                 .build();
+        log.warn("=============={}", member);
 
         memberService.register(member);
 
-        try {
-            response.setContentType("text/html; charset=utf-8");
-            PrintWriter w = response.getWriter();
-            w.write("<script>alert('회원가입이 완료되었습니다.');location.href='/member/login';</script>");
-            w.flush();
-            w.close();
-        } catch (Exception e) {
-            throw new RuntimeException("오류 메세지");
-        }
-
-        return "redirect:/member/login";
+        return "success";
     }
 
     /**
