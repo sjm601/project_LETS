@@ -86,7 +86,6 @@ public class MypageController {
         }
         int selectPage = Integer.parseInt(page);
         int count = reservationService.getCountResByMember(loginMember.getId(), type);
-        log.warn("=============={}", count);
 
         PageParams pageParams = PageParams.builder()
                 .elementSize(ELEMENT_SIZE)
@@ -95,11 +94,9 @@ public class MypageController {
                 .rowCount(count)
                 .type(type)
                 .build();
-        log.warn("=============={}", pageParams);
         Pagination pagination = new Pagination(pageParams);
 
         List<Map<String, Object>> reservationList = reservationService.getMemberResList(loginMember.getId(), pageParams);
-        log.warn("=============={}", reservationList);
 
         ReviewForm reviewForm = ReviewForm.builder().build();
 

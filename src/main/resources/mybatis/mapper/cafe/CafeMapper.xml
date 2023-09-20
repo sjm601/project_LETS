@@ -314,6 +314,12 @@
         ORDER BY "month"
     </select>
 
+    <select id="readCountByLastMonth" resultType="int">
+        SELECT COUNT(ID)
+        FROM CAFE
+        WHERE REGDATE between TO_DATE(ADD_MONTHS(SYSDATE, -1)) and SYSDATE
+    </select>
+
     <update id="delete" parameterType="int">
         UPDATE CAFE
         SET STATUS = 'disabled'

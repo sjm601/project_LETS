@@ -26,7 +26,7 @@ public interface ContactMapper {
     public void create(Contact contact);
 
     /**
-     * 보류 중인 전체 입점 신청 갯수 조회
+     * 상태 별 전체 입점 신청 갯수 조회
      *
      * @return 입점 신청 갯수
      */

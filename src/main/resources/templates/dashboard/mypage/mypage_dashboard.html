@@ -67,8 +67,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 my-2">
-                                    <label>나이</label>
-                                    <h6 th:text="${member.age}"></h6>
+                                    <label>생년월일</label>
+                                    <h6 th:text="${member.birthday}"></h6>
                                 </div>
                             </div>
                         </div>
@@ -128,9 +128,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label th:for="age">나이</label>
-                    <input th:id="age" th:name="age" th:value="${member.age}"
-                           type="number" class="form-control" required>
+                    <label th:for="birthday">생년월일</label>
+                    <input th:id="birthday" th:name="birthday" th:value="${member.birthday}"
+                           th:min="1900-01-01" th:max="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}"
+                           type="date" class="form-control" required>
                 </div>
                 <button type="submit" class="btn_1 my-2 edit_btn">
                     <i class="fa fa-fw fa-pencil mr-1"></i>
@@ -145,16 +146,15 @@
             <div class="small-dialog-header">
                 <h3>회원 탈퇴</h3>
             </div>
-            <form th:action="@{/member/delete}" method="post">
-                <div class="form-group message-reply margin-top-0">
-                    <label for="password">비밀번호</label>
-                    <input type="password" id="password" name="password" class="form-control password" required>
-                </div>
-                <button type="submit" class="btn_1 gray delete delete_btn">
-                    <i class="fa fa-fw fa-times-circle-o mr-1"></i>
-                    회원 탈퇴
-                </button>
-            </form>
+            <div class="form-group message-reply margin-top-0">
+                <label for="deletePassword">비밀번호</label>
+                <input type="password" id="deletePassword" name="deletePassword" class="form-control deletePassword"
+                       required>
+            </div>
+            <button class="btn_1 gray delete delete_btn">
+                <i class="fa fa-fw fa-times-circle-o mr-1"></i>
+                회원 탈퇴
+            </button>
         </div>
 
 
@@ -162,6 +162,7 @@
 
     <th:block th:fragment="scripts">
         <script src="/js/custom/image_upload_member.js"></script>
+        <script src="/dashboard/js/custom/mypage-dashboard_custom.js"></script>
     </th:block>
 
 </th:block>

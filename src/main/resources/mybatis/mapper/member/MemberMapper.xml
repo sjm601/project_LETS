@@ -11,9 +11,15 @@
     </insert>
 
     <select id="readAll" resultType="Member">
-        SELECT ID, EMAIL, NAME, PHONE_NUMBER, AGE, GENDER, TYPE, TO_CHAR(regdate, 'yyyy-MM-DD') regdate, IMAGE_PATH
+        SELECT ID, EMAIL, NAME, PHONE_NUMBER, BIRTHDAY, GENDER, TYPE, TO_CHAR(regdate, 'yyyy-MM-DD') regdate, IMAGE_PATH
         FROM MEMBER
         ORDER BY regdate DESC
+    </select>
+
+    <select id="readBooleanByEmail" parameterType="string" resultType="boolean">
+        select COUNT(ID)
+        from MEMBER
+        where EMAIL = #{email} AND STATUS = 'enabled'
     </select>
 
     <select id="readByEmailAndPasswd" resultType="Member">
@@ -23,7 +29,7 @@
     </select>
 
     <select id="readById" parameterType="int" resultType="Member">
-        SELECT ID, EMAIL, NAME, PHONE_NUMBER, AGE, GENDER, TYPE, TO_CHAR(regdate, 'yyyy-MM-DD HH24:MI:SS') regdate, IMAGE_PATH
+        SELECT ID, EMAIL, NAME, PHONE_NUMBER, BIRTHDAY, GENDER, TYPE, TO_CHAR(regdate, 'yyyy-MM-DD HH24:MI:SS') regdate, IMAGE_PATH
         FROM MEMBER
         WHERE id = #{id}
     </select>
@@ -47,13 +53,19 @@
         GROUP BY GENDER
     </select>
 
+    <select id="readCountByLastMonth" resultType="int">
+        SELECT COUNT(ID)
+        FROM MEMBER
+        WHERE REGDATE between TO_DATE(ADD_MONTHS(SYSDATE, -1)) and SYSDATE
+    </select>
+
     <update id="update" parameterType="Member">
         UPDATE MEMBER
         <set>
             <if test="name != null and name != ''">NAME = #{name},</if>
             <if test="password != null and password != ''">PASSWORD = #{password},</if>
             <if test="phoneNumber != null and phoneNumber != ''">PHONE_NUMBER = #{phoneNumber},</if>
-            <if test="age != null and age != ''">AGE = #{age},</if>
+            <if test="birthday != null and birthday != ''">BIRTHDAY = #{birthday},</if>
             <if test="gender != null and gender != ''">GENDER = #{gender},</if>
             <if test="imagePath != null and imagePath != ''">IMAGE_PATH = #{imagePath},</if>
         </set>
@@ -61,7 +73,7 @@
     </update>
 
     <select id="readUpdateForm" parameterType="int" resultType="EditForm">
-        SELECT NAME, PHONE_NUMBER, AGE, GENDER, IMAGE_PATH
+        SELECT NAME, PHONE_NUMBER, BIRTHDAY, GENDER, IMAGE_PATH
         FROM MEMBER
         WHERE id = #{id}
     </select>

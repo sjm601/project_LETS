@@ -49,6 +49,14 @@ public class AdminController {
     @GetMapping("")
     public String adminMain(Model model) {
         List<Map<String, Object>> countMember = memberService.getCountByRegMonth();
+        int newMember = memberService.getCountByLastMonth();
+        int newContact = contactService.getCountContact(ContactStatus.HOLD.getStatus());
+        int newCafe = cafeService.getCountByLastMonth();
+
+
+        model.addAttribute("newMember", newMember);
+        model.addAttribute("newContact", newContact);
+        model.addAttribute("newCafe", newCafe);
         model.addAttribute("countMember", countMember);
 
         return "dashboard/admin/admin_dashboard";
