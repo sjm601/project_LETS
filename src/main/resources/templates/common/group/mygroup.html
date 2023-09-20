@@ -16,7 +16,7 @@
         <!-- 메인 -->
         <main>
             <!-- 메인 베너 -->
-            <section th:style="|background-image: url(${studyGroup['IMAGEPATH']});|" class="hero_in general img-fluid">
+            <section th:style="|background-image: url(${studyGroup['IMAGEPATH']}); background-size: cover;|" class="hero_in general">
                 <div class="wrapper">
                     <div class="container">
                         <h1 th:text="${studyGroup['NAME']}" class="fadeInUp"><span></span>주식 스터디</h1>
