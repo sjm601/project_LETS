@@ -2,27 +2,43 @@ package com.vj.lets.web.group.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vj.lets.domain.article.dto.Article;
+import com.vj.lets.domain.article.dto.ArticleComment;
+import com.vj.lets.domain.article.service.ArticleCommentService;
+import com.vj.lets.domain.article.service.ArticleService;
 import com.vj.lets.domain.group.dto.*;
 import com.vj.lets.domain.group.service.StudyGroupService;
+import com.vj.lets.domain.group.util.PageParams;
+import com.vj.lets.domain.group.util.Pagination;
 import com.vj.lets.domain.location.dto.SiGunGu;
 import com.vj.lets.domain.location.service.SiGunGuService;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 스터디 그룹 컨트롤러
  *
  * @author VJ특공대 이희영
+ * @author VJ특공대 이한솔
  * @version 1.0
  * @since 2023-09-11 (월)
  */
@@ -36,33 +52,57 @@ public class StudyGroupController {
     private final SiGunGuService siGunGuService;
     private final MemberService memberService;
 
+    private final ArticleService articleService;
+    private final ArticleCommentService articleCommentService;
+
+    /**
+     * 실제 회원 이미지 경로
+     */
+    @Value("${group.imageLocation}")
+    private String imageLocation;
+
+    /**
+     * DB에 입력할 회원 이미지 경로
+     */
+    @Value("${group.imageDBPath}")
+    private String imageDBPath;
+
     /**
      * 스터디 전체 리스트 화면 출력
      *
+     * @author VJ특공대 이희영
+     * @param page 페이지
      * @param keyword 검색 키워드
-     * @param subject 검색 주제
      * @param model   모델 인터페이스
      * @return 스터디 리스트 화면
-     * @author VJ특공대 이희영
      */
     @GetMapping("")
-    public String studyGroup(@PathParam("keyword") String keyword, @PathParam("subject") String subject, Model model) {
-        Search search = null;
+    public String studyGroup(@PathParam("page") String page, @PathParam("keyword") String keyword, @PathParam("subject") String subject, @PathParam("siGunGuName") String siGunGuName, Model model) {
+        int count = studyGroupService.getSearchCount(keyword);
+        int elementSize = 8;
+        int pageSize = 5;
 
-        if (subject != null) {
-            String changedSubject = subjectChange(subject);
-            search = Search.builder()
-                    .keyword(keyword)
-                    .subject(changedSubject)
-                    .build();
-        } else {
-            search = Search.builder()
-                    .keyword(keyword)
-                    .build();
+        if (page == null || page.isEmpty()) {
+            page = "1";
         }
 
-        List<Map<String, Object>> studyGroupList = studyGroupService.getStudyList(search);
+        int selectPage = Integer.parseInt(page);
+
+        PageParams pageParams = PageParams.builder()
+                .elementSize(elementSize)
+                .pageSize(pageSize)
+                .requestPage(selectPage)
+                .rowCount(count)
+                .keyword(keyword)
+                .subject(subject)
+                .siGunGuName(siGunGuName)
+                .build();
+
+        Pagination pagination = new Pagination(pageParams);
+
+        List<Map<String, Object>> studyGroupList = studyGroupService.getStudyList(pageParams);
         List<StudyGroup> newStudyList = studyGroupService.getNewStudyList();
+        model.addAttribute("pagination", pagination);
         model.addAttribute("studyGroupList", studyGroupList);
         model.addAttribute("newStudyList", newStudyList);
 
@@ -72,14 +112,18 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 상세보기
      *
+     * @author VJ특공대 이희영
+     * @author VJ특공대 이한솔
+     * @param page        게시글 페이지
+     * @param keyword     게시글 검색 키워드
      * @param id          스터디 그룹 아이디
      * @param loginMember 로그인 회원 정보
      * @param model       모델 인터페이스
      * @return 스터디 그룹 상세
-     * @author VJ특공대 이희영
      */
     @GetMapping("/{id}")
-    public String readGroup(@PathVariable int id, @SessionAttribute Member loginMember, Model model) {
+    public String readGroup(@PathParam("page") String page, @PathParam("keyword") String keyword, @PathVariable int id, @SessionAttribute Member loginMember, Model model) {
+        // 이희영
         GroupMemberList groupMember = null;
         List<Map<String, Object>> contactList = null;
 
@@ -90,18 +134,47 @@ public class StudyGroupController {
 
         if (studyGroupService.isGroupMember(loginMember.getId(), id) != null && studyGroupService.isGroupMember(loginMember.getId(), id).getPosition().equals("팀장")) {
             contactList = studyGroupService.getStudyContactList(id);
-
         }
         Member member = memberService.getMember(loginMember.getId());
-
-
-
-
-
+        
         model.addAttribute("member", member);
         model.addAttribute("studyGroup", studyGroup);
         model.addAttribute("groupMember", groupMember);
         model.addAttribute("contactList", contactList);
+
+        // 이한솔
+        int elementSize = 5;
+        int pageSize = 5;
+
+        int count = articleService.getCountAll(keyword);
+
+        if (page == null || page.isEmpty()) {
+            page = "1";
+        }
+
+        int selectPage = Integer.parseInt(page);
+        PageParams pageParams = PageParams.builder()
+                .elementSize(elementSize)
+                .pageSize(pageSize)
+                .requestPage(selectPage)
+                .rowCount(count)
+                .keyword(keyword)
+                .build();
+
+        Pagination pagination = new Pagination(pageParams);
+        model.addAttribute(pagination);
+
+        List<Map<String, Object>> articleList = articleService.findByPage(pageParams);
+        model.addAttribute("articleList", articleList);
+
+        List<Integer> articleIds = new ArrayList<>();
+        for (Map<String, Object> articleMap : articleList) {
+            int articleId = Integer.parseInt(articleMap.get("ID").toString());
+            articleIds.add(articleId);
+        }
+
+        List<Map<String, Object>> articleComments = articleService.findComment(articleIds);
+        model.addAttribute("commentList", articleComments);
 
         return "common/group/mygroup";
     }
@@ -109,10 +182,10 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 멤버 관리 화면 출력
      *
+     * @author VJ특공대 이희영
      * @param id 스터디 그룹 아이디
      * @return 스터디 그룹 회원 리스트
      * @throws JsonProcessingException Json 데이터 예외
-     * @author VJ특공대 이희영
      */
     @ResponseBody
     @RequestMapping("/groupSetting/{id}")
@@ -127,10 +200,10 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 멤버 탈퇴
      *
+     * @author VJ특공대 이희영
      * @param id       스터디 그룹 아이디
      * @param memberId 회원 아이디
      * @return 탈퇴 성공 유무
-     * @author VJ특공대 이희영
      */
     @ResponseBody
     @DeleteMapping("/{id}/{memberId}")
@@ -148,10 +221,10 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 신청 내역 화면 출력
      *
+     * @author VJ특공대 이희영
      * @param id 스터디 그룹 아이디
      * @return 스터디 그룹 가입 신청 리스트
      * @throws JsonProcessingException Json 데이터 예외
-     * @author VJ특공대 이희영
      */
     @ResponseBody
     @RequestMapping("/contactSetting/{id}")
@@ -166,10 +239,10 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 가입 신청 승인
      *
+     * @author VJ특공대 이희영
      * @param studyGroupId 스터디 그룹 아이디
      * @param id           회원 아이디
      * @return 가입 승인 성공 / 실패 메세지
-     * @author VJ특공대 이희영
      */
     @ResponseBody
     @PutMapping("/memberContact/{studyGroupId}/{id}")
@@ -187,10 +260,10 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 가입 신청 거절
      *
+     * @author VJ특공대 이희영
      * @param studyGroupId 스터디 그룹 아이디
      * @param id           회원 아이디
      * @return 가입 거절 성공 / 실패 메세지
-     * @author VJ특공대 이희영
      */
     @ResponseBody
     @DeleteMapping("/memberContact/{studyGroupId}/{id}")
@@ -208,15 +281,35 @@ public class StudyGroupController {
     /**
      * 내 스터디 리스트 조회 화면
      *
+     * @author VJ특공대 이희영
      * @param model 모델 인터페이스
      * @return 가입한 스터디 그룹 리스트
-     * @author VJ특공대 이희영
      */
     @GetMapping("/mygroup")
-    public String myGroup(@SessionAttribute Member loginMember, Model model) {
-        List<Map<String, Object>> myStudyList = studyGroupService.getMyStudyList(loginMember.getId());
+    public String myGroup(@PathParam("page") String page, @SessionAttribute Member loginMember, Model model) {
+        int count = studyGroupService.getMyStudyCount(loginMember.getId());
+        int elementSize = 7;
+        int pageSize = 5;
 
-        model.addAttribute("myStudyList", myStudyList);
+        if (page == null || page.isEmpty()) {
+            page = "1";
+        }
+
+        int selectPage = Integer.parseInt(page);
+
+        PageParams pageParams = PageParams.builder()
+                .elementSize(elementSize)
+                .pageSize(pageSize)
+                .requestPage(selectPage)
+                .rowCount(count)
+                .build();
+
+        List<Map<String, Object>> myStudyListAndPageParams = studyGroupService.getMyStudyListAndPageParams(loginMember.getId(), pageParams);
+
+        Pagination pagination = new Pagination(pageParams);
+
+        model.addAttribute("pagination", pagination);
+        model.addAttribute("myStudyList", myStudyListAndPageParams);
 
         return "common/group/mygroup_list";
     }
@@ -224,36 +317,61 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 생성
      *
+     * @author VJ특공대 이희영
      * @param loginMember 로그인 회원 정보
      * @return 스터디 그룹 상세
-     * @author VJ특공대 이희영
      */
     @PostMapping("/create")
-    public String createGroup(@ModelAttribute CreateForm createForm, @SessionAttribute Member loginMember) {
+    public String createGroup(@ModelAttribute CreateForm createForm, MultipartFile imagePath, @SessionAttribute Member loginMember) throws IOException {
         String selectedSubject = createForm.getSubject();
         String subject = subjectChange(selectedSubject);
 
         StudyGroup studyGroup = StudyGroup.builder()
                 .name(createForm.getName())
                 .totalCount(createForm.getTotalCount())
-                .imagePath(createForm.getImagePath())
                 .subject(subject)
                 .build();
 
-        int studyGroupId = studyGroupService.generateStudy(studyGroup, loginMember.getId(), createForm.getSiGunGuName());
+        if (!imagePath.isEmpty()) {
+            // 이미지 폴더에 저장
+            // 업로드 이미지 확장자 가져오기
+            String imageExtension = StringUtils.getFilenameExtension(imagePath.getOriginalFilename());
+            // 업로드 한 이미지 다운로드 받을 위치 설정
+            StringBuilder imageDir = new StringBuilder();
+            String uuid = UUID.randomUUID().toString();
+            String imageName = createForm.getName() + uuid;
+
+            imageDir.append(imageLocation).append(imageName).append(".").append(imageExtension);
+
+            File uploadDir = new File(imageDir.toString());
+            // 폴더 없으면 생성
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs();
+            }
+            imagePath.transferTo(uploadDir);
+
+            StringBuilder imagePathDB = new StringBuilder();
+            imagePathDB.append(imageDBPath).append(imageName).append(".").append(imageExtension);
+
+            studyGroup.setImagePath(imagePathDB.toString());
+        } else {
+            studyGroup.setImagePath("");
+        }
+
+        int studyGroupId = studyGroupService.generateStudy(studyGroup, loginMember.getId(), createForm.getSiGunGuName(), createForm.getSiDoName());
         return "redirect:/group/" + studyGroupId;
     }
 
     /**
      * 스터디 그룹 정보 수정
      *
+     * @author VJ특공대 이희영
      * @param createForm 정보 수정 Form에서 입력된 객체
      * @param id         스터디 그룹 아이디
      * @return 스터디 그룹 상세 화면
-     * @author VJ특공대 이희영
      */
     @PostMapping("/update/{id}")
-    public String updateGroup(@ModelAttribute CreateForm createForm, @PathVariable int id) {
+    public String updateGroup(@ModelAttribute CreateForm createForm, MultipartFile settingImage, @PathVariable int id) throws IOException {
         String siGunGuName = createForm.getSiGunGuName();
         SiGunGu siGunGu = siGunGuService.findById(siGunGuName);
 
@@ -264,21 +382,45 @@ public class StudyGroupController {
                 .id(id)
                 .name(createForm.getName())
                 .totalCount(createForm.getTotalCount())
-                .imagePath(createForm.getImagePath())
                 .subject(subject)
                 .siGunGuId(siGunGu.getId())
                 .build();
 
+        if (!settingImage.isEmpty()) {
+            // 이미지 폴더에 저장
+            // 업로드 이미지 확장자 가져오기
+            String imageExtension = StringUtils.getFilenameExtension(settingImage.getOriginalFilename());
+            // 업로드 한 이미지 다운로드 받을 위치 설정
+            StringBuilder imageDir = new StringBuilder();
+            String uuid = UUID.randomUUID().toString();
+            String imageName = createForm.getName() + uuid;
+
+            imageDir.append(imageLocation).append(imageName).append(".").append(imageExtension);
+            File uploadDir = new File(imageDir.toString());
+            // 폴더 없으면 생성
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs();
+            }
+            settingImage.transferTo(uploadDir);
+
+            StringBuilder imagePathDB = new StringBuilder();
+            imagePathDB.append(imageDBPath).append(imageName).append(".").append(imageExtension);
+            studyGroup.setImagePath(imagePathDB.toString());
+        } else {
+            studyGroup.setImagePath("");
+        }
+
         studyGroupService.editStudy(studyGroup);
+
         return "redirect:/group/{id}";
     }
 
     /**
      * 스터디 그룹 삭제
      *
+     * @author VJ특공대 이희영
      * @param id 스터디 그룹 아이디
      * @return 내 스터디 그룹 리스트 화면
-     * @author VJ특공대 이희영
      */
     @PostMapping("/delete/{id}")
     public String deleteGroup(@PathVariable int id) {
@@ -290,10 +432,10 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 가입
      *
+     * @author VJ특공대 이희영
      * @param id          스터디 그룹 아이디
      * @param loginMember 로그인 멤버
      * @return 스터디 그룹 상세 화면
-     * @author VJ특공대 이희영
      */
     @ResponseBody
     @PostMapping("/join/{id}")
@@ -322,9 +464,9 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 생성 및 수정 기능에서 사용할 스터디 그룹 주제 변환 기능
      *
+     * @author VJ특공대 이희영
      * @param selectedSubject Form에서 선택된 스터디 그룹 주제 옵션
      * @return DB에 입력될 스터디 그룹 주제
-     * @author VJ특공대 이희영
      */
     private String subjectChange(String selectedSubject) {
         selectedSubject = switch (selectedSubject) {
@@ -341,5 +483,111 @@ public class StudyGroupController {
         };
 
         return selectedSubject;
+    }
+
+    /**
+     * 게시글 등록
+     *
+     * @author VJ특공대 이한솔
+     * @param article 게시글
+     * @param request HttpServletRequest 객체
+     * @param model model 인터페이스
+     * @return 스터디 그룹 화면
+     */
+    @PostMapping("/{id}/article")
+    public String create(@ModelAttribute Article article, HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        if (loginMember != null) {
+            int memberId = loginMember.getId(); // Member 객체에서 member_id를 가져옵니다.
+
+            // 2. ArticleDto에 로그인한 회원의 ID 설정
+            article.setMemberId(memberId);
+
+            // 3. ArticleService를 호출하여 article 테이블에 값을 삽입
+            articleService.create(article);
+        }
+        return "redirect:/group/{id}";
+    }
+
+    /**
+     * 게시글 삭제
+     * 
+     * @author VJ특공대 이한솔
+     * @param id 게시글 아이디
+     * @param article 게시글
+     * @param model model 인터페이스
+     * @return 스터디 그룹 화면
+     */
+    @PostMapping("/{id}/article/delete")
+    public String delete(@PathParam("id") int id, @ModelAttribute Article article, Model model) {
+        Article targetArticle = articleService.findById(id);
+
+        model.addAttribute("article", targetArticle);
+        articleService.delete(id);
+
+        return "redirect:/group/{id}";
+    }
+
+    /**
+     * 게시글 수정
+     * 
+     * @author VJ특공대 이한솔
+     * @param article 게시글
+     * @param model model 인터페이스
+     * @return 스터디 그룹 화면
+     */
+    @PostMapping("/{id}/article/update")
+    public String update(@ModelAttribute Article article, Model model) {
+        model.addAttribute("targetArticle", article);
+        
+        articleService.update(article);
+        model.addAttribute("article", article);
+        
+        return "redirect:/group/{id}";
+    }
+
+    /**
+     * 게시글 댓글 등록
+     * 
+     * @author VJ특공대 이한솔
+     * @param articleComment 게시글 댓글
+     * @param articleId 게시글 아이디
+     * @param request HttpServletRequest 객체
+     * @param model model 인터페이스
+     * @return 스터디 그룹 화면
+     */
+    @PostMapping("/{id}/{articleId}/commentCreate")
+    public String commentCreate(@ModelAttribute ArticleComment articleComment, @PathVariable int articleId , HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        Member loginMember = (Member) session.getAttribute("loginMember");
+
+        if (loginMember != null) {
+            int memberId = loginMember.getId();
+            articleComment.setMemberId(memberId);
+            articleComment.setArticleId(articleId);
+            articleCommentService.create(articleComment);
+        }
+
+        return "redirect:/group/{id}";
+    }
+
+    /**
+     * 게시글 댓글 삭제
+     *
+     * @author VJ특공대 이한솔
+     * @param id 댓글 아이디
+     * @param articleComment 게시글 댓글
+     * @param model model 인터페이스
+     * @return 스터디 그룹 화면
+     */
+    @PostMapping("/{id}/commentDelete")
+    public String delete(@PathParam("commentId") int id, @ModelAttribute ArticleComment articleComment, Model model) {
+        ArticleComment targetComment = articleCommentService.findById(id);
+        model.addAttribute("articleComment", targetComment);
+        articleCommentService.delete(id);
+
+        return "redirect:/group/{id}";
     }
 }

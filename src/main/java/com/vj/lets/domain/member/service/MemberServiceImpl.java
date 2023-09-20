@@ -44,7 +44,6 @@ public class MemberServiceImpl implements MemberService {
     private final StudyGroupMapper studyGroupMapper;
     private final GroupHistoryMapper groupHistoryMapper;
     private final GroupMemberListMapper groupMemberListMapper;
-    private final GroupContactMapper groupContactMapper;
 
     /**
      * 회원 가입

@@ -2,13 +2,12 @@ package com.vj.lets.domain.group.service;
 
 import com.vj.lets.domain.group.dto.GroupContact;
 import com.vj.lets.domain.group.dto.GroupMemberList;
-import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
 import com.vj.lets.domain.group.mapper.GroupContactMapper;
 import com.vj.lets.domain.group.mapper.GroupHistoryMapper;
 import com.vj.lets.domain.group.mapper.GroupMemberListMapper;
 import com.vj.lets.domain.group.mapper.StudyGroupMapper;
-import com.vj.lets.domain.location.dto.SiGunGu;
+import com.vj.lets.domain.group.util.PageParams;
 import com.vj.lets.domain.location.mapper.SiGunGuMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,14 +40,14 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @param studyGroup 생성할 스터디 그룹 정보
      * @param id 회원 아이디
      * @param siGunGuName 시,군,구 이름
+     * @param siDoName 시,도 이름
      * @return 생성된 스터디 그룹 아이디
      */
     @Override
     @Transactional
-    public int generateStudy(StudyGroup studyGroup, int id, String siGunGuName) {
-        // 전달 받은 시,군,구 이름을 시,군,구 아이디로 변환
-        SiGunGu siGunGu = siGunGuMapper.getSiGunGu(siGunGuName);
-        studyGroup.setSiGunGuId(siGunGu.getId());
+    public int generateStudy(StudyGroup studyGroup, int id, String siGunGuName, String siDoName) {
+        int siGunGuId = siGunGuMapper.getSiGunGuDo(siGunGuName, siDoName);
+        studyGroup.setSiGunGuId(siGunGuId);
 
         // 스터디 그룹 생성
         studyGroupMapper.createStudy(studyGroup);
@@ -66,13 +65,14 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * 스터디 그룹 전체 리스트 조회
      *
      * @author VJ특공대 이희영
+     * @param pageParams 페이징 정보
      * @return 스터디 그룹 리스트
      */
     @Override
-    public List<Map<String, Object>> getStudyList(Search search) {
+    public List<Map<String, Object>> getStudyList(PageParams pageParams) {
         List<Map<String, Object>> list = null;
 
-        list = studyGroupMapper.findAllStudyList(search);
+        list = studyGroupMapper.findAllStudyList(pageParams);
         return list;
     }
 
@@ -288,5 +288,44 @@ public class StudyGroupServiceImpl implements StudyGroupService{
 
         newStudyList = studyGroupMapper.findNewStudyList();
         return newStudyList;
+    }
+
+    /**
+     * 스터디 그룹 검색 수 조회
+     *
+     * @author VJ특공대 이희영
+     * @param keyword 검색 키워드
+     * @return 검색 결과 수
+     */
+    @Override
+    public int getSearchCount(String keyword) {
+        return studyGroupMapper.studySearchCount(keyword);
+    }
+
+    /**
+     * 가입한 스터디 수 조회
+     *
+     * @author VJ특공대 이희영
+     * @param id 회원 아이디
+     * @return 스터디 가입 수
+     */
+    @Override
+    public int getMyStudyCount(int id) {
+        return groupMemberListMapper.myStudyCount(id);
+    }
+
+    /**
+     * 페이징 정보를 포함한 스터디 그룹 가입 리스트 조회
+     *
+     * @param id 회원 아이디
+     * @param pageParams 페이징 정보
+     * @return 가입 리스트 조회
+     */
+    @Override
+    public List<Map<String, Object>> getMyStudyListAndPageParams(int id, PageParams pageParams) {
+        List<Map<String, Object>> myStudyListAndPageParams = null;
+        myStudyListAndPageParams = groupMemberListMapper.findMyGroupListAndPageParams(id, pageParams);
+
+        return myStudyListAndPageParams;
     }
 }

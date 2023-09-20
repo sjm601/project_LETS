@@ -1,7 +1,7 @@
 package com.vj.lets.domain.group.mapper;
 
-import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
+import com.vj.lets.domain.group.util.PageParams;
 import com.vj.lets.domain.location.dto.SiGunGu;
 import com.vj.lets.domain.location.mapper.SiGunGuMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -81,9 +81,19 @@ class StudyGroupMapperTest {
     @Transactional
     void findAllTest() {
         // given
-        Search search = Search.builder().build();
+        String keyword = "테스트";
+        int count = studyGroupMapper.studySearchCount(keyword);
+
+        PageParams pageParams = PageParams.builder()
+                .elementSize(5)
+                .pageSize(5)
+                .requestPage(1)
+                .rowCount(count)
+                .keyword(keyword)
+                .build();
+
         // when
-        List<Map<String, Object>> studyGroupList = studyGroupMapper.findAllStudyList(search);
+        List<Map<String, Object>> studyGroupList = studyGroupMapper.findAllStudyList(pageParams);
 
         // then
         log.info("스터디 그룹 전체 리스트 : {}", studyGroupList);
@@ -174,5 +184,19 @@ class StudyGroupMapperTest {
         // then
         log.info("신규 스터디 리스트 : {}", newStudyList);
         assertThat(newStudyList).isNotNull();
+    }
+
+    @Test
+    @Transactional
+    void studySearchCountTest() {
+        // given
+        String keyword ="테스트";
+
+        // when
+        int count = studyGroupMapper.studySearchCount(keyword);
+
+        // then
+        log.info("검색 결과 수 : {}", count);
+        assertThat(count).isNotZero();
     }
 }

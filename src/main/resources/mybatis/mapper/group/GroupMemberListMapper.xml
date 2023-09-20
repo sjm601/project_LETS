@@ -75,4 +75,50 @@
         WHERE MEMBER_ID = #{memberId} and STUDY_GROUP_ID = #{studyGroupId}
     </update>
 
+    <select id="myStudyCount" parameterType="int" resultType="int">
+        SELECT COUNT(ID) COUNT
+        FROM GROUP_MEMBER_LIST
+        WHERE MEMBER_ID = #{id}
+    </select>
+
+    <select id="findMyGroupListAndPageParams" parameterType="int" resultType="map">
+        SELECT  ID,
+                POSTITION,
+                MEMBERID,
+                STUDYGROUPID,
+                NAME,
+                TOTALCOUNT,
+                CURRENTCOUNT,
+                SUBJECT,
+                IMAGEPATH,
+                SIGUNGUNAME
+        FROM (SELECT    ID,
+                        CEIL(rownum / #{pageParams.elementSize}) request_page,
+                        POSTITION,
+                        MEMBERID,
+                        STUDYGROUPID,
+                        NAME,
+                        TOTALCOUNT,
+                        CURRENTCOUNT,
+                        SUBJECT,
+                        IMAGEPATH,
+                        SIGUNGUNAME
+              FROM (SELECT    GML.ID             ID,
+                              GML.POSITION       POSTITION,
+                              GML.MEMBER_ID      MEMBERID,
+                              GML.STUDY_GROUP_ID STUDYGROUPID,
+                              SG.NAME            NAME,
+                              SG.TOTAL_COUNT     TOTALCOUNT,
+                              SG.CURRENT_COUNT   CURRENTCOUNT,
+                              SG.SUBJECT         SUBJECT,
+                              SG.IMAGE_PATH      IMAGEPATH,
+                              SGG.NAME           SIGUNGUNAME
+                    FROM GROUP_MEMBER_LIST GML
+                             JOIN STUDY_GROUP SG ON GML.STUDY_GROUP_ID = SG.ID
+                             JOIN SI_GUN_GU SGG ON SG.SI_GUN_GU_ID = SGG.ID
+                    WHERE MEMBER_ID = #{id} AND SG.STATUS = 'enabled'
+                    ORDER BY REGDATE DESC))
+        WHERE request_page = #{pageParams.requestPage}
+    </select>
+
 </mapper>

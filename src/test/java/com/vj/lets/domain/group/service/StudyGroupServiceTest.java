@@ -2,8 +2,8 @@ package com.vj.lets.domain.group.service;
 
 import com.vj.lets.domain.group.dto.GroupContact;
 import com.vj.lets.domain.group.dto.GroupMemberList;
-import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
+import com.vj.lets.domain.group.util.PageParams;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,20 +32,22 @@ class StudyGroupServiceTest {
 
     @Test
     @Transactional
-    void createStudyGroupTest() {
+    void generateStudyTest() {
         // given
         String siGunGuName = "노원구";
+        String siDoName = "서울";
 
         StudyGroup studyGroup = StudyGroup.builder()
                 .name("스터디이름")
                 .totalCount(10)
                 .subject("스터디주제")
+                .imagePath("")
                 .build();
 
-        int id = 30;
+        int id = 50;
 
         // when
-        int studyGroupId = studyGroupService.generateStudy(studyGroup, id, siGunGuName);
+        int studyGroupId = studyGroupService.generateStudy(studyGroup, id, siGunGuName, siDoName);
 
         // then
         log.info("생성한 스터디 그룹 아이디 : {}", studyGroupId);
@@ -55,10 +57,19 @@ class StudyGroupServiceTest {
     @Transactional
     void getStudyGroupListTest() {
         // given
-        Search search = Search.builder().build();
+        String keyword = "테스트";
+        int count = studyGroupService.getSearchCount(keyword);
+
+        PageParams pageParams = PageParams.builder()
+                .elementSize(5)
+                .pageSize(5)
+                .requestPage(1)
+                .rowCount(count)
+                .keyword(keyword)
+                .build();
 
         // when
-        List<Map<String, Object>> list = studyGroupService.getStudyList(search);
+        List<Map<String, Object>> list = studyGroupService.getStudyList(pageParams);
 
         // then
         log.info("스터디 그룹 리스트 : {}", list);
@@ -247,5 +258,55 @@ class StudyGroupServiceTest {
         // then
         log.info("신규 스터디 리스트 : {}", newStudyList);
         assertThat(newStudyList).isNotNull();
+    }
+
+    @Test
+    @Transactional
+    void getSearchCount() {
+        // given
+        String keyword ="테스트";
+
+        // when
+        int count = studyGroupService.getSearchCount(keyword);
+
+        // then
+        log.info("검색 결과 수 : {}", count);
+        assertThat(count).isNotZero();
+    }
+
+    @Test
+    @Transactional
+    void getMyStudyCountTest() {
+        // given
+        int id = 37;
+
+        // when
+        int count = studyGroupService.getMyStudyCount(id);
+
+        // then
+        log.info("가입한 스터디 수 조회 : {}", count);
+        assertThat(count).isNotZero();
+    }
+
+    @Test
+    @Transactional
+    void getMyStudyListAndPageParamsTest() {
+        // given
+        int id = 37;
+        int count = studyGroupService.getMyStudyCount(id);
+
+        PageParams pageParams = PageParams.builder()
+                .elementSize(5)
+                .pageSize(5)
+                .rowCount(count)
+                .requestPage(1)
+                .build();
+
+        // when
+        List<Map<String, Object>> list = studyGroupService.getMyStudyListAndPageParams(id, pageParams);
+
+        // then
+        log.info("페이징 정보를 포함한 가입한 그룹 리스트 : {}", list);
+        assertThat(list).isNotNull();
     }
 }

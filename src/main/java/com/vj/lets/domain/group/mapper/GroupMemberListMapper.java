@@ -1,6 +1,7 @@
 package com.vj.lets.domain.group.mapper;
 
 import com.vj.lets.domain.group.dto.GroupMemberList;
+import com.vj.lets.domain.group.util.PageParams;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -72,6 +73,7 @@ public interface GroupMemberListMapper {
     /**
      * 특정 스터디 그룹에 팀원 있는지 여부 조회
      *
+     * @author VJ특공대 김종원
      * @param studyGroupId 스터디 그룹 아이디
      * @return 팀원 유무
      */
@@ -80,6 +82,7 @@ public interface GroupMemberListMapper {
     /**
      * 특정 스터디 그룹에 가장 오래된 팀원 ID 조회
      *
+     * @author VJ특공대 김종원
      * @param studyGroupId 스터디 그룹 아이디
      * @return 팀원 아이디
      */
@@ -88,8 +91,28 @@ public interface GroupMemberListMapper {
     /**
      * 특정 스터디 그룹의 특정 멤버 포지션 팀원에서 팀장으로 업데이트
      *
+     * @author VJ특공대 김종원
      * @param memberId     멤버 아이디
      * @param studyGroupId 스터디 그룹 아이디
      */
     public void updateMemberPosition(@Param("memberId") int memberId, @Param("studyGroupId") int studyGroupId);
+
+    /**
+     * 가입한 스터디 그룹 수 조회
+     * 
+     * @author VJ특공대 이희영
+     * @param id 멤버 아이디
+     * @return 가입한 그룹 수
+     */
+    public int myStudyCount(int id);
+
+    /**
+     * 페이징 정보를 포함한 내가 가입한 스터디 그룹 조회
+     *
+     * @author VJ특공대 이희영
+     * @param id 멤버 아이디
+     * @param pageParams 페이징 정보
+     * @return 가입한 리스트
+     */
+    public List<Map<String, Object>> findMyGroupListAndPageParams(@Param("id") int id, @Param("pageParams") PageParams pageParams);
 }

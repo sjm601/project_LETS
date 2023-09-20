@@ -31,5 +31,5 @@ public interface SiGunGuMapper {
      * @param siDoName 시도 이름
      * @return 시군구 아이디
      */
-    public int getSiGunGuDo(@Param("siGunGuName") String siGunGuName,@Param("siDoName") String siDoName);
+    public int getSiGunGuDo(@Param("siGunGuName") String siGunGuName, @Param("siDoName") String siDoName);
 }

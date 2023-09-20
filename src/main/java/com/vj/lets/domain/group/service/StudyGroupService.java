@@ -4,6 +4,8 @@ import com.vj.lets.domain.group.dto.GroupContact;
 import com.vj.lets.domain.group.dto.GroupMemberList;
 import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
+import com.vj.lets.domain.group.util.PageParams;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -24,17 +26,19 @@ public interface StudyGroupService {
      * @param studyGroup 생성할 스터디 그룹 정보
      * @param id 회원 아이디
      * @param siGunGuName 시,군,구 이름
+     * @param siDoName 시,도 이름
      * @return 생성된 스터디 그룹 아이디
      */
-    public int generateStudy(StudyGroup studyGroup, int id, String siGunGuName);
+    public int generateStudy(StudyGroup studyGroup, int id, String siGunGuName, String siDoName);
 
     /**
      * 스터디 그룹 전체 리스트 조회
      *
      * @author VJ특공대 이희영
+     * @param  pageParams 페이징 정보
      * @return 스터디 그룹 리스트
      */
-    public List<Map<String, Object>> getStudyList(Search search);
+    public List<Map<String, Object>> getStudyList(PageParams pageParams);
 
     /**
      * 스터디 그룹 화면 출력
@@ -138,7 +142,7 @@ public interface StudyGroupService {
      * 가입한 스터디 그룹 리스트 조회
      *
      * @author VJ특공대 이희영
-     * @param memberId 회원 아이디
+     * @param  memberId 회원 아이디
      * @return 가입한 스터디 그룹 리스트
      */
     public List<Map<String, Object>> getMyStudyList(int memberId);
@@ -150,4 +154,32 @@ public interface StudyGroupService {
      * @return 신규 스터디 그룹 리스트
      */
     public List<StudyGroup> getNewStudyList();
+
+    /**
+     * 스터디 그룹 검색 수 조회
+     *
+     * @author VJ특공대 이희영
+     * @param keyword 검색 키워드
+     * @return 검색 결과 수
+     */
+    public int getSearchCount(String keyword);
+
+    /**
+     * 가입된 스터디 그룹 수 조회
+     * 
+     * @author VJ특공대 이희영
+     * @param id 회원 아이디
+     * @return 가입한 스터디 수
+     */
+    public int getMyStudyCount(int id);
+
+    /**
+     * 페이징 정보를 포함한 내가 가입한 스터디 그룹 조회
+     *
+     * @author VJ특공대 이희영
+     * @param id 회원 아이디
+     * @param pageParams 페이징 정보
+     * @return 가입한 리스트
+     */
+    public List<Map<String, Object>> getMyStudyListAndPageParams(int id, PageParams pageParams);
 }

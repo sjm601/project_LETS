@@ -15,26 +15,56 @@
         FROM DUAL
     </select>
 
-    <select id="findAllStudyList" resultType="map">
-        SELECT SG.ID            ID,
-               SG.NAME          NAME,
-               SG.TOTAL_COUNT   TOTALCOUNT,
-               SG.CURRENT_COUNT CURRENTCOUNT,
-               SG.REGDATE       REGDATE,
-               SG.IMAGE_PATH    IMAGEPATH,
-               SG.SUBJECT       SUBJECT,
-               SG.STATUS        STATUS,
-               SGG.NAME         SIGUNGUNAME
+    <select id="studySearchCount" parameterType="string" resultType="int">
+        SELECT COUNT(SG.ID) COUNT
         FROM STUDY_GROUP SG
                  JOIN SI_GUN_GU SGG ON SG.SI_GUN_GU_ID = SGG.ID
         <where>
             SG.STATUS = 'enabled'
-            <if test="subject != null">AND SG.SUBJECT LIKE '%' || #{subject} || '%'</if>
             <if test="keyword != null">AND SG.NAME LIKE '%' || #{keyword} || '%'</if>
             <if test="keyword != null">OR SG.SUBJECT LIKE '%' || #{keyword} || '%'</if>
             <if test="keyword != null">OR SGG.NAME LIKE '%' || #{keyword} || '%'</if>
         </where>
-        ORDER BY REGDATE DESC
+    </select>
+
+    <select id="findAllStudyList" resultType="map">
+        SELECT  ID,
+                NAME,
+                TOTALCOUNT,
+                CURRENTCOUNT,
+                REGDATE,
+                IMAGEPATH,
+                SUBJECT,
+                SIGUNGUNAME
+        FROM (SELECT    ID,
+                        CEIL(rownum / #{elementSize}) request_page,
+                        NAME,
+                        TOTALCOUNT,
+                        CURRENTCOUNT,
+                        REGDATE,
+                        IMAGEPATH,
+                        SUBJECT,
+                        SIGUNGUNAME
+                FROM (SELECT    SG.ID ID,
+                                SG.NAME NAME,
+                                SG.TOTAL_COUNT TOTALCOUNT,
+                                SG.CURRENT_COUNT CURRENTCOUNT,
+                                SG.REGDATE REGDATE,
+                                SG.IMAGE_PATH IMAGEPATH,
+                                SG.SUBJECT SUBJECT,
+                                SGG.NAME SIGUNGUNAME
+                        FROM STUDY_GROUP SG
+                            JOIN SI_GUN_GU SGG ON SG.SI_GUN_GU_ID = SGG.ID
+                        <where>
+                            SG.STATUS = 'enabled'
+                            <if test="subject != null">AND SG.SUBJECT LIKE '%' || #{subject} || '%'</if>
+                            <if test="siGunGuName != null">AND SGG.NAME LIKE '%' || #{siGunGuName} || '%'</if>
+                            <if test="keyword != null">AND SG.NAME LIKE '%' || #{keyword} || '%'</if>
+                            <if test="keyword != null">OR SG.SUBJECT LIKE '%' || #{keyword} || '%'</if>
+                            <if test="keyword != null">OR SGG.NAME LIKE '%' || #{keyword} || '%'</if>
+                        </where>
+                        ORDER BY REGDATE DESC))
+        WHERE request_page = #{requestPage}
     </select>
 
     <select id="readStudy" parameterType="int" resultType="map">
@@ -45,7 +75,7 @@
                SG.REGDATE       REGDATE,
                SG.IMAGE_PATH    IMAGEPATH,
                SG.SUBJECT       SUBJECT,
-               SGG.NAME  SIGUNGUNAME,
+               SGG.NAME         SIGUNGUNAME,
                M.NAME           MEMBERNAME
         FROM STUDY_GROUP SG
                  JOIN GROUP_MEMBER_LIST GML ON SG.ID = GML.STUDY_GROUP_ID
@@ -87,8 +117,8 @@
     </update>
 
     <select id="findNewStudyList" resultType="StudyGroup">
-        SELECT ID, NAME, REGDATE
-        FROM (SELECT ID, NAME, REGDATE
+        SELECT ID, NAME, REGDATE, IMAGEPATH
+        FROM (SELECT ID, NAME, REGDATE, IMAGE_PATH IMAGEPATH
                 FROM STUDY_GROUP
                 WHERE STATUS = 'enabled'
                 ORDER BY REGDATE DESC)

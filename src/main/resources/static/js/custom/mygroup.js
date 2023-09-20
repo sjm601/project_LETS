@@ -118,7 +118,7 @@ function groupContactAddRow(data, i) {
          </td>`
 }
 
-// 스터디 그룹 가입 승인/거절 
+// 스터디 그룹 가입 승인/거절
 // fetch를 이용해 서버에서 스터디 그룹 멤버 가입 승인 또는 거절
 function contactMember(id, type) {
     const url = `/group/memberContact/${studyGroupId}/` + id;
@@ -172,8 +172,6 @@ contactSubmitBtn.addEventListener('click', e => {
         age: inputAge.value
     }
 
-    console.log(obj);
-
     if (obj.name === null || obj.gender === null || obj.age < 1) {
         alert("항목을 모두 입력해주세요.");
     } else {
@@ -188,10 +186,23 @@ contactSubmitBtn.addEventListener('click', e => {
         }).then(response => response.text())
             .then(msg => {
                 if (msg === 'contact-success') {
-                    alert("스터디 가입 신청이 완료되었습니다.");
+                    alert("스터디 가입 신청이 완료 되었습니다.");
                 } else {
                     alert("이미 가입 신청한 스터디 입니다.");
                 }
             });
     }
+});
+
+const loadMoreBtn = document.querySelector('#searchBtn');
+loadMoreBtn.addEventListener('click', e => {
+
+    if (!confirm("스터디에 가입 하시겠습니까?")) return;
+
+    $.ajax({
+        url: "/group/list",
+        dataType: "text"
+    }).done(result => {
+        $("#studyGroupList").replaceWith(result);
+    });
 });

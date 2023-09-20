@@ -8,7 +8,6 @@
         <meta name="author" content="VJCommando">
         <meta name="description" content="LETS | 페이지 설명">
         <title>LETS | 페이지 타이틀</title>
-
         <link href="/css/blog.css" rel="stylesheet">
     </th:block>
 
@@ -37,53 +36,53 @@
                         </li>
                         <li class="mx-2">
                             <div class="text-center">
-                                <a th:href="@{'/group?subject=stock'}" class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">주식 / 코인</a>
+                                <a th:href="@{'/group?subject=주식'}" class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">주식 / 코인</a>
                             </div>
                         </li>
                         <li class="mx-2">
                             <div class="text-center">
-                                <a th:href="@{'/group?subject=econo'}" class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">경제 /
+                                <a th:href="@{'/group?subject=경제'}" class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">경제 /
                                     부동산</a>
                             </div>
                         </li>
                         <li class="mx-2">
                             <div class="text-center">
-                                <a th:href="@{'/group?subject=emplo'}" class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">취업</a>
+                                <a th:href="@{'/group?subject=취업'}" class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">취업</a>
                             </div>
                         </li>
                         <li class="mx-2">
                             <div class="text-center">
-                                <a th:href="@{'/group?subject=inter'}" class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">면접</a>
+                                <a th:href="@{'/group?subject=면접'}" class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">면접</a>
                             </div>
                         </li>
                         <li class="mx-2">
                             <div class="text-center">
-                                <a th:href="@{'/group?subject=essay'}" class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">논술</a>
+                                <a th:href="@{'/group?subject=논술'}" class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">논술</a>
                             </div>
                         </li>
                         <li class="mx-2">
                             <div class="text-center">
-                                <a th:href="@{'/group?subject=langu'}" class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">언어</a>
+                                <a th:href="@{'/group?subject=언어'}" class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">언어</a>
                             </div>
                         </li>
                         <li class="mx-2">
                             <div class="text-center">
-                                <a th:href="@{'/group?subject=it'}" class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">IT</a>
+                                <a th:href="@{'/group?subject=IT'}" class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">IT</a>
                             </div>
                         </li>
                         <li class="mx-2">
                             <div class="text-center">
-                                <a th:href="@{'/group?subject=certi'}" class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">자격증</a>
+                                <a th:href="@{'/group?subject=자격증'}" class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">자격증</a>
                             </div>
                         </li>
                         <li class="mx-2">
                             <div class="text-center">
-                                <a th:href="@{'/group?subject=study'}" class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">공부</a>
+                                <a th:href="@{'/group?subject=공부'}" class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">공부</a>
                             </div>
                         </li>
                         <li class="mx-2">
                             <div class="text-center">
-                                <a th:href="@{'/group?subject=all'}" class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">기타</a>
+                                <a th:href="@{'/group?subject=기타'}" class="subject rounded-5 btn btn-light" href="#" style="font-size: 14px;">기타</a>
                             </div>
                         </li>
                     </ul>
@@ -122,8 +121,8 @@
                                 <li th:each="newStudy : ${newStudyList}">
                                     <div class="d-flex">
                                         <a th:href="@{/group/{id}(id=${newStudy.id})}" href="#">
-                                            <img class="rounded-5 bg-danger" src="" alt="" width="50px"
-                                                height="50px">
+                                            <img th:src="${newStudy.imagePath} != null ? ${newStudy.imagePath} : '/assets/upload_image/group/default.png'" class="rounded-5 bg-danger" src="" alt="" width="50px"
+                                                 height="50px">
                                         </a>
                                         <h3 class="ms-2 my-auto">
                                             <a th:href="@{/group/{id}(id=${newStudy.id})}"
@@ -139,15 +138,14 @@
                     <!-- 스터디 리스트 -->
                     <div class="col-lg-9">
                         <div class="isotope-wrapper">
-                            <div class="row">
+                            <div class="row" id="studyGroupList">
                                 <th:block th:each="studyGroup : ${studyGroupList}">
                                     <div class="col-md-6 isotope-item popular">
                                         <div class="box_grid" data-cue="slideInUp">
                                             <figure>
-                                                <a th:href="@{/group/{id}(id=${studyGroup.ID})}" href="#"><img
-                                                        src="img/restaurant_1.jpg" class="img-fluid" alt=""
-                                                        width="800" height="533">
-                                                    <div class="read_more"><span>열기</span></div>
+                                                <a th:href="@{/group/{id}(id=${studyGroup.ID})}" href="#">
+                                                    <img th:src="${studyGroup['IMAGEPATH']} != null ? ${studyGroup['IMAGEPATH']} : '/assets/upload_image/group/default.png'" src="img/restaurant_1.jpg" class="img-fluid" alt=""
+                                                        width="800" height="533" />
                                                 </a>
                                             </figure>
                                             <div class="wrapper pb-2 text-end">
@@ -156,20 +154,19 @@
                                                                                href="#">주식스터디</a>
                                                 </h3>
                                                 <ul class="d-flex p-0 mb-2 border-0">
-                                                    <li><a class="text-dark p-2 rounded-5 btn btn-outline-light"
-                                                           href="#"
-                                                           style="font-size: 14px;"><i
-                                                            class="fa-solid fa-location-dot me-1"></i>
-                                                        <th:block th:text="${studyGroup.SIGUNGUNAME}">강동구</th:block>
-                                                    </a></li>
-                                                    <li><a th:text="${studyGroup.SUBJECT}"
+                                                    <li><a th:href="@{|/group?siGunGuName=${studyGroup.SIGUNGUNAME}|}"
+                                                           class="text-dark p-2 rounded-5 btn btn-outline-light"
+                                                           href="#" style="font-size: 14px;">
+                                                            <i class="fa-solid fa-location-dot me-1"></i>
+                                                            <th:block th:text="${studyGroup.SIGUNGUNAME}">강동구</th:block></a>
+                                                    </li>
+                                                    <li><a th:href="@{|/group?subject=${studyGroup.SUBJECT}|}" th:text="${studyGroup.SUBJECT}"
                                                            class="text-dark p-2 rounded-5 btn btn-outline-light"
                                                            href="#"
-                                                           style="font-size: 14px;">주식</a></li>
+                                                           style="font-size: 14px;">주식</a>
+                                                    </li>
                                                 </ul>
-                                                <span
-                                                        class="text-secondary">멤버수 <strong
-                                                        th:text="${studyGroup.CURRENTCOUNT}"
+                                                <span class="text-secondary">멤버수 <strong th:text="${studyGroup.CURRENTCOUNT}"
                                                         class="ms-2 text-success fw-bold">40</strong> /
 												<th:block th:text="${studyGroup.TOTALCOUNT}">50</th:block>명</span>
                                             </div>
@@ -178,7 +175,42 @@
                                 </th:block>
                             </div>
                         </div>
-                        <p class="text-center"><a href="#0" class="btn_1 rounded add_top_30">Load more</a></p>
+                        <div>
+                            <ul class="pagination h-100 justify-content-center align-items-center">
+                                <th:block th:if="${pagination.showFirst}">
+                                    <li class="page-item">
+                                        <a th:href="@{/group?page=1}" class="page-link">처음으로</a>
+                                    </li>
+                                </th:block>
+                                <th:block th:if="${pagination.showPrevious}">
+                                    <li class="page-item">
+                                        <a th:href="@{|/group?page=${pagination.previousStartPage}|}" class="page-link">이전</a>
+                                    </li>
+                                </th:block>
+                                <th:block th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
+                                    <th:block th:if="${i == pagination.params.requestPage}">
+                                        <li class="page-item active">
+                                            <a th:text="${i}" class="page-link" href="#">1</a>
+                                        </li>
+                                    </th:block>
+                                    <th:block th:if="${i != pagination.params.requestPage}">
+                                        <li class="page-item">
+                                            <a th:text="${i}" th:href="@{|/group?page=${i}|}" class="page-link" href="#">2</a>
+                                        </li>
+                                    </th:block>
+                                </th:block>
+                                <th:block th:if="${pagination.showNext}">
+                                    <li class="page-item">
+                                        <a th:href="@{|/group?page=${pagination.nextStartPage}|}" class="page-link">다음</a>
+                                    </li>
+                                </th:block>
+                                <th:block th:if="${pagination.showLast}">
+                                    <li class="page-item">
+                                        <a th:href="@{|/group?page=${pagination.totalPages}|}" class="page-link">끝으로</a>
+                                    </li>
+                                </th:block>
+                            </ul>
+                        </div>
                     </div>
                     <!-- /스터디 리스트 -->
                 </div>
