@@ -70,6 +70,11 @@ public class MemberServiceImpl implements MemberService {
         return memberMapper.readByEmailAndPasswd(email, password);
     }
 
+    @Override
+    public boolean isEmail(String email) {
+        return memberMapper.readBooleanByEmail(email);
+    }
+
     /**
      * 전체 회원 리스트 조회
      *

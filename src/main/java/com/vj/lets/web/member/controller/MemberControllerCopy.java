@@ -6,7 +6,6 @@ import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.dto.RegisterForm;
 import com.vj.lets.domain.member.service.MemberService;
 import com.vj.lets.domain.member.util.MemberType;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -36,7 +35,7 @@ import java.io.PrintWriter;
 @RequestMapping("/member")
 @RequiredArgsConstructor
 @Slf4j
-public class MemberController {
+public class MemberControllerCopy {
 
     private final MemberService memberService;
 
@@ -72,42 +71,39 @@ public class MemberController {
      *
      * @param registerForm  회원가입 폼 객체
      * @param bindingResult 바인딩 리절트 객체
-     * @param response      서블릿 리스폰스 객체
      * @param model         모델 객체
      * @return 논리적 뷰 이름
      */
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute RegisterForm registerForm,
+    @ResponseBody
+    public Object register(@Valid @RequestBody RegisterForm registerForm,
                            BindingResult bindingResult,
-                           HttpServletResponse response, Model model) {
+                           Model model) {
+
+        log.warn("=============={}", registerForm);
 
         if (bindingResult.hasErrors()) {
-            return "redirect:/member/register";
+            return "fail";
         }
 
-        // 데이터 검증 처리 과정 추가 예정
-
-        Member member = Member.builder()
-                .email(registerForm.getEmail())
-                .name(registerForm.getName())
-                .password(registerForm.getPassword())
-                .type(MemberType.GUEST.getType())
-                .build();
-
-        memberService.register(member);
-
-
-        try {
-            response.setContentType("text/html; charset=utf-8");
-            PrintWriter w = response.getWriter();
-            w.write("<script>alert('회원가입이 완료되었습니다.');location.href='/member/login';</script>");
-            w.flush();
-            w.close();
-        } catch (Exception e) {
-            throw new RuntimeException("오류 메세지");
+        if (memberService.isEmail(registerForm.getEmail())) {
+            return "duplicate";
         }
 
-        return "redirect:/member/login";
+        if (!memberService.isEmail(registerForm.getEmail())) {
+            Member member = Member.builder()
+                    .email(registerForm.getEmail())
+                    .name(registerForm.getName())
+                    .password(registerForm.getPassword())
+                    .type(MemberType.GUEST.getType())
+                    .build();
+
+            memberService.register(member);
+
+            return "success";
+        }
+
+        return "fail";
     }
 
     /**
@@ -137,17 +133,19 @@ public class MemberController {
      * @param loginForm     로그인 폼 객체
      * @param bindingResult 리절트 객체
      * @param request       서블릿 리퀘스트 객체
-     * @param response      서블릿 리스폰스 객체
      * @param model         모델 객체
      * @return 논리적 뷰 이름
      */
     @PostMapping("/login")
-    public String login(@Valid @ModelAttribute LoginForm loginForm,
+    @ResponseBody
+    public String login(@Valid @RequestBody LoginForm loginForm,
                         BindingResult bindingResult,
-                        HttpServletRequest request, HttpServletResponse response, Model model) {
+                        HttpServletRequest request, Model model) {
+
+        log.warn("================={}", loginForm);
 
         if (bindingResult.hasErrors()) {
-            return "redirect:/member/login";
+            return "fail";
         }
 
         // 데이터 검증 처리 과정 추가 예정
@@ -157,41 +155,13 @@ public class MemberController {
         if (loginMember == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
 
-            try {
-                response.setContentType("text/html; charset=utf-8");
-                PrintWriter w = response.getWriter();
-                w.write("<script>alert('아이디 또는 비밀번호가 맞지 않습니다.');location.href='/member/login';</script>");
-                w.flush();
-                w.close();
-            } catch (Exception e) {
-                throw new RuntimeException("오류 메세지");
-            }
-
-            return "redirect:/member/login";
+            return "fail";
         }
 
         HttpSession session = request.getSession();
         session.setAttribute("loginMember", loginMember);
 
-        // 쿠키 생성
-        if (loginForm.getRemember() != null && loginForm.getRemember()) {
-            Cookie saveCookie;
-            saveCookie = new Cookie("remember", loginMember.getEmail());
-            saveCookie.setPath("/");
-            saveCookie.setMaxAge(60 * 60 * 24 * 100);
-            response.addCookie(saveCookie);
-        } else if (loginForm.getRemember() == null || !loginForm.getRemember()) {
-            Cookie saveCookie;
-            saveCookie = new Cookie("remember", loginMember.getEmail());
-            saveCookie.setPath("/");
-            saveCookie.setMaxAge(0);
-            response.addCookie(saveCookie);
-        }
-
-        String redirectURI = (String) session.getAttribute("redirectURI");
-        log.warn("======================{}", redirectURI);
-        String uri = redirectURI == null ? "/" : redirectURI;
-        return "redirect:" + uri;
+        return "success";
     }
 
     /**

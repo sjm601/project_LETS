@@ -26,11 +26,19 @@ public interface MemberMapper {
     public void create(Member member);
 
     /**
-     * 전체 회원 목혹 조회
+     * 전체 회원 목록 조회
      *
      * @return 회원 목록
      */
     public List<Member> readAll();
+
+    /**
+     * 이메일로 회원 존재 유무 주회
+     *
+     * @param email 이메일
+     * @return 회원 존재 유무
+     */
+    public boolean readBooleanByEmail(String email);
 
     /**
      * 이메일, 비밀번호로 회원 조회

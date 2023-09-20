@@ -94,6 +94,8 @@ document.querySelector('button.regist_btn').addEventListener('click', event => {
                 location.href = redirectUrl;
             } else if (message === 'fail') {
                 alert('회원가입이 정상적으로 진행되지 않았습니다. 다시 시도해주세요.');
+            } else if (message === 'duplicate') {
+                alert("해당 이메일은 회원가입이 가능하지 않습니다.");
             }
         }).catch(error => {
             alert(error);
