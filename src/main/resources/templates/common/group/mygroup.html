@@ -66,22 +66,22 @@
             <!--                                            </li>-->
             <!--                                        </ul>-->
             <!--                                    </div>-->
-            <!--                                    <div class="mb-2">-->
-            <!--                                        &lt;!&ndash; 가입 전 가입하기 버튼, 가입 후 글 작성 버튼 노출 &ndash;&gt;-->
-            <!--                                        <button th:if="${groupMember == null}" class="btn btn-success my-auto"-->
-            <!--                                                data-bs-toggle="modal"-->
-            <!--                                                data-bs-target="#registerModal" id="register"-->
-            <!--                                                style="font-size: 14px;">가입하기-->
-            <!--                                        </button>-->
-            <!--                                        <button th:if="${groupMember != null}" class="btn btn-success my-auto"-->
-            <!--                                                data-bs-toggle="modal"-->
-            <!--                                                data-bs-target="#writeModal" id="write" style="font-size: 14px;">글-->
-            <!--                                            작성-->
-            <!--                                        </button>-->
-            <!--                                    </div>-->
-            <!--                                </div>-->
-            <!--                            </div>-->
-            <!--                            &lt;!&ndash; /카페 정보 위젯 &ndash;&gt;-->
+<!--                                                <div class="mb-2">-->
+<!--                                                    &lt;!&ndash; 가입 전 가입하기 버튼, 가입 후 글 작성 버튼 노출 &ndash;&gt;-->
+<!--                                                    <button th:if="${groupMember == null}" class="btn btn-success my-auto"-->
+<!--                                                            data-bs-toggle="modal"-->
+<!--                                                            data-bs-target="#registerModal" id="register"-->
+<!--                                                            style="font-size: 14px;">가입하기-->
+<!--                                                    </button>-->
+<!--                                                    <button th:if="${groupMember != null}" class="btn btn-success my-auto"-->
+<!--                                                            data-bs-toggle="modal"-->
+<!--                                                            data-bs-target="#writeModal" id="write" style="font-size: 14px;">글-->
+<!--                                                        작성-->
+<!--                                                    </button>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+                                        <!-- /카페 정보 위젯 -->
 
             <!-- 게시글 검색 위젯 -->
             <div class="widget">
@@ -96,6 +96,11 @@
                     </div>
                     <button type="submit" id="submit" class="btn_1 rounded">검색</button>
                 </form>
+                <button class="btn btn-success my-auto"
+                        data-bs-toggle="modal"
+                        data-bs-target="#writeModal" id="write" style="font-size: 14px;">글
+                    작성
+                </button>
             </div>
             <!-- /게시글 검색 위젯 -->
 
@@ -104,29 +109,17 @@
                 <div class="widget-title">
                     <h4>최근 게시글</h4>
                 </div>
-                <ul class="comments-list">
+                <th:block>
+                <ul th:each="recentArticleList : ${recentArticleList}" class="comments-list">
                     <li>
                         <div class="alignleft">
-                            <a href="#"><img src="/img/blog-5.jpg" alt="#"></a>
+                            <a href="#"><img th:src="${recentArticleList.imagePath}" src="/img/blog-5.jpg" alt="#"></a>
                         </div>
-                        <small>11.08.2016</small>
-                        <h3><a href="#" title="">Verear qualisque ex minimum...</a></h3>
-                    </li>
-                    <li>
-                        <div class="alignleft">
-                            <a href="#0"><img src="/img/blog-6.jpg" alt=""></a>
-                        </div>
-                        <small>11.08.2016</small>
-                        <h3><a href="#" title="">Verear qualisque ex minimum...</a></h3>
-                    </li>
-                    <li>
-                        <div class="alignleft">
-                            <a href="#0"><img src="/img/blog-4.jpg" alt=""></a>
-                        </div>
-                        <small>11.08.2016</small>
-                        <h3><a href="#" title="">Verear qualisque ex minimum...</a></h3>
+                        <small th:text="${recentArticleList.regdate}">게시글 날짜</small>
+                        <h3><a href="#" title="" th:text="${recentArticleList.title}">제목...</a></h3>
                     </li>
                 </ul>
+                </th:block>
             </div>
             <!-- /최근 게시글 위젯 -->
             </aside>
@@ -153,8 +146,8 @@
                                         data-bs-toggle="modal"
                                         style="font-size: 14px; height: 30px;">수정
                                 </button>
-                                <form th:action="@{/article/list/delete}" th:method="post">
-                                    <input type="hidden" name="id" th:value="${articleList.ID}"/>
+                                <form th:action="@{/article/list/delete/{articleId}(articleId=${articleList['ID']})}" th:method="POST">
+                                    <input type="hidden" name="articleId" th:value="${articleList['ID']}"/>
                                     <button type="submit" class="btn btn-danger mx-2"
                                             style="font-size: 14px; height: 30px;">삭제
                                     </button>
@@ -163,8 +156,8 @@
                         </div>
                         <h1 class="mb-3" th:text="${articleList.TITLE}">주식 스터디</h1>
                         <div class="postmeta">
-                            <!-- 추후 수정 필요함 %%이미지 패스 관련%%%
-                            <p><img th:src="@{articleList.IMAGEPATH}" alt="" class="img-fluid" src="img/blog-single.jpg"></p> -->
+                            <!-- 추후 수정 필요함 %%이미지 패스 관련%%% -->
+<!--                            <div><img th:src="${articleList.IMAGEPATH}" alt="" class="img-fluid" src="img/blog-single.jpg"></div>-->
                         </div>
                         <!-- /post meta -->
                         <div class="post-content">
@@ -176,17 +169,17 @@
                                     <div class="accordion-item">
                                         <h2 class="accordion-header">
                                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseOne" aria-expanded="true"
+                                                    th:data-bs-target="|#commentaccordion_${articleList['ID']}|" aria-expanded="false"
                                                     aria-controls="collapseOne">
                                                 댓글 보기
                                             </button>
                                         </h2>
                                         <th:block th:each="comment : ${commentList}">
                                             <div id="collapseOne" class="accordion-collapse collapse show"
-                                                 data-bs-parent="#accordionExample">
-                                                <div class="accordion-body">
+                                                th:id="|commentaccordion_${comment['ARTICLEID']}|">
+                                                <div th:if="${articleList.ID == comment.ARTICLEID and comment.ID != null}" class="accordion-body">
                                                     <div class="card card-body">
-                                                        <ul th:if="${articleList.ID == comment.ARTICLEID}">
+                                                        <ul>
                                                             <li>
                                                                 <div class="comment_right clearfix">
                                                                     <div class="comment_info">

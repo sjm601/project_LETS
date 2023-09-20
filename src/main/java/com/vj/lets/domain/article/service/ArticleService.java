@@ -15,30 +15,64 @@ import java.util.Map;
 * @author : 이한솔
 */
 public interface ArticleService {
-    /** 게시글 생성*/
+
+    /**
+     * 게시글 등록
+     * @param article : 게시글
+     */
     public void create (Article article);
 
-    /** 게시글 검색*/
+    /**
+     * 게시글 검색
+     * @param keyword : 검색어
+     * @return : 검색된 게시글 목록
+     */
     public Article search (@Param("keyword") String keyword);
 
-    /** 게시글 수정*/
+    /**
+     * 게시글 수정
+     * @param article : 게시글
+     */
     public void update (Article article);
 
-    /** 게시글 삭제*/
+    /**
+     * 게시글 삭제
+     * @param articleId : 게시글 번호
+     */
     @Transactional
-    public void delete(int id);
+    public void delete(int articleId);
 
 
-    /** 게시글 목록 (페이지에 따라 보이는 목록임)*/
+    /**
+     * 게시글 목록 (검색값 , 페이지처리 포함)
+     * @param pageParams : 페이지
+     * @return
+     */
     public List<Map<String, Object>> findByPage (PageParams pageParams);
 
-    /** 페이징 계산(검색값 포함)에 필요한 게시글 전체 갯수 반환 */
+    /**
+     * 페이지 처리(검색 값 포함)에 필요한 게시글의 갯수
+     * @param keyword : 검색어
+     * @return : 검색된 게시글 갯수
+     */
     public int getCountAll(@Param("keyword") String keyword);
 
-    /** id로 게시글 찾기 (수정 ,삭제할 때 필요?)*/
-    public Article findById(int id);
+    /**
+     * 게시글 번호로 해당 게시글 찾기
+     * @param articleId : 게시글 번호
+     * @return : 해당 게시글
+     */
+    public Article findById(int articleId);
 
-    /** 해당게시글의 댓글 찾기*/
+    /**
+     * 해당 게시글의 번호로 댓글들 검색
+     * @param articleIds : 해당 페이지에 나오는 게시글 번호들
+     * @return : 댓글 목록
+     */
     public List<Map<String, Object>> findComment (List<Integer> articleIds);
 
+    /**
+     * 최근 게시글 목록 검색
+     */
+    public List<Article> getRecentArticles ();
 }

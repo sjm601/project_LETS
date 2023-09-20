@@ -23,6 +23,10 @@ public class ArticleServiceImpl implements ArticleService {
     private final ArticleMapper articleMapper;
     private final ArticleHistoryMapper articleHistoryMapper;
 
+    /**
+     * 게시글 등록
+     * @param article : 게시글
+     */
     @Transactional
     @Override
     public void create(Article article) {
@@ -30,11 +34,20 @@ public class ArticleServiceImpl implements ArticleService {
         articleHistoryMapper.create();
     }
 
+    /**
+     * 게시글 검색
+     * @param keyword : 검색어
+     * @return : 검색된 게시글 목록
+     */
     @Override
     public Article search(String keyword) {
         return articleMapper.search(keyword);
     }
 
+    /**
+     * 게시글 수정
+     * @param article : 게시글
+     */
     @Transactional
     @Override
     public void update(Article article) {
@@ -42,32 +55,63 @@ public class ArticleServiceImpl implements ArticleService {
         articleHistoryMapper.createByUpdate(article.getId(), ArticleHistoryComment.UPDATE.getComment());
     }
 
+    /**
+     * 게시글 삭제
+     * @param articleId : 게시글 번호
+     */
     @Transactional
     @Override
-    public void delete(int id) {
-        articleMapper.delete(id);
-        articleHistoryMapper.createByUpdate(id, ArticleHistoryComment.DELETE.getComment());
+    public void delete(int articleId) {
+        articleMapper.delete(articleId);
+        articleHistoryMapper.createByUpdate(articleId, ArticleHistoryComment.DELETE.getComment());
     }
 
+    /**
+     * 게시글 목록 (검색값 , 페이지처리 포함)
+     * @param pageParams : 페이지
+     * @return
+     */
     @Override
     public List<Map<String, Object>> findByPage(PageParams pageParams) {
         return articleMapper.findByPage(pageParams);
     }
 
+    /**
+     * 페이지 처리(검색 값 포함)에 필요한 게시글의 갯수
+     * @param keyword : 검색어
+     * @return : 검색된 게시글 갯수
+     */
     @Override
     public int getCountAll(String keyword) {
         return articleMapper.getCountAll(keyword);
     }
 
+    /**
+     * 게시글 번호로 해당 게시글 찾기
+     * @param id : 게시글 번호
+     * @return : 해당 게시글
+     */
     @Override
     public Article findById(int id) {
         return articleMapper.findById(id);
     }
 
+    /**
+     * 해당 게시글의 번호로 댓글들 검색
+     * @param articleIds : 해당 페이지에 나오는 게시글 번호들
+     * @return : 댓글 목록
+     */
     @Override
     public List<Map<String, Object>> findComment(List<Integer> articleIds) {
         return articleMapper.findComment(articleIds);
     }
 
-
+    /**
+     * 최근 게시글 목록
+     * @return : 최근 게시글 목록 (3개까지)
+     */
+    @Override
+    public List<Article> getRecentArticles() {
+        return articleMapper.getRecentArticles();
+    }
 }
