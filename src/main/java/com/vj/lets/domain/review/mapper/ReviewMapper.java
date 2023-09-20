@@ -2,7 +2,6 @@ package com.vj.lets.domain.review.mapper;
 
 import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.review.dto.Review;
-import jakarta.annotation.Priority;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -40,6 +39,14 @@ public interface ReviewMapper {
      * @return 리뷰 목록
      */
     public List<Map<String, Object>> readByCafe(int cafeId);
+
+    /**
+     * 카페별 리뷰점수 개수 통계 조회
+     *
+     * @param cafeId 카페 ID
+     * @return 별점별 통계 목록
+     */
+    public Map<Integer, Object> countByReviewRating(int cafeId);
 
     /**
      * 회원 ID로 리뷰 작성 수 조회

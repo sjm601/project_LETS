@@ -38,6 +38,14 @@ public interface ReviewService {
     public List<Map<String, Object>> getReviewListByCafe(int cafeId);
 
     /**
+     * 카페에 등록한 리뷰 점수별 개수 조회
+     *
+     * @param cafeId 카페 ID
+     * @return 점수별 개수
+     */
+    public Map<Integer, Object> getCountReviewRatingByCafe(int cafeId);
+
+    /**
      * 특정 회원이 작성한 리뷰 갯수 조회
      *
      * @param memberId 회원 ID

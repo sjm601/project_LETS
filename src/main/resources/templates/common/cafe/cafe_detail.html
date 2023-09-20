@@ -20,7 +20,7 @@
             <section class="hero_in restaurants_detail">
                 <div class="wrapper">
                     <div class="container">
-                        <h1 class="fadeInUp"><span></span>EZEN Study Cafe</h1>
+                        <h1 class="fadeInUp" th:text="${Cafe['name']}">EZEN Study Cafe</h1>
                     </div>
                 </div>
             </section>
@@ -40,122 +40,57 @@
                     <div class="row">
                         <div class="col-lg-8">
                             <section id="description">
-                                <h2>운영시간<strong class="point-blue ms-1 mt-0">영업종료</strong></h2>
-                                <p>12:00 ~ 22:00</p>
+                                <h2>운영시간
+                                    <strong th:if="${Cafe['startTime']} <= ${#calendars.format(#calendars.createNow(),'HH')} and ${Cafe['endTime']} > ${#calendars.format(#calendars.createNow(),'HH')}" class="point-blue ms-1 mt-0">영업중</strong>
+                                    <strong th:unless="${Cafe['startTime']} <= ${#calendars.format(#calendars.createNow(),'HH')} and ${Cafe['endTime']} > ${#calendars.format(#calendars.createNow(),'HH')}" class="point-blue ms-1 mt-0">영업종료</strong>
+                                </h2>
+                                <p th:text="|${Cafe['startTime']}시 ~ ${Cafe['endTime']}시|">12:00 ~ 22:00</p>
                                 <h2>위치</h2>
-                                <p>서울시 노원구 동일로 300 4층</p>
+                                <p th:if="${Cafe['detailAddress']} != null" th:text="|${Cafe['siDoName']} ${Cafe['siGunGuName']} ${Cafe['roadAddress']} ${Cafe['detailAddress']}|">서울시 노원구 동일로 300 4층</p>
+                                <p th:unless="${Cafe['detailAddress']} != null" th:text="|${Cafe['siDoName']} ${Cafe['siGunGuName']} ${Cafe['roadAddress']}|">서울시 노원구 동일로 300</p>
                                 <h2>소개</h2>
-                                <p>Per consequat adolescens ex, cu nibh commune, ad sumo viris
-                                    eloquentiam sed. Mea appareat omittantur eloquentiam ad, nam ei quas oportere
-                                    democritum. Prima causae
-                                    admodum id est, ei timeam inimicus sed. Sit an meis aliquam, cetero inermis vel ut.
-                                    An
-                                    sit illum
-                                    euismod facilisis, tamquam vulputate pertinacia eum at.</p>
-
+                                <p th:text="${Cafe['description']}">Per consequat </p>
                                 <ul class="none">
                                     <div class="row">
-                                        <li class="col-lg-6"><i class="fa-regular fa-eye me-2"></i>보안 CCTV</li>
-                                        <li class="col-lg-6"><i class="fa-regular fa-eye me-2"></i>보안 CCTV</li>
-                                        <li class="col-lg-6"><i class="fa-regular fa-eye me-2"></i>보안 CCTV</li>
-                                        <li class="col-lg-6"><i class="fa-regular fa-eye me-2"></i>보안 CCTV</li>
-                                        <li class="col-lg-6"><i class="fa-regular fa-eye me-2"></i>보안 CCTV</li>
-                                        <li class="col-lg-6"><i class="fa-regular fa-eye me-2"></i>보안 CCTV</li>
-                                        <li class="col-lg-6"><i class="fa-regular fa-eye me-2"></i>보안 CCTV</li>
-                                        <li class="col-lg-6"><i class="fa-regular fa-eye me-2"></i>보안 CCTV</li>
+                                        <li th:each="cafeOption : ${options}" class="col-lg-6">
+                                            <i th:class="|${cafeOption.imagePath} me-2|" class="fa-regular fa-eye me-2"></i>
+                                            <em th:text="${cafeOption.name}"></em>
+                                        </li>
                                     </div>
                                 </ul>
                                 <!-- /row -->
                                 <hr>
-
                                 <div>
                                     <h3 class="mb-3">Room Type</h3>
-                                    <div class="pictures_grid magnific-gallery clearfix">
+                                    <div class="pictures_grid magnific-gallery clearfix" th:each="room : ${roomList}">
                                         <div class="d-flex">
-                                            <figure class="mb-2 me-lg-3"><a href="img/detail_gallery/detail_1.jpg"
+                                            <figure class="mb-2 me-lg-3"><a th:href="@{${room.imagePath}}" href="img/detail_gallery/detail_1.jpg"
                                                                             title="Photo title"
                                                                             data-effect="mfp-zoom-in"><img
-                                                    src="img/detail_gallery/detail_1.jpg" alt=""></a></figure>
+                                                    th:src="${room.imagePath}" src="img/detail_gallery/detail_1.jpg" alt=""></a></figure>
                                             <div class="row mb-3 mt-lg-3">
                                                 <div class="col-lg-12">
                                                     <ul class="bullets">
-                                                        <li><strong class="line-strong">이름</strong>이젠 101</li>
-                                                        <li><strong class="line-strong">수용인원</strong>10</li>
-                                                        <li><strong class="line-strong">시간당 가격</strong>15,000원</li>
+                                                        <li>
+                                                            <strong class="line-strong">이름</strong>
+                                                            <strong th:text="${room.name}">이젠 101</strong>
+                                                        </li>
+                                                        <li>
+                                                            <strong class="line-strong">최대 수용인원</strong>
+                                                            <strong th:text="|${room.headCount}명|">10</strong>
+                                                        </li>
+                                                        <li>
+                                                            <strong class="line-strong">시간당 가격</strong>
+                                                            <strong th:text="|${room.price}원|">15,000원</strong>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- /row -->
-                                        <p>Per consequat adolescens ex, cu nibh commune , ad sumo viris
-                                            eloquentiam sed. Mea appareat omittantur eloquentiam ad, nam ei quas
-                                            oportere
-                                            democritum. Prima
-                                            causae
-                                            admodum id est, ei timeam inimicus sed. Sit an meis aliquam, cetero inermis
-                                            vel
-                                            ut. An sit illum
-                                            euismod facilisis, tamquam vulputate pertinacia eum at.</p>
+                                        <p th:text="${room.description}">Per consequat adolescens ex, cu nibh commune</p>
                                     </div>
                                     <!-- /room-option -->
-                                    <div class="pictures_grid magnific-gallery clearfix">
-                                        <div class="d-flex">
-                                            <figure class="mb-2 me-lg-3"><a href="img/detail_gallery/detail_1.jpg"
-                                                                            title="Photo title"
-                                                                            data-effect="mfp-zoom-in"><img
-                                                    src="img/detail_gallery/detail_1.jpg" alt=""></a></figure>
-                                            <div class="row mb-3 mt-lg-3">
-                                                <div class="col-lg-12">
-                                                    <ul class="bullets">
-                                                        <li><strong class="line-strong">이름</strong>이젠 101</li>
-                                                        <li><strong class="line-strong">수용인원</strong>10</li>
-                                                        <li><strong class="line-strong">시간당 가격</strong>15,000원</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- /row -->
-                                        <p>Per consequat adolescens ex, cu nibh commune , ad sumo viris
-                                            eloquentiam sed. Mea appareat omittantur eloquentiam ad, nam ei quas
-                                            oportere
-                                            democritum. Prima
-                                            causae
-                                            admodum id est, ei timeam inimicus sed. Sit an meis aliquam, cetero inermis
-                                            vel
-                                            ut. An sit illum
-                                            euismod facilisis, tamquam vulputate pertinacia eum at.</p>
-                                    </div>
-                                    <!-- /room-option -->
-                                    <div class="pictures_grid magnific-gallery clearfix">
-                                        <div class="d-flex">
-                                            <figure class="mb-2 me-lg-3"><a href="img/detail_gallery/detail_1.jpg"
-                                                                            title="Photo title"
-                                                                            data-effect="mfp-zoom-in"><img
-                                                    src="img/detail_gallery/detail_1.jpg" alt=""></a></figure>
-                                            <div class="row mb-3 mt-lg-3">
-                                                <div class="col-lg-12">
-                                                    <ul class="bullets">
-                                                        <li><strong class="line-strong">이름</strong>이젠 101</li>
-                                                        <li><strong class="line-strong">수용인원</strong>10</li>
-                                                        <li><strong class="line-strong">시간당 가격</strong>15,000원</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- /row -->
-                                        <p>Per consequat adolescens ex, cu nibh commune , ad sumo viris
-                                            eloquentiam sed. Mea appareat omittantur eloquentiam ad, nam ei quas
-                                            oportere
-                                            democritum. Prima
-                                            causae
-                                            admodum id est, ei timeam inimicus sed. Sit an meis aliquam, cetero inermis
-                                            vel
-                                            ut. An sit illum
-                                            euismod facilisis, tamquam vulputate pertinacia eum at.</p>
-                                    </div>
-                                    <!-- /room-option -->
-
-
                                 </div>
                                 <hr>
                                 <h3>Location</h3>
@@ -170,17 +105,25 @@
                                     <div class="row">
                                         <div class="col-lg-3">
                                             <div id="review_summary">
-                                                <strong>8.5</strong>
-                                                <em>Superb</em>
-                                                <small>Based on 4 reviews</small>
+                                                <strong th:if="${Cafe['cafeRating']} == null">0.0</strong>
+                                                <strong th:unless="${Cafe['cafeRating']} == null"
+                                                        th:text="${#numbers.formatDecimal(Cafe['cafeRating'],1,1)}">5.0</strong>
+                                                <span th:switch="${#numbers.formatInteger(Cafe['cafeRating'],1)}">
+                                                <em th:case="5">Superb</em>
+                                                <em th:case="4">VeryGood</em>
+                                                <em th:case="3">Good</em>
+                                                <em th:case="2">Pleasant</em>
+                                                <em th:case="1">Poor</em>
+                                                <em th:case="*">No Rating</em></span>
+                                                <small th:text="|${Cafe['reviewCount']}개의 리뷰 통계|">Based on 4 reviews</small>
                                             </div>
                                         </div>
                                         <div class="col-lg-9">
                                             <div class="row">
                                                 <div class="col-lg-10 col-9">
                                                     <div class="progress">
-                                                        <div class="progress-bar" role="progressbar" style="width: 90%"
-                                                             aria-valuenow="90"
+                                                        <div class="progress-bar" role="progressbar" th:style="|width:${countReviews['five']}%|" style="width: 100%"
+                                                             aria-valuenow="100"
                                                              aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
@@ -191,8 +134,8 @@
                                             <div class="row">
                                                 <div class="col-lg-10 col-9">
                                                     <div class="progress">
-                                                        <div class="progress-bar" role="progressbar" style="width: 95%"
-                                                             aria-valuenow="95"
+                                                        <div class="progress-bar" role="progressbar" th:style="|width:${countReviews['four']}%|" style="width: 100%"
+                                                             aria-valuenow="0"
                                                              aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
@@ -203,8 +146,8 @@
                                             <div class="row">
                                                 <div class="col-lg-10 col-9">
                                                     <div class="progress">
-                                                        <div class="progress-bar" role="progressbar" style="width: 60%"
-                                                             aria-valuenow="60"
+                                                        <div class="progress-bar" role="progressbar" th:style="|width:${countReviews['three']}%|" style="width: 0%"
+                                                             aria-valuenow="0"
                                                              aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
@@ -215,8 +158,8 @@
                                             <div class="row">
                                                 <div class="col-lg-10 col-9">
                                                     <div class="progress">
-                                                        <div class="progress-bar" role="progressbar" style="width: 20%"
-                                                             aria-valuenow="20"
+                                                        <div class="progress-bar" role="progressbar" th:style="|width:${countReviews['two']}%|" style="width: 20%"
+                                                             aria-valuenow="0"
                                                              aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
@@ -227,7 +170,7 @@
                                             <div class="row">
                                                 <div class="col-lg-10 col-9">
                                                     <div class="progress">
-                                                        <div class="progress-bar" role="progressbar" style="width: 0"
+                                                        <div class="progress-bar" role="progressbar" th:style="|width:${countReviews['one']}%|" style="width: 0"
                                                              aria-valuenow="0"
                                                              aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
@@ -245,143 +188,57 @@
 
                                 <div class="reviews-container">
                                     <ul>
-                                        <li>
+                                        <li th:each="review : ${reviews}">
                                             <div class="review-box clearfix">
                                                 <figure class="rev-thumb"><img src="img/avatar1.jpg" alt="">
                                                 </figure>
                                                 <div class="rev-content">
                                                     <div class="rating">
-                                                        <i class="icon_star voted"></i><i class="icon_star voted"></i><i
-                                                            class="icon_star voted"></i><i
-                                                            class="icon_star voted"></i><i
-                                                            class="icon_star"></i>
+                                                            <div th:switch="${review['rating']}">
+                                                            <div th:case="5"><i class="icon_star voted"></i><i class="icon_star voted"></i>
+                                                                <i class="icon_star voted"></i> <i class="icon_star voted"></i><i class="icon_star voted"></i></div>
+                                                            <div th:case="4"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i>
+                                                                <i class="icon_star voted"></i><i class="icon_star"></i></div>
+                                                            <div th:case="3"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i>
+                                                                <i class="icon_star"></i><i class="icon_star"></i></div>
+                                                            <div th:case="2"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
+                                                                <i class="icon_star"></i><i class="icon_star"></i></div>
+                                                            <div th:case="*"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i>
+                                                                <i class="icon_star voted"></i><i class="icon_star"></i></div>
+                                                            </div>
                                                     </div>
-                                                    <div class="rev-info mb-1">
+                                                    <div class="rev-info mb-1" th:text="|${review['writerName']} - ${review['writeDate']}|">
                                                         Guest – April 03, 2016:
                                                     </div>
-                                                    <div class="rev-info">
+                                                    <div class="rev-info" th:text="|방타입 ${review['roomName']}|">
                                                         방타입 A1
                                                     </div>
                                                     <div class="rev-text">
-                                                        <p>
+                                                        <p th:text="${review['content']}">
                                                             Sed eget turpis a pede tempor malesuada. Vivamus quis mi at
                                                             leo
-                                                            pulvinar hendrerit. Cum
-                                                            sociis
-                                                            natoque penatibus et magnis dis
                                                         </p>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </li>
-                                        <li class="cafe-reply">
-                                            <div class="review-box clearfix">
-                                                <figure class="rev-thumb"><img src="img/avatar1.jpg" alt="">
+                                            <th:block th:if="${review['commentContent']} != null">
+                                            <div class="review-box clearfix cafe-reply">
+                                                <figure class="rev-thumb"><img th:src="${Cafe['imagePath']}" src="img/avatar1.jpg" alt="">
                                                 </figure>
                                                 <div class="rev-content">
-                                                    <div class="rev-info">
+                                                    <div class="rev-info" th:text="|host - ${review['commentWriteDate']}|">
                                                         Host – April 03, 2016:
                                                     </div>
                                                     <div class="rev-text">
-                                                        <p>
+                                                        <p th:text="${review['commentContent']}">
                                                             이젠 스터디카페를 이용해주셔서 감사합니다.
                                                         </p>
                                                     </div>
                                                 </div>
                                             </div>
+                                            </th:block>
                                         </li>
                                         <!-- /review-box -->
-                                        <li>
-                                            <div class="review-box clearfix">
-                                                <figure class="rev-thumb"><img src="img/avatar2.jpg" alt="">
-                                                </figure>
-                                                <div class="rev-content">
-                                                    <div class="rating">
-                                                        <i class="icon-star voted"></i><i class="icon_star voted"></i><i
-                                                            class="icon_star voted"></i><i
-                                                            class="icon_star voted"></i><i
-                                                            class="icon_star"></i>
-                                                    </div>
-                                                    <div class="rev-info mb-1">
-                                                        Guest – April 03, 2016:
-                                                    </div>
-                                                    <div class="rev-info">
-                                                        방타입 A1
-                                                    </div>
-                                                    <div class="rev-text">
-                                                        <p>
-                                                            Sed eget turpis a pede tempor malesuada. Vivamus quis mi at
-                                                            leo
-                                                            pulvinar hendrerit. Cum
-                                                            sociis
-                                                            natoque penatibus et magnis dis
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="cafe-reply">
-                                            <div class="review-box clearfix">
-                                                <figure class="rev-thumb"><img src="img/avatar1.jpg" alt="">
-                                                </figure>
-                                                <div class="rev-content">
-                                                    <div class="rev-info">
-                                                        Host – April 03, 2016:
-                                                    </div>
-                                                    <div class="rev-text">
-                                                        <p>
-                                                            이젠 스터디카페를 이용해주셔서 감사합니다.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <!-- /review-box -->
-                                        <li>
-                                            <div class="review-box clearfix">
-                                                <figure class="rev-thumb"><img src="img/avatar3.jpg" alt="">
-                                                </figure>
-                                                <div class="rev-content">
-                                                    <div class="rating">
-                                                        <i class="icon-star voted"></i><i class="icon_star voted"></i><i
-                                                            class="icon_star voted"></i><i
-                                                            class="icon_star voted"></i><i
-                                                            class="icon_star"></i>
-                                                    </div>
-                                                    <div class="rev-info mb-1">
-                                                        Guest – April 03, 2016:
-                                                    </div>
-                                                    <div class="rev-info">
-                                                        방타입 A1
-                                                    </div>
-                                                    <div class="rev-text">
-                                                        <p>
-                                                            Sed eget turpis a pede tempor malesuada. Vivamus quis mi at
-                                                            leo
-                                                            pulvinar hendrerit. Cum
-                                                            sociis
-                                                            natoque penatibus et magnis dis
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="cafe-reply">
-                                            <div class="review-box clearfix">
-                                                <figure class="rev-thumb"><img src="img/avatar1.jpg" alt="">
-                                                </figure>
-                                                <div class="rev-content">
-                                                    <div class="rev-info">
-                                                        Host – April 03, 2016:
-                                                    </div>
-                                                    <div class="rev-text">
-                                                        <p>
-                                                            이젠 스터디카페를 이용해주셔서 감사합니다.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
                                     </ul>
                                     <!-- /review-box -->
                                 </div>
@@ -510,9 +367,48 @@
         </script>
         <script src="/js/custom/cafe.js"></script>
         <!-- Map -->
-        <script src="http://maps.googleapis.com/maps/api/js"></script>
-        <script src="/js/map_single_restaurant.js"></script>
-        <script src="/js/infobox.js"></script>
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=665c870d0cd68fefbb228c9c40d58cf1"></script>
+        <script th:inline="javascript">
+            var name = [[${Cafe['name']}]];
+            var lat = [[${Cafe['latitude']}]];
+            var lng = [[${Cafe['longitude']}]];
+            var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                mapOption = {
+                    center: new kakao.maps.LatLng(lat, lng), // 지도의 중심좌표
+                    level: 3 // 지도의 확대 레벨
+                };
+
+            // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+            var map = new kakao.maps.Map(mapContainer, mapOption);
+            // 마커를 표시할 위치와 title 객체 배열입니다
+
+            var positions = [
+                {
+                    title: name,
+                    latlng: new kakao.maps.LatLng(lat, lng)
+                }
+            ];
+
+            // 마커 이미지의 이미지 주소입니다
+            var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
+            for (var i = 0; i < positions.length; i ++) {
+
+                // 마커 이미지의 이미지 크기 입니다
+                var imageSize = new kakao.maps.Size(24, 35);
+
+                // 마커 이미지를 생성합니다
+                var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+                // 마커를 생성합니다
+                var marker = new kakao.maps.Marker({
+                    map: map, // 마커를 표시할 지도
+                    position: positions[i].latlng, // 마커를 표시할 위치
+                    title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                    image : markerImage // 마커 이미지
+                });
+            }
+        </script>
 
         <!-- DATEPICKER  -->
         <script th:inline="javascript">

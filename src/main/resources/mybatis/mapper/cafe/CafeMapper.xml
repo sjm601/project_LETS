@@ -33,6 +33,7 @@
         SELECT caf.ID "id",
                EMAIL "email",
                caf.NAME "name",
+               caf.MEMBER_ID "memberID",
                PHONE_NUMBER "phoneNumber",
                do.NAME "siDoName",
                si.NAME "siGunGuName",
@@ -50,12 +51,16 @@
                  LEFT JOIN (SELECT res.CAFE_ID, AVG(rev.RATING) "cafeRating"
                             FROM REVIEW rev
                                      JOIN RESERVATION res ON rev.RESERVATION_ID = res.ID
+                                     JOIN member mem ON rev.MEMBER_ID = mem.ID
+                            WHERE TYPE = 'guest'
                             GROUP BY res.CAFE_ID) a ON a.CAFE_ID = caf.ID
                  LEFT JOIN SI_GUN_GU si ON si.ID = caf.SI_GUN_GU_ID
                  LEFT JOIN SI_DO do ON do.ID = si.SI_DO_ID
                  LEFT JOIN (SELECT res.CAFE_ID, COUNT(res.id) "reviewCount"
                             FROM RESERVATION res
                                      JOIN review rv ON res.id = rv.reservation_id
+                                     JOIN MEMBER mem ON rv.MEMBER_ID = mem.ID
+                            WHERE TYPE = 'guest'
                             GROUP BY res.CAFE_ID) c ON c.CAFE_ID = caf.ID
         Where caf.ID = #{id}
           AND STATUS = 'enabled'
@@ -106,6 +111,8 @@
                  LEFT JOIN (SELECT res.CAFE_ID, AVG(rev.RATING) "cafeRating"
                             FROM REVIEW rev
                                      JOIN RESERVATION res ON rev.RESERVATION_ID = res.ID
+                                     JOIN member mem ON rev.MEMBER_ID = mem.ID
+                            WHERE TYPE = 'guest'
                             GROUP BY res.CAFE_ID) a ON a.CAFE_ID = caf.ID
                  LEFT JOIN (SELECT CAFE_ID, MIN(PRICE) "minPrice"
                             FROM ROOM roo
@@ -116,6 +123,8 @@
                  LEFT JOIN (SELECT res.CAFE_ID, COUNT(res.id) "reviewCount"
                             FROM RESERVATION res
                                      JOIN review rv ON res.id = rv.reservation_id
+                                     JOIN MEMBER mem ON rv.MEMBER_ID = mem.ID
+                            WHERE TYPE = 'guest'
                             GROUP BY res.CAFE_ID) c ON c.CAFE_ID = caf.ID
                  LEFT JOIN (SELECT res.CAFE_ID, COUNT(res.ID) "resCount"
                             FROM RESERVATION res
@@ -160,6 +169,8 @@
                        LEFT JOIN (SELECT res.CAFE_ID, AVG(rev.RATING) "cafeRating"
                                   FROM REVIEW rev
                                            JOIN RESERVATION res ON rev.RESERVATION_ID = res.ID
+                                           JOIN member mem ON rev.MEMBER_ID = mem.ID
+                                  WHERE TYPE = 'guest'
                                   GROUP BY res.CAFE_ID) a ON a.CAFE_ID = caf.ID
                        LEFT JOIN (SELECT CAFE_ID, MIN(PRICE) "minPrice"
                                   FROM ROOM roo
@@ -170,6 +181,8 @@
                        LEFT JOIN (SELECT res.CAFE_ID, COUNT(res.id) "reviewCount"
                                   FROM RESERVATION res
                                            JOIN review rv ON res.id = rv.reservation_id
+                                           JOIN MEMBER mem ON rv.MEMBER_ID = mem.ID
+                                  WHERE TYPE = 'guest'
                                   GROUP BY res.CAFE_ID) c ON c.CAFE_ID = caf.ID
                        LEFT JOIN (SELECT res.CAFE_ID, COUNT(res.ID) "resCount"
                                   FROM RESERVATION res
@@ -199,6 +212,8 @@
             LEFT JOIN (SELECT res.CAFE_ID, AVG(rev.RATING) "cafeRating"
                        FROM REVIEW rev
                            JOIN RESERVATION res ON rev.RESERVATION_ID = res.ID
+                       JOIN member mem ON rev.MEMBER_ID = mem.ID
+                       WHERE TYPE = 'guest'
                        GROUP BY res.CAFE_ID) a ON a.CAFE_ID = caf.ID
             LEFT JOIN (SELECT CAFE_ID, MIN(PRICE) "minPrice"
                        FROM ROOM roo
@@ -206,6 +221,17 @@
                        GROUP BY CAFE_ID) b ON b.CAFE_ID = caf.ID
             LEFT JOIN SI_GUN_GU si ON si.ID = caf.SI_GUN_GU_ID
             LEFT JOIN SI_DO do ON do.ID = si.SI_DO_ID
+            LEFT JOIN (SELECT res.CAFE_ID, COUNT(res.id) "reviewCount"
+                        FROM RESERVATION res
+                        JOIN review rv ON res.id = rv.reservation_id
+                        JOIN MEMBER mem ON rv.MEMBER_ID = mem.ID
+                        WHERE TYPE = 'guest'
+                        GROUP BY res.CAFE_ID) c ON c.CAFE_ID = caf.ID
+            LEFT JOIN (SELECT res.CAFE_ID, COUNT(res.ID) "resCount"
+                        FROM RESERVATION res
+                        WHERE res.STATUS = 'use'
+                        OR res.STATUS = 'complete'
+                        GROUP BY res.CAFE_ID) d ON d.CAFE_ID = caf.ID
         <where>
             STATUS = 'enabled'
             <if test="name != null and name != ''">AND NAME LIKE '%' || #{name} || '%'</if>

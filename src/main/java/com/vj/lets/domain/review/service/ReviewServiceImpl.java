@@ -63,6 +63,17 @@ public class ReviewServiceImpl implements ReviewService {
         return addMaps(guestReviewList);
     }
 
+    /**
+     * 카페에 등록한 리뷰 점수별 개수 조회
+     *
+     * @param cafeId 카페 ID
+     * @return 별점별 통계 목록
+     */
+    @Override
+    public Map<Integer, Object> getCountReviewRatingByCafe(int cafeId) {
+        return reviewMapper.countByReviewRating(cafeId);
+    }
+
     @Override
     public int getCountReviewByMember(int memberId) {
         return reviewMapper.readCountByMember(memberId);
