@@ -58,10 +58,17 @@ public interface MemberMapper {
 
     /**
      * 현재 가입 된 회원 성별 수 조회
-     * 
+     *
      * @return 회원 성별 수 목록
      */
     public List<Map<String, Object>> readCountByGender();
+
+    /**
+     * 최근 한 달간 신규 회원 수 조회
+     *
+     * @return 신규 회원 수
+     */
+    public int readCountByLastMonth();
 
     /**
      * 회원 정보 수정

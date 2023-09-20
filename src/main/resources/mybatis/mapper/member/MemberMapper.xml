@@ -47,6 +47,12 @@
         GROUP BY GENDER
     </select>
 
+    <select id="readCountByLastMonth" resultType="int">
+        SELECT COUNT(ID)
+        FROM MEMBER
+        WHERE REGDATE between TO_DATE(ADD_MONTHS(SYSDATE, -1)) and SYSDATE
+    </select>
+
     <update id="update" parameterType="Member">
         UPDATE MEMBER
         <set>

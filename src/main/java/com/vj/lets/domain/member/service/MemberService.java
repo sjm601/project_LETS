@@ -64,6 +64,13 @@ public interface MemberService {
     public List<Map<String, Object>> getCountByGender();
 
     /**
+     * 최근 한 달간 가입한 신규 회원 수 조회
+     *
+     * @return 신규 회원 수
+     */
+    public int getCountByLastMonth();
+
+    /**
      * 회원 정보 수정
      *
      * @param member 회원 정보

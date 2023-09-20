@@ -45,10 +45,14 @@ public interface CafeMapper {
      */
     public Map<String, Object> findByMemberId(int id);
 
-    /** 카페 전체리스트 출력 */
+    /**
+     * 카페 전체리스트 출력
+     */
     public List<Map<String, Object>> findByAll();
 
-    /** 누적 예약이 가장 많은 카페 6개 출력 */
+    /**
+     * 누적 예약이 가장 많은 카페 6개 출력
+     */
     public List<Map<String, Object>> findByBest();
 
 
@@ -59,7 +63,7 @@ public interface CafeMapper {
 
     /**
      * 전체 입점 카페 수 조회
-     * 
+     *
      * @param type 검색 조건
      * @return 전체 입점 카페 수
      * @see com.vj.lets.web.dashboard.controller.AdminController
@@ -82,6 +86,14 @@ public interface CafeMapper {
      * @see com.vj.lets.web.dashboard.controller.AdminController
      */
     public List<Map<String, Object>> readCountByRegMonth();
+
+    /**
+     * 최근 한달간 신규 카페 수 조회
+     *
+     * @return 신규 카페 수
+     * @see com.vj.lets.web.dashboard.controller.AdminController
+     */
+    public int readCountByLastMonth();
 
     /**
      * 카페삭제

@@ -77,6 +77,7 @@ public interface CafeService {
      * @return 옵션리스트
      */
     public List<CafeOption> getCafeOptionCafeId(int id);
+
     /**
      * 예약이 많은 카페 6개 검색
      *
@@ -117,10 +118,19 @@ public interface CafeService {
     public List<Map<String, Object>> getCountByRegMonth();
 
     /**
+     * 최근 한 달간 등록된 신규 카페 수 조회
+     *
+     * @return 신규 카페 수
+     * @see com.vj.lets.web.dashboard.controller.AdminController
+     */
+    public int getCountByLastMonth();
+
+    /**
      * 카페 정보 수정
-     * @param cafeId 카페 아이디
-     * @param cafe 카페 정보
-     * @param comment 수정 사유
+     *
+     * @param cafeId    카페 아이디
+     * @param cafe      카페 정보
+     * @param comment   수정 사유
      * @param optionIds 수정한 옵션 리스트
      */
     public void editCafe(int cafeId, String siGunGu, String siDo, Cafe cafe, String comment, List<Integer> optionIds);
@@ -129,7 +139,7 @@ public interface CafeService {
     /**
      * 카페 옵션 여부 체크
      *
-     * @param cafeId 카페아이디
+     * @param cafeId   카페아이디
      * @param optionId 옵션아이디
      * @return 옵션여부체크
      */

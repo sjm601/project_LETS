@@ -135,6 +135,16 @@ public class MemberServiceImpl implements MemberService {
     }
 
     /**
+     * 최근 한 달간 가입한 신규 회원 수 조회
+     *
+     * @return 신규 회원 수
+     */
+    @Override
+    public int getCountByLastMonth() {
+        return memberMapper.readCountByLastMonth();
+    }
+
+    /**
      * 회원 탈퇴
      *
      * @param id 회원 ID
