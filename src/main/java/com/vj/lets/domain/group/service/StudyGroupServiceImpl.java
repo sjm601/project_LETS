@@ -219,8 +219,6 @@ public class StudyGroupServiceImpl implements StudyGroupService{
     public void approveStudyContact(int id, int studyGroupId) {
         // 스터디 그룹 가입 신청 승인
         groupContactMapper.approveGroupContact(id, studyGroupId);
-        // 스터디 그룹 가입 신청 리스트에서 신청 내역 삭제
-        groupContactMapper.deleteContact(id, studyGroupId);
         // 스터디 그룹 멤버 리스트에 전달 받은 회원 id '팀원'으로 추가
         groupMemberListMapper.addMember(id, studyGroupId);
         // 스터디 그룹 현재 회원 수 1증가
@@ -241,8 +239,6 @@ public class StudyGroupServiceImpl implements StudyGroupService{
     public void refuseStudyContact(int id, int studyGroupId) {
         // 스터디 그룹 가입 거절
         groupContactMapper.refuseGroupContact(id, studyGroupId);
-        // 스터디 그룹 가입 신청 리스트에서 신청 내역 삭제
-        groupContactMapper.deleteContact(id, studyGroupId);
     }
 
     /**

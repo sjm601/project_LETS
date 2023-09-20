@@ -100,14 +100,14 @@ class GroupContactMapperTest {
     @Transactional
     void isAlreadyContactTest() {
         // given
-        int id = 30;
-        int studyGroupId = 1;
+        int id = 59;
+        int studyGroupId = 6;
 
         // when
         GroupContact groupContact = groupContactMapper.isAlreadyContact(id, studyGroupId);
 
         // then
         log.info("스터디 가입 신청 내역 존재 여부 확인 : {}", groupContact);
-        assertThat(groupContact).isNull();
+        assertThat(groupContact).isNotNull();
     }
 }
