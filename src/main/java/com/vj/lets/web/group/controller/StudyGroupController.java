@@ -446,9 +446,9 @@ public class StudyGroupController {
         ContactInfo contactInfo = objectMapper.readValue(contact, ContactInfo.class);
         Member member = memberService.getMember(loginMember.getId());
 
-        if (member.getGender() == null || member.getAge() == 0) {
+        if (member.getGender() == null || member.getBirthday() == null) {
             member.setGender(contactInfo.getGender());
-            member.setAge(contactInfo.getAge());
+            member.setBirthday(contactInfo.getBirthday());
             memberService.editMember(member);
         }
 

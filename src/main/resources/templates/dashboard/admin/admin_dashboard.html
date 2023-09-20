@@ -30,7 +30,7 @@
                                     <i class="fa fa-fw fa-user"></i>
                                 </div>
                                 <div class="mr-5">
-                                    <h5>26 신규 회원!</h5>
+                                    <h5><th:block th:text="${newMember}">26</th:block> 신규 회원!</h5>
                                 </div>
                             </div>
                             <a th:href="@{/admin/member}" class="card-footer text-white clearfix small z-1"
@@ -47,7 +47,7 @@
                                     <i class="fa fa-fw fa-list"></i>
                                 </div>
                                 <div class="mr-5">
-                                    <h5>10 신규 신청!</h5>
+                                    <h5><th:block th:text="${newContact}">10</th:block> 신규 신청!</h5>
                                 </div>
                             </div>
                             <a th:href="@{/admin/contact}" class="card-footer text-white clearfix small z-1"
@@ -64,7 +64,7 @@
                                     <i class="fa fa-fw fa-building"></i>
                                 </div>
                                 <div class="mr-5">
-                                    <h5>10 신규 입점!</h5>
+                                    <h5><th:block th:text="${newCafe}">10</th:block> 신규 입점!</h5>
                                 </div>
                             </div>
                             <a th:href="@{/admin/host}" class="card-footer text-white clearfix small z-1"

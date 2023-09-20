@@ -105,6 +105,11 @@ public class CafeServiceImpl implements CafeService{
     }
 
     @Override
+    public int getCountByLastMonth() {
+        return cafeMapper.readCountByLastMonth();
+    }
+
+    @Override
     @Transactional
     public void editCafe(int cafeId, String siGunGu, String siDo, Cafe cafe, String comment, List<Integer> optionIds) {
         List<CafeOptionList> cafeOptionLists = new ArrayList<>();

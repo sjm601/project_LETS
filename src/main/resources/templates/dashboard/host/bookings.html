@@ -20,7 +20,7 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a th:href="@{/host}" href="/dashboard/host/host_dashboard.html">My page</a>
+                        <a th:href="@{/host}" href="/dashboard/host/host_dashboard.html">마이페이지</a>
                     </li>
                     <li class="breadcrumb-item active">Bookings list</li>
                 </ol>
@@ -44,7 +44,13 @@
                     <div class="list_general">
                         <ul>
                             <li th:each="reservation, index : ${hostReservationList}" class="reservations">
-                                <figure><img th:src="@{../static/upload_image/room/}+${reservation.get('image')}" src="/dashboard/img/item_2.jpg" alt=""></figure>
+                                <figure>  <img th:if="${reservation.get('image') == null}"
+                                               src="/dashboard/img/item_1.jpg"
+                                               alt="">
+                                    <img th:if="${reservation.get('image') != null}"
+                                         th:src="|${reservation.get('image')}|"
+                                         src="/dashboard/img/item_1.jpg"
+                                         alt=""></figure>
                                 <h4>
                                     <th:block th:text="${reservation.get('roomName')}"></th:block>
                                     <th:block th:switch="${reservation.get('reservationStatus')}">

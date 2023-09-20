@@ -79,6 +79,14 @@ public class ReservationController {
         return "redirect:/reservation/payment/success";
     }
 
+    @DeleteMapping("/{id}/payment")
+    @ResponseBody
+    public Object cancelReservation(@RequestBody int reservationId, Model model) {
+        reservationService.cancelReservation(reservationId);
+
+        return "success";
+    }
+
     @GetMapping("/payment/success")
     public String paymentSuccess(Model model) {
         return "common/cafe/payment_success";

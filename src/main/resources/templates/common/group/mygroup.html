@@ -80,53 +80,6 @@
                                 </div>
                             </div>
                             <!-- /카페 정보 위젯 -->
-
-                            <!-- 게시글 검색 위젯 -->
-                            <div class="widget">
-                                <div class="widget-title">
-                                    <h4>게시글 검색</h4>
-                                </div>
-                                <form th:action="@{/group/{id}(id=${studyGroup['ID']})}" action="#" method="get"
-                                      id="searchForm">
-                                    <div class="form-group">
-                                        <input type="search" name="keyword" id="search" class="form-control"
-                                               placeholder="검색어를 입력해주세요">
-                                    </div>
-                                    <button type="submit" id="submit" class="btn_1 rounded">검색</button>
-                                </form>
-                            </div>
-                            <!-- /게시글 검색 위젯 -->
-
-                            <!-- 최근 게시글 위젯 -->
-                            <div class="widget">
-                                <div class="widget-title">
-                                    <h4>최근 게시글</h4>
-                                </div>
-                                <ul class="comments-list">
-                                    <li>
-                                        <div class="alignleft">
-                                            <a href="#"><img src="/img/blog-5.jpg" alt="#"></a>
-                                        </div>
-                                        <small>11.08.2016</small>
-                                        <h3><a href="#" title="">Verear qualisque ex minimum...</a></h3>
-                                    </li>
-                                    <li>
-                                        <div class="alignleft">
-                                            <a href="#0"><img src="/img/blog-6.jpg" alt=""></a>
-                                        </div>
-                                        <small>11.08.2016</small>
-                                        <h3><a href="#" title="">Verear qualisque ex minimum...</a></h3>
-                                    </li>
-                                    <li>
-                                        <div class="alignleft">
-                                            <a href="#0"><img src="/img/blog-4.jpg" alt=""></a>
-                                        </div>
-                                        <small>11.08.2016</small>
-                                        <h3><a href="#" title="">Verear qualisque ex minimum...</a></h3>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- /최근 게시글 위젯 -->
                         </aside>
                         <!-- /사이드 바 -->
 
@@ -141,70 +94,63 @@
                                             </div>
                                             <div class="ms-3 my-auto">
                                                 <h6 th:text="${articleList['WRITER']}">이희영</h6>
-                                                <span class="mb-0" th:text="${articleList.REGDATE}">2023-09-06</span>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <button th:data-bs-target="'#modifyModal_' + ${articleList.ID}"
-                                                    data-bs-target="#modifyModal" class="btn btn-warning mx-2"
-                                                    data-bs-toggle="modal" style="font-size: 14px; height: 30px;">수정
+                                            <span class="mb-0" th:text="${articleList.REGDATE}">2023-09-06</span>
+                                       </div>
+                                 </div>                                      
+                            <div class="d-flex">
+                                <button th:data-bs-target="'#modifyModal_' + ${articleList.ID}"
+                                        data-bs-target="#modifyModal" class="btn btn-warning mx-2"
+                                        data-bs-toggle="modal"
+                                        style="font-size: 14px; height: 30px;">수정
+                                </button>
+                                <form th:action="@{/article/list/delete/{articleId}(articleId=${articleList['ID']})}" th:method="POST">
+                                    <input type="hidden" name="articleId" th:value="${articleList['ID']}"/>
+                                    <button type="submit" class="btn btn-danger mx-2"
+                                            style="font-size: 14px; height: 30px;">삭제
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <h1 class="mb-3" th:text="${articleList.TITLE}">주식 스터디</h1>
+                        <div class="postmeta">
+                            <!-- 추후 수정 필요함 %%이미지 패스 관련%%% -->
+<!--                            <div><img th:src="${articleList.IMAGEPATH}" alt="" class="img-fluid" src="img/blog-single.jpg"></div>-->
+                        </div>
+                        <!-- /post meta -->
+                        <div class="post-content">
+                            <p th:text="${articleList.CONTENT}">...내용입니다.</p>
+                            <div id="comments">
+                                <hr/>
+
+                                <div class="accordion" id="accordionExample">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                    th:data-bs-target="|#commentaccordion_${articleList['ID']}|" aria-expanded="false"
+                                                    aria-controls="collapseOne">
+                                                댓글 보기
                                             </button>
-                                            <!-- 현재 게시글 작성자가 아닌 사람도 삭제 시킬 수 있음 -->
-                                            <form th:action="@{/group/{id}/article/delete(id=${studyGroup['ID']})}"
-                                                  th:method="post">
-                                                <input type="hidden" name="id" th:value="${articleList.ID}"/>
-                                                <button type="submit" class="btn btn-danger mx-2"
-                                                        style="font-size: 14px; height: 30px;">삭제
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <h1 class="mb-3" th:text="${articleList.TITLE}">주식 스터디</h1>
-                                    <div class="postmeta">
-                                        <!-- 추후 수정 필요함 %%이미지 패스 관련%%%
-                                        <p><img th:src="@{articleList.IMAGEPATH}" alt="" class="img-fluid" src="img/blog-single.jpg"></p> -->
-                                    </div>
-                                    <!-- /post meta -->
-                                    <div class="post-content">
-                                        <p th:text="${articleList.CONTENT}">...내용입니다.</p>
-                                        <div id="comments">
-                                            <hr/>
-                                            <div class="accordion" id="accordionExample">
-                                                <div class="accordion-item">
-                                                    <h2 class="accordion-header">
-                                                        <button class="accordion-button" type="button"
-                                                                data-bs-toggle="collapse"
-                                                                data-bs-target="#collapseOne" aria-expanded="true"
-                                                                aria-controls="collapseOne">
-                                                            댓글 보기
-                                                        </button>
-                                                    </h2>
-                                                    <th:block th:each="comment : ${commentList}">
-                                                        <div id="collapseOne" class="accordion-collapse collapse show"
-                                                             data-bs-parent="#accordionExample">
-                                                            <div class="accordion-body">
-                                                                <div class="card card-body">
-                                                                    <ul th:if="${articleList.ID == comment.ARTICLEID}">
-                                                                        <li>
-                                                                            <div class="comment_right clearfix">
-                                                                                <div class="comment_info">
-                                                                                    <span th:text="${comment.COMMENTWRITER}">Anna Smith</span><span>|</span>
-                                                                                    <span th:text="${comment.COMMENTREGDATE}"> 2023-09-06</span><span>|</span>
-                                                                                    <div th:class="ms-2"
-                                                                                         th:text="${comment.CONTENT}">음
-                                                                                    </div>
-                                                                                    <form th:action="@{/group/{id}/commentDelete(id=${studyGroup['ID']})}"
-                                                                                          th:method="post">
-                                                                                        <input type="hidden" name="id"
-                                                                                               th:value="${comment.ID}"/>
-                                                                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                                                                            <button type="submit"
-                                                                                                    class="btn btn-danger mx-2"
-                                                                                                    style="font-size: 14px;">
-                                                                                                삭제
-                                                                                            </button>
-                                                                                        </div>
-                                                                                    </form>
+                                        </h2>
+                                        <th:block th:each="comment : ${commentList}">
+                                            <div id="collapseOne" class="accordion-collapse collapse show"
+                                                th:id="|commentaccordion_${comment['ARTICLEID']}|">
+                                                <div th:if="${articleList.ID == comment.ARTICLEID and comment.ID != null}" class="accordion-body">
+                                                    <div class="card card-body">
+                                                        <ul>
+                                                            <li>
+                                                                <div class="comment_right clearfix">
+                                                                    <div class="comment_info">
+                                                                        <span th:text="${comment.COMMENTWRITER}">Anna Smith</span><span>|</span>
+                                                                        <span th:text="${comment.COMMENTREGDATE}"> 2023-09-06</span><span>|</span>
+                                                                        <div th:class="ms-2"
+                                                                             th:text="${comment.CONTENT}">음
+                                                                        </div>
+                                                                            <form th:action="@{/article/list/comment/delete}" th:method="post">
+                                                                                <input type="hidden" name="id" th:value="${comment.ID}"/>
+                                                                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                                                    <button type="submit" class="btn btn-danger mx-2"
+                                                                                            style="font-size: 14px;">삭제
+                                                                                    </button>
                                                                                 </div>
                                                                             </div>
                                                                         </li>

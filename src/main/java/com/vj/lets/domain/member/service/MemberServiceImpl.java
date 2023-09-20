@@ -69,6 +69,11 @@ public class MemberServiceImpl implements MemberService {
         return memberMapper.readByEmailAndPasswd(email, password);
     }
 
+    @Override
+    public boolean isEmail(String email) {
+        return memberMapper.readBooleanByEmail(email);
+    }
+
     /**
      * 전체 회원 리스트 조회
      *
@@ -131,6 +136,16 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public List<Map<String, Object>> getCountByGender() {
         return memberMapper.readCountByGender();
+    }
+
+    /**
+     * 최근 한 달간 가입한 신규 회원 수 조회
+     *
+     * @return 신규 회원 수
+     */
+    @Override
+    public int getCountByLastMonth() {
+        return memberMapper.readCountByLastMonth();
     }
 
     /**

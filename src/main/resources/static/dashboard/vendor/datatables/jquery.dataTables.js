@@ -11415,7 +11415,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
+			"sInfo": "_START_ 부터 _END_ 까지 출력, 총 _TOTAL_ 개 결과",
 	
 	
 			/**

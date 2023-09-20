@@ -7,8 +7,12 @@
 
     <!-- 게시글 생성 -->
     <insert id="create" parameterType="Article">
-        INSERT INTO article(ID, TITLE, CONTENT, MEMBER_ID)
-        VALUES (ARTICLE_ID_SEQ.NEXTVAL, #{title}, #{content} , #{memberId})
+        INSERT INTO article(ID,
+                            TITLE,
+                            CONTENT,
+                            IMAGE_PATH ,
+                            MEMBER_ID)
+        VALUES (ARTICLE_ID_SEQ.NEXTVAL, #{title}, #{content}, #{imagePath, jdbcType=NULL}, #{memberId})
     </insert>
 
     <!-- 게시글 수정 -->
@@ -25,7 +29,7 @@
     <update id="delete" parameterType="int">
         UPDATE Article
         SET status = 'disabled'
-        WHERE ID = #{id}
+        WHERE ID = #{articleId}
     </update>
 
     <!-- 페이징 계산(검색값 포함)에 필요한 게시글 전체 갯수 -->
@@ -90,7 +94,11 @@
         SELECT
             ID,
             title,
-            content
+            content,
+            TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') AS regdate,
+            IMAGE_PATH,
+            STATUS,
+            MEMBER_ID
         FROM
             article
         WHERE
@@ -111,6 +119,26 @@
         <foreach collection="list" item="articleId" open="(" close=")" separator=",">
             #{articleId}
         </foreach>
+        ORDER BY ac.regdate ASC
     </select>
+
+    <select id="getRecentArticles" resultType="Article">
+        SELECT
+        id,
+        title,
+        image_path,
+        regdate
+        FROM (
+        SELECT
+        id,
+        title,
+        image_path,
+        TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') AS regdate
+        FROM article
+        ORDER BY regdate DESC
+        )
+        <![CDATA[ WHERE ROWNUM <= 3 ]]>
+    </select>
+
 
 </mapper>

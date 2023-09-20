@@ -106,4 +106,12 @@ public interface ReservationMapper {
      * @return 예약 목록
      */
     public List<Map<String, Object>> findByHost(@Param("cafeId") int cafeId, @Param("pageParams") PageParams pageParams);
+
+    /**
+     * 호스트 카페의 총 예약 건 수를 가져옴
+     * @param cafeId
+     * @return 호스트 카페의 총 예약 건 수
+     */
+    public int readTotalRes(int cafeId);
 }
+

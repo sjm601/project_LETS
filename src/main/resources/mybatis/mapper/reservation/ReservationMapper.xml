@@ -245,4 +245,13 @@
         ORDER BY BOOKING_DATE DESC))
         WHERE "request_page" = #{pageParams.requestPage}
     </select>
+
+    <select id="readTotalRes" parameterType="int" resultType="int">
+        SELECT COUNT(res.status) AS "count"
+        FROM RESERVATION res
+                 JOIN MEMBER mem ON res.MEMBER_ID = mem.ID
+                 JOIN CAFE caf ON res.CAFE_ID = caf.ID
+        WHERE res.status = 'complete'
+          AND caf.ID = #{cafeId}
+    </select>
 </mapper>

@@ -26,11 +26,19 @@ public interface MemberMapper {
     public void create(Member member);
 
     /**
-     * 전체 회원 목혹 조회
+     * 전체 회원 목록 조회
      *
      * @return 회원 목록
      */
     public List<Member> readAll();
+
+    /**
+     * 이메일로 회원 존재 유무 주회
+     *
+     * @param email 이메일
+     * @return 회원 존재 유무
+     */
+    public boolean readBooleanByEmail(String email);
 
     /**
      * 이메일, 비밀번호로 회원 조회
@@ -58,10 +66,17 @@ public interface MemberMapper {
 
     /**
      * 현재 가입 된 회원 성별 수 조회
-     * 
+     *
      * @return 회원 성별 수 목록
      */
     public List<Map<String, Object>> readCountByGender();
+
+    /**
+     * 최근 한 달간 신규 회원 수 조회
+     *
+     * @return 신규 회원 수
+     */
+    public int readCountByLastMonth();
 
     /**
      * 회원 정보 수정
