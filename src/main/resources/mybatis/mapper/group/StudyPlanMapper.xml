@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vj.lets.domain.group.mapper.StudyPlanMapper">
+
+    <insert id="createStudyPlan" parameterType="StudyPlan">
+        INSERT INTO STUDY_PLAN (ID, TOTAL_COUNT, STUDY_GROUP_ID)
+        VALUES (STUDY_PLAN_ID_SEQ.nextval, #{headCount}, #{studyGroupId})
+    </insert>
+
+    <select id="findAllStudyPlan" parameterType="int">
+        SELECT ID, TOTAL_COUNT, CURRENT_COUNT, REGDATE, RESERVATION_ID
+        FROM STUDY_PLAN
+        WHERE STUDY_GROUP_ID = #{studyGroupId}
+    </select>
+
+    <update id="updateStudyPlan">
+        UPDATE STUDY_PLAN
+        SET RESERVATION_ID = #{reservationId}
+        WHERE ID = #{studyPlanId}
+    </update>
+
+    <delete id="deleteStudyPlan" parameterType="int">
+        DELETE STUDY_PLAN
+        WHERE ID = #{studyPlanId}
+    </delete>
+</mapper>
