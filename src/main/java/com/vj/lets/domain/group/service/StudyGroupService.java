@@ -5,6 +5,7 @@ import com.vj.lets.domain.group.dto.GroupMemberList;
 import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
 import com.vj.lets.domain.group.util.PageParams;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ public interface StudyGroupService {
      * 스터디 그룹 전체 리스트 조회
      *
      * @author VJ특공대 이희영
+     * @param  pageParams 페이징 정보
      * @return 스터디 그룹 리스트
      */
     public List<Map<String, Object>> getStudyList(PageParams pageParams);
@@ -140,7 +142,7 @@ public interface StudyGroupService {
      * 가입한 스터디 그룹 리스트 조회
      *
      * @author VJ특공대 이희영
-     * @param memberId 회원 아이디
+     * @param  memberId 회원 아이디
      * @return 가입한 스터디 그룹 리스트
      */
     public List<Map<String, Object>> getMyStudyList(int memberId);
@@ -161,4 +163,23 @@ public interface StudyGroupService {
      * @return 검색 결과 수
      */
     public int getSearchCount(String keyword);
+
+    /**
+     * 가입된 스터디 그룹 수 조회
+     * 
+     * @author VJ특공대 이희영
+     * @param id 회원 아이디
+     * @return 가입한 스터디 수
+     */
+    public int getMyStudyCount(int id);
+
+    /**
+     * 페이징 정보를 포함한 내가 가입한 스터디 그룹 조회
+     *
+     * @author VJ특공대 이희영
+     * @param id 회원 아이디
+     * @param pageParams 페이징 정보
+     * @return 가입한 리스트
+     */
+    public List<Map<String, Object>> getMyStudyListAndPageParams(int id, PageParams pageParams);
 }

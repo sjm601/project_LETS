@@ -38,6 +38,7 @@ public interface StudyGroupMapper {
      * 스터디 그룹 전체 리스트 조회
      *
      * @author VJ특공대 이희영
+     * @param  pageParams 페이징 정보
      * @return 스터디 그룹 리스트
      */
     public List<Map<String, Object>> findAllStudyList(PageParams pageParams);

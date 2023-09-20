@@ -19,6 +19,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -69,7 +70,6 @@ public class StudyGroupController {
         }
 
         int selectPage = Integer.parseInt(page);
-        log.info("셀렉트 페이지 : {}", selectPage);
 
         PageParams pageParams = PageParams.builder()
                 .elementSize(elementSize)
@@ -82,10 +82,8 @@ public class StudyGroupController {
                 .build();
 
         Pagination pagination = new Pagination(pageParams);
-        log.info("페이지네이션 : {}", pagination);
 
         List<Map<String, Object>> studyGroupList = studyGroupService.getStudyList(pageParams);
-        log.info("스터디 그룹 리스트 : {}", studyGroupList);
         List<StudyGroup> newStudyList = studyGroupService.getNewStudyList();
         model.addAttribute("pagination", pagination);
         model.addAttribute("studyGroupList", studyGroupList);
@@ -271,10 +269,30 @@ public class StudyGroupController {
      * @return 가입한 스터디 그룹 리스트
      */
     @GetMapping("/mygroup")
-    public String myGroup(@SessionAttribute Member loginMember, Model model) {
-        List<Map<String, Object>> myStudyList = studyGroupService.getMyStudyList(loginMember.getId());
+    public String myGroup(@PathParam("page") String page, @SessionAttribute Member loginMember, Model model) {
+        int count = studyGroupService.getMyStudyCount(loginMember.getId());
+        int elementSize = 7;
+        int pageSize = 5;
 
-        model.addAttribute("myStudyList", myStudyList);
+        if (page == null || page.isEmpty()) {
+            page = "1";
+        }
+
+        int selectPage = Integer.parseInt(page);
+
+        PageParams pageParams = PageParams.builder()
+                .elementSize(elementSize)
+                .pageSize(pageSize)
+                .requestPage(selectPage)
+                .rowCount(count)
+                .build();
+
+        List<Map<String, Object>> myStudyListAndPageParams = studyGroupService.getMyStudyListAndPageParams(loginMember.getId(), pageParams);
+
+        Pagination pagination = new Pagination(pageParams);
+
+        model.addAttribute("pagination", pagination);
+        model.addAttribute("myStudyList", myStudyListAndPageParams);
 
         return "common/group/mygroup_list";
     }

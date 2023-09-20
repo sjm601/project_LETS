@@ -2,14 +2,12 @@ package com.vj.lets.domain.group.service;
 
 import com.vj.lets.domain.group.dto.GroupContact;
 import com.vj.lets.domain.group.dto.GroupMemberList;
-import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
 import com.vj.lets.domain.group.mapper.GroupContactMapper;
 import com.vj.lets.domain.group.mapper.GroupHistoryMapper;
 import com.vj.lets.domain.group.mapper.GroupMemberListMapper;
 import com.vj.lets.domain.group.mapper.StudyGroupMapper;
 import com.vj.lets.domain.group.util.PageParams;
-import com.vj.lets.domain.location.dto.SiGunGu;
 import com.vj.lets.domain.location.mapper.SiGunGuMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -67,6 +65,7 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * 스터디 그룹 전체 리스트 조회
      *
      * @author VJ특공대 이희영
+     * @param pageParams 페이징 정보
      * @return 스터디 그룹 리스트
      */
     @Override
@@ -298,7 +297,35 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @param keyword 검색 키워드
      * @return 검색 결과 수
      */
+    @Override
     public int getSearchCount(String keyword) {
         return studyGroupMapper.studySearchCount(keyword);
+    }
+
+    /**
+     * 가입한 스터디 수 조회
+     *
+     * @author VJ특공대 이희영
+     * @param id 회원 아이디
+     * @return 스터디 가입 수
+     */
+    @Override
+    public int getMyStudyCount(int id) {
+        return groupMemberListMapper.myStudyCount(id);
+    }
+
+    /**
+     * 페이징 정보를 포함한 스터디 그룹 가입 리스트 조회
+     *
+     * @param id 회원 아이디
+     * @param pageParams 페이징 정보
+     * @return 가입 리스트 조회
+     */
+    @Override
+    public List<Map<String, Object>> getMyStudyListAndPageParams(int id, PageParams pageParams) {
+        List<Map<String, Object>> myStudyListAndPageParams = null;
+        myStudyListAndPageParams = groupMemberListMapper.findMyGroupListAndPageParams(id, pageParams);
+
+        return myStudyListAndPageParams;
     }
 }

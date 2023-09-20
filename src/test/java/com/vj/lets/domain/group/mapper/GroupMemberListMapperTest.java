@@ -2,6 +2,7 @@ package com.vj.lets.domain.group.mapper;
 
 import com.vj.lets.domain.group.dto.GroupMemberList;
 import com.vj.lets.domain.group.dto.StudyGroup;
+import com.vj.lets.domain.group.util.PageParams;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,6 +120,42 @@ class GroupMemberListMapperTest {
 
         // then
         log.info("가입된 스터디 그룹 리스트 : {}", list);
+        assertThat(list).isNotNull();
+    }
+
+    @Test
+    @Transactional
+    void myStudyCountTest() {
+        // given
+        int id = 37;
+
+        // when
+        int count = groupMemberListMapper.myStudyCount(id);
+
+        // then
+        log.info("가입한 스터디 수 조회 : {}", count);
+        assertThat(count).isNotZero();
+    }
+
+    @Test
+    @Transactional
+    void findMyGroupListAndPageParamsTest() {
+        // given
+        int id = 37;
+        int count = groupMemberListMapper.myStudyCount(id);
+
+        PageParams pageParams = PageParams.builder()
+                .elementSize(5)
+                .pageSize(5)
+                .rowCount(count)
+                .requestPage(1)
+                .build();
+
+        // when
+        List<Map<String, Object>> list = groupMemberListMapper.findMyGroupListAndPageParams(id, pageParams);
+
+        // then
+        log.info("페이징 정보를 포함한 가입한 그룹 리스트 : {}", list);
         assertThat(list).isNotNull();
     }
 }

@@ -273,4 +273,40 @@ class StudyGroupServiceTest {
         log.info("검색 결과 수 : {}", count);
         assertThat(count).isNotZero();
     }
+
+    @Test
+    @Transactional
+    void getMyStudyCountTest() {
+        // given
+        int id = 37;
+
+        // when
+        int count = studyGroupService.getMyStudyCount(id);
+
+        // then
+        log.info("가입한 스터디 수 조회 : {}", count);
+        assertThat(count).isNotZero();
+    }
+
+    @Test
+    @Transactional
+    void getMyStudyListAndPageParamsTest() {
+        // given
+        int id = 37;
+        int count = studyGroupService.getMyStudyCount(id);
+
+        PageParams pageParams = PageParams.builder()
+                .elementSize(5)
+                .pageSize(5)
+                .rowCount(count)
+                .requestPage(1)
+                .build();
+
+        // when
+        List<Map<String, Object>> list = studyGroupService.getMyStudyListAndPageParams(id, pageParams);
+
+        // then
+        log.info("페이징 정보를 포함한 가입한 그룹 리스트 : {}", list);
+        assertThat(list).isNotNull();
+    }
 }
