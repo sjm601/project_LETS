@@ -63,20 +63,29 @@ function deleteMember(id) {
 // 스터디 그룹 멤버 관리 테이블 행 추가
 function groupMemberAddRow(data, i) {
     const tr = document.createElement('tr')
+    const today = new Date();
+    let birthday = `${data[i].BIRTHDAY}`;
+    let dayCount = today.getTime() - birthday;
+    let age = 0;
+
+    if (data[i].BIRTHDAY !== undefined) {
+        age = Math.floor(dayCount / (1000 * 60 * 60 * 24 * 365));
+    }
+
     tbodyMemberList.appendChild(tr);
     if (data[i].POSITION === '팀장') {
         tr.innerHTML +=
             `<td>${(i + 1)}</td>
              <td>${data[i].NAME}</td>
              <td>${data[i].GENDER}</td>
-             <td>${data[i].AGE}</td>
+             <td>${age}</td>
              <td><span class="btn">${data[i].POSITION}</span></td>`
     } else {
         tr.innerHTML +=
             `<td>${(i + 1)}</td>
              <td>${data[i].NAME}</td>
              <td>${data[i].GENDER}</td>
-             <td>${data[i].AGE}</td>
+             <td>${age}</td>
              <td><button type="button" class="btn btn-danger memberRemoveBtn" onclick="deleteMember(${data[i].MEMBERID})" style="font-size: 14px;">탈퇴</button></td>`
     }
 }
@@ -104,13 +113,22 @@ function viewContactList(url) {
 
 // 스터디 그룹 가입 신청 내역 테이블 행 추가
 function groupContactAddRow(data, i) {
-    const tr = document.createElement('tr')
+    const tr = document.createElement('tr');
+    const today = new Date();
+    let birthday = `${data[i].BIRTHDAY}`;
+    let dayCount = today.getTime() - birthday;
+    let age = 0;
+
+    if (data[i].BIRTHDAY !== undefined) {
+        age = Math.floor(dayCount / (1000 * 60 * 60 * 24 * 365));
+    }
+
     tbodyContactList.appendChild(tr);
     tr.innerHTML +=
         `<td>${(i + 1)}</td>
          <td>${data[i].NAME}</td>
          <td>${data[i].GENDER}</td>
-         <td>${data[i].AGE}</td>
+         <td>${age}</td>
          <td>${data[i].REGDATE}</td>
          <td>
             <button class="btn btn-success me-2" onclick="contactMember(${data[i].MEMBERID}, 'approve')" style="font-size: 14px;">승인</button>
@@ -161,7 +179,7 @@ function contactMember(id, type) {
 const contactSubmitBtn = document.querySelector('#contactSubmit');
 const inputName = document.querySelector('#name');
 const selectGender = document.querySelector('#gender');
-const inputAge = document.querySelector('#age');
+const inputBirthday = document.querySelector('#birthday');
 
 contactSubmitBtn.addEventListener('click', e => {
     const url = `/group/join/${studyGroupId}`;
@@ -169,7 +187,7 @@ contactSubmitBtn.addEventListener('click', e => {
     const obj = {
         name: inputName.value,
         gender: selectGender.options[selectGender.selectedIndex].value,
-        age: inputAge.value
+        birthday: inputBirthday.value
     }
 
     if (obj.name === null || obj.gender === null || obj.age < 1) {
@@ -192,17 +210,4 @@ contactSubmitBtn.addEventListener('click', e => {
                 }
             });
     }
-});
-
-const loadMoreBtn = document.querySelector('#searchBtn');
-loadMoreBtn.addEventListener('click', e => {
-
-    if (!confirm("스터디에 가입 하시겠습니까?")) return;
-
-    $.ajax({
-        url: "/group/list",
-        dataType: "text"
-    }).done(result => {
-        $("#studyGroupList").replaceWith(result);
-    });
 });

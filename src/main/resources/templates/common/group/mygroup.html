@@ -360,11 +360,10 @@
                                 </select>
                             </div>
                             <div class="mb-2">
-                                <label for="age" class="form-label">나이</label>
-                                <input th:readonly="${member.age != 0 ? 'true' : 'false'}"
-                                       th:value="${member.age != 0 ? member.age : '0'}"
-                                       class="form-control mb-2" id="age" name="age"
-                                       type="number" placeholder="나이"/>
+                                <label th:for="birthday">생년월일</label>
+                                <input th:id="birthday" th:name="birthday" th:value="${member.birthday}"
+                                       th:min="1900-01-01" th:max="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}"
+                                       type="date" class="form-control" required>
                             </div>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                             <button th:id="contactSubmit" type="button" class="btn btn-primary">가입</button>
