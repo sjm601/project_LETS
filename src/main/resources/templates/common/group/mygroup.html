@@ -191,7 +191,7 @@
                                                                                     <div th:class="ms-2"
                                                                                          th:text="${comment.CONTENT}">음
                                                                                     </div>
-                                                                                    <form th:action="@{/article/list/comment/delete}"
+                                                                                    <form th:action="@{/group/{id}/commentDelete(id=${studyGroup['ID']})}"
                                                                                           th:method="post">
                                                                                         <input type="hidden" name="id"
                                                                                                th:value="${comment.ID}"/>
