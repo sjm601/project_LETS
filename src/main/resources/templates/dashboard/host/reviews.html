@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <th:block
-    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+        th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
 
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
@@ -29,90 +29,113 @@
                         <h2 class="d-inline-block">고객 리뷰</h2>
                         <div class="filter">
                             <div class="styled-select short">
-                                <select name="orderby">
-                                    <option value="Any time">Any time</option>
-                                    <option value="Latest">Latest</option>
-                                    <option value="Oldest">Oldest</option>
+                                <select name="type" id="orderType">
+                                    <option th:selected="${pagination.params.type == 'latest'}" value="latest">최근 순
+                                    </option>
+                                    <option th:selected="${pagination.params.type == 'oldest'}" value="oldest">오래된 순
+                                    </option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="list_general reviews">
-                        <ul>
-                            <li>
-                                <span>June 15 2017</span>
-                                <span class="rating"><i class="fa fa-fw fa-star yellow"></i><i
-                                    class="fa fa-fw fa-star yellow"></i><i
-                                    class="fa fa-fw fa-star yellow"></i><i class="fa fa-fw fa-star yellow"></i><i
-                                    class="fa fa-fw fa-star"></i></span>
-                                <figure><img src="/dashboard/img/item_1.jpg" alt=""></figure>
-                                <h4>Room A-1 <small>by 예약자 이름(ID)</small></h4>
 
-                                <p>Lorem ipsum dolor sit amet, dolores mandamus moderatius ea ius, sed civibus vivendum
-                                    imperdiet ei, amet
-                                    tritani sea id. Ut veri diceret fierent mei, qui facilisi suavitate euripidis ad. In
-                                    vim
-                                    mucius menandri
-                                    convenire, an brute zril vis. Ancillae delectus necessitatibus no eam, at porro
-                                    solet veniam
-                                    mel, ad
-                                    everti nostrud vim. Eam no menandri pertinacia deterruisset.</p>
-                                <p class="inline-popups"><a href="#modal-reply" data-effect="mfp-zoom-in"
-                                                            class="btn_1 gray"><i
-                                    class="fa fa-fw fa-reply"></i> Reply to this review</a></p>
-                            </li>
-                            <li>
-                                <span>June 15 2017</span>
-                                <span class="rating"><i class="fa fa-fw fa-star yellow"></i><i
-                                    class="fa fa-fw fa-star yellow"></i><i
-                                    class="fa fa-fw fa-star yellow"></i><i class="fa fa-fw fa-star"></i><i
-                                    class="fa fa-fw fa-star"></i></span>
-                                <figure><img src="/dashboard/img/item_2.jpg" alt=""></figure>
-                                <h4>Room A-2 <small>by 예약자 이름(ID)</small></h4>
-                                <p>Ex omnis error aliquam quo, eu eos atqui accusam, ex nec sensibus erroribus
-                                    principes. No pro
-                                    albucius
-                                    eloquentiam accommodare. Mei id illud posse persius. Nec eu dico lucilius delicata,
-                                    qui
-                                    propriae
-                                    voluptaria eu.</p>
-                                <p class="inline-popups"><a href="#modal-reply" data-effect="mfp-zoom-in"
-                                                            class="btn_1 gray"><i
-                                    class="fa fa-fw fa-reply"></i> Reply to this review</a></p>
-                            </li>
-                            <li>
-                                <span>June 15 2017</span>
-                                <span class="rating"><i class="fa fa-fw fa-star yellow"></i><i
-                                    class="fa fa-fw fa-star yellow"></i><i
-                                    class="fa fa-fw fa-star yellow"></i><i class="fa fa-fw fa-star yellow"></i><i
-                                    class="fa fa-fw fa-star"></i></span>
-                                <figure><img src="/dashboard/img/item_3.jpg" alt=""></figure>
-                                <h4>Room A-3 <small>by 예약자 이름(ID)</small></h4>
-                                <p>Cum id mundi admodum menandri, eum errem aperiri at. Ut quas facilis qui, euismod
-                                    admodum
-                                    persequeris
-                                    cum at. Summo aliquid eos ut, eum facilisi salutatus ne. Mazim option abhorreant ne
-                                    his. Mel
-                                    simul
-                                    iisque albucius at, probatus indoctum efficiendi mei ei. Veniam percipit ei sea.</p>
-                                <p class="inline-popups"><a href="#modal-reply" data-effect="mfp-zoom-in"
-                                                            class="btn_1 gray"><i
-                                    class="fa fa-fw fa-reply"></i> Reply to this review</a></p>
+                        <ul>
+                            <li th:each="review, index : ${hostReviewList}" class="reviews"
+                                th:if="${review.get('memberType') == 'guest'}">
+                                <span th:text="${review.get('writeDate')}">June 15 2017</span>
+                                <span class="rating">
+                                    <i th:each="num : ${#numbers.sequence(1, #strings.toString(review.get('rating')))}"
+                                       class="fa fa-fw fa-star yellow"></i><i th:if="${review.get('rating') < 5}"
+                                                                              th:each="num : ${#numbers.sequence(4, #strings.toString(review.get('rating')))}"
+                                                                              class="fa fa-fw fa-star"></i>
+                                </span>
+                                <figure>
+                                    <img th:if="${review.get('guestProfile') == null}"
+                                         src="/upload_image/member/default_others.png"
+                                         alt="">
+                                    <img th:if="${review.get('guestProfile') != null}"
+                                         th:src="|${review.get('guestProfile')}|"
+                                         src="/upload_image/member/default_others.png"
+                                         alt="">
+                                </figure>
+                                <h4>
+                                    <th:block th:text="|Room ${review.get('roomName')}|">
+                                        Hotel Mariott
+                                    </th:block>
+                                    <small>of
+                                        <th:block
+                                                th:text="${review.get('reserveName')+'('+review.get('reserveId')+')'}">
+                                            M.Twain
+                                        </th:block>
+                                    </small>
+                                </h4>
+                                <p th:text="${review.get('content')}">리뷰 콘텐츠</p>
+
+                                <!-- reservation status is use -->
+                                <th:block
+                                        th:if="${{review.get('reviewCount') < 2}}">
+                                    <p class="inline-popups">
+                                        <a th:href="|#modal_review_${index.count}|" href="#modal_review"
+                                           data-effect="mfp-zoom-in" class="btn_1 gray">
+                                            <i class="fa fa-fw fa-pencil mr-1"></i>
+                                            리뷰 답변
+                                        </a>
+                                    </p>
+                                    <!-- register to review popup -->
+                                    <div th:id="|modal_review_${index.count}|" id="modal_review"
+                                         class="white-popup mfp-with-anim mfp-hide modal_review">
+                                        <div class="small-dialog-header">
+                                            <h3>리뷰 답변</h3>
+                                        </div>
+                                        <div class="message-reply margin-top-0">
+                                            <div class="form-group">
+                                                <label for="content">내용</label>
+                                                <textarea id="content" name="content"
+                                                          cols="40" rows="3" class="form-control"
+                                                          required></textarea>
+                                            </div>
+                                            <button class="btn_1 review_btn">
+                                                <i class="fa fa-fw fa-pencil mr-1"></i>
+                                                답변 등록
+                                            </button>
+                                        </div>
+                                    </div>
+                                </th:block>
+
+                                <th:block
+                                        th:if="${{review.get('reviewCount') == 2}}">
+                                    <div data-effect="mfp-zoom-in" class="btn_999 gray">리뷰 답변 완료</div>
+                                </th:block>
                             </li>
                         </ul>
+
                     </div>
                 </div>
                 <!-- /box_general-->
                 <nav aria-label="...">
                     <ul class="pagination pagination-sm add_bottom_30">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1">Previous</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
                         <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
+                            <a th:if="${pagination.showPrevious}"
+                               th:href="@{|?page=${pagination.previousStartPage}&type=${pagination.params.type}|}"
+                               class="page-link" href="#"
+                               tabindex="-1">&lt;&lt;</a>
+                        </li>
+                        <th:block
+                                th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
+                            <li th:if="${i == pagination.params.requestPage}" class="page-item active">
+                                <a th:text="${i}" class="page-link">1</a>
+                            </li>
+                            <li th:if="${i != pagination.params.requestPage && i > 0}" class="page-item">
+                                <a th:href="@{|?page=${i}&type=${pagination.params.type}|}"
+                                   th:text="${i}" class="page-link" href="#">2
+                                </a>
+                            </li>
+                        </th:block>
+                        <li class="page-item">
+                            <a th:if="${pagination.showNext}"
+                               th:href="@{|?page=${pagination.nextStartPage}&type=${pagination.params.type}|}"
+                               class="page-link" href="#">&gt;&gt;</a>
                         </li>
                     </ul>
                 </nav>
@@ -125,8 +148,13 @@
     </th:block>
 
     <th:block th:fragment="scripts">
-        <!-- Custom scripts for this page -->
-        <!-- /custom scripts -->
+        <script th:inline="javascript">
+            const reviewList = [[${hostReviewList}]];
+            document.querySelector('#orderType').addEventListener('change', (event) => {
+                location.href = `?type=${event.target.value}`;
+            })
+        </script>
+        <script src="/dashboard/js/custom/host-reviews_custom.js"></script>
     </th:block>
 
 </th:block>

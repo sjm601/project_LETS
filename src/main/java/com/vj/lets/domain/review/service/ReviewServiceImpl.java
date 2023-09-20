@@ -137,4 +137,25 @@ public class ReviewServiceImpl implements ReviewService {
         reviewMapper.disabled(id);
         reviewHistoryMapper.createByUpdate(id, ReviewHistoryComment.DELETE.getComment());
     }
+
+    @Override
+    public int getCountByHost(int cafeId) {
+        return reviewMapper.readCountByHost(cafeId);
+    }
+
+    @Override
+    public List<Map<String, Object>> getByHost(int cafeId, PageParams pageParams) {
+        List<Map<String, Object>> hostReviewList = reviewMapper.readByHost(cafeId, pageParams);
+        return addMaps(hostReviewList);
+    }
+
+    @Override
+    public int getCountByReview(int reservationId) {
+        return reviewMapper.readCountByReview(reservationId);
+    }
+
+    @Override
+    public int getTodayReview(int cafeId) {
+        return reviewMapper.readTodayReview(cafeId);
+    }
 }

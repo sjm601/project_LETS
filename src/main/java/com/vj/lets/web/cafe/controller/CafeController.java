@@ -109,12 +109,8 @@ public class CafeController {
     @ResponseBody
     public  String findReservedTime(@PathVariable int roomId, Model model, @RequestBody Object bookingDate) throws JsonProcessingException, ParseException {
         ObjectMapper objectMapper = new ObjectMapper();
-        log.info("asdasdasdasd:{}", roomId);
-        log.info("bookingDate:{}", bookingDate);
         String bookDate = bookingDate.toString();
-        log.info("bookingDate:{}", bookDate);
         List<Reservation> reservedTime =reservationService.checkDuplicateResTime(roomId, bookDate);
-        log.info("reservedTime:{}", reservedTime);
         return objectMapper.writeValueAsString(reservedTime);
     }
 
