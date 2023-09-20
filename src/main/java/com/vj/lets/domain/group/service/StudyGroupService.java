@@ -24,9 +24,10 @@ public interface StudyGroupService {
      * @param studyGroup 생성할 스터디 그룹 정보
      * @param id 회원 아이디
      * @param siGunGuName 시,군,구 이름
+     * @param siDoName 시,도 이름
      * @return 생성된 스터디 그룹 아이디
      */
-    public int generateStudy(StudyGroup studyGroup, int id, String siGunGuName);
+    public int generateStudy(StudyGroup studyGroup, int id, String siGunGuName, String siDoName);
 
     /**
      * 스터디 그룹 전체 리스트 조회

@@ -41,14 +41,14 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @param studyGroup 생성할 스터디 그룹 정보
      * @param id 회원 아이디
      * @param siGunGuName 시,군,구 이름
+     * @param siDoName 시,도 이름
      * @return 생성된 스터디 그룹 아이디
      */
     @Override
     @Transactional
-    public int generateStudy(StudyGroup studyGroup, int id, String siGunGuName) {
-        // 전달 받은 시,군,구 이름을 시,군,구 아이디로 변환
-        SiGunGu siGunGu = siGunGuMapper.getSiGunGu(siGunGuName);
-        studyGroup.setSiGunGuId(siGunGu.getId());
+    public int generateStudy(StudyGroup studyGroup, int id, String siGunGuName, String siDoName) {
+        int siGunGuId = siGunGuMapper.getSiGunGuDo(siGunGuName, siDoName);
+        studyGroup.setSiGunGuId(siGunGuId);
 
         // 스터디 그룹 생성
         studyGroupMapper.createStudy(studyGroup);

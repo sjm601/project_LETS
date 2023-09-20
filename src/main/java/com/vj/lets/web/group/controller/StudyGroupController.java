@@ -2,6 +2,9 @@ package com.vj.lets.web.group.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vj.lets.domain.article.service.ArticleService;
+import com.vj.lets.domain.common.web.PageParams;
+import com.vj.lets.domain.common.web.Pagination;
 import com.vj.lets.domain.group.dto.*;
 import com.vj.lets.domain.group.service.StudyGroupService;
 import com.vj.lets.domain.location.dto.SiGunGu;
@@ -16,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +28,7 @@ import java.util.Map;
  * 스터디 그룹 컨트롤러
  *
  * @author VJ특공대 이희영
+ * @author VJ특공대 이한솔
  * @version 1.0
  * @since 2023-09-11 (월)
  */
@@ -35,6 +41,10 @@ public class StudyGroupController {
     private final StudyGroupService studyGroupService;
     private final SiGunGuService siGunGuService;
     private final MemberService memberService;
+
+    private final ArticleService articleService;
+    private static final int ELEMENT_SIZE = 5;
+    private static final int PAGE_SIZE = 5;
 
     /**
      * 스터디 전체 리스트 화면 출력
@@ -72,14 +82,18 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 상세보기
      *
+     * @param page        게시글 페이지
+     * @param keyword     게시글 검색 키워드
      * @param id          스터디 그룹 아이디
      * @param loginMember 로그인 회원 정보
      * @param model       모델 인터페이스
      * @return 스터디 그룹 상세
      * @author VJ특공대 이희영
+     * @author VJ특공대 이한솔
      */
     @GetMapping("/{id}")
-    public String readGroup(@PathVariable int id, @SessionAttribute Member loginMember, Model model) {
+    public String readGroup(@PathParam("page") String page, @PathParam("keyword") String keyword, @PathVariable int id, @SessionAttribute Member loginMember, Model model) {
+        // 이희영
         GroupMemberList groupMember = null;
         List<Map<String, Object>> contactList = null;
 
@@ -92,12 +106,42 @@ public class StudyGroupController {
             contactList = studyGroupService.getStudyContactList(id);
         }
         Member member = memberService.getMember(loginMember.getId());
-
-
+        
         model.addAttribute("member", member);
         model.addAttribute("studyGroup", studyGroup);
         model.addAttribute("groupMember", groupMember);
         model.addAttribute("contactList", contactList);
+
+        // 이한솔
+        int count = articleService.getCountAll(keyword);
+
+        if (page == null || page.isEmpty()) {
+            page = "1";
+        }
+
+        int selectPage = Integer.parseInt(page);
+        PageParams pageParams = PageParams.builder()
+                .elementSize(ELEMENT_SIZE)
+                .pageSize(PAGE_SIZE)
+                .requestPage(selectPage)
+                .rowCount(count)
+                .keyword(keyword)
+                .build();
+
+        Pagination pagination = new Pagination(pageParams);
+        model.addAttribute(pagination);
+
+        List<Map<String, Object>> articleList = articleService.findByPage(pageParams);
+        model.addAttribute("articleList", articleList);
+
+        List<Integer> articleIds = new ArrayList<>();
+        for (Map<String, Object> articleMap : articleList) {
+            int articleId = Integer.parseInt(articleMap.get("ID").toString());
+            articleIds.add(articleId);
+        }
+
+        List<Map<String, Object>> articleComments = articleService.findComment(articleIds);
+        model.addAttribute("commentList", articleComments);
 
         return "common/group/mygroup";
     }
@@ -236,7 +280,7 @@ public class StudyGroupController {
                 .subject(subject)
                 .build();
 
-        int studyGroupId = studyGroupService.generateStudy(studyGroup, loginMember.getId(), createForm.getSiGunGuName());
+        int studyGroupId = studyGroupService.generateStudy(studyGroup, loginMember.getId(), createForm.getSiGunGuName(), createForm.getSiDoName());
         return "redirect:/group/" + studyGroupId;
     }
 

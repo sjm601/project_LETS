@@ -152,8 +152,9 @@
                             </div>
                             <div class="mb-5">
                                 <label class="form-label" for="address">스터디 대표 주소(시, 군, 구)</label>
-                                <input class="form-control" id="address" name="siGunGuName" type="text"
-                                       placeholder="클릭하여 주소 입력하세요" readonly/>
+                                <input th:hidden="true" class="form-control sidoInputs" name="siDoName" type="text" />
+                                <input class="form-control sigunguInputs" id="address" name="siGunGuName" type="text"
+                                       placeholder="클릭하여 주소 입력하세요" readonly />
                             </div>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                             <button type="submit" class="btn btn-primary">생성</button>

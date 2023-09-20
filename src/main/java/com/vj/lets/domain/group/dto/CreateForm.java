@@ -20,5 +20,6 @@ public class CreateForm {
     private String name;
     private int totalCount;
     private String subject;
+    private String siDoName;
     private String siGunGuName;
 }

@@ -45,7 +45,7 @@
                SG.REGDATE       REGDATE,
                SG.IMAGE_PATH    IMAGEPATH,
                SG.SUBJECT       SUBJECT,
-               SGG.NAME  SIGUNGUNAME,
+               SGG.NAME         SIGUNGUNAME,
                M.NAME           MEMBERNAME
         FROM STUDY_GROUP SG
                  JOIN GROUP_MEMBER_LIST GML ON SG.ID = GML.STUDY_GROUP_ID
