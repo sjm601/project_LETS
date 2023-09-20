@@ -52,6 +52,14 @@ public interface FaqService {
     public Map<String, List<Faq>> getFaqList();
 
     /**
+     * 카페와 관련된 FAQ 카테고리 조회
+     *
+     * @author VJ특공대 강소영
+     * @return FAQ 목록
+     */
+    public List<FaqCategory> getCafeFaqList();
+
+    /**
      * FAQ 수정
      *
      * @param faq FAQ 정보

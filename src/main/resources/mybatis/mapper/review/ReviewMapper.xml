@@ -32,6 +32,7 @@
                rev.RATING                            "rating",
                TO_CHAR(rev.WRITE_DATE, 'yyyy-MM-DD') "writeDate",
                mem.NAME                              "writerName",
+               mem.IMAGE_PATH                        "writerImagePath",
                roo.NAME                              "roomName",
                res.ID                                "reservationId"
         FROM REVIEW rev
@@ -43,6 +44,18 @@
           AND caf.ID = #{cafeId}
           AND mem.TYPE = 'guest'
         ORDER BY WRITE_DATE DESC
+    </select>
+
+    <select id="countByReviewRating" parameterType="int" resultType="map">
+        SELECT ROUND(COUNT(DECODE(RATING,5,1))/COUNT(RATING)*100,-1) "five",
+               ROUND(COUNT(DECODE(RATING,4,1))/COUNT(RATING)*100,-1) "four",
+               ROUND(COUNT(DECODE(RATING,3,1))/COUNT(RATING)*100,-1) "three",
+               ROUND(COUNT(DECODE(RATING,2,1))/COUNT(RATING)*100,-1) "two",
+               ROUND(COUNT(DECODE(RATING,1,1))/COUNT(RATING)*100,-1) "one"
+        FROM REVIEW rv
+                 JOIN RESERVATION res ON res.ID = rv.RESERVATION_ID
+        WHERE CAFE_ID = #{cafeId}
+          AND RATING != 0
     </select>
 
     <select id="readCountByMember" parameterType="int" resultType="int">

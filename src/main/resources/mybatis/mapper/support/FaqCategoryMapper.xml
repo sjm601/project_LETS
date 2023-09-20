@@ -15,6 +15,14 @@
         FROM FAQ_CATEGORY
     </select>
 
+    <select id="readByCafeCategory" resultType="FaqCategory">
+        SELECT ID, NAME, DESCRIPTION
+        FROM FAQ_CATEGORY
+        WHERE NAME LIKE '%'||'카페'||'%'
+            OR NAME LIKE '%'||'예약'||'%'
+            OR NAME LIKE '%'||'결제'||'%'
+    </select>
+
     <update id="update" parameterType="FaqCategory">
         UPDATE FAQ_CATEGORY
         <set>

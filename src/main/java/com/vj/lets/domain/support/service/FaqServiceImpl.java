@@ -88,6 +88,17 @@ public class FaqServiceImpl implements FaqService {
     }
 
     /**
+     * 카페와 관련된 FAQ 리스트 검색
+     *
+     * @author VJ특공대 강소영
+     * @return FAQ리스트
+     */
+    @Override
+    public List<FaqCategory> getCafeFaqList() {
+        return faqCategoryMapper.readByCafeCategory();
+    }
+
+    /**
      * FAQ 수정
      *
      * @param faq FAQ 정보

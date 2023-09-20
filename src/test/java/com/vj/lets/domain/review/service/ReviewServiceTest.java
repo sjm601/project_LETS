@@ -55,7 +55,7 @@ class ReviewServiceTest {
     @Test
     void getReviewListByCafeTest() {
         // given
-        int cafeId = 1;
+        int cafeId = 2;
         // when
         List<Map<String, Object>> list = reviewService.getReviewListByCafe(cafeId);
         // then

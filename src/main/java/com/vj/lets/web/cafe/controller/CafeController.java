@@ -9,6 +9,7 @@ import com.vj.lets.domain.cafe.service.CafeService;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.reservation.dto.Reservation;
 import com.vj.lets.domain.reservation.service.ReservationService;
+import com.vj.lets.domain.review.service.ReviewService;
 import com.vj.lets.domain.room.dto.Room;
 import com.vj.lets.domain.room.service.RoomService;
 import com.vj.lets.domain.support.dto.FaqCategory;
@@ -40,6 +41,7 @@ public class CafeController {
     private final ReservationService reservationService;
     private final CafeService cafeService;
     private final RoomService roomService;
+    private final ReviewService reviewService;
     private final FaqService faqService;
 
     @GetMapping("")
@@ -51,7 +53,7 @@ public class CafeController {
 
     @GetMapping("/list")
     public String cafeList(@ModelAttribute CafeSearch cafeSearch, Model model) {
-        List<FaqCategory> categoryList = faqService.getFaqCategoryList();
+        List<FaqCategory> categoryList = faqService.getCafeFaqList();
         model.addAttribute("categoryList", categoryList);
         List<CafeOption> options = cafeService.getOptionList();
         model.addAttribute("options", options);
@@ -71,13 +73,15 @@ public class CafeController {
                              Model model) {
         Map<String, Object> cafe = cafeService.getCafe(id);
         model.addAttribute("Cafe", cafe);
-
-
+        List<CafeOption> options = cafeService.getCafeOptionCafeId(id);
+        model.addAttribute("options", options);
         List<Room> roomList = roomService.getSearchCafeRoom(id);
         model.addAttribute("roomList", roomList);
-
         model.addAttribute("errorMessage", "");
-
+        List<Map<String, Object>> reviews = reviewService.getReviewListByCafe(id);
+        model.addAttribute("reviews", reviews);
+        Map<Integer, Object> countReviews = reviewService.getCountReviewRatingByCafe(id);
+        model.addAttribute("countReviews", countReviews);
         return "common/cafe/cafe_detail";
     }
 
