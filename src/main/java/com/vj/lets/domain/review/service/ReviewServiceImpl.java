@@ -137,4 +137,14 @@ public class ReviewServiceImpl implements ReviewService {
         List<Map<String, Object>> hostReviewList = reviewMapper.readByHost(cafeId, pageParams);
         return addMaps(hostReviewList);
     }
+
+    @Override
+    public int getCountByReview(int reservationId) {
+        return reviewMapper.readCountByReview(reservationId);
+    }
+
+    @Override
+    public int getTodayReview(int cafeId) {
+        return reviewMapper.readTodayReview(cafeId);
+    }
 }

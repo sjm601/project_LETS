@@ -104,4 +104,18 @@ public interface ReviewMapper {
      * @return 리뷰 목록
      */
     public List<Map<String, Object>> readByHost(@Param("cafeId") int cafeId, @Param("pageParams") PageParams pageParams);
+
+    /**
+     * 예약 아이디로 리뷰 답변 완료 유무 판단 위해 사용
+     * @param reservationId
+     * @return 예약 아이디로 작성된 리뷰가 2개일 시 답변 완료로 판단
+     */
+    public int readCountByReview(int reservationId);
+
+    /**
+     * 오늘 호스트의 카페에 등록된 리뷰를 불러오기 위해 사용
+     * @param cafeId
+     * @return 오늘 호스트 카페에 등록된 리뷰 수
+     */
+    public int readTodayReview(int cafeId);
 }

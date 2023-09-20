@@ -18,7 +18,7 @@
                     <div class="container">
                         <div class="bs-wizard clearfix">
                             <div class="bs-wizard-step">
-                                <div class="text-center bs-wizard-stepnum">Your cart</div>
+                                <div class="text-center bs-wizard-stepnum">예약 확인</div>
                                 <div class="progress">
                                     <div class="progress-bar"></div>
                                 </div>
@@ -26,7 +26,7 @@
                             </div>
 
                             <div class="bs-wizard-step active">
-                                <div class="text-center bs-wizard-stepnum">Payment</div>
+                                <div class="text-center bs-wizard-stepnum">결제</div>
                                 <div class="progress">
                                     <div class="progress-bar"></div>
                                 </div>
@@ -34,7 +34,7 @@
                             </div>
 
                             <div class="bs-wizard-step disabled">
-                                <div class="text-center bs-wizard-stepnum">Finish!</div>
+                                <div class="text-center bs-wizard-stepnum">결제 완료!</div>
                                 <div class="progress">
                                     <div class="progress-bar"></div>
                                 </div>
@@ -53,16 +53,16 @@
                             <div class="col-lg-8">
                                 <div class="box_cart">
                                     <div class="form_title">
-                                        <h3><strong>★</strong>Payer Details</h3>
+                                        <h3><strong>★</strong>결제자 정보</h3>
                                         <p>
-                                            Please enter the details of the payer.
+                                            결제자의 세부 정보를 입력해 주세요.
                                         </p>
                                     </div>
                                     <div class="step">
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <label for="firstname_booking">Name</label>
+                                                    <label for="firstname_booking">이름</label>
                                                     <input type="text" class="form-control" id="name_booking"
                                                            name="name_booking" required>
                                                     <div class="invalid-feedback">이름을 정확히 입력하여 주세요...</div>
@@ -72,7 +72,7 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <label for="email_booking">Email</label>
+                                                    <label for="email_booking">이메일</label>
                                                     <input type="email" id="email_booking" name="email_booking"
                                                            class="form-control" required>
                                                     <div class="invalid-feedback">이메일을 정확히 입력하여 주세요...</div>
@@ -82,7 +82,7 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <label for="telephone_booking">Telephone</label>
+                                                    <label for="telephone_booking">전화번호</label>
                                                     <input type="tel" id="telephone_booking" name="telephone_booking"
                                                            class="form-control" required>
                                                     <div class="invalid-feedback">전화번호를 정확히 입력하여 주세요... (ex.
@@ -94,12 +94,9 @@
                                     </div>
                                     <!--End step -->
                                     <div id="policy" class="mt-5">
-                                        <h5>Cancellation policy</h5>
-                                        <p class="nomargin">Reservations can be canceled without penalty <a href="#0">on
-                                            My
-                                            Page within 24 hours after the reservation</a> is completed on the
-                                            website.<br>
-                                            Please check the FAQ page for detailed cancellation regulations.</p>
+                                        <h5>예약 및 결제 세부 정책</h5>
+                                        <p class="nomargin">예약 및 결제에 대한 세부 사항은 <a th:href="@{/support/help}" href="#0">이 페이지에서 확인 가능</a> 합니다.<br>
+                                            보다 더한 질문이나 요청은 FAQ 페이지를 참고 바랍니다.</p>
                                     </div>
                                 </div>
                             </div>
@@ -111,17 +108,16 @@
                                         Total <span data-th-text="${#numbers.formatInteger(reservation.totalPrice, 3, 'COMMA') + '원'}" class="float-end">79,000</span>
                                     </div>
                                     <ul class="cart_details">
-                                        <li>Date <span th:text="${reservation['booking_date']}">2023-09-04</span></li>
-                                        <li>Time
+                                        <li>예약일 <span th:text="${reservation['booking_date']}">2023-09-04</span></li>
+                                        <li>이용시간
                                             <span th:text="${reservation.START_TIME + ':00' +'-' + reservation.END_TIME + ':00'}">11:00 - 13:00</span>
                                         </li>
-                                        <li>Total Headcount <span th:text="${reservation['HEAD_COUNT']}">2</span></li>
+                                        <li>이용 총원 <span th:text="${reservation['HEAD_COUNT']}">2</span></li>
                                     </ul>
                                     <button type="submit" class="btn_1 full-width purchase">
-                                        Purchase
+                                        결제
                                     </button>
-                                    <div class="text-center"><small>Click this button to proceed with the
-                                        payment.</small>
+                                    <div class="text-center"><small>버튼을 누르면 결제가 진행됩니다.</small>
                                     </div>
                                 </div>
                             </aside>
@@ -295,6 +291,8 @@
                                         payPhoneNumber: telephone_booking
                                     }
                                 });
+
+
                                 let msg = '결제에 실패하였습니다.';
                                 msg += '에러내용 : ' + rsp.error_msg;
                                 alert(msg);

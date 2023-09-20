@@ -131,5 +131,10 @@ public class ReservationServiceImpl implements ReservationService {
         return resList;
     }
 
+    @Override
+    public int getTotalRes(int cafeId) {
+        return reservationMapper.readTotalRes(cafeId);
+    }
+
 
 }

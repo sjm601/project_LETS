@@ -10,6 +10,8 @@ import com.vj.lets.domain.common.web.Pagination;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.reservation.dto.Reservation;
 import com.vj.lets.domain.reservation.service.ReservationService;
+import com.vj.lets.domain.review.dto.Review;
+import com.vj.lets.domain.review.dto.ReviewForm;
 import com.vj.lets.domain.review.service.ReviewService;
 import com.vj.lets.domain.room.dto.Room;
 import com.vj.lets.domain.room.service.RoomService;
@@ -63,6 +65,10 @@ public class HostController {
         model.addAttribute("countRes", countRes);
         List<Map<String, Object>> monthlySales = reservationService.getMonthlySales(cafeId);
         model.addAttribute("monthlySales", monthlySales);
+        int reviewCount = reviewService.getTodayReview(cafeId);
+        model.addAttribute("reviewCount",reviewCount);
+        int resCount = reservationService.getTotalRes(cafeId);
+        model.addAttribute("resCount",resCount);
         return "dashboard/host/host_dashboard";
     }
 
@@ -204,6 +210,7 @@ public class HostController {
         }
         int selectPage = Integer.parseInt(page);
         int count = reservationService.getCountResByHost(cafeId, type);
+        log.info("============={}", count);
         PageParams pageParams = PageParams.builder()
                 .elementSize(ELEMENT_SIZE)
                 .pageSize(PAGE_SIZE)
@@ -215,6 +222,7 @@ public class HostController {
         Pagination pagination = new Pagination(pageParams);
 
         List<Map<String, Object>> hostReservationList = reservationService.getHostResList(cafeId, pageParams);
+        log.info("============={}", hostReservationList);
 
         model.addAttribute("hostReservationList", hostReservationList);
         model.addAttribute("pagination", pagination);
@@ -252,10 +260,37 @@ public class HostController {
 
         List<Map<String, Object>> hostReviewList = reviewService.getByHost(cafeId, pageParams);
         log.info("리뷰리스트:{}",hostReviewList);
+
+        ReviewForm reviewForm = ReviewForm.builder().build();
+
+        model.addAttribute("reviewForm", reviewForm);
         model.addAttribute("hostReviewList", hostReviewList);
         model.addAttribute("pagination", pagination);
 
         return "dashboard/host/reviews";
+    }
+
+
+    /**
+     * 리뷰 답변 작성 기능
+     *
+     * @param reviewForm 리뷰 폼 객체
+     * @param model      모델 객체
+     * @return 실행 후 반환 값
+     */
+    @PostMapping("/reviews")
+    @ResponseBody
+    public Object reviewRegist(@SessionAttribute Member loginMember,@RequestBody ReviewForm reviewForm, Model model) {
+        Review review = Review.builder()
+                .content(reviewForm.getContent())
+                .reservationId(reviewForm.getReservationId())
+                .memberId(loginMember.getId())
+                .build();
+
+        log.info("받은 리뷰 정보:{}",review);
+        reviewService.register(review);
+
+        return "success";
     }
 
     @GetMapping("/stats")

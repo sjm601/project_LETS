@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <th:block
-    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+        th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
 
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
@@ -29,7 +29,7 @@
                         <h2 class="d-inline-block">고객 리뷰</h2>
                         <div class="filter">
                             <div class="styled-select short">
-                                <select name="orderby">
+                                <select name="type" id="orderType">
                                     <option th:selected="${pagination.params.type == 'latest'}" value="latest">최근 순
                                     </option>
                                     <option th:selected="${pagination.params.type == 'oldest'}" value="oldest">오래된 순
@@ -39,8 +39,10 @@
                         </div>
                     </div>
                     <div class="list_general reviews">
+
                         <ul>
-                            <li th:each="review, index : ${hostReviewList}" class="reviews">
+                            <li th:each="review, index : ${hostReviewList}" class="reviews"
+                                th:if="${review.get('memberType') == 'guest'}">
                                 <span th:text="${review.get('writeDate')}">June 15 2017</span>
                                 <span class="rating">
                                     <i th:each="num : ${#numbers.sequence(1, #strings.toString(review.get('rating')))}"
@@ -49,10 +51,12 @@
                                                                               class="fa fa-fw fa-star"></i>
                                 </span>
                                 <figure>
-                                    <img th:if="${review.get('guestProfile') == null}" src="/dashboard/img/item_1.jpg"
+                                    <img th:if="${review.get('guestProfile') == null}"
+                                         src="/upload_image/member/default_others.png"
                                          alt="">
                                     <img th:if="${review.get('guestProfile') != null}"
-                                         th:src="|${review.get('guestProfile')}.jpg|" src="/dashboard/img/item_1.jpg"
+                                         th:src="|${review.get('guestProfile')}|"
+                                         src="/upload_image/member/default_others.png"
                                          alt="">
                                 </figure>
                                 <h4>
@@ -60,12 +64,52 @@
                                         Hotel Mariott
                                     </th:block>
                                     <small>of
-                                        <th:block th:text="${review.get('reserveName')+'('+review.get('reserveId')+')'}">M.Twain</th:block>
+                                        <th:block
+                                                th:text="${review.get('reserveName')+'('+review.get('reserveId')+')'}">
+                                            M.Twain
+                                        </th:block>
                                     </small>
                                 </h4>
                                 <p th:text="${review.get('content')}">리뷰 콘텐츠</p>
+
+                                <!-- reservation status is use -->
+                                <th:block
+                                        th:if="${{review.get('reviewCount') < 2}}">
+                                    <p class="inline-popups">
+                                        <a th:href="|#modal_review_${index.count}|" href="#modal_review"
+                                           data-effect="mfp-zoom-in" class="btn_1 gray">
+                                            <i class="fa fa-fw fa-pencil mr-1"></i>
+                                            리뷰 답변
+                                        </a>
+                                    </p>
+                                    <!-- register to review popup -->
+                                    <div th:id="|modal_review_${index.count}|" id="modal_review"
+                                         class="white-popup mfp-with-anim mfp-hide modal_review">
+                                        <div class="small-dialog-header">
+                                            <h3>리뷰 답변</h3>
+                                        </div>
+                                        <div class="message-reply margin-top-0">
+                                            <div class="form-group">
+                                                <label for="content">내용</label>
+                                                <textarea id="content" name="content"
+                                                          cols="40" rows="3" class="form-control"
+                                                          required></textarea>
+                                            </div>
+                                            <button class="btn_1 review_btn">
+                                                <i class="fa fa-fw fa-pencil mr-1"></i>
+                                                답변 등록
+                                            </button>
+                                        </div>
+                                    </div>
+                                </th:block>
+
+                                <th:block
+                                        th:if="${{review.get('reviewCount') == 2}}">
+                                    <div data-effect="mfp-zoom-in" class="btn_999 gray">리뷰 답변 완료</div>
+                                </th:block>
                             </li>
                         </ul>
+
                     </div>
                 </div>
                 <!-- /box_general-->
@@ -73,8 +117,9 @@
                     <ul class="pagination pagination-sm add_bottom_30">
                         <li class="page-item">
                             <a th:if="${pagination.showPrevious}"
-                               th:href="@{|?page=${pagination.previousStartPage}&type=${pagination.params.type}|}" class="page-link" href="#"
-                               tabindex="-1"><i class="fa-solid fa-angles-left" style="color: #000000;"></i></a>
+                               th:href="@{|?page=${pagination.previousStartPage}&type=${pagination.params.type}|}"
+                               class="page-link" href="#"
+                               tabindex="-1">&lt;&lt;</a>
                         </li>
                         <th:block
                                 th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
@@ -90,7 +135,7 @@
                         <li class="page-item">
                             <a th:if="${pagination.showNext}"
                                th:href="@{|?page=${pagination.nextStartPage}&type=${pagination.params.type}|}"
-                               class="page-link" href="#"><i class="fa-solid fa-angles-right" style="color: #000000;"></i></a>
+                               class="page-link" href="#">&gt;&gt;</a>
                         </li>
                     </ul>
                 </nav>
@@ -103,8 +148,13 @@
     </th:block>
 
     <th:block th:fragment="scripts">
-        <!-- Custom scripts for this page -->
-        <!-- /custom scripts -->
+        <script th:inline="javascript">
+            const reviewList = [[${hostReviewList}]];
+            document.querySelector('#orderType').addEventListener('change', (event) => {
+                location.href = `?type=${event.target.value}`;
+            })
+        </script>
+        <script src="/dashboard/js/custom/host-reviews_custom.js"></script>
     </th:block>
 
 </th:block>

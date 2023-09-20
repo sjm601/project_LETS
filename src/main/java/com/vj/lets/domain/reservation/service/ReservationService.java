@@ -103,6 +103,13 @@ public interface ReservationService {
 
     public List<Map<String, Object>> getHostResList(int cafeId, PageParams pageParams);
 
+    /**
+     * 호스트 카페의 총 예약 건 수를 가져옴
+     * @param cafeId
+     * @return 호스트 카페의 총 예약 건 수
+     */
+    public int getTotalRes(int cafeId);
+
 
 
 }

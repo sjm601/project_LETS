@@ -113,57 +113,91 @@
     </select>
 
     <select id="readCountByHost" parameterType="int" resultType="int">
-    SELECT COUNT(r.ID) AS "count"
-    FROM REVIEW r
-    INNER JOIN RESERVATION res ON r.reservation_id = res.ID
-    INNER JOIN CAFE c ON res.cafe_id = c.ID
-    WHERE r.STATUS = 'enabled'
-    AND c.ID = #{cafeId}
+        SELECT COUNT(r.ID) AS "count"
+        FROM REVIEW r
+                 INNER JOIN RESERVATION res ON r.reservation_id = res.ID
+                 INNER JOIN CAFE c ON res.cafe_id = c.ID
+                 INNER JOIN MEMBER m ON r.member_id = m.id
+        WHERE r.STATUS = 'enabled'
+          AND c.ID = #{cafeId}
+          AND m.type='guest'
     </select>
 
     <select id="readByHost" parameterType="int" resultType="Map">
         SELECT "id",
-               "content",
-               "rating",
-               "writeDate",
-               "cafeName",
-               "roomName",
-               "roomImage",
-               "reservationId",
-               "guestProfile",
-               "reserveName",
-               "reserveId"
-        FROM (SELECT CEIL(ROWNUM / #{pageParams.elementSize}) "request_page",
-                     "id",
-                     "content",
-                     "rating",
-                     "writeDate",
-                     "cafeName",
-                     "roomName",
-                     "roomImage",
-                     "reservationId",
-                     "guestProfile",
-                     "reserveName",
-                     "reserveId"
-              FROM (SELECT rev.ID                                 "id",
-                           rev.CONTENT                            "content",
-                           rev.RATING                             "rating",
-                           TO_CHAR(rev.WRITE_DATE, 'YYYY-MM-DD')  "writeDate",
-                           caf.NAME                               "cafeName",
-                           roo.NAME                               "roomName",
-                           roo.IMAGE_PATH                         "roomImage",
-                           res.ID                                 "reservationId",
-                           mem.IMAGE_PATH                         "guestProfile",
-                           mem.Name                               "reserveName",
-                           mem.email                              "reserveId"
-                    FROM REVIEW rev
-                             JOIN MEMBER mem ON rev.MEMBER_ID = mem.ID
-                             JOIN RESERVATION res ON res.ID = rev.RESERVATION_ID
-                             JOIN CAFE caf ON res.CAFE_ID = caf.ID
-                             JOIN ROOM roo ON res.ROOM_ID = roo.ID
-                    WHERE rev.STATUS = 'enabled'
-                      AND caf.ID = #{cafeId}))
+        "content",
+        "rating",
+        "writeDate",
+        "cafeName",
+        "roomName",
+        "roomImage",
+        "reservationId",
+        "guestProfile",
+        "reserveName",
+        "reserveId",
+        "memberType",
+        "reviewCount"
+        FROM (
+        SELECT CEIL(ROWNUM / #{pageParams.elementSize}) "request_page",
+        "id",
+        "content",
+        "rating",
+        "writeDate",
+        "cafeName",
+        "roomName",
+        "roomImage",
+        "reservationId",
+        "guestProfile",
+        "reserveName",
+        "reserveId",
+        "memberType",
+        "reviewCount"
+        FROM (
+        SELECT rev.ID                                 "id",
+        rev.CONTENT                            "content",
+        rev.RATING                             "rating",
+        TO_CHAR(rev.WRITE_DATE, 'YYYY-MM-DD')  "writeDate",
+        caf.NAME                               "cafeName",
+        roo.NAME                               "roomName",
+        roo.IMAGE_PATH                         "roomImage",
+        res.ID                                 "reservationId",
+        mem.IMAGE_PATH                         "guestProfile",
+        mem.Name                               "reserveName",
+        mem.email                              "reserveId",
+        mem.type                               "memberType",
+        (SELECT COUNT(reservation_ID)
+        FROM REVIEW
+        WHERE STATUS = 'enabled'
+        AND reservation_ID = res.ID)        "reviewCount"
+        FROM REVIEW rev
+        JOIN MEMBER mem ON rev.MEMBER_ID = mem.ID
+        JOIN RESERVATION res ON res.ID = rev.RESERVATION_ID
+        JOIN CAFE caf ON res.CAFE_ID = caf.ID
+        JOIN ROOM roo ON res.ROOM_ID = roo.ID
+        WHERE rev.STATUS = 'enabled'
+        AND caf.ID = #{cafeId}
+        <if test="pageParams.type == null or pageParams.type == 'latest'">ORDER BY res.BOOKING_DATE ASC</if>
+        <if test="pageParams.type == 'oldest'">ORDER BY res.BOOKING_DATE DESC</if>))
         WHERE "request_page" = #{pageParams.requestPage}
+    </select>
+
+    <select id="readCountByReview" parameterType="int" resultType="int">
+    SELECT COUNT(reservation_ID) AS "count"
+    FROM REVIEW
+    WHERE STATUS = 'enabled'
+    AND reservation_ID = #{reservationId}
+    </select>
+
+    <select id="readTodayReview" parameterType="int" resultType="int">
+        SELECT COUNT(write_date) AS "count"
+        FROM REVIEW rev
+                 JOIN MEMBER mem ON rev.MEMBER_ID = mem.ID
+                 JOIN RESERVATION res ON res.ID = rev.RESERVATION_ID
+                 JOIN CAFE caf ON res.CAFE_ID = caf.ID
+        WHERE rev.status = 'enabled'
+          AND caf.ID = #{cafeId}
+          AND mem.type = 'guest'
+          AND to_char(write_date) = to_char(sysdate)
     </select>
 
     <update id="update" parameterType="Review">
@@ -180,5 +214,7 @@
         SET status = 'disabled'
         WHERE ID = #{id}
     </update>
+
+
 
 </mapper>
