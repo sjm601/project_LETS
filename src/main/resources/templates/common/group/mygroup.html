@@ -348,7 +348,7 @@
                         <h1 class="modal-title fs-5" id="WriteModalLabel">게시글 작성</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form th:action="@{/article/list/{page}}" th:method="post">
+                    <form th:action="@{/group/{id}/article(id=${studyGroup['ID']})}" th:method="post">
                         <div class="form-group modal-body">
                             <label for="title" class="form-label">제목</label>
                             <input type="text" class="form-control" name="title" placeholder="Enter Title" required>
