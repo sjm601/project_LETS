@@ -104,7 +104,15 @@ public class CafeController {
         return  objectMapper.writeValueAsString(roomList);
     }
 
-
+    /**
+     * 중복예약을 막기 위해 패치로 중복 시간 제외
+     * @param roomId
+     * @param model
+     * @param bookingDate
+     * @return JSON에 반환된 이미 예약된 시간
+     * @throws JsonProcessingException
+     * @throws ParseException
+     */
     @PostMapping("/selectRoom/{roomId}")
     @ResponseBody
     public  String findReservedTime(@PathVariable int roomId, Model model, @RequestBody Object bookingDate) throws JsonProcessingException, ParseException {
@@ -116,12 +124,12 @@ public class CafeController {
 
     /**
      * 예약 생성하기
-     * @param id
-     * @param bookingDate
-     * @param headCount
-     * @param startTime
-     * @param endTime
-     * @param roomId
+     * @param id 카페 아이디
+     * @param bookingDate 예약 날짜
+     * @param headCount 예약 총원
+     * @param startTime 시작 시간
+     * @param endTime 종료 시간
+     * @param roomId 룸 아이디
      * @param reservation
      * @param loginMember
      * @param model
@@ -138,13 +146,6 @@ public class CafeController {
                            @ModelAttribute Reservation reservation,
                            @SessionAttribute Member loginMember,
                            Model model) {
-
-        int count = reservationService.checkDuplicateReservation(roomId, bookingDate, startTime, endTime);
-        if (count > 0) {
-            model.addAttribute("errorMessage", "이미 예약된 시간대 입니다. 다른 시간을 선택하세요.");
-            return "redirect:/cafe/{id}?error=true";
-        }
-
 
         // 예약 객체 설정
         reservation.setCafeId(id);

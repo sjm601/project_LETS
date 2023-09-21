@@ -189,6 +189,8 @@
         JOIN ROOM roo ON res.ROOM_ID = roo.ID
         WHERE rev.STATUS = 'enabled'
         AND caf.ID = #{cafeId}
+        AND res.STATUS != 'cancel'
+        AND mem.TYPE !='host'
         <if test="pageParams.type == null or pageParams.type == 'latest'">ORDER BY res.BOOKING_DATE ASC</if>
         <if test="pageParams.type == 'oldest'">ORDER BY res.BOOKING_DATE DESC</if>))
         WHERE "request_page" = #{pageParams.requestPage}

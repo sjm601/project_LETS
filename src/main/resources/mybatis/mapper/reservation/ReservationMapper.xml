@@ -110,16 +110,17 @@
                  JOIN member m ON r.member_id = m.id
                  JOIN room ro ON r.room_id = ro.id
         WHERE r.cafe_id = #{cafeId}
+        AND r.status != 'cancel'
         ORDER BY r.booking_date DESC
     </select>
 
     <select id="findResInfo" parameterType="int" resultType="map">
-    SELECT ca.name AS "cafe_name", ca.image_path,m.name AS "member_name", ro.name AS "room_name", r.head_count, TO_CHAR(r.BOOKING_DATE, 'YYYY/MM/DD') AS "booking_date", r.start_time, r.end_time, ro.price,(r.end_time - r.start_time) * ro.price AS "totalPrice",r.id
+    SELECT ca.name AS "cafe_name",ca.id AS "cafeId", ca.image_path,m.name AS "member_name", ro.name AS "room_name", r.head_count, TO_CHAR(r.BOOKING_DATE, 'YYYY/MM/DD') AS "booking_date", r.start_time, r.end_time, ro.price,(r.end_time - r.start_time) * ro.price AS "totalPrice",r.id, r.member_id AS "memberId"
     FROM reservation r
     JOIN member m ON r.member_id = m.id
     JOIN room ro ON r.room_id = ro.id
     JOIN cafe ca ON ro.cafe_id = ca.id
-    WHERE r.id = #{id}
+    WHERE r.id = #{id} AND r.member_id = #{memberId}
     </select>
 
     <select id="findNowRes" parameterType="int" resultType="int">
@@ -144,7 +145,7 @@
         SELECT ID, START_TIME, END_TIME
         FROM RESERVATION
         WHERE ROOM_ID = #{roomId}
-        AND TO_CHAR(BOOKING_DATE, 'YYYY-MM-DD') = #{bookingDate}
+        AND TO_CHAR(BOOKING_DATE, 'YYYY-MM-DD') = #{bookingDate} AND STATUS != 'cancel'
     </select>
 
     <update id="delete">

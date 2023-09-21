@@ -88,6 +88,7 @@
     <th:block th:fragment="scripts">
         <!-- Custom scripts for this page -->
         <script th:inline="javascript">
+            // 숫자를 천 단위로 포맷하는 함수
             let countRes = [[${countRes}]];
             let monthResKey = [];
             let monthResValue = [];
@@ -135,20 +136,26 @@
                     scales: {
                         xAxes: [{
                             time: {
-                                unit: 'date'
+                                unit: 'month'
                             },
                             gridLines: {
                                 display: false
                             },
                             ticks: {
-                                maxTicksLimit: 7
+                                maxTicksLimit: 12,
+                                callback: function(value, index, values) {
+                                    return value + '월';
+                                },
                             }
                         }],
                         yAxes: [{
                             ticks: {
                                 min: 0,
                                 max: Math.max(...monthlySalesValue) + (Math.max(...monthlySalesValue) * 0.1),
-                                maxTicksLimit: 5
+                                maxTicksLimit: 5,
+                                callback: function(value, index, values) {
+                                    return value.toLocaleString() + '원';
+                                },
                             },
                             gridLines: {
                                 color: "rgba(0, 0, 0, .125)",
@@ -157,7 +164,15 @@
                     },
                     legend: {
                         display: false
-                    }
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                const value = tooltipItem.yLabel;
+                                return value.toLocaleString() + '원';
+                            },
+                        },
+                    },
                 }
             });
 
@@ -172,7 +187,8 @@
                         backgroundColor: "rgba(2,117,216,1)",
                         borderColor: "rgba(2,117,216,1)",
                         data: monthResValue,
-                    }],
+                    }]
+                    ,
                 },
                 options: {
                     scales: {
@@ -184,14 +200,20 @@
                                 display: false
                             },
                             ticks: {
-                                maxTicksLimit: 12
+                                maxTicksLimit: 12,
+                                callback: function(value, index, values) {
+                                    return value + '월';
+                                },
                             }
                         }],
                         yAxes: [{
                             ticks: {
                                 min: 0,
                                 max: Math.max(...monthResValue) + (Math.max(...monthResValue) * 0.1),
-                                maxTicksLimit: 5
+                                maxTicksLimit: 5,
+                                callback: function(value, index, values) {
+                                    return value.toLocaleString() + '건';
+                                },
                             },
                             gridLines: {
                                 display: true
@@ -200,7 +222,15 @@
                     },
                     legend: {
                         display: false
-                    }
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                const value = tooltipItem.yLabel;
+                                return value.toLocaleString() + '건';
+                            },
+                        },
+                    },
                 }
             });
         </script>

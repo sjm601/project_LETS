@@ -432,7 +432,6 @@
                 fetch(url)
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data);
                         const roomListSelected = document.querySelector('#roomName');
                         roomListSelected.innerHTML = '';
 
@@ -462,11 +461,11 @@
             function updateRoomPrice() {
                 const selectedOption = $('#roomName').find('option:selected');
                 const selectedRoomPrice = selectedOption.data('price');
-                console.log(selectedRoomPrice);
+                const formattedPrice = selectedRoomPrice.toLocaleString();
                 const selectedRoomPriceElement = document.querySelector('#selectedRoomPrice');
                 const selectedRoomPriceElement2 = document.querySelector('#calculateRoomPrice');
-                selectedRoomPriceElement.innerText = selectedRoomPrice + '원';
-                selectedRoomPriceElement2.innerText = selectedRoomPrice;
+                selectedRoomPriceElement.innerText = formattedPrice + '원';
+                selectedRoomPriceElement2.innerText = formattedPrice;
             }
 
             //룸 선택에 따른 최대 인원수로 MAX
@@ -605,29 +604,14 @@
                     const selectCalculTime = document.querySelector('#calculateTime');
                     selectCalculTime.innerHTML = '';
                     selectCalculTime.innerHTML += endTimmmme.value - startTimmmme.value;
-                    const totalPrice = document.querySelector('#totalPrice');
-                    totalPrice.innerHTML = '';
-                    totalPrice.innerHTML += document.querySelector('#calculateRoomPrice').innerHTML * selectCalculTime.innerHTML;
+                    const totalPrice = document.querySelector('#calculateRoomPrice').innerHTML.replace(/,/g, "") * selectCalculTime.innerHTML;
+                    const formatPrice = totalPrice.toLocaleString();
+                    const totalPriceInput = document.querySelector('#totalPrice');
+                    totalPriceInput.innerHTML = '';
+                    totalPriceInput.innerHTML += formatPrice;
 
                 });
             });
-        </script>
-
-        <script th:inline="javascript">
-            window.onload = function () {
-                var showAlertParam = new URLSearchParams(window.location.search).get("error");
-                if (showAlertParam === "true") {
-                    showAlert();
-                }
-            };
-
-            function showAlert() {
-                Swal.fire({
-                    icon: 'error',
-                    title: '이미 예약된 시간대 입니다.',
-                    text: '다른 시간을 선택하세요.'
-                });
-            }
         </script>
         <!-- INPUT QUANTITY  -->
         <script src="/js/input_qty.js"></script>
