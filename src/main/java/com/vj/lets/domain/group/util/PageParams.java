@@ -40,4 +40,8 @@ public class PageParams {
     
     // 검색 주제
     private String subject;
+
+//    //페이징 처리를위한 그룹아이디
+//    private  int groupId;
+
 }
