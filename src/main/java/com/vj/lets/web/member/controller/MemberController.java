@@ -14,6 +14,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -77,15 +78,18 @@ public class MemberController {
      * @return 논리적 뷰 이름
      */
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute RegisterForm registerForm,
+    @ResponseBody
+    public Object register(@Valid @RequestBody RegisterForm registerForm,
                            BindingResult bindingResult,
-                           HttpServletResponse response, Model model) {
+                           Model model) {
 
         if (bindingResult.hasErrors()) {
-            return "redirect:/member/register";
+            return "fail";
         }
 
-        // 데이터 검증 처리 과정 추가 예정
+        if (memberService.checkEmail(registerForm.getEmail())) {
+            return "duplicate";
+        }
 
         Member member = Member.builder()
                 .email(registerForm.getEmail())
@@ -96,18 +100,7 @@ public class MemberController {
 
         memberService.register(member);
 
-
-        try {
-            response.setContentType("text/html; charset=utf-8");
-            PrintWriter w = response.getWriter();
-            w.write("<script>alert('회원가입이 완료되었습니다.');location.href='/member/login';</script>");
-            w.flush();
-            w.close();
-        } catch (Exception e) {
-            throw new RuntimeException("오류 메세지");
-        }
-
-        return "redirect:/member/login";
+        return "success";
     }
 
     /**
@@ -142,56 +135,26 @@ public class MemberController {
      * @return 논리적 뷰 이름
      */
     @PostMapping("/login")
-    public String login(@Valid @ModelAttribute LoginForm loginForm,
+    @ResponseBody
+    public String login(@Valid @RequestBody LoginForm loginForm,
                         BindingResult bindingResult,
-                        HttpServletRequest request, HttpServletResponse response, Model model) {
+                        HttpServletRequest request, Model model) {
 
         if (bindingResult.hasErrors()) {
-            return "redirect:/member/login";
+            return "fail";
         }
-
-        // 데이터 검증 처리 과정 추가 예정
 
         Member loginMember = memberService.isMember(loginForm.getEmail(), loginForm.getPassword());
 
         if (loginMember == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
-
-            try {
-                response.setContentType("text/html; charset=utf-8");
-                PrintWriter w = response.getWriter();
-                w.write("<script>alert('아이디 또는 비밀번호가 맞지 않습니다.');location.href='/member/login';</script>");
-                w.flush();
-                w.close();
-            } catch (Exception e) {
-                throw new RuntimeException("오류 메세지");
-            }
-
-            return "redirect:/member/login";
+            return "fail";
         }
 
         HttpSession session = request.getSession();
         session.setAttribute("loginMember", loginMember);
 
-        // 쿠키 생성
-        if (loginForm.getRemember() != null && loginForm.getRemember()) {
-            Cookie saveCookie;
-            saveCookie = new Cookie("remember", loginMember.getEmail());
-            saveCookie.setPath("/");
-            saveCookie.setMaxAge(60 * 60 * 24 * 100);
-            response.addCookie(saveCookie);
-        } else if (loginForm.getRemember() == null || !loginForm.getRemember()) {
-            Cookie saveCookie;
-            saveCookie = new Cookie("remember", loginMember.getEmail());
-            saveCookie.setPath("/");
-            saveCookie.setMaxAge(0);
-            response.addCookie(saveCookie);
-        }
-
-        String redirectURI = (String) session.getAttribute("redirectURI");
-        log.warn("======================{}", redirectURI);
-        String uri = redirectURI == null ? "/" : redirectURI;
-        return "redirect:" + uri;
+        return "success";
     }
 
     /**

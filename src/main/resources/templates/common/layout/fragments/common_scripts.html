@@ -4,5 +4,8 @@
 <th:block th:fragment="scripts">
     <script src="/js/common_scripts.js"></script>
     <script src="/js/main.js"></script>
+    <th:block th:if="${session.loginMember == null}">
+        <script src="/js/custom/login.js"></script>
+    </th:block>
 </th:block>
 </html>

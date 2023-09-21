@@ -90,8 +90,8 @@ public class CafeServiceImpl implements CafeService{
     }
 
     @Override
-    public int getCountCafeForAdmin(String type) {
-        return cafeMapper.readCountAllForAdmin(type);
+    public int getCountCafeForAdmin() {
+        return cafeMapper.readCountAllForAdmin();
     }
 
     @Override

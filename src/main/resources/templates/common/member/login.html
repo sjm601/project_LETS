@@ -10,6 +10,9 @@
 
     <!-- COMMON LINK -->
     <th:block th:replace="~{/common/layout/fragments/common_head :: head}"></th:block>
+    <link href="/css/custom/sign_page_custom.css" rel="stylesheet">
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 
 <body id="login_bg">
@@ -28,43 +31,61 @@
                 <img src="/images/title_textblack.svg" width="110" height="40" alt="" class="logo_sticky">
             </a>
         </figure>
-        <form th:action="@{/member/login}" th:method="post" th:object="${loginForm}">
-            <div class="access_social" style="text-align: center;">
-                <a href="#"><img src="/images/login/kakao_login_medium_wide.png" width="286" alt=""></a>
+        <div id="buttonDiv"></div>
+        <div class="access_social" style="text-align: center;">
+            <a href="#"><img src="/images/login/kakao_login_medium_wide.png" width="286" alt=""></a>
+        </div>
+        <div class="divider"><span>Or</span></div>
+        <div class="form-group">
+            <label for="email">이메일</label>
+            <input th:value="${loginForm.email}" type="email" id="email" name="email" class="form-control" required>
+            <i class="icon_mail_alt"></i>
+            <div id="emailCheck" class="registerCheck"></div>
+        </div>
+        <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" name="password" class="form-control" required>
+            <i class="icon_lock_alt"></i>
+            <div id="passwordCheck" class="registerCheck"></div>
+        </div>
+        <div class="clearfix add_bottom_30">
+            <div class="checkboxes float-start">
+                <label for="remember" class="container_check">이메일 기억
+                    <input th:checked="${loginForm.remember}" type="checkbox" id="remember" name="remember">
+                    <span class="checkmark"></span>
+                </label>
             </div>
-            <div class="divider"><span>Or</span></div>
-            <div class="form-group">
-                <label for="email">이메일</label>
-                <th:block></th:block>
-                <input th:field="*{email}" type="email" class="form-control" name="email" id="email" required>
-                <i class="icon_mail_alt"></i>
-            </div>
-            <div class="form-group">
-                <label for="password">비밀번호</label>
-                <input th:field="*{password}" type="password" class="form-control" name="password" id="password" required>
-                <i class="icon_lock_alt"></i>
-            </div>
-            <div class="clearfix add_bottom_30">
-                <div class="checkboxes float-start">
-                    <label class="container_check">이메일 기억
-                        <input th:field="*{remember}" type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-                <div class="float-end mt-1"><a id="forgot" href="javascript:void(0);">비밀번호를 잊으셨나요?</a></div>
-            </div>
-            <button class="btn_1 rounded full-width">로그인</button>
-            <div class="text-center add_top_10">LETS 와 함께 하실까요? <strong><a th:href="@{/member/register}" href="/register.html">회원가입</a></strong>
-            </div>
-        </form>
+        </div>
+        <input class="btn_1 rounded full-width login_btn" value="로그인">
+        <div class="text-center add_top_10">LETS 와 함께 하실까요?
+            <strong><a th:href="@{/member/register}" href="/register.html">회원가입</a></strong>
+        </div>
         <div class="copy">© LETS</div>
     </aside>
 </div>
 <!-- /login -->
 
-<th:block th:replace="~{/common/layout/fragments/common_scripts :: scripts}">
+<script src="/js/common_scripts.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/custom/login.js"></script>
 
-</th:block>
+<script th:inline="javascript">
+    function handleCredentialResponse(response) {
+        console.log("Encoded JWT ID token: " + response.credential);
+    }
+
+    window.onload = function () {
+        google.accounts.id.initialize({
+            client_id: "32263468491-ka20sqkvcqukc86579f4n9a6oujf6r6k.apps.googleusercontent.com",
+            callback: handleCredentialResponse
+        });
+        google.accounts.id.renderButton(
+            document.getElementById("buttonDiv"),
+            {theme: "outline", size: "large"}  // customization attributes
+        );
+        google.accounts.id.prompt(); // also display the One Tap dialog
+    }
+</script>
 
 </body>
 

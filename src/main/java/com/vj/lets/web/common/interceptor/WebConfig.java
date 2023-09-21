@@ -30,12 +30,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // 세부 컨트롤러 실행 전 로그인 체크 인터셉터 등록
-        registry.addInterceptor(new LoginCheckInterceptor())
-                .order(1)
-                .addPathPatterns(loginEssential)
-                .excludePathPatterns(loginNotEssential);
-
         // 로그인 모달 창 인터셉터 등록
         registry.addInterceptor(new LoginModalInterceptor())
                 .order(3)

@@ -296,7 +296,7 @@ public class AdminController {
             type = "latest";
         }
         int selectPage = Integer.parseInt(page);
-        int count = cafeService.getCountCafeForAdmin(type);
+        int count = cafeService.getCountCafeForAdmin();
         PageParams pageParams = PageParams.builder()
                 .elementSize(ELEMENT_SIZE)
                 .pageSize(PAGE_SIZE)

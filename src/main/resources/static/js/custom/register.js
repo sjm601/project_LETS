@@ -1,17 +1,12 @@
-const mappingUrl = '/member/register';
-const redirectUrl = '/member/login';
-
-const emailValid = (email) => {
+function emailValid(email) {
     return /^[A-Za-z0-9.\-_]+@([A-Za-z0-9-]+\.)+[A-Za-z]{2,6}$/.test(email)
-};
-
-const passwordValid = (password) => {
+}
+function passwordValid(password) {
     return /^[a-z0-9_-]{4,18}$/.test(password)
-};
-
-const nameValid = (name) => {
+}
+function nameValid(name) {
     return /^[가-힣]{2,10}$/.test(name)
-};
+}
 
 const email = document.querySelector('#email');
 const password = document.querySelector('#password');
@@ -72,11 +67,11 @@ name.addEventListener('change', () => {
     }
 })
 
-document.querySelector('button.regist_btn').addEventListener('click', event => {
+document.querySelector('input.regist_btn').addEventListener('click', event => {
     event.preventDefault();
 
     if (emailCheck && passwordCheck && passwordConfirmCheck && nameCheck) {
-        fetch(mappingUrl, {
+        fetch('/member/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -91,7 +86,7 @@ document.querySelector('button.regist_btn').addEventListener('click', event => {
         }).then(message => {
             if (message === 'success') {
                 alert("회원가입이 완료되었습니다.");
-                location.href = redirectUrl;
+                location.href = '/member/login';
             } else if (message === 'fail') {
                 alert('회원가입이 정상적으로 진행되지 않았습니다. 다시 시도해주세요.');
             } else if (message === 'duplicate') {

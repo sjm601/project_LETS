@@ -23,6 +23,14 @@ public interface MemberService {
     public void register(Member member);
 
     /**
+     * 회원 가입 시 이메일 중복 여부 조회
+     *
+     * @param email 이메일
+     * @return 중복 여부
+     */
+    public boolean checkEmail(String email);
+
+    /**
      * 로그인 시 회원 조회
      *
      * @param email    이메일
@@ -30,14 +38,6 @@ public interface MemberService {
      * @return 회원 정보
      */
     public Member isMember(String email, String password);
-
-    /**
-     * 회원 가입 시 이메일 중복 여부 조회
-     *
-     * @param email 이메일
-     * @return 중복 여부
-     */
-    public boolean isEmail(String email);
 
     /**
      * 전체 회원 목록 조회

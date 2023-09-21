@@ -1,11 +1,27 @@
 /*============================================================================================*/
 /* Your custom styles below */
 /*============================================================================================*/
+#loginModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+#logoutModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
 #loginModal .modal-dialog .modal-content .modal-header h4 {
     margin: 0;
 }
 
-#loginModal .modal-dialog .modal-content .modal-body form .form-group i {
+#loginModal .modal-dialog .modal-content .modal-body .sign-in-wrapper .form-group i {
     font-size: 21px;
     font-size: 1.3125rem;
     position: absolute;
@@ -18,7 +34,7 @@
     font-weight: 400 !important;
 }
 
-#loginModal .modal-dialog .modal-content .modal-body form .form-group input {
+#loginModal .modal-dialog .modal-content .modal-body .sign-in-wrapper .form-group input {
     padding-left: 40px !important;
 }
 
@@ -26,4 +42,8 @@ input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+.registerCheck {
+    color: red;
 }
