@@ -195,16 +195,11 @@
                                                 <div class="rev-content">
                                                     <div class="rating">
                                                             <div th:switch="${review['rating']}">
-                                                            <div th:case="5"><i class="icon_star voted"></i><i class="icon_star voted"></i>
-                                                                <i class="icon_star voted"></i> <i class="icon_star voted"></i><i class="icon_star voted"></i></div>
-                                                            <div th:case="4"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i>
-                                                                <i class="icon_star voted"></i><i class="icon_star"></i></div>
-                                                            <div th:case="3"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i>
-                                                                <i class="icon_star"></i><i class="icon_star"></i></div>
-                                                            <div th:case="2"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
-                                                                <i class="icon_star"></i><i class="icon_star"></i></div>
-                                                            <div th:case="*"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i>
-                                                                <i class="icon_star voted"></i><i class="icon_star"></i></div>
+                                                            <div th:case="5"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i></div>
+                                                            <div th:case="4"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i></div>
+                                                            <div th:case="3"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i></div>
+                                                            <div th:case="2"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></div>
+                                                            <div th:case="*"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i></div>
                                                             </div>
                                                     </div>
                                                     <div class="rev-info mb-1" th:text="|${review['writerName']} - ${review['writeDate']}|">
@@ -241,6 +236,42 @@
                                         <!-- /review-box -->
                                     </ul>
                                     <!-- /review-box -->
+                                    <div>
+                                        <ul class="pagination h-100 justify-content-center align-items-center">
+                                            <th:block th:if="${pagination.showFirst}">
+                                                <li class="page-item">
+                                                    <a th:href="@{|/cafe/{id}?page=1(id=${Cafe['id']})|}" class="page-link">처음으로</a>
+                                                </li>
+                                            </th:block>
+                                            <th:block th:if="${pagination.showPrevious}">
+                                                <li class="page-item">
+                                                    <a th:href="@{|/cafe/{id}?page=${pagination.previousStartPage}(id=${Cafe['id']})|}" class="page-link">이전</a>
+                                                </li>
+                                            </th:block>
+                                            <th:block th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
+                                                <th:block th:if="${i == pagination.params.requestPage}">
+                                                    <li class="page-item active">
+                                                        <a th:text="${i}" class="page-link" href="#">1</a>
+                                                    </li>
+                                                </th:block>
+                                                <th:block th:if="${i != pagination.params.requestPage}">
+                                                    <li class="page-item">
+                                                        <a th:text="${i}" th:href="@{|/cafe/{id}?page=${i}(id=${Cafe['id']})|}" class="page-link" href="#">2</a>
+                                                    </li>
+                                                </th:block>
+                                            </th:block>
+                                            <th:block th:if="${pagination.showNext}">
+                                                <li class="page-item">
+                                                    <a th:href="@{|/cafe/{id}?page=${pagination.nextStartPage}(id=${Cafe['id']})|}" class="page-link">다음</a>
+                                                </li>
+                                            </th:block>
+                                            <th:block th:if="${pagination.showLast}">
+                                                <li class="page-item">
+                                                    <a th:href="@{|/cafe/{id}?page=${pagination.totalPages}|}" class="page-link">끝으로</a>
+                                                </li>
+                                            </th:block>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <!-- /review-container -->
                             </section>
@@ -432,7 +463,6 @@
                 fetch(url)
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data);
                         const roomListSelected = document.querySelector('#roomName');
                         roomListSelected.innerHTML = '';
 
@@ -462,11 +492,11 @@
             function updateRoomPrice() {
                 const selectedOption = $('#roomName').find('option:selected');
                 const selectedRoomPrice = selectedOption.data('price');
-                console.log(selectedRoomPrice);
+                const formattedPrice = selectedRoomPrice.toLocaleString();
                 const selectedRoomPriceElement = document.querySelector('#selectedRoomPrice');
                 const selectedRoomPriceElement2 = document.querySelector('#calculateRoomPrice');
-                selectedRoomPriceElement.innerText = selectedRoomPrice + '원';
-                selectedRoomPriceElement2.innerText = selectedRoomPrice;
+                selectedRoomPriceElement.innerText = formattedPrice + '원';
+                selectedRoomPriceElement2.innerText = formattedPrice;
             }
 
             //룸 선택에 따른 최대 인원수로 MAX
@@ -605,29 +635,14 @@
                     const selectCalculTime = document.querySelector('#calculateTime');
                     selectCalculTime.innerHTML = '';
                     selectCalculTime.innerHTML += endTimmmme.value - startTimmmme.value;
-                    const totalPrice = document.querySelector('#totalPrice');
-                    totalPrice.innerHTML = '';
-                    totalPrice.innerHTML += document.querySelector('#calculateRoomPrice').innerHTML * selectCalculTime.innerHTML;
+                    const totalPrice = document.querySelector('#calculateRoomPrice').innerHTML.replace(/,/g, "") * selectCalculTime.innerHTML;
+                    const formatPrice = totalPrice.toLocaleString();
+                    const totalPriceInput = document.querySelector('#totalPrice');
+                    totalPriceInput.innerHTML = '';
+                    totalPriceInput.innerHTML += formatPrice;
 
                 });
             });
-        </script>
-
-        <script th:inline="javascript">
-            window.onload = function () {
-                var showAlertParam = new URLSearchParams(window.location.search).get("error");
-                if (showAlertParam === "true") {
-                    showAlert();
-                }
-            };
-
-            function showAlert() {
-                Swal.fire({
-                    icon: 'error',
-                    title: '이미 예약된 시간대 입니다.',
-                    text: '다른 시간을 선택하세요.'
-                });
-            }
         </script>
         <!-- INPUT QUANTITY  -->
         <script src="/js/input_qty.js"></script>

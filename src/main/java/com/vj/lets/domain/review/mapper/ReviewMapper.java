@@ -36,9 +36,11 @@ public interface ReviewMapper {
      * 카페 ID로 리뷰 목록 조회
      *
      * @param cafeId 카페 ID
+     * @param pageParams 페이징
      * @return 리뷰 목록
      */
-    public List<Map<String, Object>> readByCafe(int cafeId);
+    public List<Map<String, Object>> readByCafe(@Param("cafeId") int cafeId,
+                                                @Param("pageParams") PageParams pageParams);
 
     /**
      * 카페별 리뷰점수 개수 통계 조회

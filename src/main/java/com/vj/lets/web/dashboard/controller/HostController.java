@@ -193,6 +193,14 @@ public class HostController {
         return "redirect:/host/room";
     }
 
+    /**
+     * 호스트 카페의 예약 리스트 페이지
+     * @param page
+     * @param type
+     * @param request
+     * @param model
+     * @return 호스트의 카페의 예약 리스트
+     */
     @GetMapping("/bookings")
     public String hostBookingList(@RequestParam(value = "page", required = false) String page,
                                   @RequestParam(value = "type", required = false) String type,
@@ -231,6 +239,14 @@ public class HostController {
     }
 
 
+    /**
+     * 호스트 카페에 등록된 리뷰 출력
+     * @param page
+     * @param type
+     * @param request
+     * @param model
+     * @return 호스트 카페에 등록된 리뷰 출력 (guest의 리뷰만 출력됨)
+     */
     @GetMapping("/reviews")
     public String hostreviewList(@RequestParam(value = "page", required = false) String page,
                                  @RequestParam(value = "type", required = false) String type,
@@ -293,6 +309,12 @@ public class HostController {
         return "success";
     }
 
+    /**
+     * 호스트 카페의 예약에 대한 종합 데이터 출력
+     * @param request
+     * @param model
+     * @return 호스트 카페의 예약에 대한 종합 데이터 (예약 취소 제외)
+     */
     @GetMapping("/stats")
     public String hostTotalData(HttpServletRequest request, Model model){
         HttpSession session = request.getSession();

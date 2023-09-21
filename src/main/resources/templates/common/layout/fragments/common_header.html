@@ -15,6 +15,36 @@
             </a>
         </div>
         <!-- /top_menu -->
+        <ul id="top_menu">
+            <th:block th:if="${session.loginMember} == null">
+                <li>
+                    <span>
+                        <a href="#sign-in-dialog" id="sign-in" title="LogIn">
+                            <i class="fa-solid fa-arrow-right-to-bracket fa-2xl me-1"></i>
+                            로그인
+                        </a>
+                    </span>
+                </li>
+            </th:block>
+            <th:block th:if="${session.loginMember} != null">
+                <li>
+                        <span>
+                            <a th:href="@{/mypage}" title="MY PAGE">
+                                <i class="fa-regular fa-circle-user fa-2xl me-1"></i>
+                                내 정보
+                            </a>
+                        </span>
+                </li>
+                <li>
+                        <span>
+                            <a href="#sign-in-dialog" id="sign-in" title="LogIn">
+                                <i class="fa-solid fa-arrow-right-from-bracket fa-2xl me-1"></i>
+                                로그아웃
+                            </a>
+                        </span>
+                </li>
+            </th:block>
+        </ul>
         <a href="#menu" class="btn_mobile">
             <div class="hamburger hamburger--spin" id="hamburger">
                 <div class="hamburger-box">
@@ -24,44 +54,16 @@
         </a>
         <nav id="menu" class="main-menu">
             <ul>
-                <li><span><a th:href="@{/}" href="#">Home</a></span></li>
-                <li><span><a th:href="@{/cafe}" href="/cafe-list.html">StudyCafe</a></span></li>
-                <li><span><a href="#0">StudyGroup</a></span>
+                <li><span><a th:href="@{/}" href="#">홈</a></span></li>
+                <li><span><a th:href="@{/cafe}" href="/cafe-list.html">스터디 카페</a></span></li>
+                <li><span><a href="#0">스터디 그룹</a></span>
                     <ul>
-                        <li><a th:href="@{/group/mygroup}" href="#">My Group</a></li>
-                        <li><a th:href="@{/group}" href="#">StudyList</a></li>
+                        <li><a th:href="@{/group/mygroup}" href="#">나의 스터디</a></li>
+                        <li><a th:href="@{/group}" href="#">다른 스터디</a></li>
                     </ul>
                 </li>
-                <li><span><a th:href="@{/support/contact}" href="/contact">Contact</a></span></li>
-                <li><span><a th:href="@{/support/help}" href="/help.html">Support</a></span></li>
-                <th:block th:if="${session.loginMember} == null">
-                    <li>
-                    <span>
-                        <a data-bs-toggle="modal" data-bs-target="#loginModal" href="#" title="LOG IN">
-                            <i class="fa-solid fa-arrow-right-to-bracket fa-2xl me-1"></i>
-                            LOGIN
-                        </a>
-                    </span>
-                    </li>
-                </th:block>
-                <th:block th:if="${session.loginMember} != null">
-                    <li>
-                        <span>
-                            <a th:href="@{/mypage}" title="MY PAGE">
-                                <i class="fa-regular fa-circle-user fa-2xl me-1"></i>
-                                MyPage
-                            </a>
-                        </span>
-                    </li>
-                    <li>
-                        <span>
-                            <a th:href="@{/member/logout}" title="LOG OUT">
-                                <i class="fa-solid fa-arrow-right-from-bracket fa-2xl me-1"></i>
-                                LOGOUT
-                            </a>
-                        </span>
-                    </li>
-                </th:block>
+                <li><span><a th:href="@{/support/contact}" href="/contact">입점문의</a></span></li>
+                <li><span><a th:href="@{/support/help}" href="/help.html">고객지원</a></span></li>
             </ul>
         </nav>
     </header>

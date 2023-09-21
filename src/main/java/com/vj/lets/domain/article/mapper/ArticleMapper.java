@@ -47,14 +47,14 @@ public interface ArticleMapper {
      * @param pageParams : 페이지
      * @return
      */
-    public List<Map<String, Object>> findByPage (PageParams pageParams);
+    public List<Map<String, Object>> findByPage (@Param("pageParams") PageParams pageParams, @Param("groupId")int groupId);
 
     /**
      * 페이지 처리(검색 값 포함)에 필요한 게시글의 갯수
      * @param keyword : 검색어
      * @return : 검색된 게시글 갯수
      */
-    public int getCountAll(@Param("keyword") String keyword);
+    public int getCountAll(@Param("keyword") String keyword, @Param("groupId")int groupId);
 
     /**
      * 게시글 번호로 해당 게시글 찾기 (삭제, 수정 시 필요)

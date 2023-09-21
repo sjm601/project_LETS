@@ -72,8 +72,8 @@ public class ArticleServiceImpl implements ArticleService {
      * @return
      */
     @Override
-    public List<Map<String, Object>> findByPage(PageParams pageParams) {
-        return articleMapper.findByPage(pageParams);
+    public List<Map<String, Object>> findByPage(PageParams pageParams, int groupId) {
+        return articleMapper.findByPage(pageParams, groupId);
     }
 
     /**
@@ -82,8 +82,8 @@ public class ArticleServiceImpl implements ArticleService {
      * @return : 검색된 게시글 갯수
      */
     @Override
-    public int getCountAll(String keyword) {
-        return articleMapper.getCountAll(keyword);
+    public int getCountAll(String keyword, int groupId) {
+        return articleMapper.getCountAll(keyword, groupId);
     }
 
     /**

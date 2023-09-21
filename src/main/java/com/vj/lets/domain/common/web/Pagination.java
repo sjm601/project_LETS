@@ -16,6 +16,7 @@ public class Pagination {
 	
 	// 페이징 계산 위한 파라메터
 	private PageParams params;
+	private PageParamsForCafe paramsForCafe;
 	
 	// 계산 결과 저장을 위한 필드
 	// 전체 페이지 수
@@ -33,6 +34,11 @@ public class Pagination {
 	
 	public Pagination(PageParams params) {
 		this.params = params;
+		compute();
+	}
+
+	public Pagination(PageParamsForCafe paramsForCafe) {
+		this.paramsForCafe = paramsForCafe;
 		compute();
 	}
 

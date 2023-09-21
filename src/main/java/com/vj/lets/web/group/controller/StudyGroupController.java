@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vj.lets.domain.article.dto.Article;
 import com.vj.lets.domain.article.dto.ArticleComment;
+import com.vj.lets.domain.article.dto.ArticleCreateForm;
 import com.vj.lets.domain.article.service.ArticleCommentService;
 import com.vj.lets.domain.article.service.ArticleService;
 import com.vj.lets.domain.group.dto.*;
@@ -15,6 +16,7 @@ import com.vj.lets.domain.location.service.SiGunGuService;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +69,18 @@ public class StudyGroupController {
      */
     @Value("${group.imageDBPath}")
     private String imageDBPath;
+
+    /**
+     * 실제 게시글 이미지 경로
+     */
+    @Value("${article.imageLocation}")
+    private String ArticleImageLocation;
+
+    /**
+     * DB에 입력할 게시글 이미지 경로
+     */
+    @Value("${article.imageDBPath}")
+    private String ArticleImageDBPath;
 
     /**
      * 스터디 전체 리스트 화면 출력
@@ -142,16 +157,16 @@ public class StudyGroupController {
         model.addAttribute("groupMember", groupMember);
         model.addAttribute("contactList", contactList);
 
-        // 이한솔
+        // 게시글 화면 (이한솔)
         int elementSize = 5;
         int pageSize = 5;
-
-        int count = articleService.getCountAll(keyword);
+        int count = articleService.getCountAll(keyword, id);
 
         if (page == null || page.isEmpty()) {
             page = "1";
         }
-
+        log.info("카운트 {}", count);
+        log.info("뭐가문젠데 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ{}",keyword);
         int selectPage = Integer.parseInt(page);
         PageParams pageParams = PageParams.builder()
                 .elementSize(elementSize)
@@ -162,19 +177,26 @@ public class StudyGroupController {
                 .build();
 
         Pagination pagination = new Pagination(pageParams);
-        model.addAttribute(pagination);
+        model.addAttribute("pagination",pagination);
+        log.info("페이지네이션 ------{}",pagination);
 
-        List<Map<String, Object>> articleList = articleService.findByPage(pageParams);
+        List<Map<String, Object>> articleList = articleService.findByPage(pageParams, id);
+        log.info("articleList ------{}",articleList);
         model.addAttribute("articleList", articleList);
-
+        log.info("articleList ------{}",articleList);
         List<Integer> articleIds = new ArrayList<>();
         for (Map<String, Object> articleMap : articleList) {
             int articleId = Integer.parseInt(articleMap.get("ID").toString());
             articleIds.add(articleId);
         }
-
+        //해당 게시글의 댓글 목록
         List<Map<String, Object>> articleComments = articleService.findComment(articleIds);
         model.addAttribute("commentList", articleComments);
+
+        // 최근 게시글 목록
+        List<Article> recentArticles = articleService.getRecentArticles();
+        model.addAttribute("recentArticleList",recentArticles);
+
 
         return "common/group/mygroup";
     }
@@ -489,24 +511,54 @@ public class StudyGroupController {
      * 게시글 등록
      *
      * @author VJ특공대 이한솔
-     * @param article 게시글
+     * @param createForm 게시글 등록 폼 객체
      * @param request HttpServletRequest 객체
      * @param model model 인터페이스
      * @return 스터디 그룹 화면
      */
     @PostMapping("/{id}/article")
-    public String create(@ModelAttribute Article article, HttpServletRequest request, Model model) {
+    public String create(@ModelAttribute ArticleCreateForm createForm,@PathVariable int groupId, MultipartFile imagePath, HttpServletRequest request, Model model) throws IOException {
         HttpSession session = request.getSession();
-
         Member loginMember = (Member) session.getAttribute("loginMember");
         if (loginMember != null) {
             int memberId = loginMember.getId(); // Member 객체에서 member_id를 가져옵니다.
 
-            // 2. ArticleDto에 로그인한 회원의 ID 설정
-            article.setMemberId(memberId);
+            log.info(" 담으려는 아티클 폼 {}", createForm);
+            log.info("이미지 패스ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ{}", imagePath);
 
-            // 3. ArticleService를 호출하여 article 테이블에 값을 삽입
+            Article article = Article.builder()
+                    .title(createForm.getTitle())
+                    .content(createForm.getContent())
+                    .memberId(memberId)
+                    .groupId(createForm.getGroupId())
+                    .build();
+            log.info("아티클 객체에 넣어둔 정보 확인 ======{}", article);
+            if (imagePath == null) {
+                article.setImagePath(null);
+                log.info("이미지패스 null 일때 {}", article);
+            } else if (!imagePath.isEmpty()) {
+                // 이미지 폴더에 저장
+                // 업로드 이미지 확장자 가져오기
+                String imageExtension = StringUtils.getFilenameExtension(imagePath.getOriginalFilename());
+                // 업로드 한 이미지 다운로드 받을 위치 설정
+                StringBuilder imageDir = new StringBuilder();
+                imageDir.append(ArticleImageLocation).append(loginMember.getId()).append(".").append(imageExtension);
+                File uploadDir = new File(imageDir.toString());
+                // 폴더 없으면 생성
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdirs();
+                }
+                imagePath.transferTo(uploadDir);
+
+                StringBuilder imagePathDB = new StringBuilder();
+                imagePathDB.append(ArticleImageDBPath).append(loginMember.getId()).append(".").append(imageExtension);
+                article.setImagePath(imagePathDB.toString());
+            }
+
+            log.info("-----------create 전 아티클 {}", article);
             articleService.create(article);
+            log.info("생성 후 아티클 {}", article);
+
         }
         return "redirect:/group/{id}";
     }
@@ -515,17 +567,36 @@ public class StudyGroupController {
      * 게시글 삭제
      * 
      * @author VJ특공대 이한솔
-     * @param id 게시글 아이디
+     * @param articleId 게시글 아이디
      * @param article 게시글
      * @param model model 인터페이스
      * @return 스터디 그룹 화면
      */
     @PostMapping("/{id}/article/delete")
-    public String delete(@PathParam("id") int id, @ModelAttribute Article article, Model model) {
-        Article targetArticle = articleService.findById(id);
+    public String delete(@PathVariable("id") int articleId, @ModelAttribute Article article, HttpServletRequest request,
+                         HttpServletResponse response, Model model) {
+        HttpSession session = request.getSession();
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        Article targetArticle = articleService.findById(articleId);
+        log.info("444444444444444444444444444444{}",targetArticle);
+        int articleMemberId = targetArticle.getMemberId();
+        log.info("{}",articleMemberId);
+        log.info("{}",loginMember.getId());
 
-        model.addAttribute("article", targetArticle);
-        articleService.delete(id);
+        if (loginMember.getId() == articleMemberId) {
+            articleService.delete(articleId);
+        }else {
+
+            try {
+                response.setContentType("text/html; charset=utf-8");
+                PrintWriter w = response.getWriter();
+                w.write("<script>alert('글쓴이만 삭제할 수 있습니다..');location.href='/group';</script>");
+                w.flush();
+                w.close();
+            } catch (Exception e) {
+                throw new RuntimeException("오류 메세지");
+            }
+        }
 
         return "redirect:/group/{id}";
     }
@@ -539,11 +610,29 @@ public class StudyGroupController {
      * @return 스터디 그룹 화면
      */
     @PostMapping("/{id}/article/update")
-    public String update(@ModelAttribute Article article, Model model) {
-        model.addAttribute("targetArticle", article);
-        
-        articleService.update(article);
-        model.addAttribute("article", article);
+    public String update(@ModelAttribute Article article, HttpServletRequest request,
+                         HttpServletResponse response, Model model) {
+        HttpSession session = request.getSession();
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        Article targetArticle = articleService.findById(article.getId());
+        int articleMemberId = targetArticle.getMemberId();
+
+        if (loginMember.getId() == articleMemberId) {
+            model.addAttribute("targetArticle", article);
+            articleService.update(article);
+            model.addAttribute("article", article);
+        }else {
+
+            try {
+                response.setContentType("text/html; charset=utf-8");
+                PrintWriter w = response.getWriter();
+                w.write("<script>alert('글쓴이만 수정할 수 있습니다..');location.href='/group';</script>");
+                w.flush();
+                w.close();
+            } catch (Exception e) {
+                throw new RuntimeException("오류 메세지");
+            }
+        }
         
         return "redirect:/group/{id}";
     }

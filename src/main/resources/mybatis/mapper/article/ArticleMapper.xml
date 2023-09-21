@@ -33,11 +33,12 @@
     </update>
 
     <!-- 페이징 계산(검색값 포함)에 필요한 게시글 전체 갯수 -->
-    <select id="getCountAll" parameterType="object" resultType="int">
+    <select id="getCountAll" resultType="int">
         SELECT COUNT(a.id) AS "cnt"
         FROM article a
         JOIN MEMBER m ON a.MEMBER_ID = m.ID
-        WHERE a.STATUS = 'enabled'
+        JOIN STUDY_GROUP sg ON a.STUDY_GROUP_ID = sg.ID
+        WHERE a.STATUS = 'enabled' AND a.STUDY_GROUP_ID = #{groupId}
         <if test="keyword != null">
             AND (
             m.name LIKE '%' || #{keyword} || '%'
@@ -48,7 +49,7 @@
     </select>
 
     <!-- 게시글 목록 (페이징 처리 및 검색값 , 댓글 포함) -->
-    <select id="findByPage" parameterType="PageParams" resultType="map">
+    <select id="findByPage" resultType="map">
         SELECT
         id,
         title,
@@ -59,7 +60,7 @@
         FROM (
         SELECT
         id,
-        CEIL(rownum / #{elementSize}) request_page,
+        CEIL(rownum / #{pageParams.elementSize}) request_page,
         title,
         content,
         writer,
@@ -75,19 +76,20 @@
         a.image_path AS image_path
         FROM article a
         JOIN member m ON a.member_id = m.id
-        WHERE a.status = 'enabled'
-        <if test="keyword != null">
-            AND (
-            m.name LIKE '%' || #{keyword} || '%'
-            OR a.title LIKE '%' || #{keyword} || '%'
-            OR a.content LIKE '%' || #{keyword} || '%'
-            )
-        </if>
+        JOIN STUDY_GROUP sg on a.STUDY_GROUP_ID = sg.ID
+        WHERE
+        a.status = 'enabled' AND a.STUDY_GROUP_ID = #{groupId}
+        <where>
+            <if test="pageParams.keyword != null">AND m.name LIKE '%' || #{pageParams.keyword} || '%'</if>
+            <if test="pageParams.keyword != null">OR a.title LIKE '%' || #{pageParams.keyword} || '%'</if>
+            <if test="pageParams.keyword != null">OR a.content LIKE '%' || #{pageParams.keyword} || '%'</if>
+        </where>
         ORDER BY a.regdate DESC
         )
         )
-        WHERE request_page = #{requestPage}
+        WHERE request_page = #{pageParams.requestPage}
     </select>
+
 
     <!-- 게시글 찾기 -->
     <select id="findById" parameterType="int" resultType="Article">
@@ -115,10 +117,13 @@
         FROM article_comment ac
         JOIN article a ON a.id = ac.article_id
         JOIN member m ON m.id = ac.MEMBER_ID
-        WHERE ac.STATUS='enabled' AND a.id IN
-        <foreach collection="list" item="articleId" open="(" close=")" separator=",">
-            #{articleId}
-        </foreach>
+        WHERE ac.STATUS='enabled'
+        <if test="list != null and list.size() > 0">
+            AND a.id IN
+            <foreach collection="list" item="articleId" open="(" close=")" separator=",">
+                #{articleId}
+            </foreach>
+        </if>
         ORDER BY ac.regdate ASC
     </select>
 

@@ -4,6 +4,7 @@ import com.vj.lets.domain.cafe.dto.Cafe;
 import com.vj.lets.domain.cafe.dto.CafeSearch;
 import com.vj.lets.domain.common.web.PageParams;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -47,8 +48,11 @@ public interface CafeMapper {
 
     /**
      * 카페 전체리스트 출력
+     *
+     * @param pageParams 페이지
+     * @return 카페 전체 리스트
      */
-    public List<Map<String, Object>> findByAll();
+    public List<Map<String, Object>> findByAll(PageParams pageParams);
 
     /**
      * 누적 예약이 가장 많은 카페 6개 출력
@@ -59,7 +63,10 @@ public interface CafeMapper {
     /**
      * 카패 검색 결과 출력
      */
-    public List<Map<String, Object>> findBySearch(CafeSearch cafeSearch);
+    public List<Map<String, Object>> findBySearch(@Param("cafeSearch") CafeSearch cafeSearch,
+                                                  @Param("pageParams") PageParams pageParams,
+                                                  @Param("currentY") double currentY,
+                                                  @Param("currentX") double currentX);
 
     /**
      * 전체 입점 카페 수 조회
@@ -68,7 +75,7 @@ public interface CafeMapper {
      * @return 전체 입점 카페 수
      * @see com.vj.lets.web.dashboard.controller.AdminController
      */
-    public int readCountAllForAdmin(String type);
+    public int readCountAllForAdmin();
 
     /**
      * 전체 카페 목록 조회 (관리자용)

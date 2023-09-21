@@ -120,8 +120,9 @@ class ReservationServiceTest {
     void getResInfoTest() {
         // given
         int findId = 2;
+        int memberId =22;
         // when
-        Map<String ,Reservation> reservation = reservationService.getResInfo(findId);
+        Map<String ,Reservation> reservation = reservationService.getResInfo(findId,memberId);
         // then
         log.info("예약 검색 완료:{}",reservation);
         assertThat(reservation).isNotNull();

@@ -17,7 +17,10 @@ import java.util.Map;
 @Mapper
 public interface ReservationMapper {
 
-    //예약 생성
+    /**
+     * 예약 등록
+     * @param reservation 예약
+     */
     public void create(Reservation reservation);
 
     /**
@@ -28,12 +31,15 @@ public interface ReservationMapper {
     public void cancel(int id);
 
 
-    // 결제에 필요한 예약 정보 받아오기
+    /**
+     * 예약에 필요한 예약 정보 가져오기(reservation 페이지)
+     * @param id 예약 ID
+     * @return
+     */
     public Reservation findById(int id);
 
     /**
      * 예약 전체 리스트 조회
-     *
      * @return 예약 리스트
      */
     public List<Reservation> findByAll();
@@ -57,37 +63,83 @@ public interface ReservationMapper {
      * @see com.vj.lets.web.dashboard.controller.MypageController
      */
     public List<Map<String, Object>> findByMember(@Param("memberId") int memberId, @Param("pageParams") PageParams pageParams);
-
-    //카페 id로 예약 전체 리스트 조회
+    
+    /**
+     * 카페 id로 예약 전체 리스트 조회
+     * @param cafeId 카페 아이디
+     * @return 호스트 카페에 대한 전체 예약 리스트
+     */
     public List<Reservation> findCafeResList(int cafeId);
 
-    //매달 총 예약 건 수 가져오기
+    /**
+     * 매달 총 예약 목록 수 및 정보 가져오기 (호스트 대시보드 사용)
+     * @param cafeId 카페 아이디
+     * @return 호스트 대시보드 그래프에서 사용
+     */
     public List<Map<String, Object>> findCountMonthRes(int cafeId);
 
-    //d
+    /**
+     * 예약에 관한 총 데이터 출력 (호스트 대시보드 테이블 페이지에서 사용)
+     * @param cafeId
+     * @return 예약 상태가 cancel 이 아닌 데이터 리스트 출력
+     */
     public List<Map<String, Reservation>> findTotalData(int cafeId);
 
+    
 
-    //예약에 필요한 예약 정보 가져오기
-    public Map<String, Reservation> findResInfo(int id);
+    /**
+     * 예약에 필요한 예약 정보 가져오기
+     * @param id 예약 아이디
+     * @param memberId 멤버 아이디
+     * @return 예약 정보 확인 페이지에서 보여줄 목록들 출력
+     */
+    public Map<String, Reservation> findResInfo(@Param("id") int id,@Param("memberId") int memberId);
 
-    //예약 - 결제 이동을 위해 필요
+    /**
+     * 예약 페이지에서 결제로 이동하기 위해 필요함
+     * @param memberId 멤버아이디
+     * @return 가장 최근 예약 시도된 예약 아이디
+     */
     public int findNowRes(int memberId);
 
-    //예약 중복 방지
+    /**
+     * 예약 중복 방지를 위한 카운트
+     * @param roomId
+     * @param bookingDate
+     * @param startTime
+     * @param endTime
+     * @return 카운트가 1보다 클 시 중복
+     */
     public int checkDuplicateReservation(@Param("roomId") int roomId, @Param("bookingDate") String bookingDate, @Param("startTime") int startTime, @Param("endTime") int endTime);
 
-    //예약 중복 방지
+    /**
+     * 예약 중복을 막기 위해 카페 디테일에서 사용
+     * @param roomId
+     * @param bookingDate
+     * @return 예약 중복 방지를 위한 시작시간, 종료 시간 출력
+     */
     public List<Reservation> checkDuplicateResTime(@Param("roomId") int roomId, @Param("bookingDate") String bookingDate);
 
 
-    //예약 삭제
+    /**
+     * 예약 삭제 (예약 정보 확인  페이지 - 취소 버튼)
+     * @param id
+     * @param memberId
+     */
     public void delete(@Param("id") int id, @Param("memberId") int memberId);
-    
-    //호스트 예약건수 달마다 출력
+
+    /**
+     * 호스트의 예약 건수 달마다 출력 ( 호스트 대시보드 그래프에서 사용)
+     * @param cafeId
+     * @return 호스트의 매달 예약 건순
+     */
     public List<Map<String, Object>> readCountByResMonth(int cafeId);
-    
-    //호스트의 매달 매출 출력
+
+    /**
+     * 호스트의 월 매출 (호스트 대시보드 그래프에서 사용)
+     * @param cafeId
+     * @return 호스트의 월 매출
+     */
     public List<Map<String, Object>> readMonthlySales(int cafeId);
 
     /**

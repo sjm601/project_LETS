@@ -2,6 +2,7 @@ package com.vj.lets.web.article.controller;
 
 import com.vj.lets.domain.article.dto.Article;
 import com.vj.lets.domain.article.dto.ArticleComment;
+import com.vj.lets.domain.article.dto.ArticleCreateForm;
 import com.vj.lets.domain.article.service.ArticleCommentService;
 import com.vj.lets.domain.article.service.ArticleService;
 import com.vj.lets.domain.group.util.PageParams;
@@ -23,10 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -65,7 +62,7 @@ public class ArticleController {
     @GetMapping("/list/{page}")
     public String articleList(@PathVariable String page, @PathParam("keyword") String keyword,Model model) {
         // 페이징 처리 된 게시글 목록들 출력하는 코드
-        int count = articleService.getCountAll(keyword);
+//        int count = articleService.getCountAll(keyword);
         if (page == null || page.isEmpty()) {
             page = "1";
         }
@@ -74,43 +71,52 @@ public class ArticleController {
                 .elementSize(ELEMENT_SIZE)
                 .pageSize(PAGE_SIZE)
                 .requestPage(selectPage)
-                .rowCount(count)
+//                .rowCount(count)
                 .keyword(keyword)
                 .build();
         Pagination pagination = new Pagination(pageParams);
         model.addAttribute(pagination);
-        List<Map<String, Object>> articleList = articleService.findByPage(pageParams);
-        model.addAttribute("articleList", articleList);
+//        List<Map<String, Object>> articleList = articleService.findByPage(pageParams,id);
+//        model.addAttribute("articleList", articleList);
 
-        // 댓글 목록들 출력하는 코드
-        List<Integer> articleIds = new ArrayList<>();
-        for (Map<String, Object> articleMap : articleList) {
-            Integer articleId = ((BigDecimal) articleMap.get("ID")).intValue();
-            articleIds.add(articleId);
-        }
-        List<Map<String, Object>> articleComments = articleService.findComment(articleIds);
-        model.addAttribute("commentList", articleComments);
-
-        // 최근 게시글 목록 반환하는 코드
-        List<Article> recentArticles = articleService.getRecentArticles();
-        log.info("최근게시물 = ============================{}",recentArticles);
-        model.addAttribute("recentArticleList",recentArticles);
-        log.info("담긴 게시물 ------------------{}", recentArticles);
+//        // 댓글 목록들 출력하는 코드
+//        List<Integer> articleIds = new ArrayList<>();
+//        for (Map<String, Object> articleMap : articleList) {
+//            Integer articleId = ((BigDecimal) articleMap.get("ID")).intValue();
+//            articleIds.add(articleId);
+//        }
+//        List<Map<String, Object>> articleComments = articleService.findComment(articleIds);
+//        model.addAttribute("commentList", articleComments);
+//
+//        // 최근 게시글 목록 반환하는 코드
+//        List<Article> recentArticles = articleService.getRecentArticles();
+//        log.info("최근게시물 = ============================{}",recentArticles);
+//        model.addAttribute("recentArticleList",recentArticles);
+//        log.info("담긴 게시물 ------------------{}", recentArticles);
         return "common/group/mygroup";
     }
 
     //게시글 등록
     @PostMapping("/list/{page}")
-    public String create(@ModelAttribute Article article, @PathVariable String page, MultipartFile imagePath, HttpServletRequest request, Model model) throws IOException {
+    public String create(@ModelAttribute ArticleCreateForm createForm, @PathVariable String page, MultipartFile imagePath, HttpServletRequest request, Model model) throws IOException {
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
         if (loginMember != null) {
             int memberId = loginMember.getId(); // Member 객체에서 member_id를 가져옵니다.
 
-            article.setMemberId(memberId);
-            log.info(" 담으려는 아티클 객체{}", article);
-            log.info("이미지 패스ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ{}" , imagePath);
-            if (!imagePath.isEmpty()) {
+            log.info(" 담으려는 아티클 폼 {}", createForm);
+            log.info("이미지 패스ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ{}", imagePath);
+
+            Article article = Article.builder()
+                    .title(createForm.getTitle())
+                    .content(createForm.getContent())
+                    .memberId(memberId)
+                    .build();
+            log.info("아티클 객체에 넣어둔 정보 확인 ======{}", article);
+            if (imagePath == null) {
+                article.setImagePath(null);
+                log.info("이미지패스 null 일때 {}", article);
+            } else if (!imagePath.isEmpty()) {
                 // 이미지 폴더에 저장
                 // 업로드 이미지 확장자 가져오기
                 String imageExtension = StringUtils.getFilenameExtension(imagePath.getOriginalFilename());
@@ -131,12 +137,11 @@ public class ArticleController {
 
             log.info("-----------create 전 아티클 {}", article);
             articleService.create(article);
-            log.info("생성 후 아티클 {}",article);
+            log.info("생성 후 아티클 {}", article);
 
         }
         return "redirect:/article/list/1";
     }
-
     // 게시글 수정
     @PostMapping("/list/{page}/update")
     public String update(@PathVariable String page, @ModelAttribute Article article, HttpServletRequest request,

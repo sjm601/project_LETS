@@ -43,9 +43,10 @@ public interface CafeService {
     /**
      * 카페 전체 리스트 출력
      *
+     * @param pageParams 페이징
      * @return 카페 전체 리스트
      */
-    public List<Map<String, Object>> getCafeList();
+    public List<Map<String, Object>> getCafeList(PageParams pageParams);
 
     /**
      * 카페 옵션 리스트 출력
@@ -91,7 +92,8 @@ public interface CafeService {
      * @param cafeSearch 카페 검색값
      * @return 카페 검색 결과
      */
-    public List<Map<String, Object>> getSearchCafe(CafeSearch cafeSearch);
+    public List<Map<String, Object>> getSearchCafe(CafeSearch cafeSearch, PageParams pageParams,
+                                                   double currentY, double currentX);
 
     /**
      * 전체 입점 카페 수 조회
@@ -99,7 +101,7 @@ public interface CafeService {
      * @return 전체 입점 카페 수
      * @see com.vj.lets.web.dashboard.controller.AdminController
      */
-    public int getCountCafeForAdmin(String type);
+    public int getCountCafeForAdmin();
 
     /**
      * 관리자 용 전체 카페 목록 조회

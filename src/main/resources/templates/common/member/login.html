@@ -11,6 +11,9 @@
 
     <!-- COMMON LINK -->
     <th:block th:replace="~{/common/layout/fragments/common_head :: head}"></th:block>
+    <link href="/css/custom/sign_page_custom.css" rel="stylesheet">
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 
 <body id="login_bg">
@@ -81,7 +84,15 @@
 </div>
 <!-- /login -->
 
-<th:block th:replace="~{/common/layout/fragments/common_scripts :: scripts}">
+<script src="/js/common_scripts.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/custom/login.js"></script>
+
+<script th:inline="javascript">
+    function handleCredentialResponse(response) {
+        console.log("Encoded JWT ID token: " + response.credential);
+    }
+
 
 </th:block>
 <script>
@@ -109,7 +120,6 @@
             email : json.email
         }
         let url = '/';
-
         fetch(url, {
             method: 'POST',
             headers: {
