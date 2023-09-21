@@ -75,7 +75,7 @@ public interface CafeMapper {
      * @return 전체 입점 카페 수
      * @see com.vj.lets.web.dashboard.controller.AdminController
      */
-    public int readCountAllForAdmin(String type);
+    public int readCountAllForAdmin();
 
     /**
      * 전체 카페 목록 조회 (관리자용)

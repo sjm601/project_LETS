@@ -123,14 +123,6 @@ group:
 article:
   imageLocation: C:/ezen-fullstack/workspace/final_project_lets/src/main/resources/static/upload_image/article/
   imageDBPath: /assets/upload_image/article/
-
-  # google login
-  google.auth.url: https://oauth2.googleapis.com
-  google.login.url: https://accounts.google.com
-  google.redirect.uri: http://localhost:8080/google/login/redirect
-  google.client.id: 32263468491-ka20sqkvcqukc86579f4n9a6oujf6r6k.apps.googleusercontent.com
-  google.secret: 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
-  google.auth.scope: profile,email,openid
   
   
   

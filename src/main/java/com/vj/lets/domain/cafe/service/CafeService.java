@@ -101,7 +101,7 @@ public interface CafeService {
      * @return 전체 입점 카페 수
      * @see com.vj.lets.web.dashboard.controller.AdminController
      */
-    public int getCountCafeForAdmin(String type);
+    public int getCountCafeForAdmin();
 
     /**
      * 관리자 용 전체 카페 목록 조회

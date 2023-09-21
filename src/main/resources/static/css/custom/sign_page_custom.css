@@ -1,8 +1,4 @@
-#loginModal .modal-dialog .modal-content .modal-header h4 {
-    margin: 0 !important;
-}
-
-#loginModal .modal-dialog .modal-content .modal-body form .form-group i {
+#login aside .form-group i {
     font-size: 21px;
     font-size: 1.3125rem;
     position: absolute;
@@ -13,4 +9,8 @@
     height: 25px;
     display: block;
     font-weight: 400 !important;
+}
+
+#login aside .form-group input {
+    padding-left: 40px !important;
 }
