@@ -6,19 +6,17 @@ import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.dto.RegisterForm;
 import com.vj.lets.domain.member.service.MemberService;
 import com.vj.lets.domain.member.util.MemberType;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,7 +25,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * 회원 관련 요청 컨트롤러 (회원 가입, 회원 로그인, 회원 로그아웃)
+ * 회원 관련 요청 컨트롤러
  *
  * @author VJ특공대 김종원
  * @version 1.0
@@ -60,7 +58,10 @@ public class MemberController {
      * @return 논리적 뷰 이름
      */
     @GetMapping("/register")
-    public String registerView(Model model) {
+    public String registerView(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        session.getAttribute()
+        if()
 
         RegisterForm registerForm = RegisterForm.builder().build();
         model.addAttribute("registerForm", registerForm);
@@ -79,9 +80,11 @@ public class MemberController {
      */
     @PostMapping("/register")
     @ResponseBody
-    public Object register(@Valid @RequestBody RegisterForm registerForm,
+    public Object register(@Validated @RequestBody RegisterForm registerForm,
                            BindingResult bindingResult,
                            Model model) {
+
+        log.warn("================{}", registerForm);
 
         if (bindingResult.hasErrors()) {
             return "fail";
@@ -136,7 +139,7 @@ public class MemberController {
      */
     @PostMapping("/login")
     @ResponseBody
-    public String login(@Valid @RequestBody LoginForm loginForm,
+    public String login(@Validated @RequestBody LoginForm loginForm,
                         BindingResult bindingResult,
                         HttpServletRequest request, Model model) {
 
@@ -161,16 +164,16 @@ public class MemberController {
      * 회원 정보 수정 기능
      *
      * @param editForm      회원 정보 수정 폼 객체
-     * @param bindingResult 바인딩 리절트 객체
      * @param request       서블릿 리퀘스트 객체
      * @param response      서블릿 리스폰스 객체
      * @param model         모델 객체
      * @return 논리적 뷰 이름
      */
     @PostMapping("/edit")
-    public String edit(@Valid @ModelAttribute EditForm editForm, BindingResult bindingResult,
+    public String edit(@ModelAttribute EditForm editForm,
                        MultipartFile imagePath,
-                       HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+                       HttpServletRequest request, HttpServletResponse response,
+                       Model model) throws IOException {
 
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
- * 로그인 모달창 인터셉터 구현
+ * 로그인 모달 인터셉터 구현
  *
  * @author VJ특공대 김종원
  * @version 1.0

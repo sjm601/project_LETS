@@ -10,10 +10,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * 인터셉터 등록 자바 설정 클래스 구현
  *
- * @author 에너자이조 김기정
  * @author VJ특공대 김종원
  * @version 1.0
- * @see LoginCheckInterceptor
  * @see LoginModalInterceptor
  * @since 2023-09-08 (금)
  */

@@ -33,25 +33,29 @@
             <label for="email">이메일</label>
             <input type="email" id="email" class="form-control" required>
             <i class="icon_mail_alt"></i>
-            <div id="emailCheck" class="registerCheck"></div>
+            <div id="emailCheck" class="text-danger registerCheck"></div>
+            <div th:errors="${registerForm.email}" class="text-danger"></div>
         </div>
         <div class="form-group">
             <label for="password">비밀번호</label>
             <input type="password" id="password" class="form-control" required>
             <i class="icon_lock_alt"></i>
-            <div id="passwordCheck" class="registerCheck"></div>
+            <div id="passwordCheck" class="text-danger registerCheck"></div>
+            <div th:errors="${registerForm.password}" class="text-danger"></div>
         </div>
         <div class="form-group">
             <label for="passwordConfirm">비밀번호 확인</label>
             <input type="password" id="passwordConfirm" class="form-control" required>
             <i class="icon_lock_alt"></i>
-            <div id="passwordConfirmCheck" class="registerCheck"></div>
+            <div id="passwordConfirmCheck" class="text-danger registerCheck"></div>
+            <div th:errors="${registerForm.passwordConfirm}" class="text-danger"></div>
         </div>
         <div class="form-group">
             <label for="name">이름</label>
             <input type="text" id="name" class="form-control" required>
             <i class="ti-user"></i>
-            <div id="nameCheck" class="registerCheck"></div>
+            <div id="nameCheck" class="text-danger registerCheck"></div>
+            <div th:errors="${registerForm.name}" class="text-danger"></div>
         </div>
         <input class="btn_1 rounded full-width add_top_30 regist_btn" value="회원 가입">
         <div class="text-center add_top_10">계정이 이미 있으신가요?
