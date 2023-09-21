@@ -58,10 +58,7 @@ public class MemberController {
      * @return 논리적 뷰 이름
      */
     @GetMapping("/register")
-    public String registerView(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        session.getAttribute()
-        if()
+    public String registerView(Model model) {
 
         RegisterForm registerForm = RegisterForm.builder().build();
         model.addAttribute("registerForm", registerForm);
@@ -74,7 +71,6 @@ public class MemberController {
      *
      * @param registerForm  회원가입 폼 객체
      * @param bindingResult 바인딩 리절트 객체
-     * @param response      서블릿 리스폰스 객체
      * @param model         모델 객체
      * @return 논리적 뷰 이름
      */
