@@ -55,8 +55,8 @@ public class CafeServiceImpl implements CafeService{
     }
 
     @Override
-    public List<Map<String, Object>> getCafeList() {
-        return cafeMapper.findByAll();
+    public List<Map<String, Object>> getCafeList(PageParams pageParams) {
+        return cafeMapper.findByAll(pageParams);
     }
 
     @Override
@@ -85,8 +85,9 @@ public class CafeServiceImpl implements CafeService{
     }
 
     @Override
-    public List<Map<String, Object>> getSearchCafe(CafeSearch cafeSearch){
-        return cafeMapper.findBySearch(cafeSearch);
+    public List<Map<String, Object>> getSearchCafe(CafeSearch cafeSearch, PageParams pageParams,
+                                                   double currentY, double currentX){
+        return cafeMapper.findBySearch(cafeSearch, pageParams, currentY, currentX);
     }
 
     @Override

@@ -17,13 +17,11 @@ import lombok.*;
 @Builder
 public class CafeSearch {
     String name;
-//    int countPerson;
-//    int price;
-//    int option;
+    int countPerson;
+    int price;
+    int option;
     double currentX;
     double currentY;
-    int minDuration;
     int maxDuration;
-//    int maxRating;
-//    int minRating;
+    int rating;
 }

@@ -90,48 +90,80 @@
           AND STATUS = 'enabled'
     </select>
 
-    <select id="findByAll" resultType="map">
-        SELECT
-            caf.ID "id",
-            caf.NAME "cafeName",
-            do.NAME "siDoName",
-            si.NAME "siGunGuName",
-            ROAD_ADDRESS "roadAddress",
-            DETAIL_ADDRESS "detailAddress",
-            LATITUDE "latitude",
-            LONGITUDE "longitude",
-            START_TIME "startTime",
-            END_TIME "endTime",
-            IMAGE_PATH "imagePath",
-            "cafeRating",
-            "minPrice",
-            "reviewCount",
-            "resCount"
-        FROM CAFE caf
-                 LEFT JOIN (SELECT res.CAFE_ID, AVG(rev.RATING) "cafeRating"
-                            FROM REVIEW rev
-                                     JOIN RESERVATION res ON rev.RESERVATION_ID = res.ID
-                                     JOIN member mem ON rev.MEMBER_ID = mem.ID
-                            WHERE TYPE = 'guest'
-                            GROUP BY res.CAFE_ID) a ON a.CAFE_ID = caf.ID
-                 LEFT JOIN (SELECT CAFE_ID, MIN(PRICE) "minPrice"
-                            FROM ROOM roo
-                                     JOIN CAFE ON CAFE_ID = CAFE.ID
-                            GROUP BY CAFE_ID) b ON b.CAFE_ID = caf.ID
-                 LEFT JOIN SI_GUN_GU si ON si.ID = caf.SI_GUN_GU_ID
-                 LEFT JOIN SI_DO do ON do.ID = si.SI_DO_ID
-                 LEFT JOIN (SELECT res.CAFE_ID, COUNT(res.id) "reviewCount"
-                            FROM RESERVATION res
-                                     JOIN review rv ON res.id = rv.reservation_id
-                                     JOIN MEMBER mem ON rv.MEMBER_ID = mem.ID
-                            WHERE TYPE = 'guest'
-                            GROUP BY res.CAFE_ID) c ON c.CAFE_ID = caf.ID
-                 LEFT JOIN (SELECT res.CAFE_ID, COUNT(res.ID) "resCount"
-                            FROM RESERVATION res
-                            WHERE res.STATUS = 'use' OR res.STATUS = 'complete'
-                            GROUP BY res.CAFE_ID) d ON d.CAFE_ID = caf.ID
-        WHERE STATUS = 'enabled'
-        ORDER BY REGDATE DESC
+    <select id="findByAll" parameterType="PageParams" resultType="map">
+        SELECT "id",
+               "cafeName",
+               "siDoName",
+               "siGunGuName",
+               "roadAddress",
+               "detailAddress",
+               "latitude",
+               "longitude",
+               "startTime",
+               "endTime",
+               "imagePath",
+               "cafeRating",
+               "minPrice",
+               "reviewCount",
+               "resCount"
+        FROM(SELECT CEIL(ROWNUM / #{elementSize}) "request_page",
+                    "id",
+                    "cafeName",
+                    "siDoName",
+                    "siGunGuName",
+                    "roadAddress",
+                    "detailAddress",
+                    "latitude",
+                    "longitude",
+                    "startTime",
+                    "endTime",
+                    "imagePath",
+                    "cafeRating",
+                    "minPrice",
+                    "reviewCount",
+                    "resCount"
+             FROM
+                 (SELECT caf.ID "id",
+                         caf.NAME "cafeName",
+                         do.NAME "siDoName",
+                         si.NAME "siGunGuName",
+                         ROAD_ADDRESS "roadAddress",
+                         DETAIL_ADDRESS "detailAddress",
+                         LATITUDE "latitude",
+                         LONGITUDE "longitude",
+                         START_TIME "startTime",
+                         END_TIME "endTime",
+                         IMAGE_PATH "imagePath",
+                         "cafeRating",
+                         "minPrice",
+                         "reviewCount",
+                         "resCount"
+                  FROM CAFE caf
+                           LEFT JOIN (SELECT res.CAFE_ID, AVG(rev.RATING) "cafeRating"
+                                      FROM REVIEW rev
+                                               JOIN RESERVATION res ON rev.RESERVATION_ID = res.ID
+                                               JOIN member mem ON rev.MEMBER_ID = mem.ID
+                                      WHERE TYPE = 'guest'
+                                      GROUP BY res.CAFE_ID) a ON a.CAFE_ID = caf.ID
+                           LEFT JOIN (SELECT CAFE_ID, MIN(PRICE) "minPrice"
+                                      FROM ROOM roo
+                                               JOIN CAFE ON CAFE_ID = CAFE.ID
+                                      GROUP BY CAFE_ID) b ON b.CAFE_ID = caf.ID
+                           LEFT JOIN SI_GUN_GU si ON si.ID = caf.SI_GUN_GU_ID
+                           LEFT JOIN SI_DO do ON do.ID = si.SI_DO_ID
+                           LEFT JOIN (SELECT res.CAFE_ID, COUNT(res.id) "reviewCount"
+                                      FROM RESERVATION res
+                                               JOIN review rv ON res.id = rv.reservation_id
+                                               JOIN MEMBER mem ON rv.MEMBER_ID = mem.ID
+                                      WHERE TYPE = 'guest'
+                                      GROUP BY res.CAFE_ID) c ON c.CAFE_ID = caf.ID
+                           LEFT JOIN (SELECT res.CAFE_ID, COUNT(res.ID) "resCount"
+                                      FROM RESERVATION res
+                                      WHERE res.STATUS = 'use' OR res.STATUS = 'complete'
+                                      GROUP BY res.CAFE_ID) d ON d.CAFE_ID = caf.ID
+                  WHERE STATUS = 'enabled'
+                  ORDER BY REGDATE DESC))
+        WHERE "request_page" = #{requestPage}
     </select>
 
     <select id="findByBest" resultType="map">
@@ -194,55 +226,92 @@
         WHERE ROWNUM &lt;= 6
     </select>
 
-    <select id="findBySearch" parameterType="CafeSearch" resultType="map">
-        SELECT caf.ID "id",
-        caf.NAME "cafeName",
-        do.NAME "siDoName",
-        si.NAME "siGunGuName",
-        ROAD_ADDRESS "roadAddress",
-        DETAIL_ADDRESS "detailAddress",
-        LATITUDE "latitude",
-        LONGITUDE "longitude",
-        START_TIME "startTime",
-        END_TIME "endTime",
-        IMAGE_PATH "imagePath",
-        "cafeRating",
-        "minPrice"
-        FROM CAFE caf
-            LEFT JOIN (SELECT res.CAFE_ID, AVG(rev.RATING) "cafeRating"
-                       FROM REVIEW rev
-                           JOIN RESERVATION res ON rev.RESERVATION_ID = res.ID
-                       JOIN member mem ON rev.MEMBER_ID = mem.ID
-                       WHERE TYPE = 'guest'
-                       GROUP BY res.CAFE_ID) a ON a.CAFE_ID = caf.ID
-            LEFT JOIN (SELECT CAFE_ID, MIN(PRICE) "minPrice"
-                       FROM ROOM roo
-                           JOIN CAFE ON CAFE_ID = CAFE.ID
-                       GROUP BY CAFE_ID) b ON b.CAFE_ID = caf.ID
-            LEFT JOIN SI_GUN_GU si ON si.ID = caf.SI_GUN_GU_ID
-            LEFT JOIN SI_DO do ON do.ID = si.SI_DO_ID
-            LEFT JOIN (SELECT res.CAFE_ID, COUNT(res.id) "reviewCount"
-                        FROM RESERVATION res
-                        JOIN review rv ON res.id = rv.reservation_id
-                        JOIN MEMBER mem ON rv.MEMBER_ID = mem.ID
-                        WHERE TYPE = 'guest'
-                        GROUP BY res.CAFE_ID) c ON c.CAFE_ID = caf.ID
-            LEFT JOIN (SELECT res.CAFE_ID, COUNT(res.ID) "resCount"
-                        FROM RESERVATION res
-                        WHERE res.STATUS = 'use'
-                        OR res.STATUS = 'complete'
-                        GROUP BY res.CAFE_ID) d ON d.CAFE_ID = caf.ID
+    <select id="findBySearch" resultType="map">
+        SELECT
+            "id",
+            "cafeName",
+            "siDoName",
+            "siGunGuName",
+            "roadAddress",
+            "detailAddress",
+            "latitude",
+            "longitude",
+            "startTime",
+            "endTime",
+            "imagePath",
+            "cafeRating",
+            "minPrice"
+        FROM(SELECT CEIL(ROWNUM / #{pageParams.elementSize}) "request_page",
+                "id",
+                "cafeName",
+                "siDoName",
+                "siGunGuName",
+                "roadAddress",
+                "detailAddress",
+                "latitude",
+                "longitude",
+                "startTime",
+                "endTime",
+                "imagePath",
+                "cafeRating",
+                "minPrice"
+            FROM
+                (SELECT caf.ID "id",
+                caf.NAME "cafeName",
+                do.NAME "siDoName",
+                si.NAME "siGunGuName",
+                ROAD_ADDRESS "roadAddress",
+                DETAIL_ADDRESS "detailAddress",
+                LATITUDE "latitude",
+                LONGITUDE "longitude",
+                START_TIME "startTime",
+                END_TIME "endTime",
+                IMAGE_PATH "imagePath",
+                "cafeRating",
+                "minPrice"
+                FROM
+                    CAFE caf
+                        LEFT JOIN (SELECT res.CAFE_ID, AVG(rev.RATING) "cafeRating"
+                                    FROM REVIEW rev
+                                    JOIN RESERVATION res ON rev.RESERVATION_ID = res.ID
+                                    JOIN member mem ON rev.MEMBER_ID = mem.ID
+                                    WHERE TYPE = 'guest'
+                                    GROUP BY res.CAFE_ID) a ON a.CAFE_ID = caf.ID
+                        LEFT JOIN (SELECT CAFE_ID, MIN(PRICE) "minPrice", MAX(HEAD_COUNT) "maxPerson"
+                                FROM ROOM roo
+                                JOIN CAFE ON CAFE_ID = CAFE.ID
+                                GROUP BY CAFE_ID) b ON b.CAFE_ID = caf.ID
+                        LEFT JOIN SI_GUN_GU si ON si.ID = caf.SI_GUN_GU_ID
+                        LEFT JOIN SI_DO do ON do.ID = si.SI_DO_ID
+                        LEFT JOIN (SELECT res.CAFE_ID, COUNT(res.id) "reviewCount"
+                                FROM RESERVATION res
+                                JOIN review rv ON res.id = rv.reservation_id
+                                JOIN MEMBER mem ON rv.MEMBER_ID = mem.ID
+                                WHERE TYPE = 'guest'
+                                GROUP BY res.CAFE_ID) c ON c.CAFE_ID = caf.ID
+                        LEFT JOIN (SELECT res.CAFE_ID, COUNT(res.ID) "resCount"
+                                FROM RESERVATION res
+                                WHERE res.STATUS = 'use'
+                                        OR res.STATUS = 'complete'
+                                GROUP BY res.CAFE_ID) d ON d.CAFE_ID = caf.ID
         <where>
             STATUS = 'enabled'
-            <if test="name != null and name != ''">AND NAME LIKE '%' || #{name} || '%'</if>
-            <if test="minDuration != null and minDuration != '' and maxDuration != null and maxDuration != ''">
-                AND DISTNACE_WGS84(LATITUDE, LONGITUDE, #{currentY}, #{currentX}) BETWEEN #{minDuration} AND
-                #{maxDuration}
+            <if test="name != null and name != ''">AND caf.NAME LIKE '%' || #{cafeSearch.name} || '%'</if>
+            <if test="maxDuration != null and maxDuration != ''">
+                AND DISTNACE_WGS84(LATITUDE, LONGITUDE, #{cafeSearch.currentY}, #{cafeSearch.currentX}) &gt;= #{cafeSearch.maxDuration}
             </if>
+            <if test="rating != null and rating != ''">AND "cafeRating" = TRUNC(#{cafeSearch.rating})</if>
+            <if test="searchOption != null and searchOption != ''">
+                AND caf.ID IN (select ca.id
+                from cafe ca
+                join CAFE_OPTION_LIST col ON col.CAFE_ID = ca.ID
+                where col.OPTION_ID = #{cafeSearch.searchOption})</if>
+            <if test="countPerson != null and countPerson != ''">AND "maxPerson" &gt;= #{cafeSearch.countPerson}</if>
         </where>
-        <if test="minDuration != null and minDuration != '' and maxDuration != null and maxDuration != ''">
-            ORDER BY DISTNACE_WGS84(LATITUDE, LONGITUDE, #{currentY}, #{currentX}) ASC
-        </if>
+        <if test="maxDuration != null and maxDuration != ''">
+            ORDER BY DISTNACE_WGS84(LATITUDE, LONGITUDE, #{cafeSearch.currentY}, #{cafeSearch.currentX}) ASC
+        </if>))
+        WHERE "request_page" = #{pageParams.requestPage}
     </select>
 
     <select id="readCountAllForAdmin" resultType="int">

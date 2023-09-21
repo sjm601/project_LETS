@@ -195,16 +195,11 @@
                                                 <div class="rev-content">
                                                     <div class="rating">
                                                             <div th:switch="${review['rating']}">
-                                                            <div th:case="5"><i class="icon_star voted"></i><i class="icon_star voted"></i>
-                                                                <i class="icon_star voted"></i> <i class="icon_star voted"></i><i class="icon_star voted"></i></div>
-                                                            <div th:case="4"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i>
-                                                                <i class="icon_star voted"></i><i class="icon_star"></i></div>
-                                                            <div th:case="3"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i>
-                                                                <i class="icon_star"></i><i class="icon_star"></i></div>
-                                                            <div th:case="2"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
-                                                                <i class="icon_star"></i><i class="icon_star"></i></div>
-                                                            <div th:case="*"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i>
-                                                                <i class="icon_star voted"></i><i class="icon_star"></i></div>
+                                                            <div th:case="5"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i></div>
+                                                            <div th:case="4"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i></div>
+                                                            <div th:case="3"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i></div>
+                                                            <div th:case="2"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></div>
+                                                            <div th:case="*"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i></div>
                                                             </div>
                                                     </div>
                                                     <div class="rev-info mb-1" th:text="|${review['writerName']} - ${review['writeDate']}|">
@@ -241,6 +236,42 @@
                                         <!-- /review-box -->
                                     </ul>
                                     <!-- /review-box -->
+                                    <div>
+                                        <ul class="pagination h-100 justify-content-center align-items-center">
+                                            <th:block th:if="${pagination.showFirst}">
+                                                <li class="page-item">
+                                                    <a th:href="@{|/cafe/{id}?page=1(id=${Cafe['id']})|}" class="page-link">처음으로</a>
+                                                </li>
+                                            </th:block>
+                                            <th:block th:if="${pagination.showPrevious}">
+                                                <li class="page-item">
+                                                    <a th:href="@{|/cafe/{id}?page=${pagination.previousStartPage}(id=${Cafe['id']})|}" class="page-link">이전</a>
+                                                </li>
+                                            </th:block>
+                                            <th:block th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
+                                                <th:block th:if="${i == pagination.params.requestPage}">
+                                                    <li class="page-item active">
+                                                        <a th:text="${i}" class="page-link" href="#">1</a>
+                                                    </li>
+                                                </th:block>
+                                                <th:block th:if="${i != pagination.params.requestPage}">
+                                                    <li class="page-item">
+                                                        <a th:text="${i}" th:href="@{|/cafe/{id}?page=${i}(id=${Cafe['id']})|}" class="page-link" href="#">2</a>
+                                                    </li>
+                                                </th:block>
+                                            </th:block>
+                                            <th:block th:if="${pagination.showNext}">
+                                                <li class="page-item">
+                                                    <a th:href="@{|/cafe/{id}?page=${pagination.nextStartPage}(id=${Cafe['id']})|}" class="page-link">다음</a>
+                                                </li>
+                                            </th:block>
+                                            <th:block th:if="${pagination.showLast}">
+                                                <li class="page-item">
+                                                    <a th:href="@{|/cafe/{id}?page=${pagination.totalPages}|}" class="page-link">끝으로</a>
+                                                </li>
+                                            </th:block>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <!-- /review-container -->
                             </section>

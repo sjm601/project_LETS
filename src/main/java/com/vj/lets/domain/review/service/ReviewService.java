@@ -36,7 +36,7 @@ public interface ReviewService {
      * @param cafeId 카페 ID
      * @return 리뷰 목록
      */
-    public List<Map<String, Object>> getReviewListByCafe(int cafeId);
+    public List<Map<String, Object>> getReviewListByCafe(int cafeId, PageParams pageParams);
 
     /**
      * 카페에 등록한 리뷰 점수별 개수 조회

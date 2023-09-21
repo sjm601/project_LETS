@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vj.lets.domain.cafe.dto.CafeOption;
 import com.vj.lets.domain.cafe.dto.CafeSearch;
 import com.vj.lets.domain.cafe.service.CafeService;
+import com.vj.lets.domain.common.web.PageParams;
+import com.vj.lets.domain.common.web.Pagination;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.reservation.dto.Reservation;
 import com.vj.lets.domain.reservation.service.ReservationService;
@@ -14,6 +16,7 @@ import com.vj.lets.domain.room.dto.Room;
 import com.vj.lets.domain.room.service.RoomService;
 import com.vj.lets.domain.support.dto.FaqCategory;
 import com.vj.lets.domain.support.service.FaqService;
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -52,23 +55,45 @@ public class CafeController {
     }
 
     @GetMapping("/list")
-    public String cafeList(@ModelAttribute CafeSearch cafeSearch, Model model) {
+    public String cafeList(@PathParam("page") String page,
+                           @ModelAttribute CafeSearch cafeSearch,
+                           Model model) {
         List<FaqCategory> categoryList = faqService.getCafeFaqList();
         model.addAttribute("categoryList", categoryList);
         List<CafeOption> options = cafeService.getOptionList();
         model.addAttribute("options", options);
-        List<Map<String, Object>> allCafe = cafeService.getCafeList();
+
+        int count = cafeService.getCountCafeForAdmin("enabled");
+        int elementSize = 8;
+        int pageSize = 5;
+
+        if (page == null || page.isEmpty()){
+            page = "1";
+        }
+
+        int selectPage = Integer.parseInt(page);
+
+        PageParams pageParams = PageParams.builder()
+                .elementSize(elementSize)
+                .pageSize(pageSize)
+                .requestPage(selectPage)
+                .rowCount(count)
+                .build();
+        Pagination pagination = new Pagination(pageParams);
+        model.addAttribute("pagination", pagination);
+
+        List<Map<String, Object>> allCafe = cafeService.getCafeList(pageParams);
         model.addAttribute("allCafe", allCafe);
-        cafeSearch.setMinDuration(cafeSearch.getMinDuration()/1000);
-        cafeSearch.setMaxDuration(cafeSearch.getMaxDuration()/1000);
-        List<Map<String, Object>> searchCafes = cafeService.getSearchCafe(cafeSearch);
-        model.addAttribute("searchCafes", searchCafes);
+
+//        List<Map<String, Object>> searchCafes = cafeService.getSearchCafe(cafeSearch, pageParams, 27.1212, 125.111);
+//        model.addAttribute("searchCafes", searchCafes);
         return "common/cafe/cafe_list";
     }
 
 
     @GetMapping("/{id}")
     public String viewDetail(@PathVariable int id,
+                             @PathParam("page") String page,
                              @ModelAttribute Reservation reservation,
                              Model model) {
         Map<String, Object> cafe = cafeService.getCafe(id);
@@ -78,7 +103,29 @@ public class CafeController {
         List<Room> roomList = roomService.getSearchCafeRoom(id);
         model.addAttribute("roomList", roomList);
         model.addAttribute("errorMessage", "");
-        List<Map<String, Object>> reviews = reviewService.getReviewListByCafe(id);
+
+        //리뷰목록 페이징 처리
+        int count =Integer.parseInt(cafe.get("reviewCount").toString());
+        log.info("count:{}", count);
+        int elementSize = 5;
+        int pageSize = 5;
+
+        if (page == null || page.isEmpty()){
+            page = "1";
+        }
+
+        int selectPage = Integer.parseInt(page);
+
+        PageParams pageParams = PageParams.builder()
+                .elementSize(elementSize)
+                .pageSize(pageSize)
+                .requestPage(selectPage)
+                .rowCount(count)
+                .build();
+        Pagination pagination = new Pagination(pageParams);
+        model.addAttribute("pagination", pagination);
+
+        List<Map<String, Object>> reviews = reviewService.getReviewListByCafe(id, pageParams);
         model.addAttribute("reviews", reviews);
         Map<Integer, Object> countReviews = reviewService.getCountReviewRatingByCafe(id);
         model.addAttribute("countReviews", countReviews);

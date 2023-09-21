@@ -58,8 +58,9 @@ public class ReviewServiceImpl implements ReviewService {
      * @return 리뷰 목록
      */
     @Override
-    public List<Map<String, Object>> getReviewListByCafe(int cafeId) {
-        List<Map<String, Object>> guestReviewList = reviewMapper.readByCafe(cafeId);
+    public List<Map<String, Object>> getReviewListByCafe(int cafeId, PageParams pageParams) {
+        log.info("====={}", pageParams);
+        List<Map<String, Object>> guestReviewList = reviewMapper.readByCafe(cafeId, pageParams);
         return addMaps(guestReviewList);
     }
 
