@@ -12,6 +12,13 @@
                 #{reservationId})
     </insert>
 
+    <select id="checkAlreadyPayment" parameterType="int" resultType="int">
+    SELECT COUNT(p.reservation_id) AS "count"
+    FROM PAYMENT p
+    JOIN RESERVATION res ON p.reservation_id = res.ID
+    WHERE p.RESERVATION_ID = #{reservationId}
+    </select>
+
 
 
 

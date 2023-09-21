@@ -41,4 +41,15 @@ class PaymentMapperTest {
         log.info("결제 정보 :{}",payment);
         assertThat(payment).isNotNull();
     }
+
+    @Test
+    void checkAlreadyPaymentTest() {
+        // given
+        int reservationId = 24;
+        // when
+        int count = paymentMapper.checkAlreadyPayment(reservationId);
+        // then
+        log.info("카운트:{}", count);
+        assertThat(count).isNotNull();
+    }
 }

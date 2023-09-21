@@ -138,22 +138,42 @@ public class ReviewServiceImpl implements ReviewService {
         reviewHistoryMapper.createByUpdate(id, ReviewHistoryComment.DELETE.getComment());
     }
 
+    /**
+     * 리뷰 출력을 위한 호스트 카페에 총 리뷰수 출력
+     * @param cafeId
+     * @return 리뷰의 총 개수
+     */
     @Override
     public int getCountByHost(int cafeId) {
         return reviewMapper.readCountByHost(cafeId);
     }
 
+    /**
+     * 리뷰 목록 출력
+     * @param cafeId   카페 ID
+     * @param pageParams 페이징 객체
+     * @return 호스트 카페에 대한 고객들의 리뷰 리스트
+     */
     @Override
     public List<Map<String, Object>> getByHost(int cafeId, PageParams pageParams) {
-        List<Map<String, Object>> hostReviewList = reviewMapper.readByHost(cafeId, pageParams);
-        return addMaps(hostReviewList);
+        return reviewMapper.readByHost(cafeId, pageParams);
     }
 
+    /**
+     * 예약 아이디로 리뷰 개수 가져오기
+     * @param reservationId
+     * @return 리뷰 개수
+     */
     @Override
     public int getCountByReview(int reservationId) {
         return reviewMapper.readCountByReview(reservationId);
     }
 
+    /**
+     * 호스트 해당 카페의 오늘 등록된 리뷰 수 출력 (호스트 대시 보드 사용)
+     * @param cafeId
+     * @return 오늘 등록된 리뷰 수
+     */
     @Override
     public int getTodayReview(int cafeId) {
         return reviewMapper.readTodayReview(cafeId);

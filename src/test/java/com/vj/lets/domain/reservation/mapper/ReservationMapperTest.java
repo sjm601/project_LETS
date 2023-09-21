@@ -126,8 +126,9 @@ class ReservationMapperTest {
     void findResInfoTest() {
         // given
         int findId = 2;
+        int memberId = 22;
         // when
-        Map<String ,Reservation> reservation = reservationMapper.findResInfo(findId);
+        Map<String ,Reservation> reservation = reservationMapper.findResInfo(findId,memberId);
         // then
         log.info("예약 검색 완료:{}",reservation);
         assertThat(reservation).isNotNull();
@@ -192,5 +193,67 @@ class ReservationMapperTest {
         // then
         log.info("결과:{}",result);
         assertThat(result).isNotNull();
+    }
+
+
+    @Test
+    @Transactional
+    void cancelTest() {
+        // given
+        int id = 2;
+        // when
+        reservationMapper.cancel(id);
+        // then
+        log.info("취소된 예약:{}",id);
+        assertThat(id).isNotZero();
+    }
+
+
+    @Test
+    void readCountByMemberTest() {
+        // given
+        // when
+        // then
+    }
+
+
+    @Test
+    @Transactional
+    void deleteTest() {
+        // given
+        int id = 2;
+        int memberId =22;
+        // when
+        reservationMapper.delete(id,memberId);
+        // then
+        log.info("삭제된 예약 아이디:{}", id);
+        assertThat(id).isNotNull();
+    }
+
+
+
+    @Test
+    void readCountByHostTest() {
+        // given
+        // when
+        // then
+    }
+
+    @Test
+    void findByHostTest() {
+        // given
+        // when
+        // then
+    }
+
+    @Test
+    void readTotalResTest() {
+        // given
+        int cafeId = 2;
+        // when
+        int count = reservationMapper.readTotalRes(cafeId);
+        // then
+        log.info("총 예약 횟수:{}", count);
+        assertThat(count).isNotZero();
     }
 }
