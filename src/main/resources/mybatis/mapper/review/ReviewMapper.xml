@@ -26,24 +26,44 @@
         ORDER BY WRITE_DATE DESC
     </select>
 
-    <select id="readByCafe" parameterType="int" resultType="Map">
-        SELECT rev.ID                                "id",
-               rev.CONTENT                           "content",
-               rev.RATING                            "rating",
-               TO_CHAR(rev.WRITE_DATE, 'yyyy-MM-DD') "writeDate",
-               mem.NAME                              "writerName",
-               mem.IMAGE_PATH                        "writerImagePath",
-               roo.NAME                              "roomName",
-               res.ID                                "reservationId"
-        FROM REVIEW rev
-                 JOIN MEMBER mem on rev.MEMBER_ID = mem.ID
-                 JOIN RESERVATION res on res.ID = rev.RESERVATION_ID
-                 JOIN CAFE caf on res.CAFE_ID = caf.ID
-                 JOIN ROOM roo on res.ROOM_ID = roo.ID
-        WHERE rev.STATUS = 'enabled'
-          AND caf.ID = #{cafeId}
-          AND mem.TYPE = 'guest'
-        ORDER BY WRITE_DATE DESC
+    <select id="readByCafe" resultType="Map">
+        SELECT  "id",
+                "content",
+                "rating",
+                "writeDate",
+                "writerName",
+                "writerImagePath",
+                "roomName",
+                "reservationId"
+        FROM (SELECT CEIL(ROWNUM / #{pageParams.elementSize}) "request_page",
+                     "id",
+                     "content",
+                     "rating",
+                     "writeDate",
+                     "writerName",
+                     "writerImagePath",
+                     "roomName",
+                     "reservationId"
+              FROM (
+                       SELECT
+                           rev.ID                                "id",
+                           rev.CONTENT                           "content",
+                           rev.RATING                            "rating",
+                           TO_CHAR(rev.WRITE_DATE, 'yyyy-MM-DD') "writeDate",
+                           mem.NAME                              "writerName",
+                           mem.IMAGE_PATH                        "writerImagePath",
+                           roo.NAME                              "roomName",
+                           res.ID                                "reservationId"
+                       FROM REVIEW rev
+                                JOIN MEMBER mem on rev.MEMBER_ID = mem.ID
+                                JOIN RESERVATION res on res.ID = rev.RESERVATION_ID
+                                JOIN CAFE caf on res.CAFE_ID = caf.ID
+                                JOIN ROOM roo on res.ROOM_ID = roo.ID
+                       WHERE rev.STATUS = 'enabled'
+                         AND caf.ID = #{cafeId}
+                         AND mem.TYPE = 'guest'
+                       ORDER BY WRITE_DATE DESC))
+        WHERE "request_page" = #{pageParams.requestPage}
     </select>
 
     <select id="countByReviewRating" parameterType="int" resultType="map">
