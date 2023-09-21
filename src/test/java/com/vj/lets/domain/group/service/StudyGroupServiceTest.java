@@ -3,6 +3,7 @@ package com.vj.lets.domain.group.service;
 import com.vj.lets.domain.group.dto.GroupContact;
 import com.vj.lets.domain.group.dto.GroupMemberList;
 import com.vj.lets.domain.group.dto.StudyGroup;
+import com.vj.lets.domain.group.dto.StudyPlan;
 import com.vj.lets.domain.group.util.PageParams;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -264,7 +265,7 @@ class StudyGroupServiceTest {
     @Transactional
     void getSearchCount() {
         // given
-        String keyword ="테스트";
+        String keyword = "테스트";
 
         // when
         int count = studyGroupService.getSearchCount(keyword);
@@ -308,5 +309,64 @@ class StudyGroupServiceTest {
         // then
         log.info("페이징 정보를 포함한 가입한 그룹 리스트 : {}", list);
         assertThat(list).isNotNull();
+    }
+
+    @Test
+    @Transactional
+    void generateStudyPlan() {
+        // given
+        int memberId = 37;
+
+        StudyPlan studyPlan = StudyPlan.builder()
+                .totalCount(10)
+                .studyGroupId(1)
+                .build();
+
+        // when
+        studyGroupService.generateStudyPlan(studyPlan, memberId);
+
+        // then
+        log.info("스터디 일정 생성");
+    }
+
+    @Test
+    @Transactional
+    void registerReservation() {
+        // given
+        int studyPlanId = 1;
+        int reservationId = 1;
+
+        // when
+        studyGroupService.registerReservation(studyPlanId, reservationId);
+
+        // then
+        log.info("스터디 일정에 예약 정보 등록");
+    }
+
+    @Test
+    @Transactional
+    void participateStudyPlanTest() {
+        // given
+        int memberId = 30;
+        int studyPlanId = 1;
+
+        // when
+        studyGroupService.participateStudyPlan(memberId, studyPlanId);
+
+        // then
+        log.info("스터디 일정 참여");
+    }
+
+    @Test
+    @Transactional
+    void removeStudyPlanTest() {
+        // given
+        int studyPlanId = 1;
+
+        // when
+        studyGroupService.removeStudyPlan(studyPlanId);
+
+        // then
+        log.info("스터디 일정 삭제");
     }
 }

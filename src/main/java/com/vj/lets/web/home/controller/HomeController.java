@@ -1,15 +1,16 @@
 package com.vj.lets.web.home.controller;
 
-import com.vj.lets.domain.member.dto.LoginForm;
+
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.util.MemberType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * 메인 인덱스 페이지 요청 컨트롤러
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/")
+@Slf4j
 public class HomeController {
+
 
     /**
      * 현재 로그인 상태 및 로그인 회원 타입에 따른 홈 화면 출력 및 리다이렉트
@@ -50,4 +53,9 @@ public class HomeController {
 
     }
 
+    @PostMapping("")
+    public String home2 (@RequestBody String google) {
+        log.info(google);
+        return "/index";
+    }
 }

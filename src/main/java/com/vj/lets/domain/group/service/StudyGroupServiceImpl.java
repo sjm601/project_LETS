@@ -3,13 +3,12 @@ package com.vj.lets.domain.group.service;
 import com.vj.lets.domain.group.dto.GroupContact;
 import com.vj.lets.domain.group.dto.GroupMemberList;
 import com.vj.lets.domain.group.dto.StudyGroup;
-import com.vj.lets.domain.group.mapper.GroupContactMapper;
-import com.vj.lets.domain.group.mapper.GroupHistoryMapper;
-import com.vj.lets.domain.group.mapper.GroupMemberListMapper;
-import com.vj.lets.domain.group.mapper.StudyGroupMapper;
+import com.vj.lets.domain.group.dto.StudyPlan;
+import com.vj.lets.domain.group.mapper.*;
 import com.vj.lets.domain.group.util.PageParams;
 import com.vj.lets.domain.location.mapper.SiGunGuMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +31,8 @@ public class StudyGroupServiceImpl implements StudyGroupService{
     private final GroupHistoryMapper groupHistoryMapper;
     private final GroupContactMapper groupContactMapper;
     private final GroupMemberListMapper groupMemberListMapper;
+    private final StudyPlanMapper studyPlanMapper;
+    private final ParticipationListMapper participationListMapper;
 
     /**
      * 스터디 그룹 생성
@@ -219,8 +220,6 @@ public class StudyGroupServiceImpl implements StudyGroupService{
     public void approveStudyContact(int id, int studyGroupId) {
         // 스터디 그룹 가입 신청 승인
         groupContactMapper.approveGroupContact(id, studyGroupId);
-        // 스터디 그룹 가입 신청 리스트에서 신청 내역 삭제
-        groupContactMapper.deleteContact(id, studyGroupId);
         // 스터디 그룹 멤버 리스트에 전달 받은 회원 id '팀원'으로 추가
         groupMemberListMapper.addMember(id, studyGroupId);
         // 스터디 그룹 현재 회원 수 1증가
@@ -237,12 +236,9 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      * @param studyGroupId 스터디 그룹 아이디
      */
     @Override
-    @Transactional
     public void refuseStudyContact(int id, int studyGroupId) {
         // 스터디 그룹 가입 거절
         groupContactMapper.refuseGroupContact(id, studyGroupId);
-        // 스터디 그룹 가입 신청 리스트에서 신청 내역 삭제
-        groupContactMapper.deleteContact(id, studyGroupId);
     }
 
     /**
@@ -327,5 +323,54 @@ public class StudyGroupServiceImpl implements StudyGroupService{
         myStudyListAndPageParams = groupMemberListMapper.findMyGroupListAndPageParams(id, pageParams);
 
         return myStudyListAndPageParams;
+    }
+
+    /**
+     * 스터디 일정 생성
+     *
+     * @param studyPlan 스터디 일정 정보
+     * @param memberId 멤버 아이디
+     */
+    @Override
+    @Transactional
+    public void generateStudyPlan(StudyPlan studyPlan, int memberId) {
+        studyPlanMapper.createStudyPlan(studyPlan);
+        participationListMapper.createParticipationList(memberId);
+    }
+
+    /**
+     * 스터디 일정에 예약 정보 등록
+     * 
+     * @param studyPlanId 스터디 일정 아이디
+     * @param reservationId 예약 아이디
+     */
+    @Override
+    public void registerReservation(int studyPlanId, int reservationId) {
+        studyPlanMapper.updateStudyPlan(studyPlanId, reservationId);
+    }
+
+    /**
+     * 스터디 일정 참여
+     *
+     * @param memberId 멤버 아이디
+     * @param studyPlanId 스터디 일정 아이디
+     */
+    @Override
+    @Transactional
+    public void participateStudyPlan(int memberId, int studyPlanId) {
+        participationListMapper.participateStudy(memberId, studyPlanId);
+        studyPlanMapper.plusCurrentCount(studyPlanId);
+    }
+
+    /**
+     * 스터디 일정 삭제
+     *
+     * @param studyPlanId 스터디 일정 아이디
+     */
+    @Override
+    @Transactional
+    public void removeStudyPlan(int studyPlanId) {
+        participationListMapper.deleteParticipationList(studyPlanId);
+        studyPlanMapper.deleteStudyPlan(studyPlanId);
     }
 }

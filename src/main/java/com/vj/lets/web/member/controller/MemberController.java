@@ -1,9 +1,8 @@
 package com.vj.lets.web.member.controller;
 
-import com.vj.lets.domain.member.dto.EditForm;
-import com.vj.lets.domain.member.dto.LoginForm;
-import com.vj.lets.domain.member.dto.Member;
-import com.vj.lets.domain.member.dto.RegisterForm;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vj.lets.domain.member.dto.*;
 import com.vj.lets.domain.member.service.MemberService;
 import com.vj.lets.domain.member.util.MemberType;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 
 /**
  * 회원 관련 요청 컨트롤러
@@ -267,5 +268,4 @@ public class MemberController {
         }
         return "redirect:/";
     }
-
 }
