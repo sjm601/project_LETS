@@ -26,4 +26,10 @@
         DELETE STUDY_PLAN
         WHERE ID = #{studyPlanId}
     </delete>
+
+    <update id="plusCurrentCount" parameterType="int">
+        UPDATE STUDY_PLAN
+        SET CURRENT_COUNT = CURRENT_COUNT + 1
+        WHERE ID = #{studyPlanId}
+    </update>
 </mapper>

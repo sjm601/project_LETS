@@ -78,4 +78,17 @@ class StudyPlanMapperTest {
         // then
         log.info("스터디 일정 삭제");
     }
+
+    @Test
+    @Transactional
+    void plusCurrentCountTest() {
+        // given
+        int studyPlanId = 1;
+
+        // when
+        studyPlanMapper.plusCurrentCount(studyPlanId);
+
+        // then
+        log.info("스터디 일정 현재 인원 1증가");
+    }
 }

@@ -43,10 +43,18 @@ public interface StudyPlanMapper {
     public void updateStudyPlan(@Param("studyPlanId") int studyPlanId, @Param("reservationId") int reservationId);
 
     /**
-     *  스터디 일정 삭제
+     * 스터디 일정 삭제
      *  
      * @author VJ특공대 이희영
      * @param studyPlanId 스터디 일정 아이디
      */
     public void deleteStudyPlan(int studyPlanId);
+
+    /**
+     * 스터디 일정 현재 인원 1 증가
+     *
+     * @author VJ특공대 이희영
+     * @param studyPlanId 스터디 일정 아이디
+     */
+    public void plusCurrentCount(int studyPlanId);
 }

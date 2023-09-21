@@ -5,7 +5,7 @@
 
 <mapper namespace="com.vj.lets.domain.group.mapper.ParticipationListMapper">
 
-    <insert id="createParticipationList" parameterType="ParticipationList">
+    <insert id="createParticipationList" parameterType="int">
         INSERT INTO PARTICIPATION_LIST (ID, MEMBER_TYPE, MEMBER_ID, STUDY_PLAN_ID)
         VALUES (PARTICIPATION_LIST_ID_SEQ.nextval, '주최자', #{memberId}, STUDY_PLAN_ID_SEQ.currval)
     </insert>
@@ -24,6 +24,6 @@
 
     <delete id="deleteParticipationList" parameterType="int">
         DELETE PARTICIPATION_LIST
-        WHERE ID = #{participationListId}
+        WHERE ID = #{studyPlanId}
     </delete>
 </mapper>

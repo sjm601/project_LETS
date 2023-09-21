@@ -21,9 +21,9 @@ public interface ParticipationListMapper {
      * 스터디 참여 리스트 생성
      *
      * @author VJ특공대 이희영
-     * @param participationList 스터디 참여 리스트
+     * @param memberId 멤버 아이디
      */
-    public void createParticipationList(ParticipationList participationList);
+    public void createParticipationList(int memberId);
 
     /**
      * 스터디 일정 참여자 리스트 조회
@@ -47,7 +47,7 @@ public interface ParticipationListMapper {
      * 참여자 리스트 삭제
      * 
      * @author VJ특공대 이희영
-     * @param participationListId 참여자 리스트 아이디
+     * @param studyPlanId 스터디 일정 아이디
      */
-    public void deleteParticipationList(int participationListId);
+    public void deleteParticipationList(int studyPlanId);
 }

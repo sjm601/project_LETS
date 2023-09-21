@@ -35,13 +35,11 @@ class ParticipationListMapperTest {
         studyPlanMapper.createStudyPlan(studyPlan);
 
         ParticipationList participationList = ParticipationList.builder()
-                .memberId(memberId)
-                .memberType("주최자")
                 .build();
 
 
         // when
-        participationListMapper.createParticipationList(participationList);
+        participationListMapper.createParticipationList(memberId);
 
         // then
         log.info("스터디 참여 리스트 생성 : {}", participationList);
@@ -73,5 +71,18 @@ class ParticipationListMapperTest {
 
         // then
         log.info("스터디 일정 참여");
+    }
+
+    @Test
+    @Transactional
+    void deleteParticipationListTest() {
+        // given
+        int studyPlanId = 1;
+
+        // when
+        participationListMapper.deleteParticipationList(studyPlanId);
+
+        // then
+        log.info("스터디 참여 리스트 삭제");
     }
 }
