@@ -2,6 +2,7 @@ package com.vj.lets.domain.group.mapper;
 
 import com.vj.lets.domain.group.dto.StudyPlan;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -37,8 +38,9 @@ public interface StudyPlanMapper {
      * 
      * @author VJ특공대 이희영
      * @param studyPlanId 스터디 일정 아이디
+     * @param reservationId 예약 아이디
      */
-    public void updateStudyPlan(int studyPlanId);
+    public void updateStudyPlan(@Param("studyPlanId") int studyPlanId, @Param("reservationId") int reservationId);
 
     /**
      *  스터디 일정 삭제

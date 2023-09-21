@@ -21,4 +21,9 @@
         INSERT INTO PARTICIPATION_LIST (ID, MEMBER_TYPE, MEMBER_ID, STUDY_PLAN_ID)
         VALUES (PARTICIPATION_LIST_ID_SEQ.nextval, '참여자', #{memberId}, #{studyPlanId})
     </insert>
+
+    <delete id="deleteParticipationList" parameterType="int">
+        DELETE PARTICIPATION_LIST
+        WHERE ID = #{participationListId}
+    </delete>
 </mapper>

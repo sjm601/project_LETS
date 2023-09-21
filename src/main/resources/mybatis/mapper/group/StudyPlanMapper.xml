@@ -7,7 +7,7 @@
 
     <insert id="createStudyPlan" parameterType="StudyPlan">
         INSERT INTO STUDY_PLAN (ID, TOTAL_COUNT, STUDY_GROUP_ID)
-        VALUES (STUDY_PLAN_ID_SEQ.nextval, #{headCount}, #{studyGroupId})
+        VALUES (STUDY_PLAN_ID_SEQ.nextval, #{totalCount}, #{studyGroupId})
     </insert>
 
     <select id="findAllStudyPlan" parameterType="int">

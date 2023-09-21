@@ -2,6 +2,7 @@ package com.vj.lets.domain.group.mapper;
 
 import com.vj.lets.domain.group.dto.ParticipationList;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -37,7 +38,16 @@ public interface ParticipationListMapper {
      * 스터디 참여
      *
      * @author VJ특공대 이희영
+     * @param memberId 멤버 아이디
      * @param studyPlanId 스터디 일정 아이디
      */
-    public void participateStudy(int studyPlanId);
+    public void participateStudy(@Param("memberId") int memberId, @Param("studyPlanId") int studyPlanId);
+
+    /**
+     * 참여자 리스트 삭제
+     * 
+     * @author VJ특공대 이희영
+     * @param participationListId 참여자 리스트 아이디
+     */
+    public void deleteParticipationList(int participationListId);
 }
