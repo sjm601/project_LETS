@@ -162,17 +162,17 @@ public class ReviewServiceImpl implements ReviewService {
 
     /**
      * 예약 아이디로 리뷰 개수 가져오기
-     * @param reservationId
+     * @param reservationId 예약 ID
      * @return 리뷰 개수
      */
     @Override
-    public int getCountByReview(int reservationId) {
+    public int getCountByRes(int reservationId) {
         return reviewMapper.readCountByReview(reservationId);
     }
 
     /**
      * 호스트 해당 카페의 오늘 등록된 리뷰 수 출력 (호스트 대시 보드 사용)
-     * @param cafeId
+     * @param cafeId 카페 ID
      * @return 오늘 등록된 리뷰 수
      */
     @Override

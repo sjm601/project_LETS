@@ -98,7 +98,7 @@ public interface ReviewService {
      * @param reservationId
      * @return 예약 아이디로 작성된 리뷰가 2개일 시 답변 완료로 판단
      */
-    public int getCountByReview(int reservationId);
+    public int getCountByRes(int reservationId);
 
     /**
      * 오늘 호스트의 카페에 등록된 리뷰를 불러오기 위해 사용

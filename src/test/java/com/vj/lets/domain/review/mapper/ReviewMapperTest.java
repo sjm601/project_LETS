@@ -123,7 +123,7 @@ class ReviewMapperTest {
         boolean tf = reviewMapper.readCountByReservationId(reservationId);
         // then
         log.info("리뷰 유무 : {}", tf);
-        assertThat(tf).isNotNull();
+        assertThat(tf).isTrue();
     }
 
     @Test
