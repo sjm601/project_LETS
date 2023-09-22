@@ -30,6 +30,6 @@ public class Article {
     /** 회원번호 (참조)*/
     private int memberId;
     /** 그룹 아이디 (참조)*/
-    private int groupId;
+    private int studyGroupId;
 
 }

@@ -66,6 +66,7 @@ public class CafeController {
         List<CafeOption> options = cafeService.getOptionList();
         model.addAttribute("options", options);
 
+
         int count = cafeService.getCountCafeForAdmin();
         int elementSize = 8;
         int pageSize = 5;
@@ -80,7 +81,7 @@ public class CafeController {
                 .elementSize(elementSize)
                 .pageSize(pageSize)
                 .requestPage(selectPage)
-                .rowCount(count)
+//                .rowCount(count)
                 .build();
         PaginationForCafe paginationForCafe = new PaginationForCafe(pageParamsForCafe);
         model.addAttribute("pagination", paginationForCafe);

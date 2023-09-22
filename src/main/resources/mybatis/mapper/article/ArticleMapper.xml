@@ -11,16 +11,18 @@
                             TITLE,
                             CONTENT,
                             IMAGE_PATH ,
+                            STUDY_GROUP_ID,
                             MEMBER_ID)
-        VALUES (ARTICLE_ID_SEQ.NEXTVAL, #{title}, #{content}, #{imagePath}, #{memberId})
+        VALUES (ARTICLE_ID_SEQ.NEXTVAL, #{title}, #{content}, #{imagePath, jdbcType=NULL}, #{studyGroupId}, #{memberId})
     </insert>
 
     <!-- 게시글 수정 -->
     <update id="update" parameterType="Article">
         UPDATE Article
         <set>
-            <if test="title != null or title != ''">title = #{title},</if>
-            <if test="content != null or content != ''">content = #{content}</if>
+            <if test="title != null or title != ''"> title = #{title},</if>
+            <if test="content != null or content != ''"> content = #{content},</if>
+            <if test="content != null or content != ''"> imagePath = #{modifyImage}</if>
         </set>
         WHERE ID = #{id}
     </update>
@@ -142,6 +144,7 @@
         image_path,
         TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') AS regdate
         FROM article
+        WHERE STUDY_GROUP_ID = #{groupId}
         ORDER BY regdate DESC
         )
         WHERE <![CDATA[ ROWNUM <= 3 ]]>

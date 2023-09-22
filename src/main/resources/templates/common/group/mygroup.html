@@ -72,11 +72,11 @@
                                                 data-bs-target="#registerModal" id="register"
                                                 style="font-size: 14px;">가입하기
                                         </button>
-<!--                                        <button th:if="${groupMember != null}" class="btn btn-success my-auto"-->
-<!--                                                data-bs-toggle="modal"-->
-<!--                                                data-bs-target="#writeModal" id="write" style="font-size: 14px;">글-->
-<!--                                            작성-->
-<!--                                        </button>-->
+                                        <!--                                        <button th:if="${groupMember != null}" class="btn btn-success my-auto"-->
+                                        <!--                                                data-bs-toggle="modal"-->
+                                        <!--                                                data-bs-target="#writeModal" id="write" style="font-size: 14px;">글-->
+                                        <!--                                            작성-->
+                                        <!--                                        </button>-->
                                         <button class="btn btn-success my-auto"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#writeModal" id="write" style="font-size: 14px;">글
@@ -90,19 +90,18 @@
                             <div class="widget-title">
                                 <h4>최근 게시글</h4>
                             </div>
-                                <th:block>
-                                    <ul th:each="recentArticle : ${recentArticleList}" class="comments-list">
-                                        <li>
-                                            <div class="alignleft">
-                                                <a href="#"><img th:src="${recentArticle.imagePath}" src="/img/blog-5.jpg" alt="#"></a>
-                                            </div>
-                                            <small th:text="${recentArticle.regdate}">게시글 날짜</small>
-                                            <h3><a href="#" title="" th:text="${recentArticle.title}">제목...</a></h3>
-                                        </li>
-                                    </ul>
-                                </th:block>
-                                <!-- /최근 게시글 위젯 -->
-
+                            <th:block>
+                                <ul th:each="recentArticle : ${recentArticleList}" class="comments-list">
+                                    <li>
+                                        <div class="alignleft">
+                                           <img th:src="${recentArticle.imagePath}" src="/img/blog-5.jpg" alt="#">
+                                        </div>
+                                        <small th:text="${recentArticle.regdate}">게시글 날짜</small>
+                                        <h3><a th:href="@{/group/{id}(id=${studyGroup['ID']})}" title="" th:text="${recentArticle.title}">제목...</a></h3>
+                                    </li>
+                                </ul>
+                            </th:block>
+                            <!-- /최근 게시글 위젯 -->
                         </aside>
                         <!-- /사이드 바 -->
 
@@ -138,7 +137,7 @@
                                     <h1 class="mb-3" th:text="${article['TITLE']}">주식 스터디</h1>
                                     <div class="postmeta">
                                         <!-- 추후 수정 필요함 %%이미지 패스 관련%%% -->
-                                        <!--<div><img th:src="${articleList.IMAGEPATH}" alt="" class="img-fluid" src="img/blog-single.jpg"></div>-->
+                                        <div><img th:src="${article['IMAGEPATH']}" alt="" class="img-fluid" src="img/blog-single.jpg"></div>
                                     </div>
                                     <!-- /post meta -->
                                     <div class="post-content">
@@ -247,9 +246,9 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label" for="modifyImage">사진</label>
-                                                        <input th:id="modifyImage" th:name="modifyImage" type="file"
+                                                        <input th:id="modifyImage" th:name="imagePath" type="file"
                                                                class="real-upload form-control" accept="image/*"
-                                                               id="modifyImage"
+                                                               id="modifyImage" enctype="multipart/form-data"
                                                                name="modifyImage"/>
                                                     </div>
                                                     <!-- /수정 폼 -->
@@ -350,7 +349,7 @@
                             <div class="mb-3">
                                 <label class="form-label" for="imagePath">사진</label>
                                 <input type="file" class="real-upload form-control" accept="image/*" id="imagePath"
-                                       name="imagePath"/>
+                                       name="imagePath" enctype="multipart/form-data"/>
                             </div>
                         </div>
                         <div class="modal-footer">

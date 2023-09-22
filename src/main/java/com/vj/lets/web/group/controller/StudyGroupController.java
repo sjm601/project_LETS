@@ -181,19 +181,20 @@ public class StudyGroupController {
 
         List<Map<String, Object>> articleList = articleService.findByPage(pageParams, id);
         model.addAttribute("articleList", articleList);
-
         List<Integer> articleIds = new ArrayList<>();
         for (Map<String, Object> articleMap : articleList) {
             int articleId = Integer.parseInt(articleMap.get("ID").toString());
             articleIds.add(articleId);
+            log.info("{}", articleIds);
         }
 
         //해당 게시글의 댓글 목록
         List<Map<String, Object>> articleComments = articleService.findComment(articleIds);
         model.addAttribute("commentList", articleComments);
+        log.info("{}", articleComments);
 
         // 최근 게시글 목록
-        List<Article> recentArticles = articleService.getRecentArticles();
+        List<Article> recentArticles = articleService.getRecentArticles(id);
         model.addAttribute("recentArticleList",recentArticles);
 
         return "common/group/mygroup";
@@ -492,7 +493,7 @@ public class StudyGroupController {
         Member loginMember = (Member) session.getAttribute("loginMember");
         if (loginMember != null) {
             int memberId = loginMember.getId(); // Member 객체에서 member_id를 가져옵니다.
-
+            createForm.setStudyGroupId(id);
             log.info(" 담으려는 아티클 폼 {}", createForm);
             log.info("이미지 패스ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ{}", imagePath);
 
@@ -500,7 +501,7 @@ public class StudyGroupController {
                     .title(createForm.getTitle())
                     .content(createForm.getContent())
                     .memberId(memberId)
-                    .groupId(createForm.getGroupId())
+                    .studyGroupId(createForm.getStudyGroupId())
                     .build();
             log.info("아티클 객체에 넣어둔 정보 확인 ======{}", article);
             if (imagePath == null) {
