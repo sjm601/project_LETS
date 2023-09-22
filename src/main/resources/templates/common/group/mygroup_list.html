@@ -142,14 +142,6 @@
                     <div class="modal-body">
                         <form th:action="@{/group/create}" action="/" th:method="post" enctype="multipart/form-data">
                             <div class="mb-3">
-                                <ul class="image-preview"></ul>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="image">대표 이미지</label>
-                                <input type="file" class="real-upload form-control" accept="image/*" id="image"
-                                       name="imagePath" />
-                            </div>
-                            <div class="mb-3">
                                 <label class="form-label" for="name">스터디 이름</label>
                                 <input class="form-control" id="name" name="name" type="text" placeholder="스터디 이름"/>
                             </div>
@@ -203,7 +195,6 @@
     <th:block th:fragment="scripts">
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script src="/js/custom/address.js"></script>
-        <script src="/js/custom/image_upload.js"></script>
     </th:block>
 
 </th:block>
