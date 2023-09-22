@@ -27,11 +27,11 @@
                     <ul class="clearfix">
                         <li>
                             <a class="btn_map" data-bs-toggle="collapse" href="#collapseMap" aria-expanded="false"
-                               aria-controls="collapseMap" data-text-swap="Hide map" data-text-original="View on map"
+                               aria-controls="collapseMap" data-text-swap="지도 숨기기" data-text-original="지도 보기"
                                onclick="relayout()">View
                                 on map</a>
                         </li>
-                        <li>
+                        <!--<li>
                             <div class="switch-field">
                                 <input type="radio" id="all" name="listing_filter" value="all" checked data-filter="*"
                                        class="selected">
@@ -43,7 +43,7 @@
                                        data-filter=".latest">
                                 <label for="latest">평점순</label>
                             </div>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
                 <!-- /container -->
@@ -61,19 +61,18 @@
                         <div class="custom-search-input-2 inner-2">
                             <form>
                                 <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="카페 이름" name="searchName">
+                                    <input class="form-control" type="text" placeholder="카페 이름" name="name">
                                     <i class="icon_search"></i>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="거리" name="searchName">
-                                    <i class="fa-solid fa-car"></i>
+                                    <input class="form-control" type="number" placeholder="사용 인원" name="countPerson">
+                                    <i class="fa-solid fa-people-group"></i>
                                 </div>
                                 <div class="form-group">
                                     <select class="wide" name="searchOption">
-                                        <option>Option</option>
-                                        <option>와이파이</option>
-                                        <option>흡연구역</option>
-                                        <option>화이트보드</option>
+                                        <option>옵션 선택</option>
+                                        <option th:each="option : ${options}"
+                                                th:text="${option.name}" th:value="${option.id}">와이파이</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -155,7 +154,7 @@
                                 </th:block>
                                 <th:block th:if="${pagination.showPrevious}">
                                     <li class="page-item">
-                                        <a th:href="@{|/cafe/list?page=${pagination.previousStartPage}|}"
+                                        <a th:href="@{/cafe/list?page=${pagination.previousStartPage}}"
                                            class="page-link">이전</a>
                                     </li>
                                 </th:block>
@@ -175,12 +174,12 @@
                                 </th:block>
                                 <th:block th:if="${pagination.showNext}">
                                     <li class="page-item">
-                                        <a th:href="@{|/cafe/list?page=${pagination.nextStartPage}|}" class="page-link">다음</a>
+                                        <a th:href="@{/cafe/list?page=${pagination.nextStartPage}}" class="page-link">다음</a>
                                     </li>
                                 </th:block>
                                 <th:block th:if="${pagination.showLast}">
                                     <li class="page-item">
-                                        <a th:href="@{|/cafe/list?page=${pagination.totalPages}|}"
+                                        <a th:href="@{/cafe/list?page=${pagination.totalPages}}"
                                            class="page-link">끝으로</a>
                                     </li>
                                 </th:block>

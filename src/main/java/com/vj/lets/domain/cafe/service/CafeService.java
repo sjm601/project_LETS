@@ -5,6 +5,7 @@ import com.vj.lets.domain.cafe.dto.CafeOption;
 import com.vj.lets.domain.cafe.dto.CafeOptionList;
 import com.vj.lets.domain.cafe.dto.CafeSearch;
 import com.vj.lets.domain.common.web.PageParams;
+import com.vj.lets.domain.common.web.PageParamsForCafe;
 
 import java.util.List;
 import java.util.Map;
@@ -43,10 +44,12 @@ public interface CafeService {
     /**
      * 카페 전체 리스트 출력
      *
-     * @param pageParams 페이징
+     * @param pageParamsForCafe 페이징
+     * @param cafeSearch 카페 검색
      * @return 카페 전체 리스트
      */
-    public List<Map<String, Object>> getCafeList(PageParams pageParams);
+    public List<Map<String, Object>> getCafeList(PageParamsForCafe pageParamsForCafe,
+                                                 CafeSearch cafeSearch);
 
     /**
      * 카페 옵션 리스트 출력
@@ -92,8 +95,7 @@ public interface CafeService {
      * @param cafeSearch 카페 검색값
      * @return 카페 검색 결과
      */
-    public List<Map<String, Object>> getSearchCafe(CafeSearch cafeSearch, PageParams pageParams,
-                                                   double currentY, double currentX);
+    public List<Map<String, Object>> getSearchCafe(CafeSearch cafeSearch, PageParamsForCafe pageParamsForCafe);
 
     /**
      * 전체 입점 카페 수 조회
