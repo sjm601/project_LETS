@@ -18,20 +18,31 @@ class PaymentServiceTest {
 
     @Test
     @Transactional
-    void registerTest() {
-        //given
-        Payment payment = Payment.builder()
-                .id(1)
-                .payStatus("success")
-                .payName("신짱구")
-                .payEmail("shin@gmail.com")
-                .payPhoneNumber("010-8282-8282")
-                .reservationId(1)
-                .build();
+    void paymentTest() {
+            //given
+            Payment payment = Payment.builder()
+                    .id(1)
+                    .payStatus("success")
+                    .payName("신짱구")
+                    .payEmail("shin@gmail.com")
+                    .payPhoneNumber("010-8282-8282")
+                    .reservationId(1)
+                    .build();
+            // when
+            paymentService.payment(payment);
+            // then
+            log.info("결제 정보 :{}",payment);
+            assertThat(payment).isNotNull();
+        }
+
+    @Test
+    void checkAlreadyPaymentTest() {
+        // given
+        int reservationId = 24;
         // when
-        paymentService.payment(payment);
+        int count = paymentService.checkAlreadyPayment(reservationId);
         // then
-        log.info("결제 정보 :{}",payment);
-        assertThat(payment).isNotNull();
+        log.info("카운트:{}", count);
+        assertThat(count).isNotZero();
     }
 }

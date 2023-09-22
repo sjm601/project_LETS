@@ -3,7 +3,6 @@ package com.vj.lets.domain.cafe.service;//import static org.junit.jupiter.api.As
 import com.vj.lets.domain.cafe.dto.Cafe;
 import com.vj.lets.domain.cafe.dto.CafeOption;
 import com.vj.lets.domain.cafe.dto.CafeOptionList;
-import com.vj.lets.domain.cafe.dto.CafeSearch;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -85,6 +84,7 @@ class CafeServiceTest {
         //then
     }
 
+    /**
     @Test
     @DisplayName("카페 리스트 전체 검색")
     @Disabled
@@ -96,7 +96,7 @@ class CafeServiceTest {
         log.info("전체 카페 리스트 :{}", cafes);
         assertThat(cafes).isNotNull();
     }
-
+**/
     @Test
     @DisplayName("카페 아이디로 카페 검색")
     @Disabled
@@ -121,7 +121,7 @@ class CafeServiceTest {
         log.info("예약 많은 카페 번호 리스트 : {}", list);
         assertThat(list).isNotNull();
     }
-
+    /**
     @Test
     @DisplayName("카페 검색")
     @Disabled
@@ -140,7 +140,7 @@ class CafeServiceTest {
         log.info("카페 검색 결과 리스트 : {}", list);
 //        assertThat(list).isNotNull();
     }
-
+**/
     @Test
     @DisplayName("카페 정보 수정")
     @Disabled

@@ -63,7 +63,7 @@ public class CafeController {
         List<CafeOption> options = cafeService.getOptionList();
         model.addAttribute("options", options);
 
-        int count = cafeService.getCountCafeForAdmin("enabled");
+        int count = cafeService.getCountCafeForAdmin();
         int elementSize = 8;
         int pageSize = 5;
 

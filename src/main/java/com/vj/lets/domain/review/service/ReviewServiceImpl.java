@@ -157,7 +157,8 @@ public class ReviewServiceImpl implements ReviewService {
      */
     @Override
     public List<Map<String, Object>> getByHost(int cafeId, PageParams pageParams) {
-        return reviewMapper.readByHost(cafeId, pageParams);
+        List<Map<String, Object>> guestReviewList = reviewMapper.readByHost(cafeId, pageParams);
+        return addMaps(guestReviewList);
     }
 
     /**
@@ -179,4 +180,10 @@ public class ReviewServiceImpl implements ReviewService {
     public int getTodayReview(int cafeId) {
         return reviewMapper.readTodayReview(cafeId);
     }
+
+    @Override
+    public String  callReviewComment(int reservationId,int memberId) {
+        return reviewMapper.callReviewComment(reservationId,memberId);
+    }
+
 }

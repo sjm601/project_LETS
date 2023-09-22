@@ -32,6 +32,7 @@
                 "rating",
                 "writeDate",
                 "writerName",
+                "writerId",
                 "writerImagePath",
                 "roomName",
                 "reservationId"
@@ -41,6 +42,7 @@
                      "rating",
                      "writeDate",
                      "writerName",
+                     "writerId",
                      "writerImagePath",
                      "roomName",
                      "reservationId"
@@ -51,6 +53,7 @@
                            rev.RATING                            "rating",
                            TO_CHAR(rev.WRITE_DATE, 'yyyy-MM-DD') "writeDate",
                            mem.NAME                              "writerName",
+                           mem.EMAIL                             "writerId",
                            mem.IMAGE_PATH                        "writerImagePath",
                            roo.NAME                              "roomName",
                            res.ID                                "reservationId"
@@ -126,7 +129,8 @@
 
     <select id="readHostCommentByResId" parameterType="int" resultType="Map">
         SELECT rev.CONTENT                           "commentContent",
-               TO_CHAR(rev.WRITE_DATE, 'yyyy-MM-DD') "commentWriteDate"
+               TO_CHAR(rev.WRITE_DATE, 'yyyy-MM-DD') "commentWriteDate",
+               rev.ID                                "commentRevId"
         FROM REVIEW rev
                  JOIN MEMBER mem on rev.MEMBER_ID = mem.ID
                  JOIN RESERVATION res on res.ID = rev.RESERVATION_ID
@@ -243,6 +247,18 @@
         </set>
         WHERE ID = #{id}
     </update>
+
+    <select id="callReviewComment" parameterType="int" resultType="string">
+        SELECT rev.content
+        FROM review rev
+                 JOIN MEMBER mem ON rev.MEMBER_ID = mem.ID
+                 JOIN RESERVATION res ON res.ID = rev.RESERVATION_ID
+                 JOIN CAFE caf ON res.CAFE_ID = caf.ID
+                 JOIN ROOM roo ON res.ROOM_ID = roo.ID
+        WHERE rev.STATUS = 'enabled'
+          AND rev.reservation_id = #{reservationId}
+          AND rev.member_id = #{memberId}
+    </select>
 
     <update id="disabled" parameterType="int">
         UPDATE REVIEW
