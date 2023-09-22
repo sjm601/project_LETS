@@ -245,7 +245,7 @@
                                             </th:block>
                                             <th:block th:if="${pagination.showPrevious}">
                                                 <li class="page-item">
-                                                    <a th:href="@{/cafe/{id}(id=${Cafe['id']})?page=${pagination.previousStartPage}}" class="page-link">이전</a>
+                                                    <a th:href="@{|/cafe/{id}(id=${Cafe['id']})?page=${pagination.previousStartPage}|}" class="page-link">이전</a>
                                                 </li>
                                             </th:block>
                                             <th:block th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
@@ -256,13 +256,13 @@
                                                 </th:block>
                                                 <th:block th:if="${i != pagination.params.requestPage}">
                                                     <li class="page-item">
-                                                        <a th:text="${i}" th:href="@{/cafe/{id}(id=${Cafe['id']})?page=${i}}" class="page-link" href="#">2</a>
+                                                        <a th:text="${i}" th:href="@{|/cafe/{id}(id=${Cafe['id']})?page=${i}|}" class="page-link" href="#">2</a>
                                                     </li>
                                                 </th:block>
                                             </th:block>
                                             <th:block th:if="${pagination.showNext}">
                                                 <li class="page-item">
-                                                    <a th:href="@{/cafe/{id}(id=${Cafe['id']})?page=${pagination.nextStartPage}}" class="page-link">다음</a>
+                                                    <a th:href="@{|/cafe/{id}(id=${Cafe['id']})?page=${pagination.nextStartPage}|}" class="page-link">다음</a>
                                                 </li>
                                             </th:block>
                                             <th:block th:if="${pagination.showLast}">
