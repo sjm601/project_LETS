@@ -11,16 +11,18 @@
                             TITLE,
                             CONTENT,
                             IMAGE_PATH ,
+                            STUDY_GROUP_ID,
                             MEMBER_ID)
-        VALUES (ARTICLE_ID_SEQ.NEXTVAL, #{title}, #{content}, #{imagePath, jdbcType=NULL}, #{memberId})
+        VALUES (ARTICLE_ID_SEQ.NEXTVAL, #{title}, #{content}, #{imagePath, jdbcType=NULL}, #{studyGroupId}, #{memberId})
     </insert>
 
     <!-- 게시글 수정 -->
     <update id="update" parameterType="Article">
         UPDATE Article
         <set>
-            <if test="title != null or title != ''">title = #{title},</if>
-            <if test="content != null or content != ''">content = #{content}</if>
+            <if test="title != null or title != ''"> title = #{title},</if>
+            <if test="content != null or content != ''"> content = #{content},</if>
+            <if test="content != null or content != ''"> imagePath = #{modifyImage}</if>
         </set>
         WHERE ID = #{id}
     </update>
@@ -108,7 +110,7 @@
     </select>
 
     <!--해당 게시글의 댓글 찾기-->
-    <select id="findComment" parameterType="java.util.List" resultType="map">
+    <select id="findComment" resultType="map">
         SELECT ac.id,
         ac.content,
         TO_CHAR(ac.regdate, 'YYYY-MM-DD HH24:MI') AS commentRegDate,
@@ -140,6 +142,7 @@
         image_path,
         TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') AS regdate
         FROM article
+        WHERE STUDY_GROUP_ID = #{groupId}
         ORDER BY regdate DESC
         )
         <![CDATA[ WHERE ROWNUM <= 3 ]]>

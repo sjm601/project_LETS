@@ -6,6 +6,7 @@ import com.vj.lets.domain.article.mapper.ArticleMapper;
 import com.vj.lets.domain.article.util.ArticleHistoryComment;
 import com.vj.lets.domain.group.util.PageParams;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -111,7 +112,7 @@ public class ArticleServiceImpl implements ArticleService {
      * @return : 최근 게시글 목록 (3개까지)
      */
     @Override
-    public List<Article> getRecentArticles() {
-        return articleMapper.getRecentArticles();
+    public List<Article> getRecentArticles(@Param("groupId")int id) {
+        return articleMapper.getRecentArticles(id);
     }
 }

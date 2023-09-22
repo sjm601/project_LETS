@@ -74,13 +74,13 @@ public class StudyGroupController {
      * 실제 게시글 이미지 경로
      */
     @Value("${article.imageLocation}")
-    private String ArticleImageLocation;
+    private String articleImageLocation;
 
     /**
      * DB에 입력할 게시글 이미지 경로
      */
     @Value("${article.imageDBPath}")
-    private String ArticleImageDBPath;
+    private String articleImageDBPath;
 
     /**
      * 스터디 전체 리스트 화면 출력
@@ -178,23 +178,23 @@ public class StudyGroupController {
 
         Pagination pagination = new Pagination(pageParams);
         model.addAttribute("pagination",pagination);
-        log.info("페이지네이션 ------{}",pagination);
 
         List<Map<String, Object>> articleList = articleService.findByPage(pageParams, id);
-        log.info("articleList ------{}",articleList);
         model.addAttribute("articleList", articleList);
-        log.info("articleList ------{}",articleList);
+        log.info("-------------페이징 처리된 아티클 리스트{}",articleList);
         List<Integer> articleIds = new ArrayList<>();
         for (Map<String, Object> articleMap : articleList) {
             int articleId = Integer.parseInt(articleMap.get("ID").toString());
             articleIds.add(articleId);
+            log.info("{}", articleIds);
         }
         //해당 게시글의 댓글 목록
         List<Map<String, Object>> articleComments = articleService.findComment(articleIds);
         model.addAttribute("commentList", articleComments);
+        log.info("{}", articleComments);
 
         // 최근 게시글 목록
-        List<Article> recentArticles = articleService.getRecentArticles();
+        List<Article> recentArticles = articleService.getRecentArticles(id);
         model.addAttribute("recentArticleList",recentArticles);
 
 
@@ -517,12 +517,12 @@ public class StudyGroupController {
      * @return 스터디 그룹 화면
      */
     @PostMapping("/{id}/article")
-    public String create(@ModelAttribute ArticleCreateForm createForm,@PathVariable int groupId, MultipartFile imagePath, HttpServletRequest request, Model model) throws IOException {
+    public String create(@ModelAttribute ArticleCreateForm createForm,@PathVariable int id, MultipartFile imagePath, HttpServletRequest request, Model model) throws IOException {
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
         if (loginMember != null) {
             int memberId = loginMember.getId(); // Member 객체에서 member_id를 가져옵니다.
-
+            createForm.setStudyGroupId(id);
             log.info(" 담으려는 아티클 폼 {}", createForm);
             log.info("이미지 패스ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ{}", imagePath);
 
@@ -530,7 +530,7 @@ public class StudyGroupController {
                     .title(createForm.getTitle())
                     .content(createForm.getContent())
                     .memberId(memberId)
-                    .groupId(createForm.getGroupId())
+                    .studyGroupId(createForm.getStudyGroupId())
                     .build();
             log.info("아티클 객체에 넣어둔 정보 확인 ======{}", article);
             if (imagePath == null) {
@@ -542,7 +542,7 @@ public class StudyGroupController {
                 String imageExtension = StringUtils.getFilenameExtension(imagePath.getOriginalFilename());
                 // 업로드 한 이미지 다운로드 받을 위치 설정
                 StringBuilder imageDir = new StringBuilder();
-                imageDir.append(ArticleImageLocation).append(loginMember.getId()).append(".").append(imageExtension);
+                imageDir.append(articleImageLocation).append(loginMember.getId()).append(".").append(imageExtension);
                 File uploadDir = new File(imageDir.toString());
                 // 폴더 없으면 생성
                 if (!uploadDir.exists()) {
@@ -551,7 +551,7 @@ public class StudyGroupController {
                 imagePath.transferTo(uploadDir);
 
                 StringBuilder imagePathDB = new StringBuilder();
-                imagePathDB.append(ArticleImageDBPath).append(loginMember.getId()).append(".").append(imageExtension);
+                imagePathDB.append(articleImageDBPath).append(loginMember.getId()).append(".").append(imageExtension);
                 article.setImagePath(imagePathDB.toString());
             }
 

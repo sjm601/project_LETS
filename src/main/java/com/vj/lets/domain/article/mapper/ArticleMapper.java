@@ -73,7 +73,7 @@ public interface ArticleMapper {
     /**
      * 최근 게시글 목록 검색
      */
-    public List<Article> getRecentArticles ();
+    public List<Article> getRecentArticles (@Param("groupId")int id);
 
 
 }
