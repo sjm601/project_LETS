@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.security.auth.Subject;
 import java.util.List;
 import java.util.Map;
 
@@ -59,7 +60,8 @@ class StudyGroupServiceTest {
     void getStudyGroupListTest() {
         // given
         String keyword = "테스트";
-        int count = studyGroupService.getSearchCount(keyword);
+        String subject = "";
+        int count = studyGroupService.getSearchCount(keyword, subject);
 
         PageParams pageParams = PageParams.builder()
                 .elementSize(5)
@@ -266,9 +268,10 @@ class StudyGroupServiceTest {
     void getSearchCount() {
         // given
         String keyword = "테스트";
+        String subject = "";
 
         // when
-        int count = studyGroupService.getSearchCount(keyword);
+        int count = studyGroupService.getSearchCount(keyword, subject);
 
         // then
         log.info("검색 결과 수 : {}", count);

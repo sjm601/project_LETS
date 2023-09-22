@@ -82,7 +82,9 @@ class StudyGroupMapperTest {
     void findAllTest() {
         // given
         String keyword = "테스트";
-        int count = studyGroupMapper.studySearchCount(keyword);
+        String subject = "";
+
+        int count = studyGroupMapper.studySearchCount(keyword, subject);
 
         PageParams pageParams = PageParams.builder()
                 .elementSize(5)
@@ -191,9 +193,10 @@ class StudyGroupMapperTest {
     void studySearchCountTest() {
         // given
         String keyword ="테스트";
+        String subject = "";
 
         // when
-        int count = studyGroupMapper.studySearchCount(keyword);
+        int count = studyGroupMapper.studySearchCount(keyword, subject);
 
         // then
         log.info("검색 결과 수 : {}", count);

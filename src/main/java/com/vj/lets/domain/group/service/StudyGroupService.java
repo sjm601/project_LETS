@@ -157,9 +157,10 @@ public interface StudyGroupService {
      *
      * @author VJ특공대 이희영
      * @param keyword 검색 키워드
+     * @param subject 검색 주제
      * @return 검색 결과 수
      */
-    public int getSearchCount(String keyword);
+    public int getSearchCount(String keyword, String subject);
 
     /**
      * 가입된 스터디 그룹 수 조회

@@ -72,12 +72,7 @@
                                                 data-bs-target="#registerModal" id="register"
                                                 style="font-size: 14px;">가입하기
                                         </button>
-                                        <!--                                        <button th:if="${groupMember != null}" class="btn btn-success my-auto"-->
-                                        <!--                                                data-bs-toggle="modal"-->
-                                        <!--                                                data-bs-target="#writeModal" id="write" style="font-size: 14px;">글-->
-                                        <!--                                            작성-->
-                                        <!--                                        </button>-->
-                                        <button class="btn btn-success my-auto"
+                                        <button th:if="${groupMember != null}" class="btn btn-success my-auto"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#writeModal" id="write" style="font-size: 14px;">글
                                             작성
@@ -292,7 +287,7 @@
                                                 <a th:text="${i}" class="page-link" href="#">1</a>
                                             </li>
                                         </th:block>
-                                        <th:block th:if="${i != pagination.params.requestPage}">
+                                        <th:block th:if="${i != pagination.params.requestPage && i > 0}">
                                             <li class="page-item">
                                                 <a th:text="${i}" th:href="@{|/group/${studyGroup['ID']}?page=${i}|}"
                                                    class="page-link" href="#">2</a>

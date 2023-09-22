@@ -291,11 +291,12 @@ public class StudyGroupServiceImpl implements StudyGroupService{
      *
      * @author VJ특공대 이희영
      * @param keyword 검색 키워드
+     * @param subject 검색 주제
      * @return 검색 결과 수
      */
     @Override
-    public int getSearchCount(String keyword) {
-        return studyGroupMapper.studySearchCount(keyword);
+    public int getSearchCount(String keyword, String subject) {
+        return studyGroupMapper.studySearchCount(keyword, subject);
     }
 
     /**

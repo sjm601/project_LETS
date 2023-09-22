@@ -4,6 +4,7 @@ import com.vj.lets.domain.group.dto.Search;
 import com.vj.lets.domain.group.dto.StudyGroup;
 import com.vj.lets.domain.group.util.PageParams;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -96,7 +97,9 @@ public interface StudyGroupMapper {
      * 스터디 검색 결과 수 조회
      *
      * @author VJ특공대 이희영
+     * @param keyword 키워드
+     * @param subject 주제
      * @return 검색된 수
      */
-    public int studySearchCount(String keyword);
+    public int studySearchCount(@Param("keyword") String keyword, @Param("subject") String subject);
 }
