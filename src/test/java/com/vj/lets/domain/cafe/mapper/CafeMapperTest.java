@@ -100,6 +100,7 @@ class CafeMapperTest {
         assertThat(cafe).isNotNull();
     }
 
+    /**
     @Test
     @DisplayName("카페 전체 검색")
     @Disabled
@@ -124,7 +125,7 @@ class CafeMapperTest {
 //        log.info("카페 리스트 : {}", list);
 //        assertThat(list).isNotNull();
     }
-
+**/
     @Test
     @DisplayName("예약이 많은 카페 6개 검색")
     @Disabled
@@ -137,6 +138,7 @@ class CafeMapperTest {
         assertThat(list).isNotNull();
     }
 
+    /**
     @Test
     @DisplayName("카페 검색")
     @Disabled
@@ -153,7 +155,7 @@ class CafeMapperTest {
 //        log.info("카페 검색 정보 : {}", list);
 //        assertThat(list).isNotNull();
     }
-
+**/
     @Test
     @DisplayName("카페 삭제")
     @Transactional

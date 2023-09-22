@@ -52,4 +52,5 @@ class PaymentMapperTest {
         log.info("카운트:{}", count);
         assertThat(count).isNotNull();
     }
+
 }
