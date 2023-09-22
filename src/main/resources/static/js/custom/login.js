@@ -59,11 +59,7 @@ document.querySelector('input.login_btn').addEventListener('click', event => {
                     setCookie("remember", email.value, 0);
                 }
 
-                if (document.referrer && document.referrer.indexOf("/") !== -1) {
-                    history.back();    // 뒤로가기
-                } else {
-                    location.href = "/";    // 메인페이지로
-                }
+                location.href = "/";    // 메인페이지로
             } else if (message === 'fail') {
                 alert('아이디 또는 비밀번호가 일치하지 않습니다.');
             }
@@ -73,7 +69,7 @@ document.querySelector('input.login_btn').addEventListener('click', event => {
     } else {
         document.querySelectorAll('.form-control').forEach((e, i) => {
             if (e.value === null || e.value === undefined || e.value === '') {
-                let checkMessage = document.querySelectorAll('.registerCheck');
+                let checkMessage = document.querySelectorAll('.loginCheck');
                 switch (checkMessage[i].getAttribute('id')) {
                     case 'emailCheck':
                         checkMessage[i].innerHTML = '이메일을 입력하세요';

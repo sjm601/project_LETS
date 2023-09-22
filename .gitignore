@@ -39,3 +39,4 @@ out/
 ## Custom ###
 **/src/main/resources/db-config.properties
 log/
+src/main/resources/client_secret.json

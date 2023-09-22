@@ -73,19 +73,20 @@ document.querySelector('input.regist_btn').addEventListener('click', event => {
     event.preventDefault();
 
     if (emailCheck && passwordCheck && passwordConfirmCheck && nameCheck) {
+        const registerForm = {
+            email: email.value,
+            password: password.value,
+            passwordConfirm: passwordConfirm.value,
+            name: name.value
+        }
         fetch('/member/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                email: email.value,
-                password: password.value,
-                passwordConfirm: passwordConfirm.value,
-                name: name.value
-            }),
+            body: JSON.stringify(registerForm),
         }).then(response => {
-            return response.text();
+            return response.json();
         }).then(message => {
             if (message === 'success') {
                 alert("회원가입이 완료되었습니다.");

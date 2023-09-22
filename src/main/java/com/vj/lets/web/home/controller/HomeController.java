@@ -53,9 +53,4 @@ public class HomeController {
 
     }
 
-    @PostMapping("")
-    public String home2 (@RequestBody String google) {
-        log.info(google);
-        return "/index";
-    }
 }
