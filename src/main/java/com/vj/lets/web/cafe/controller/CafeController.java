@@ -7,7 +7,9 @@ import com.vj.lets.domain.cafe.dto.CafeOption;
 import com.vj.lets.domain.cafe.dto.CafeSearch;
 import com.vj.lets.domain.cafe.service.CafeService;
 import com.vj.lets.domain.common.web.PageParams;
+import com.vj.lets.domain.common.web.PageParamsForCafe;
 import com.vj.lets.domain.common.web.Pagination;
+import com.vj.lets.domain.common.web.PaginationForCafe;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.reservation.dto.Reservation;
 import com.vj.lets.domain.reservation.service.ReservationService;
@@ -16,6 +18,7 @@ import com.vj.lets.domain.room.dto.Room;
 import com.vj.lets.domain.room.service.RoomService;
 import com.vj.lets.domain.support.dto.FaqCategory;
 import com.vj.lets.domain.support.service.FaqService;
+import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,14 +59,14 @@ public class CafeController {
 
     @GetMapping("/list")
     public String cafeList(@PathParam("page") String page,
-                           @ModelAttribute CafeSearch cafeSearch,
+                           @Valid @ModelAttribute CafeSearch cafeSearch,
                            Model model) {
         List<FaqCategory> categoryList = faqService.getCafeFaqList();
         model.addAttribute("categoryList", categoryList);
         List<CafeOption> options = cafeService.getOptionList();
         model.addAttribute("options", options);
 
-        int count = cafeService.getCountCafeForAdmin("enabled");
+        int count = cafeService.getCountCafeForAdmin();
         int elementSize = 8;
         int pageSize = 5;
 
@@ -73,20 +76,17 @@ public class CafeController {
 
         int selectPage = Integer.parseInt(page);
 
-        PageParams pageParams = PageParams.builder()
+        PageParamsForCafe pageParamsForCafe = PageParamsForCafe.builder()
                 .elementSize(elementSize)
                 .pageSize(pageSize)
                 .requestPage(selectPage)
                 .rowCount(count)
                 .build();
-        Pagination pagination = new Pagination(pageParams);
-        model.addAttribute("pagination", pagination);
+        PaginationForCafe paginationForCafe = new PaginationForCafe(pageParamsForCafe);
+        model.addAttribute("pagination", paginationForCafe);
 
-        List<Map<String, Object>> allCafe = cafeService.getCafeList(pageParams);
+        List<Map<String, Object>> allCafe = cafeService.getCafeList(pageParamsForCafe, cafeSearch);
         model.addAttribute("allCafe", allCafe);
-
-//        List<Map<String, Object>> searchCafes = cafeService.getSearchCafe(cafeSearch, pageParams, 27.1212, 125.111);
-//        model.addAttribute("searchCafes", searchCafes);
         return "common/cafe/cafe_list";
     }
 
@@ -105,7 +105,12 @@ public class CafeController {
         model.addAttribute("errorMessage", "");
 
         //리뷰목록 페이징 처리
-        int count =Integer.parseInt(cafe.get("reviewCount").toString());
+        int count;
+        if (cafe.get("reviewCount").toString() != null){
+            count = Integer.parseInt(cafe.get("reviewCount").toString());
+        } else{
+            count = 0;
+        }
         log.info("count:{}", count);
         int elementSize = 5;
         int pageSize = 5;
