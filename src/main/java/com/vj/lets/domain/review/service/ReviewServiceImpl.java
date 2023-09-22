@@ -181,9 +181,5 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewMapper.readTodayReview(cafeId);
     }
 
-    @Override
-    public String  callReviewComment(int reservationId,int memberId) {
-        return reviewMapper.callReviewComment(reservationId,memberId);
-    }
 
 }

@@ -129,13 +129,6 @@ public interface ReviewMapper {
      */
     public int readTodayReview(int cafeId);
 
-    /**
-     * 답변 수정을 위해 답변 호출
-     * @param reservationId
-     * @param memberId
-     * @return 작성한 답변 id, content
-     */
-    public String callReviewComment(@Param("reservationId") int reservationId,@Param("memberId") int memberId);
 
 
 }
