@@ -212,8 +212,12 @@ class ReservationMapperTest {
     @Test
     void readCountByMemberTest() {
         // given
+        int memberId =2;
+        String type = "all";
         // when
+        int count = reservationMapper.readCountByMember(memberId,type);
         // then
+        log.info("카운트:{}",count);
     }
 
 

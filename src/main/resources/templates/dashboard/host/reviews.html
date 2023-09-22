@@ -106,6 +106,32 @@
                                 <th:block
                                         th:if="${{review.get('reviewCount') == 2}}">
                                     <div data-effect="mfp-zoom-in" class="btn_999 gray">리뷰 답변 완료</div>
+                                    <p class="inline-popups">
+
+                                        <a th:href="|#modal_edit_${index.count}|" href="#modal_edit"
+                                           data-effect="mfp-zoom-in" class="btn_1 gray">
+                                            <i class="fa fa-fw fa-pencil mr-1"></i>
+                                            답글 수정
+                                        </a>
+                                    </p>
+
+                                    <!-- Edit to review popup -->
+                                    <div th:id="|modal_edit_${index.count}|" id="modal_edit"
+                                         class="white-popup mfp-with-anim mfp-hide modal_edit">
+                                        <div class="small-dialog-header">
+                                            <h3>답글 수정</h3>
+                                        </div>
+                                        <div class="form-group message-reply margin-top-0">
+                                            <label for="content">내용</label>
+                                            <textarea th:text="${review.get('commentContent')}"
+                                                      id="commentContent" name="commentContent"
+                                                      cols="40" rows="3" class="form-control"></textarea>
+                                        </div>
+                                        <button class="btn_1 edit_btn">
+                                            <i class="fa fa-fw fa-pencil mr-1"></i>
+                                            답변 수정
+                                        </button>
+                                    </div>
                                 </th:block>
                             </li>
                         </ul>

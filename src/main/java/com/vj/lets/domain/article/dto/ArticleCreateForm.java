@@ -20,6 +20,6 @@ public class ArticleCreateForm {
     /** 게시글 내용 */
     private String content;
     /** 그룹 아이디 */
-    private int groupId;
+    private int studyGroupId;
 
 }

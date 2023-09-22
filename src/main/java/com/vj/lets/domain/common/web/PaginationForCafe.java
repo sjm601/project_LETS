@@ -12,10 +12,10 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class Pagination {
-	
+public class PaginationForCafe {
+
 	// 페이징 계산 위한 파라메터
-	private PageParams params;
+	private PageParamsForCafe params;
 
 	// 계산 결과 저장을 위한 필드
 	// 전체 페이지 수
@@ -30,8 +30,8 @@ public class Pagination {
 	private int previousStartPage;
 	// 다음 페이지 시작 번호
 	private int nextStartPage;
-	
-	public Pagination(PageParams params) {
+
+	public PaginationForCafe(PageParamsForCafe params) {
 		this.params = params;
 		compute();
 	}

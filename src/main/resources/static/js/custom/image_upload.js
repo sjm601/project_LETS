@@ -45,7 +45,6 @@ realUploads.forEach((realUpload, idx) => {
             img.setAttribute('src', e.target.result);
             img.setAttribute('data-file', file.name);
             img.setAttribute('style', 'width: 200px; height: 200px;');
-            li.appendChild(img);
 
             return li;
         }

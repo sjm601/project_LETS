@@ -13,12 +13,23 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface CafeHistoryMapper {
 
-    /** 카페 생성 */
+    /**
+     * 카페 생성
+     */
     public void create();
 
-    /** 카페 업데이트 */
+    /**
+     * 카페 업데이트
+     *
+     * @param comment 변경 사유
+     * @param cafeId 카페 ID
+     */
     public void update(@Param("comment") String comment, @Param("cafeId") int cafeId);
 
-    /** 카페 삭제 */
+    /**
+     * 카페 삭제
+     *
+     * @param cafeId 카페 ID
+     */
     public void delete(int cafeId);
 }
