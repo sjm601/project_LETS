@@ -70,8 +70,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean checkEmail(String email) {
-        return memberMapper.readBooleanByEmail(email);
+    public Member isMemberByEmail(String email) {
+        return memberMapper.readByEmail(email);
     }
 
     /**

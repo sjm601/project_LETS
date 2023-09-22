@@ -22,9 +22,11 @@ public class WebConfig implements WebMvcConfigurer {
 
     public final List<String> loginNotEssential = Arrays.asList("/", "/**/*.ttf", "/**/*.woff", "/**/*.mp4", "/**/*.png", "/**/*.jpg", "/**/*.ico", "/**/*.html",
             "/**/assets/**", "/**/css/**", "/**/images/**", "/**/image/**", "/**/img/**", "/**/js/**", "/**/sass/**", "/**/upload_image/**", "/**/vendor/**",
-            "/member/register", "/member/login", "/member/logout", "/cafe", "/cafe/*", "/group", "/contact", "/support/**", "/error", "/api/**");
+            "/member/register", "/member/login", "/member/logout", "/member/google", "/member/callback", "/google/login", "/cafe", "/cafe/*", "/group", "/contact", "/support/**", "/error");
 
-    public final List<String> loginModalNotEssential = Arrays.asList("/mypage/**", "/host/**", "/admin/**");
+    public final List<String> loginModalNotEssential = Arrays.asList("/**/*.ttf", "/**/*.woff", "/**/*.mp4", "/**/*.png", "/**/*.jpg", "/**/*.ico", "/**/*.html",
+            "/**/assets/**", "/**/css/**", "/**/images/**", "/**/image/**", "/**/img/**", "/**/js/**", "/**/sass/**", "/**/upload_image/**", "/**/vendor/**",
+            "/mypage/**", "/host/**", "/admin/**", "/member/login/**", "/member/register/**");
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

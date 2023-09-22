@@ -33,12 +33,12 @@ public interface MemberMapper {
     public List<Member> readAll();
 
     /**
-     * 이메일로 회원 존재 유무 주회
+     * 이메일로 회원 조회
      *
      * @param email 이메일
-     * @return 회원 존재 유무
+     * @return 회원 정보
      */
-    public boolean readBooleanByEmail(String email);
+    public Member readByEmail(String email);
 
     /**
      * 이메일, 비밀번호로 회원 조회

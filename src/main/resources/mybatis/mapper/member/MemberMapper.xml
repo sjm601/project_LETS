@@ -16,8 +16,8 @@
         ORDER BY regdate DESC
     </select>
 
-    <select id="readBooleanByEmail" parameterType="string" resultType="boolean">
-        select COUNT(ID)
+    <select id="readByEmail" parameterType="string" resultType="Member">
+        select ID, EMAIL, NAME, TYPE, IMAGE_PATH
         from MEMBER
         where EMAIL = #{email} AND STATUS = 'enabled'
     </select>

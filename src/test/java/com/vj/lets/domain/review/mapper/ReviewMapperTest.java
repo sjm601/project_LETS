@@ -65,7 +65,7 @@ class ReviewMapperTest {
         // when
         List<Map<String, Object>> list = reviewMapper.readByCafe(cafeId, pageParams);
         // then
-        assertThat(list).isNotNull();
+//        assertThat(list).isNotNull();
     }
 **/
     @Test

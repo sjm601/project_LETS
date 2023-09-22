@@ -1,7 +1,5 @@
 package com.vj.lets.web.member.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vj.lets.domain.member.dto.*;
 import com.vj.lets.domain.member.service.MemberService;
 import com.vj.lets.domain.member.util.MemberType;
@@ -13,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -73,7 +70,7 @@ public class MemberController {
      * @param registerForm  회원가입 폼 객체
      * @param bindingResult 바인딩 리절트 객체
      * @param model         모델 객체
-     * @return 논리적 뷰 이름
+     * @return 실행 후 반환 값
      */
     @PostMapping("/register")
     @ResponseBody
@@ -81,13 +78,11 @@ public class MemberController {
                            BindingResult bindingResult,
                            Model model) {
 
-        log.warn("================{}", registerForm);
-
         if (bindingResult.hasErrors()) {
             return "fail";
         }
 
-        if (memberService.checkEmail(registerForm.getEmail())) {
+        if (memberService.isMemberByEmail(registerForm.getEmail()) != null) {
             return "duplicate";
         }
 
@@ -111,7 +106,8 @@ public class MemberController {
      * @return 논리적 뷰 이름
      */
     @GetMapping("/login")
-    public String loginView(@CookieValue(value = "remember", required = false) String rememberEmail, Model model) {
+    public String loginView(@CookieValue(value = "remember", required = false) String rememberEmail,
+                            Model model) {
         LoginForm loginForm = LoginForm.builder().build();
 
         if (rememberEmail != null) {
@@ -130,9 +126,8 @@ public class MemberController {
      * @param loginForm     로그인 폼 객체
      * @param bindingResult 리절트 객체
      * @param request       서블릿 리퀘스트 객체
-     * @param response      서블릿 리스폰스 객체
      * @param model         모델 객체
-     * @return 논리적 뷰 이름
+     * @return 실행 후 반환 값
      */
     @PostMapping("/login")
     @ResponseBody
@@ -145,7 +140,6 @@ public class MemberController {
         }
 
         Member loginMember = memberService.isMember(loginForm.getEmail(), loginForm.getPassword());
-
         if (loginMember == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             return "fail";
@@ -158,12 +152,27 @@ public class MemberController {
     }
 
     /**
+     * 구글 로그인 처리 기능
+     *
+     * @param request 서블릿 리퀘스트 객체
+     * @param model   모델 객체
+     * @return 논리적 뷰 이름
+     */
+    @GetMapping("/google")
+    public String googleLogin(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        Member loginMember = (Member) session.getAttribute("googleMember");
+        session.setAttribute("loginMember", loginMember);
+        return "redirect:/";
+    }
+
+    /**
      * 회원 정보 수정 기능
      *
-     * @param editForm      회원 정보 수정 폼 객체
-     * @param request       서블릿 리퀘스트 객체
-     * @param response      서블릿 리스폰스 객체
-     * @param model         모델 객체
+     * @param editForm 회원 정보 수정 폼 객체
+     * @param request  서블릿 리퀘스트 객체
+     * @param response 서블릿 리스폰스 객체
+     * @param model    모델 객체
      * @return 논리적 뷰 이름
      */
     @PostMapping("/edit")
@@ -233,7 +242,7 @@ public class MemberController {
      *
      * @param request 서블릿 리퀘스트 객체
      * @param model   모델 객체
-     * @return 성공시 반환 값
+     * @return 실행 후 반환 값
      */
     @DeleteMapping("/delete")
     @ResponseBody
@@ -268,4 +277,5 @@ public class MemberController {
         }
         return "redirect:/";
     }
+
 }
