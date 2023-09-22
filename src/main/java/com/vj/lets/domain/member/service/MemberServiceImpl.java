@@ -66,9 +66,15 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public Member isMember(String email, String password) {
-        return memberMapper.readByEmailAndPasswd(email, password);
+        return memberMapper.readByEmailAndPassword(email, password);
     }
 
+    /**
+     * 회원 가입 시 이메일 중복 여부 조회
+     *
+     * @param email 이메일
+     * @return 중복 여부
+     */
     @Override
     public Member isMemberByEmail(String email) {
         return memberMapper.readByEmail(email);
@@ -93,29 +99,6 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Member getMember(int id) {
         return memberMapper.readById(id);
-    }
-
-    /**
-     * 회원 정보 수정
-     *
-     * @param member 회원 정보
-     */
-    @Override
-    @Transactional
-    public void editMember(Member member) {
-        memberMapper.update(member);
-        memberHistoryMapper.createByUpdate(member.getId(), MemberHistoryComment.UPDATE.getComment());
-    }
-
-    /**
-     * 회원 정보 수정 시 수정 정보 중복 체크 용 폼 조회
-     *
-     * @param id 회원 ID
-     * @return 체크 용 폼 객체
-     */
-    @Override
-    public EditForm checkEdit(int id) {
-        return memberMapper.readUpdateForm(id);
     }
 
     /**
@@ -149,6 +132,29 @@ public class MemberServiceImpl implements MemberService {
     }
 
     /**
+     * 회원 정보 수정 시 수정 정보 중복 체크 용 폼 조회
+     *
+     * @param id 회원 ID
+     * @return 체크 용 폼 객체
+     */
+    @Override
+    public EditForm checkEdit(int id) {
+        return memberMapper.readUpdateForm(id);
+    }
+
+    /**
+     * 회원 정보 수정
+     *
+     * @param member 회원 정보
+     */
+    @Override
+    @Transactional
+    public void editMember(Member member) {
+        memberMapper.update(member);
+        memberHistoryMapper.createByUpdate(member.getId(), MemberHistoryComment.UPDATE.getComment());
+    }
+
+    /**
      * 회원 탈퇴
      *
      * @param id 회원 ID
@@ -162,11 +168,13 @@ public class MemberServiceImpl implements MemberService {
         if (memberType.equals(MemberType.HOST.getType())) {
             Map<String, Object> cafe = cafeMapper.findByMemberId(id);
             int cafeId = Integer.parseInt(cafe.get("id").toString());
+
             cafeMapper.delete(cafeId);
             cafeOptionListMapper.delete(cafeId);
             cafeHistoryMapper.delete(cafeId);
+
         } else if (memberType.equals(MemberType.GUEST.getType())) {
-             List<Map<String, Object>> myGroupList = groupMemberListMapper.findMyGroupList(id);
+            List<Map<String, Object>> myGroupList = groupMemberListMapper.findMyGroupList(id);
             for (Map<String, Object> map : myGroupList) {
                 int groupId = Integer.parseInt(map.get("STUDYGROUPID").toString());
                 GroupMemberList memberList = groupMemberListMapper.isGroupMember(id, groupId);
@@ -175,10 +183,10 @@ public class MemberServiceImpl implements MemberService {
                 groupMemberListMapper.removeMember(id, groupId);
                 studyGroupMapper.minusCurrentCount(groupId);
 
-                if (position.equals(PositionType.LEADER.getType() )) {
-
+                if (position.equals(PositionType.LEADER.getType())) {
                     if (groupMemberListMapper.readGroupMemberCount(groupId)) {
                         int oldestMemberId = groupMemberListMapper.readOldestMemberByGroupId(groupId);
+
                         groupMemberListMapper.updateMemberPosition(oldestMemberId, groupId);
                         groupHistoryMapper.updateGroupHistory(groupId);
                     } else {

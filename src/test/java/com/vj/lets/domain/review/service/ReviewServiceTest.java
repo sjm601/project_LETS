@@ -53,29 +53,42 @@ class ReviewServiceTest {
         assertThat(list).isNotNull();
     }
 
-
-    /**
-     * @Test void getReviewListByCafeTest() {
-     * // given
-     * int cafeId = 2;
-     * // when
-     * List<Map<String, Object>> list = reviewService.getReviewListByCafe(cafeId);
-     * // then
-     * log.info("====================={}", list);
-     * assertThat(list).isNotNull();
-     * }
-     **/
-
     @Test
-    @Disabled
     void getReviewListByCafeTest() {
         // given
         int cafeId = 2;
+        PageParams pageParams = PageParams.builder()
+                .elementSize(5)
+                .pageSize(5)
+                .requestPage(1)
+                .build();
         // when
-//        List<Map<String, Object>> list = reviewService.getReviewListByCafe(cafeId);
+        List<Map<String, Object>> list = reviewService.getReviewListByCafe(cafeId, pageParams);
         // then
-//        log.info("====================={}", list);
-//        assertThat(list).isNotNull();
+        log.info("리뷰 목록 : {}", list);
+        assertThat(list).isNotNull();
+    }
+
+    @Test
+    void getCountReviewRatingByCafeTest() {
+        // given
+        int cafeId = 1;
+        // when
+        Map<Integer, Object> map = reviewService.getCountReviewRatingByCafe(cafeId);
+        // then
+        log.info("점수 별 개수 : {}", map);
+        assertThat(map).isNotNull();
+    }
+
+    @Test
+    void getCountReviewByMemberTest() {
+        // given
+        int memberId = 1;
+        // when
+        int count = reviewService.getCountReviewByMember(memberId);
+        // then
+        log.info("리뷰 작성 수 : {}", count);
+        assertThat(count).isNotZero();
     }
 
     @Test
@@ -85,7 +98,7 @@ class ReviewServiceTest {
         // when
         List<Map<String, Object>> list = reviewService.getReviewListByMember(memberId, PageParams.builder().build());
         // then
-        log.info("====================={}", list);
+        log.info("리뷰 목록 : {}", list);
         assertThat(list).isNotNull();
     }
 
@@ -116,11 +129,11 @@ class ReviewServiceTest {
     }
 
     @Test
-    void getCountByReviewTest() {
+    void getCountByResTest() {
         // given
         int resId = 2;
         // when
-        int count = reviewService.getCountByReview(resId);
+        int count = reviewService.getCountByRes(resId);
         // then
         log.info("예약 아이디에 대한 리뷰 갯수 :{}", count);
     }

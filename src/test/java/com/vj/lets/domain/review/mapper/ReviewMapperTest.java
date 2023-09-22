@@ -40,6 +40,7 @@ class ReviewMapperTest {
         // when
         reviewMapper.create(review);
         // then
+        log.info("생성한 리뷰 정보 : {}", review);
         assertThat(review).isNotNull();
     }
 
@@ -49,10 +50,11 @@ class ReviewMapperTest {
         // when
         List<Map<String, Object>> list = reviewMapper.readAll();
         // then
+        log.info("리뷰 목록 : {}", list);
         assertThat(list).isNotNull();
     }
 
-    /**
+
     @Test
     void readByCafeTest() {
         // given
@@ -65,9 +67,32 @@ class ReviewMapperTest {
         // when
         List<Map<String, Object>> list = reviewMapper.readByCafe(cafeId, pageParams);
         // then
-//        assertThat(list).isNotNull();
+        log.info("리뷰 목록 : {}", list);
+        assertThat(list).isNotNull();
     }
-**/
+
+    @Test
+    void countByReviewRating() {
+        // given
+        int cafeId = 1;
+        // when
+        Map<Integer, Object> map = reviewMapper.countByReviewRating(cafeId);
+        // then
+        log.info("점수 별 개수 : {}", map);
+        assertThat(map).isNotNull();
+    }
+
+    @Test
+    void readCountByMember() {
+        // given
+        int memberId = 1;
+        // when
+        int count = reviewMapper.readCountByMember(memberId);
+        // then
+        log.info("리뷰 작성 수 : {}", count);
+        assertThat(count).isNotZero();
+    }
+
     @Test
     void readByMemberTest() {
         // given
@@ -75,6 +100,7 @@ class ReviewMapperTest {
         // when
         List<Map<String, Object>> list = reviewMapper.readByMember(memberId, PageParams.builder().build());
         // then
+        log.info("리뷰 목록 : {}", list);
         assertThat(list).isNotNull();
     }
 
@@ -85,7 +111,19 @@ class ReviewMapperTest {
         // when
         Map<String, String> map = reviewMapper.readHostCommentByResId(reservationId);
         // then
+        log.info("댓글 정보 : {}", map);
         assertThat(map).isNotNull();
+    }
+
+    @Test
+    void readCountByReservationIdTest() {
+        // given
+        int reservationId = 1;
+        // when
+        boolean tf = reviewMapper.readCountByReservationId(reservationId);
+        // then
+        log.info("리뷰 유무 : {}", tf);
+        assertThat(tf).isTrue();
     }
 
     @Test
@@ -100,6 +138,7 @@ class ReviewMapperTest {
         // when
         reviewMapper.update(review);
         // then
+        log.info("수정 정보 : {}", review);
         assertThat(review).isNotNull();
     }
 
@@ -111,28 +150,56 @@ class ReviewMapperTest {
         // when
         reviewMapper.disabled(id);
         // then
+        log.info("삭제 리뷰 : {}", id);
         assertThat(id).isNotZero();
+    }
+
+    @Test
+    void readCountByHostTest() {
+        // given
+        int cafeId = 1;
+        // when
+        int count = reviewMapper.readCountByHost(cafeId);
+        // then
+        log.info("리뷰 갯수 : {}", count);
+        assertThat(count).isNotZero();
+    }
+
+    @Test
+    void readByHostTest() {
+        // given
+        int cafeId = 1;
+        PageParams pageParams = PageParams.builder()
+                .elementSize(5)
+                .pageSize(5)
+                .requestPage(1)
+                .build();
+        // when
+        List<Map<String, Object>> list = reviewMapper.readByHost(cafeId, pageParams);
+        // then
+        log.info("리뷰 목록 : {}", list);
+        assertThat(list).isNotNull();
     }
 
     @Test
     void readCountByReviewTest() {
         // given
-        int resId =2;
+        int resId = 2;
         // when
         int count = reviewMapper.readCountByReview(resId);
         // then
-        log.info("예약 아이디에 대한 리뷰 갯수 :{}",count);
+        log.info("예약 아이디에 대한 리뷰 갯수 :{}", count);
         assertThat(count).isNotZero();
     }
 
     @Test
     void readTodayReviewTest() {
         // given
-        int cafeId=2;
+        int cafeId = 2;
         // when
         int count = reviewMapper.readTodayReview(cafeId);
         // then
-        log.info("오늘 등록된 리뷰 수 :{}",count);
+        log.info("오늘 등록된 리뷰 수 :{}", count);
     }
 
 

@@ -79,19 +79,19 @@ public interface MemberService {
     public int getCountByLastMonth();
 
     /**
-     * 회원 정보 수정
-     *
-     * @param member 회원 정보
-     */
-    public void editMember(Member member);
-
-    /**
      * 회원 정보 수정 시 수정 정보 중복 체크 용 폼 조회
      *
      * @param id 회원 ID
      * @return 체크 용 폼 객체
      */
     public EditForm checkEdit(int id);
+
+    /**
+     * 회원 정보 수정
+     *
+     * @param member 회원 정보
+     */
+    public void editMember(Member member);
 
     /**
      * 회원 탈퇴
