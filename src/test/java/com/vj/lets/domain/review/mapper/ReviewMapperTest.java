@@ -57,8 +57,13 @@ class ReviewMapperTest {
     void readByCafeTest() {
         // given
         int cafeId = 1;
+        PageParams pageParams = PageParams.builder()
+                .elementSize(5)
+                .pageSize(5)
+                .requestPage(1)
+                .build();
         // when
-        List<Map<String, Object>> list = reviewMapper.readByCafe(cafeId);
+        List<Map<String, Object>> list = reviewMapper.readByCafe(cafeId, pageParams);
         // then
         assertThat(list).isNotNull();
     }

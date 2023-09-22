@@ -18,10 +18,7 @@ import lombok.*;
 public class CafeSearch {
     String name;
     int countPerson;
-    int price;
     int option;
     double currentX;
     double currentY;
-    int maxDuration;
-    int rating;
 }

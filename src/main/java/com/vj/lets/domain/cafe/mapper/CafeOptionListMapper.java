@@ -34,7 +34,7 @@ public interface CafeOptionListMapper {
     /**
      * 카페 옵션리스트 아이디로 검색
      *
-     * @param listId
+     * @param listId 옵션 리스트ID
      * @return 카페 옵션 리스트
      */
     public CafeOptionList findByOptionListId(int listId);

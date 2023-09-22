@@ -3,6 +3,7 @@ package com.vj.lets.domain.review.service;
 import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.review.dto.Review;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -52,6 +53,7 @@ class ReviewServiceTest {
         assertThat(list).isNotNull();
     }
 
+
     /**
      * @Test void getReviewListByCafeTest() {
      * // given
@@ -63,6 +65,19 @@ class ReviewServiceTest {
      * assertThat(list).isNotNull();
      * }
      **/
+
+    @Test
+    @Disabled
+    void getReviewListByCafeTest() {
+        // given
+        int cafeId = 2;
+        // when
+//        List<Map<String, Object>> list = reviewService.getReviewListByCafe(cafeId);
+        // then
+//        log.info("====================={}", list);
+//        assertThat(list).isNotNull();
+    }
+
     @Test
     void getReviewListByMemberTest() {
         // given

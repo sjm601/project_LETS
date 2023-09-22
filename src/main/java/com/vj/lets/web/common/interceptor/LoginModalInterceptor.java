@@ -25,6 +25,7 @@ public class LoginModalInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         String rememberEmail = null;
         if (session.getAttribute("loginMember") == null) {
+            log.info("========== 로그인 모달 인터셉터 실행 =========");
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
                 for (Cookie cookie : cookies) {

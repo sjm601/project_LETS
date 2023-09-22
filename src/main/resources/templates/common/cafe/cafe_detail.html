@@ -30,9 +30,9 @@
                 <nav class="secondary_nav sticky_horizontal">
                     <div class="container">
                         <ul class="clearfix">
-                            <li><a href="#description" class="active">Description</a></li>
-                            <li><a href="#reviews">Reviews</a></li>
-                            <li><a href="#sidebar">Booking</a></li>
+                            <li><a href="#description" class="active">설명</a></li>
+                            <li><a href="#reviews">후기</a></li>
+                            <li><a href="#sidebar">예약</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -61,7 +61,7 @@
                                 <!-- /row -->
                                 <hr>
                                 <div>
-                                    <h3 class="mb-3">Room Type</h3>
+                                    <h3 class="mb-3">방 종류</h3>
                                     <div class="pictures_grid magnific-gallery clearfix" th:each="room : ${roomList}">
                                         <div class="d-flex">
                                             <figure class="mb-2 me-lg-3"><a th:href="@{${room.imagePath}}" href="img/detail_gallery/detail_1.jpg"
@@ -93,14 +93,14 @@
                                     <!-- /room-option -->
                                 </div>
                                 <hr>
-                                <h3>Location</h3>
+                                <h3>위치</h3>
                                 <div id="map" class="map map_single add_bottom_30"></div>
                                 <!-- End Map -->
                             </section>
                             <!-- /section -->
 
                             <section id="reviews">
-                                <h2>Reviews</h2>
+                                <h2>후기</h2>
                                 <div class="reviews-container">
                                     <div class="row">
                                         <div class="col-lg-3">
@@ -240,12 +240,12 @@
                                         <ul class="pagination h-100 justify-content-center align-items-center">
                                             <th:block th:if="${pagination.showFirst}">
                                                 <li class="page-item">
-                                                    <a th:href="@{|/cafe/{id}?page=1(id=${Cafe['id']})|}" class="page-link">처음으로</a>
+                                                    <a th:href="@{/cafe/{id}(id=${Cafe['id']})?page=1}" class="page-link">처음으로</a>
                                                 </li>
                                             </th:block>
                                             <th:block th:if="${pagination.showPrevious}">
                                                 <li class="page-item">
-                                                    <a th:href="@{|/cafe/{id}?page=${pagination.previousStartPage}(id=${Cafe['id']})|}" class="page-link">이전</a>
+                                                    <a th:href="@{|/cafe/{id}(id=${Cafe['id']})?page=${pagination.previousStartPage}|}" class="page-link">이전</a>
                                                 </li>
                                             </th:block>
                                             <th:block th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
@@ -256,18 +256,18 @@
                                                 </th:block>
                                                 <th:block th:if="${i != pagination.params.requestPage}">
                                                     <li class="page-item">
-                                                        <a th:text="${i}" th:href="@{|/cafe/{id}?page=${i}(id=${Cafe['id']})|}" class="page-link" href="#">2</a>
+                                                        <a th:text="${i}" th:href="@{|/cafe/{id}(id=${Cafe['id']})?page=${i}|}" class="page-link" href="#">2</a>
                                                     </li>
                                                 </th:block>
                                             </th:block>
                                             <th:block th:if="${pagination.showNext}">
                                                 <li class="page-item">
-                                                    <a th:href="@{|/cafe/{id}?page=${pagination.nextStartPage}(id=${Cafe['id']})|}" class="page-link">다음</a>
+                                                    <a th:href="@{|/cafe/{id}(id=${Cafe['id']})?page=${pagination.nextStartPage}|}" class="page-link">다음</a>
                                                 </li>
                                             </th:block>
                                             <th:block th:if="${pagination.showLast}">
                                                 <li class="page-item">
-                                                    <a th:href="@{|/cafe/{id}?page=${pagination.totalPages}|}" class="page-link">끝으로</a>
+                                                    <a th:href="@{/cafe/{id}(id=${Cafe['id']})?page=${pagination.totalPages}}" class="page-link">끝으로</a>
                                                 </li>
                                             </th:block>
                                         </ul>

@@ -3,6 +3,7 @@ package com.vj.lets.domain.cafe.mapper;
 import com.vj.lets.domain.cafe.dto.Cafe;
 import com.vj.lets.domain.cafe.dto.CafeSearch;
 import com.vj.lets.domain.common.web.PageParams;
+import com.vj.lets.domain.common.web.PageParamsForCafe;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -49,10 +50,12 @@ public interface CafeMapper {
     /**
      * 카페 전체리스트 출력
      *
-     * @param pageParams 페이지
+     * @param pageParamsForCafe 페이지
+     * @param cafeSearch 카페 검색
      * @return 카페 전체 리스트
      */
-    public List<Map<String, Object>> findByAll(PageParams pageParams);
+    public List<Map<String, Object>> findByAll(@Param("pageParamsForCafe") PageParamsForCafe pageParamsForCafe,
+                                               @Param("cafeSearch") CafeSearch cafeSearch);
 
     /**
      * 누적 예약이 가장 많은 카페 6개 출력
@@ -64,14 +67,11 @@ public interface CafeMapper {
      * 카패 검색 결과 출력
      */
     public List<Map<String, Object>> findBySearch(@Param("cafeSearch") CafeSearch cafeSearch,
-                                                  @Param("pageParams") PageParams pageParams,
-                                                  @Param("currentY") double currentY,
-                                                  @Param("currentX") double currentX);
+                                                  @Param("pageParamsForCafe") PageParamsForCafe pageParamsForCafe);
 
     /**
      * 전체 입점 카페 수 조회
      *
-     * @param type 검색 조건
      * @return 전체 입점 카페 수
      * @see com.vj.lets.web.dashboard.controller.AdminController
      */
