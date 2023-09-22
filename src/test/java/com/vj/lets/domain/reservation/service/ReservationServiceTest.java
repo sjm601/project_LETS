@@ -2,6 +2,7 @@ package com.vj.lets.domain.reservation.service;//import static org.junit.jupiter
 
 import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.reservation.dto.Reservation;
+import com.vj.lets.domain.review.service.ReviewService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,8 @@ class ReservationServiceTest {
 
     @Autowired
     private ReservationService reservationService;
+    @Autowired
+    private ReviewService reviewService;
 
     @Test
     @Transactional
@@ -170,8 +173,12 @@ class ReservationServiceTest {
     @Test
     void getCountResByMemberTest() {
         // given
+        int memberId =2;
+        String type = "all";
         // when
+        int count = reservationService.getCountResByMember(memberId,type);
         // then
+        log.info("카운트:{}",count);
     }
 
 
@@ -248,15 +255,31 @@ class ReservationServiceTest {
     @Test
     void getCountResByHostTest() {
         // given
+        int cafeId =2;
+        String type = "all";
         // when
+        int count = reservationService.getCountResByHost(cafeId,type);
         // then
+        log.info("카운트:{}",count);
+        assertThat(count).isNotZero();
     }
 
     @Test
     void getHostResListTest() {
         // given
+        int cafeId =2;
+        int count = reviewService.getCountByHost(cafeId);
+        PageParams pageParams = PageParams.builder()
+                .elementSize(2)
+                .pageSize(2)
+                .requestPage(1)
+                .rowCount(count)
+                .build();
         // when
+        List<Map<String,Object>> list = reservationService.getHostResList(cafeId,pageParams);
         // then
+        log.info("카페 아이디에 따른 예약 목록:{}", list);
+        assertThat(list).isNotNull();
     }
 
     @Test

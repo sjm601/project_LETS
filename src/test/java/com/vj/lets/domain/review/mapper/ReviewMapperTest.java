@@ -135,15 +135,33 @@ class ReviewMapperTest {
         log.info("오늘 등록된 리뷰 수 :{}",count);
     }
 
+
     @Test
-    void callReviewCommentTest() {
+    void readCountByHostTest() {
         // given
-        int resId = 8;
-        int memberId =7;
+        int cafeId =2;
         // when
-        String  review = reviewMapper.callReviewComment(resId,memberId);
+        int count = reviewMapper.readCountByHost(cafeId);
         // then
-        log.info("리뷰 답변:{}", review);
-        assertThat(review).isNotNull();
+        log.info("호스트 카페에 대한 총 리뷰 수 (게스트만):{}", count);
+        assertThat(count).isNotZero();
+    }
+
+    @Test
+    void readByHostTest() {
+        // given
+        int cafeId =2;
+        int count = reviewMapper.readCountByHost(cafeId);
+        PageParams pageParams = PageParams.builder()
+                .elementSize(2)
+                .pageSize(2)
+                .requestPage(1)
+                .rowCount(count)
+                .build();
+        // when
+        List<Map<String,Object>> list = reviewMapper.readByHost(cafeId,pageParams);
+        // then
+        log.info("카페 아이디로 카페 리뷰 조회 및 출력:{}",list);
+        assertThat(list).isNotNull();
     }
 }
