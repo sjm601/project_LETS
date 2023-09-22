@@ -76,8 +76,13 @@ public class CafeServiceImpl implements CafeService{
      * @return 카페 전체 리스트
      */
     @Override
-    public List<Map<String, Object>> getCafeList(PageParamsForCafe pageParamsForCafe, CafeSearch cafeSearch) {
-        return cafeMapper.findByAll(pageParamsForCafe, cafeSearch);
+    public List<Map<String, Object>> getCafeList(PageParamsForCafe pageParamsForCafe) {
+        return cafeMapper.findByAll(pageParamsForCafe);
+    }
+
+    @Override
+    public int getCountCafeList(CafeSearch cafeSearch) {
+        return cafeMapper.countByCafeList(cafeSearch);
     }
 
     /**
