@@ -2,6 +2,7 @@ package com.vj.lets.domain.cafe.mapper;//import static org.junit.jupiter.api.Ass
 
 import com.vj.lets.domain.cafe.dto.Cafe;
 import com.vj.lets.domain.cafe.dto.CafeSearch;
+import com.vj.lets.domain.common.web.PageParamsForCafe;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -104,8 +105,20 @@ class CafeMapperTest {
     @Disabled
     void findByAllTest() {
         //given
+        PageParamsForCafe pageParamsForCafe = PageParamsForCafe.builder()
+                .requestPage(1)
+                .pageSize(5)
+                .elementSize(5)
+//                .rowCount(count)
+                .build();
+        CafeSearch cafeSearch =CafeSearch.builder()
+                .name("카페")
+                .option(1)
+                .currentX(127.55555)
+                .currentY(27.55555)
+                .build();
         //when
-        List<Map<String, Object>> list = cafeMapper.findByAll();
+        List<Map<String, Object>> list = cafeMapper.findByAll(pageParamsForCafe, cafeSearch);
         //then
         log.info("카페 리스트 : {}", list);
         assertThat(list).isNotNull();
@@ -132,14 +145,12 @@ class CafeMapperTest {
         CafeSearch cafeSearch = CafeSearch.builder()
                 .currentX(27.222222)
                 .currentY(125.222222)
-                .minDuration(0)
-                .maxDuration(10000)
                 .build();
         //when
-        List<Map<String, Object>> list = cafeMapper.findBySearch(cafeSearch);
+//        List<Map<String, Object>> list = cafeMapper.findBySearch(cafeSearch);
         //then
-        log.info("카페 검색 정보 : {}", list);
-        assertThat(list).isNotNull();
+//        log.info("카페 검색 정보 : {}", list);
+//        assertThat(list).isNotNull();
     }
 
     @Test

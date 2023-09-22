@@ -5,7 +5,7 @@ import lombok.*;
 import java.util.List;
 
 /**
- *Cafe dto
+ *Cafe Edit dto
  *
  * @author VJ특공대 강소영
  * @version 1.0

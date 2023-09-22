@@ -5,7 +5,7 @@ import lombok.*;
 /**
  * Room History dto
  *
- * @author 강소영
+ * @author VJ특공대 강소영
  * @version 1.0
  * @since 2023-09-08 (금)
  */
