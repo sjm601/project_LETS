@@ -107,12 +107,5 @@ public interface ReviewService {
      */
     public int getTodayReview(int cafeId);
 
-    /**
-     * 답변 수정을 위해 답변 호출
-     * @param reservationId
-     * @param memberId
-     * @return 작성한 답변 id, content
-     */
-    public String callReviewComment(int reservationId,int memberId);
 
 }

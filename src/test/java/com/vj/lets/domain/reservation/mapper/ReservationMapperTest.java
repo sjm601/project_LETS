@@ -2,6 +2,7 @@ package com.vj.lets.domain.reservation.mapper;
 
 import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.reservation.dto.Reservation;
+import com.vj.lets.domain.review.mapper.ReviewMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,9 @@ class ReservationMapperTest {
 
     @Autowired
     private ReservationMapper reservationMapper;
+
+    @Autowired
+    private ReviewMapper reviewMapper;
 
 
     @Test
@@ -157,7 +161,7 @@ class ReservationMapperTest {
         int result = reservationMapper.checkDuplicateReservation(roomId,bookDate,startTime,endTime);
         // then
         log.info("결과:{}",result);
-        assertThat(result).isNotNull();
+        assertThat(result).isNotZero();
     }
 
     @Test
@@ -231,7 +235,7 @@ class ReservationMapperTest {
         reservationMapper.delete(id,memberId);
         // then
         log.info("삭제된 예약 아이디:{}", id);
-        assertThat(id).isNotNull();
+        assertThat(id).isNotZero();
     }
 
 
@@ -239,15 +243,31 @@ class ReservationMapperTest {
     @Test
     void readCountByHostTest() {
         // given
+        int cafeId =2;
+        String type = "all";
         // when
+        int count = reservationMapper.readCountByHost(cafeId,type);
         // then
+        log.info("카운트:{}",count);
+        assertThat(count).isNotZero();
     }
 
     @Test
     void findByHostTest() {
         // given
+        int cafeId =2;
+        int count = reviewMapper.readCountByHost(cafeId);
+        PageParams pageParams = PageParams.builder()
+                .elementSize(2)
+                .pageSize(2)
+                .requestPage(1)
+                .rowCount(count)
+                .build();
         // when
+        List<Map<String,Object>> list = reservationMapper.findByHost(cafeId,pageParams);
         // then
+        log.info("카페 아이디에 따른 예약 목록:{}", list);
+        assertThat(list).isNotNull();
     }
 
     @Test

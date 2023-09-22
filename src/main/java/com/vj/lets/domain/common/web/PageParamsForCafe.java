@@ -1,5 +1,6 @@
 package com.vj.lets.domain.common.web;
 
+import com.vj.lets.domain.cafe.dto.CafeSearch;
 import lombok.*;
 
 /**
@@ -26,4 +27,7 @@ public class PageParamsForCafe {
 
     // 테이블 목록 갯수
     private int rowCount;
+
+    //카페 검색
+    private CafeSearch cafeSearch;
 }

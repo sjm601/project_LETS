@@ -132,6 +132,7 @@ public interface ReviewMapper {
      */
     public int readTodayReview(int cafeId);
 
+
     /**
      * 답변 수정을 위해 답변 호출
      *

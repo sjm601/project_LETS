@@ -15,9 +15,9 @@ import lombok.*;
 @Getter
 @ToString
 @Builder
-public class CafeSearch {
+public class SearchForm {
     String name;
-    int countPerson;
+    String countPerson;
     String option;
     double currentX;
     double currentY;
