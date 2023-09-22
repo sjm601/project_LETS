@@ -2,6 +2,7 @@ package com.vj.lets.domain.cafe.mapper;//import static org.junit.jupiter.api.Ass
 
 import com.vj.lets.domain.cafe.dto.Cafe;
 import com.vj.lets.domain.cafe.dto.CafeSearch;
+import com.vj.lets.domain.common.web.PageParamsForCafe;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -99,18 +100,32 @@ class CafeMapperTest {
         assertThat(cafe).isNotNull();
     }
 
+    /**
     @Test
     @DisplayName("카페 전체 검색")
     @Disabled
     void findByAllTest() {
         //given
+        PageParamsForCafe pageParamsForCafe = PageParamsForCafe.builder()
+                .requestPage(1)
+                .pageSize(5)
+                .elementSize(5)
+//                .rowCount(count)
+                .build();
+        CafeSearch cafeSearch =CafeSearch.builder()
+                .name("카페")
+                .option(1)
+                .currentX(127.55555)
+                .currentY(27.55555)
+                .build();
         //when
-        List<Map<String, Object>> list = cafeMapper.findByAll();
-        //then
-        log.info("카페 리스트 : {}", list);
-        assertThat(list).isNotNull();
-    }
+        List<Map<String, Object>> list = cafeMapper.findByAll(pageParamsForCafe, cafeSearch);
 
+        //then
+//        log.info("카페 리스트 : {}", list);
+//        assertThat(list).isNotNull();
+    }
+**/
     @Test
     @DisplayName("예약이 많은 카페 6개 검색")
     @Disabled
@@ -123,6 +138,7 @@ class CafeMapperTest {
         assertThat(list).isNotNull();
     }
 
+    /**
     @Test
     @DisplayName("카페 검색")
     @Disabled
@@ -132,16 +148,14 @@ class CafeMapperTest {
         CafeSearch cafeSearch = CafeSearch.builder()
                 .currentX(27.222222)
                 .currentY(125.222222)
-                .minDuration(0)
-                .maxDuration(10000)
                 .build();
         //when
-        List<Map<String, Object>> list = cafeMapper.findBySearch(cafeSearch);
+//        List<Map<String, Object>> list = cafeMapper.findBySearch(cafeSearch);
         //then
-        log.info("카페 검색 정보 : {}", list);
-        assertThat(list).isNotNull();
+//        log.info("카페 검색 정보 : {}", list);
+//        assertThat(list).isNotNull();
     }
-
+**/
     @Test
     @DisplayName("카페 삭제")
     @Transactional

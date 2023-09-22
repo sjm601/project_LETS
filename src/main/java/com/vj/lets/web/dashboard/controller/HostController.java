@@ -277,6 +277,7 @@ public class HostController {
         List<Map<String, Object>> hostReviewList = reviewService.getByHost(cafeId, pageParams);
         log.info("리뷰리스트:{}",hostReviewList);
 
+
         ReviewForm reviewForm = ReviewForm.builder().build();
 
         model.addAttribute("reviewForm", reviewForm);
@@ -305,6 +306,27 @@ public class HostController {
 
         log.info("받은 리뷰 정보:{}",review);
         reviewService.register(review);
+
+        return "success";
+    }
+
+    /**
+     * 리뷰 수정 기능
+     *
+     * @param reviewForm 리뷰 폼 객체
+     * @param model      모델 객체
+     * @return 실행 후 반환 값
+     */
+    @PatchMapping("/reviews")
+    @ResponseBody
+    public Object reviewEdit(@RequestBody ReviewForm reviewForm, Model model) {
+
+        Review review = Review.builder()
+                .id(reviewForm.getReviewId())
+                .content(reviewForm.getContent())
+                .build();
+
+        reviewService.editReview(review);
 
         return "success";
     }

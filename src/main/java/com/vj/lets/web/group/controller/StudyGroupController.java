@@ -23,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -137,7 +136,7 @@ public class StudyGroupController {
      * @return 스터디 그룹 상세
      */
     @GetMapping("/{id}")
-    public String readGroup(@PathParam("page") String page, @PathParam("keyword") String keyword, @PathVariable int id, @SessionAttribute Member loginMember, Model model) {
+    public String readGroup(@PathVariable int id, @RequestParam(value = "page", required = false) String page, @RequestParam(value = "keyword", required = false) String keyword, @SessionAttribute Member loginMember, Model model) {
         // 이희영
         GroupMemberList groupMember = null;
         List<Map<String, Object>> contactList = null;
@@ -150,23 +149,24 @@ public class StudyGroupController {
         if (studyGroupService.isGroupMember(loginMember.getId(), id) != null && studyGroupService.isGroupMember(loginMember.getId(), id).getPosition().equals("팀장")) {
             contactList = studyGroupService.getStudyContactList(id);
         }
+
         Member member = memberService.getMember(loginMember.getId());
-        
+
         model.addAttribute("member", member);
         model.addAttribute("studyGroup", studyGroup);
         model.addAttribute("groupMember", groupMember);
         model.addAttribute("contactList", contactList);
 
+
         // 게시글 화면 (이한솔)
         int elementSize = 5;
         int pageSize = 5;
+
         int count = articleService.getCountAll(keyword, id);
 
         if (page == null || page.isEmpty()) {
             page = "1";
         }
-        log.info("카운트 {}", count);
-        log.info("뭐가문젠데 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ{}",keyword);
         int selectPage = Integer.parseInt(page);
         PageParams pageParams = PageParams.builder()
                 .elementSize(elementSize)
@@ -181,13 +181,13 @@ public class StudyGroupController {
 
         List<Map<String, Object>> articleList = articleService.findByPage(pageParams, id);
         model.addAttribute("articleList", articleList);
-        log.info("-------------페이징 처리된 아티클 리스트{}",articleList);
         List<Integer> articleIds = new ArrayList<>();
         for (Map<String, Object> articleMap : articleList) {
             int articleId = Integer.parseInt(articleMap.get("ID").toString());
             articleIds.add(articleId);
             log.info("{}", articleIds);
         }
+
         //해당 게시글의 댓글 목록
         List<Map<String, Object>> articleComments = articleService.findComment(articleIds);
         model.addAttribute("commentList", articleComments);
@@ -196,7 +196,6 @@ public class StudyGroupController {
         // 최근 게시글 목록
         List<Article> recentArticles = articleService.getRecentArticles(id);
         model.addAttribute("recentArticleList",recentArticles);
-
 
         return "common/group/mygroup";
     }
@@ -351,34 +350,9 @@ public class StudyGroupController {
         StudyGroup studyGroup = StudyGroup.builder()
                 .name(createForm.getName())
                 .totalCount(createForm.getTotalCount())
+                .imagePath(imageDBPath + "default.png")
                 .subject(subject)
                 .build();
-
-        if (!imagePath.isEmpty()) {
-            // 이미지 폴더에 저장
-            // 업로드 이미지 확장자 가져오기
-            String imageExtension = StringUtils.getFilenameExtension(imagePath.getOriginalFilename());
-            // 업로드 한 이미지 다운로드 받을 위치 설정
-            StringBuilder imageDir = new StringBuilder();
-            String uuid = UUID.randomUUID().toString();
-            String imageName = createForm.getName() + uuid;
-
-            imageDir.append(imageLocation).append(imageName).append(".").append(imageExtension);
-
-            File uploadDir = new File(imageDir.toString());
-            // 폴더 없으면 생성
-            if (!uploadDir.exists()) {
-                uploadDir.mkdirs();
-            }
-            imagePath.transferTo(uploadDir);
-
-            StringBuilder imagePathDB = new StringBuilder();
-            imagePathDB.append(imageDBPath).append(imageName).append(".").append(imageExtension);
-
-            studyGroup.setImagePath(imagePathDB.toString());
-        } else {
-            studyGroup.setImagePath("");
-        }
 
         int studyGroupId = studyGroupService.generateStudy(studyGroup, loginMember.getId(), createForm.getSiGunGuName(), createForm.getSiDoName());
         return "redirect:/group/" + studyGroupId;
@@ -414,10 +388,8 @@ public class StudyGroupController {
             String imageExtension = StringUtils.getFilenameExtension(settingImage.getOriginalFilename());
             // 업로드 한 이미지 다운로드 받을 위치 설정
             StringBuilder imageDir = new StringBuilder();
-            String uuid = UUID.randomUUID().toString();
-            String imageName = createForm.getName() + uuid;
+            imageDir.append(imageLocation).append(id).append(".").append(imageExtension);
 
-            imageDir.append(imageLocation).append(imageName).append(".").append(imageExtension);
             File uploadDir = new File(imageDir.toString());
             // 폴더 없으면 생성
             if (!uploadDir.exists()) {
@@ -426,7 +398,7 @@ public class StudyGroupController {
             settingImage.transferTo(uploadDir);
 
             StringBuilder imagePathDB = new StringBuilder();
-            imagePathDB.append(imageDBPath).append(imageName).append(".").append(imageExtension);
+            imagePathDB.append(imageDBPath).append(id).append(".").append(imageExtension);
             studyGroup.setImagePath(imagePathDB.toString());
         } else {
             studyGroup.setImagePath("");
@@ -461,7 +433,6 @@ public class StudyGroupController {
      */
     @ResponseBody
     @PostMapping("/join/{id}")
-    @Transactional
     public String joinGroup(@PathVariable int id, @SessionAttribute Member loginMember, @RequestBody String contact) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -517,7 +488,7 @@ public class StudyGroupController {
      * @return 스터디 그룹 화면
      */
     @PostMapping("/{id}/article")
-    public String create(@ModelAttribute ArticleCreateForm createForm,@PathVariable int id, MultipartFile imagePath, HttpServletRequest request, Model model) throws IOException {
+    public String create(@ModelAttribute ArticleCreateForm createForm, @PathVariable int id, MultipartFile imagePath, HttpServletRequest request, Model model) throws IOException {
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
         if (loginMember != null) {

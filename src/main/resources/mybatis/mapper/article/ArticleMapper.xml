@@ -40,7 +40,8 @@
         FROM article a
         JOIN MEMBER m ON a.MEMBER_ID = m.ID
         JOIN STUDY_GROUP sg ON a.STUDY_GROUP_ID = sg.ID
-        WHERE a.STATUS = 'enabled' AND a.STUDY_GROUP_ID = #{groupId}
+        <where>
+            a.STATUS = 'enabled' AND a.STUDY_GROUP_ID = #{groupId}
         <if test="keyword != null">
             AND (
             m.name LIKE '%' || #{keyword} || '%'
@@ -48,6 +49,7 @@
             OR a.content LIKE '%' || #{keyword} || '%'
             )
         </if>
+        </where>
     </select>
 
     <!-- 게시글 목록 (페이징 처리 및 검색값 , 댓글 포함) -->
@@ -77,11 +79,9 @@
         TO_CHAR(a.regdate, 'YYYY-MM-DD HH24:MI') AS regdate,
         a.image_path AS image_path
         FROM article a
-        JOIN member m ON a.member_id = m.id
-        JOIN STUDY_GROUP sg on a.STUDY_GROUP_ID = sg.ID
-        WHERE
-        a.status = 'enabled' AND a.STUDY_GROUP_ID = #{groupId}
+            JOIN member m ON a.member_id = m.id
         <where>
+        a.status = 'enabled' AND a.STUDY_GROUP_ID = #{groupId}
             <if test="pageParams.keyword != null">AND m.name LIKE '%' || #{pageParams.keyword} || '%'</if>
             <if test="pageParams.keyword != null">OR a.title LIKE '%' || #{pageParams.keyword} || '%'</if>
             <if test="pageParams.keyword != null">OR a.content LIKE '%' || #{pageParams.keyword} || '%'</if>
@@ -119,13 +119,15 @@
         FROM article_comment ac
         JOIN article a ON a.id = ac.article_id
         JOIN member m ON m.id = ac.MEMBER_ID
-        WHERE ac.STATUS='enabled'
-        <if test="list != null and list.size() > 0">
-            AND a.id IN
-            <foreach collection="list" item="articleId" open="(" close=")" separator=",">
-                #{articleId}
-            </foreach>
-        </if>
+        <where>
+            ac.STATUS='enabled'
+            <if test="list != null and list.size() > 0">
+                AND a.id IN
+                <foreach collection="list" item="articleId" open="(" close=")" separator=",">
+                    #{articleId}
+                </foreach>
+            </if>
+        </where>
         ORDER BY ac.regdate ASC
     </select>
 
@@ -145,7 +147,7 @@
         WHERE STUDY_GROUP_ID = #{groupId}
         ORDER BY regdate DESC
         )
-        <![CDATA[ WHERE ROWNUM <= 3 ]]>
+        WHERE <![CDATA[ ROWNUM <= 3 ]]>
     </select>
 
 

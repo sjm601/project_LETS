@@ -16,6 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * 예약 서비스 테스트
+ *
  * @author 박상훈
  * @version 1.0
  * @since 2023-09-10 (일)
@@ -97,7 +98,7 @@ class ReservationServiceTest {
     @DisplayName("달마다 예약 건 수 가져오기")
     void findCountMonthResTest() {
         // given
-        int cafeId= 1;
+        int cafeId = 1;
         // when
         List<Map<String, Object>> monthRes = reservationService.getCountMonthRes(cafeId);
         // then
@@ -120,11 +121,11 @@ class ReservationServiceTest {
     void getResInfoTest() {
         // given
         int findId = 2;
-        int memberId =22;
+        int memberId = 22;
         // when
-        Map<String ,Reservation> reservation = reservationService.getResInfo(findId,memberId);
+        Map<String, Reservation> reservation = reservationService.getResInfo(findId, memberId);
         // then
-        log.info("예약 검색 완료:{}",reservation);
+        log.info("예약 검색 완료:{}", reservation);
         assertThat(reservation).isNotNull();
     }
 
@@ -132,24 +133,140 @@ class ReservationServiceTest {
     void checkDuplicateReservationTest() {
         // given
         int roomId = 26;
-        String bookDate="23/09/26";
+        String bookDate = "23/09/26";
         int startTime = 11;
         int endTime = 16;
         // when
-        int result = reservationService.checkDuplicateReservation(roomId,bookDate,startTime,endTime);
+        int result = reservationService.checkDuplicateReservation(roomId, bookDate, startTime, endTime);
         // then
-        log.info("결과:{}",result);
+        log.info("결과:{}", result);
         assertThat(result).isNotNull();
     }
 
     @Test
     void getCountByResMonthTest() {
         // given
+        int cafeId = 2;
+        // when
+        List<Map<String, Object>> list = reservationService.getCountByResMonth(cafeId);
+        // then
+        log.info("리스트값:{}", list);
+        assertThat(list).isNotNull();
+    }
+
+
+    @Test
+    @Transactional
+    void cancelReservationTest() {
+        // given
+        int id = 2;
+        // when
+        reservationService.cancelReservation(id);
+        // then
+        log.info("예약 취소된 예약 아이디:{}", id);
+        assertThat(id).isNotZero();
+    }
+
+    @Test
+    void getCountResByMemberTest() {
+        // given
+        // when
+        // then
+    }
+
+
+    @Test
+    void getCountMonthResTest() {
+        // given
+        int cafeId = 2;
+        // when
+        List<Map<String, Object>> list = reservationService.getCountMonthRes(cafeId);
+        // then
+        log.info("호스트 대시보드 막대 그래프의 Y축과 X축:{}", list);
+        assertThat(list).isNotNull();
+    }
+
+    @Test
+    void getTotalDataTest() {
+        // given
+        int cafeId = 2;
+        // when
+        List<Map<String, Reservation>> reserveData = reservationService.getTotalData(cafeId);
+        // then
+        log.info("호스트 카페에 대한 모든 예약 데이터:{}", reserveData);
+        assertThat(reserveData).isNotNull();
+    }
+
+
+    @Test
+    void getNowResTest() {
+        // given
+        int memberId = 21;
+        // when
+        int resId = reservationService.getNowRes(memberId);
+        // then
+        log.info("지금 예약하려는 예약 번호:{}", resId);
+        assertThat(resId).isNotZero();
+    }
+
+    @Test
+    void checkDuplicateResTimeTest() {
+        // given
+        int roomId = 7;
+        String bookDate = "2023-09-26";
+        // when
+        List<Reservation> result = reservationService.checkDuplicateResTime(roomId, bookDate);
+        // then
+        log.info("9월 26일에 예약되어 있는 시간대 결과:{}", result);
+        assertThat(result).isNotNull();
+    }
+
+    @Test
+    @Transactional
+    void deleteTest() {
+        // given
+        int id = 2;
+        int memberId =22;
+        // when
+        reservationService.delete(id,memberId);
+        // then
+        log.info("삭제된 예약 아이디:{}", id);
+        assertThat(id).isNotZero();
+    }
+
+    @Test
+    void getMonthlySalesTest() {
+        // given
         int cafeId =2;
         // when
-        List<Map<String,Object>> list = reservationService.getCountByResMonth(cafeId);
+        List<Map<String,Object>> result = reservationService.getMonthlySales(cafeId);
         // then
-        log.info("리스트값:{}",list);
-        assertThat(list).isNotNull();
+        log.info("결과:{}",result);
+        assertThat(result).isNotNull();
+    }
+
+    @Test
+    void getCountResByHostTest() {
+        // given
+        // when
+        // then
+    }
+
+    @Test
+    void getHostResListTest() {
+        // given
+        // when
+        // then
+    }
+
+    @Test
+    void getTotalResTest() {
+        // given
+        int cafeId = 2;
+        // when
+        int count = reservationService.getTotalRes(cafeId);
+        // then
+        log.info("총 예약 횟수:{}", count);
+        assertThat(count).isNotZero();
     }
 }
