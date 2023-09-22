@@ -1,5 +1,6 @@
 package com.vj.lets.domain.member.mapper;
 
+import com.vj.lets.domain.member.dto.EditForm;
 import com.vj.lets.domain.member.dto.Member;
 import org.springframework.boot.test.context.SpringBootTest;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -43,19 +45,7 @@ class MemberMapperTest {
     }
 
     @Test
-    void findByEmailAndPasswdTest() {
-        // given
-        String email = "lhy@gmail.com";
-        String password = "1111";
-        // when
-        Member member = memberMapper.readByEmailAndPasswd(email, password);
-        // then
-        log.info("회원 정보 : {}", member);
-        assertThat(member).isNotNull();
-    }
-
-    @Test
-    void findByAllTest() {
+    void readAllTest() {
         // given
         // when
         List<Member> list = memberMapper.readAll();
@@ -65,7 +55,30 @@ class MemberMapperTest {
     }
 
     @Test
-    void findByIdTest() {
+    void readByEmailTest() {
+        // given
+        String email = "lhy@gmail.com";
+        // when
+        Member member = memberMapper.readByEmail(email);
+        // then
+        log.info("회원 정보 : {}", member);
+        assertThat(member).isNotNull();
+    }
+
+    @Test
+    void readByEmailAndPasswordTest() {
+        // given
+        String email = "lhy@gmail.com";
+        String password = "1111";
+        // when
+        Member member = memberMapper.readByEmailAndPassword(email, password);
+        // then
+        log.info("회원 정보 : {}", member);
+        assertThat(member).isNotNull();
+    }
+
+    @Test
+    void readByIdTest() {
         // given
         int id = 1;
         // when
@@ -73,6 +86,47 @@ class MemberMapperTest {
         // then
         log.info("회원 정보 : {}", member);
         assertThat(member).isNotNull();
+    }
+
+    @Test
+    void readCountByRegMonthTest() {
+        // given
+        // when
+        List<Map<String, Object>> list = memberMapper.readCountByRegMonth();
+        // then
+        log.info("월별 회원 수 : {}", list);
+        assertThat(list).isNotNull();
+    }
+
+    @Test
+    void readCountByGenderTest() {
+        // given
+        // when
+        List<Map<String, Object>> list = memberMapper.readCountByGender();
+        // then
+        log.info("성별 회원 수 : {}", list);
+        assertThat(list).isNotNull();
+    }
+
+    @Test
+    void readCountByLastMonthTest() {
+        // given
+        // when
+        int count = memberMapper.readCountByLastMonth();
+        // then
+        log.info("신규 회원 수 : {}", count);
+        assertThat(count).isNotZero();
+    }
+
+    @Test
+    void readUpdateFormTest() {
+        // given
+        int id = 1;
+        // when
+        EditForm check = memberMapper.readUpdateForm(id);
+        // then
+        log.info("회원 수정 용 폼 : {}", check);
+        assertThat(check).isNotNull();
     }
 
     @Test

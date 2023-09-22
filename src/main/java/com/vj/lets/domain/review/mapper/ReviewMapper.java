@@ -35,7 +35,7 @@ public interface ReviewMapper {
     /**
      * 카페 ID로 리뷰 목록 조회
      *
-     * @param cafeId 카페 ID
+     * @param cafeId     카페 ID
      * @param pageParams 페이징
      * @return 리뷰 목록
      */
@@ -43,7 +43,7 @@ public interface ReviewMapper {
                                                 @Param("pageParams") PageParams pageParams);
 
     /**
-     * 카페별 리뷰점수 개수 통계 조회
+     * 카페 별 각 리뷰 점수의 개수 통계 조회
      *
      * @param cafeId 카페 ID
      * @return 별점별 통계 목록
@@ -100,8 +100,9 @@ public interface ReviewMapper {
     public void disabled(int id);
 
     /**
-     * 호스트의 카페에 대한 리뷰 정보 출력
-     * @param cafeId
+     * 호스트의 카페에 대한 리뷰 갯수 출력
+     *
+     * @param cafeId 카페 ID
      * @return 리뷰 수
      */
     public int readCountByHost(int cafeId);
@@ -109,7 +110,7 @@ public interface ReviewMapper {
     /**
      * 카페 ID로 호스트의 카페 리뷰 목록 조회
      *
-     * @param cafeId   카페 ID
+     * @param cafeId     카페 ID
      * @param pageParams 페이징 객체
      * @return 리뷰 목록
      */
@@ -117,25 +118,28 @@ public interface ReviewMapper {
 
     /**
      * 예약 아이디로 리뷰 답변 완료 유무 판단 위해 사용
-     * @param reservationId
+     *
+     * @param reservationId 예약 ID
      * @return 예약 아이디로 작성된 리뷰가 2개일 시 답변 완료로 판단
      */
     public int readCountByReview(int reservationId);
 
     /**
      * 오늘 호스트의 카페에 등록된 리뷰를 불러오기 위해 사용
-     * @param cafeId
+     *
+     * @param cafeId 카페 ID
      * @return 오늘 호스트 카페에 등록된 리뷰 수
      */
     public int readTodayReview(int cafeId);
 
     /**
      * 답변 수정을 위해 답변 호출
-     * @param reservationId
-     * @param memberId
+     *
+     * @param reservationId 예약 ID
+     * @param memberId      회원 ID
      * @return 작성한 답변 id, content
      */
-    public String callReviewComment(@Param("reservationId") int reservationId,@Param("memberId") int memberId);
+    public String callReviewComment(@Param("reservationId") int reservationId, @Param("memberId") int memberId);
 
 
 }

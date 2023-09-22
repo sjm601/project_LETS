@@ -59,7 +59,6 @@ public class ReviewServiceImpl implements ReviewService {
      */
     @Override
     public List<Map<String, Object>> getReviewListByCafe(int cafeId, PageParams pageParams) {
-        log.info("====={}", pageParams);
         List<Map<String, Object>> guestReviewList = reviewMapper.readByCafe(cafeId, pageParams);
         return addMaps(guestReviewList);
     }

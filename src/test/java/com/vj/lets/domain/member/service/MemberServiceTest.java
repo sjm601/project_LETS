@@ -1,5 +1,6 @@
 package com.vj.lets.domain.member.service;
 
+import com.vj.lets.domain.member.dto.EditForm;
 import com.vj.lets.domain.member.dto.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -54,6 +56,17 @@ class MemberServiceTest {
     }
 
     @Test
+    void isMemberByEmailTest() {
+        // given
+        String email = "lhy@gmail.com";
+        // when
+        Member member = memberService.isMemberByEmail(email);
+        // then
+        log.info("회원 정보 : {}", member);
+        assertThat(member).isNotNull();
+    }
+
+    @Test
     void getMemberListTest() {
         // given
         // when
@@ -72,6 +85,47 @@ class MemberServiceTest {
         // then
         log.info("회원 정보 : {}", member);
         assertThat(member).isNotNull();
+    }
+
+    @Test
+    void getCountByRegMonthTest() {
+        // given
+        // when
+        List<Map<String, Object>> list = memberService.getCountByRegMonth();
+        // then
+        log.info("월별 회원 수 : {}", list);
+        assertThat(list).isNotNull();
+    }
+
+    @Test
+    void getCountByGenderTest() {
+        // given
+        // when
+        List<Map<String, Object>> list = memberService.getCountByGender();
+        // then
+        log.info("성별 회원 수 : {}", list);
+        assertThat(list).isNotNull();
+    }
+
+    @Test
+    void getCountByLastMonthTest() {
+        // given
+        // when
+        int count = memberService.getCountByLastMonth();
+        // then
+        log.info("신규 회원 수 : {}", count);
+        assertThat(count).isNotZero();
+    }
+
+    @Test
+    void checkEditTest() {
+        // given
+        int id = 1;
+        // when
+        EditForm check = memberService.checkEdit(id);
+        // then
+        log.info("수정 회원 정보 : {}", check);
+        assertThat(check).isNotNull();
     }
 
     @Test

@@ -31,7 +31,7 @@ class MemberHistoryMapperTest {
 
     @Test
     @Transactional
-    void updateByUpdateTest() {
+    void createByUpdateTest() {
         // given
         int memberId = 1;
         String comment = "update";

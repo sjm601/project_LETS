@@ -47,7 +47,7 @@ public interface MemberMapper {
      * @param password 비밀번호
      * @return 회원 정보
      */
-    public Member readByEmailAndPasswd(@Param("email") String email, @Param("password") String password);
+    public Member readByEmailAndPassword(@Param("email") String email, @Param("password") String password);
 
     /**
      * ID로 회원 조회
@@ -79,19 +79,19 @@ public interface MemberMapper {
     public int readCountByLastMonth();
 
     /**
-     * 회원 정보 수정
-     *
-     * @param member 회원 정보
-     */
-    public void update(Member member);
-
-    /**
      * 회원 수정 시 수정 정보 체크 용 폼 조회
      *
      * @param id 회원 ID
      * @return editForm 수정 정보 체크 용 폼 객체
      */
     public EditForm readUpdateForm(int id);
+
+    /**
+     * 회원 정보 수정
+     *
+     * @param member 회원 정보
+     */
+    public void update(Member member);
 
     /**
      * 회원 비활성화
