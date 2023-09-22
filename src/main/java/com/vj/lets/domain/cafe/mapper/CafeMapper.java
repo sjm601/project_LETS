@@ -51,11 +51,17 @@ public interface CafeMapper {
      * 카페 전체리스트 출력
      *
      * @param pageParamsForCafe 페이지
-     * @param cafeSearch 카페 검색
      * @return 카페 전체 리스트
      */
-    public List<Map<String, Object>> findByAll(@Param("pageParamsForCafe") PageParamsForCafe pageParamsForCafe,
-                                               @Param("cafeSearch") CafeSearch cafeSearch);
+    public List<Map<String, Object>> findByAll(PageParamsForCafe pageParamsForCafe);
+
+    /**
+     * 카페 리스트 개수 출력
+     *
+     * @param cafeSearch 카페 검색
+     * @return 카페 개수
+     */
+    public int countByCafeList(CafeSearch cafeSearch);
 
     /**
      * 누적 예약이 가장 많은 카페 6개 출력

@@ -100,32 +100,43 @@ class CafeMapperTest {
         assertThat(cafe).isNotNull();
     }
 
-    /**
+
     @Test
     @DisplayName("카페 전체 검색")
     @Disabled
     void findByAllTest() {
         //given
+        CafeSearch cafeSearch =CafeSearch.builder()
+                .name("카페")
+                .option("")
+                .countPerson(5)
+                .currentX(127.55555)
+                .currentY(27.55555)
+                .build();
         PageParamsForCafe pageParamsForCafe = PageParamsForCafe.builder()
                 .requestPage(1)
                 .pageSize(5)
                 .elementSize(5)
-//                .rowCount(count)
-                .build();
-        CafeSearch cafeSearch =CafeSearch.builder()
-                .name("카페")
-                .option(1)
-                .currentX(127.55555)
-                .currentY(27.55555)
+                .cafeSearch(cafeSearch)
                 .build();
         //when
-        List<Map<String, Object>> list = cafeMapper.findByAll(pageParamsForCafe, cafeSearch);
-
+        List<Map<String, Object>> list = cafeMapper.findByAll(pageParamsForCafe);
         //then
-//        log.info("카페 리스트 : {}", list);
-//        assertThat(list).isNotNull();
+        log.info("카페 리스트 : {}", list);
+        assertThat(list).isNotNull();
     }
-**/
+    @Test
+    @DisplayName("카페리스트 개수 검색")
+    void countByCafeListTest(){
+        //given
+        CafeSearch cafeSearch = CafeSearch.builder().build();
+        //when
+        int countCafe = cafeMapper.countByCafeList(cafeSearch);
+        //then
+        log.info("카페 개수 :{}", countCafe);
+        assertThat(countCafe).isNotNull();
+    }
+
     @Test
     @DisplayName("예약이 많은 카페 6개 검색")
     @Disabled

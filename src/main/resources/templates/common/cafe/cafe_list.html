@@ -59,7 +59,7 @@
                 <div class="row">
                     <aside class="col-lg-3" id="sidebar">
                         <div class="custom-search-input-2 inner-2">
-                            <form>
+                            <form th:action="@{/cafe/list}">
                                 <div class="form-group">
                                     <input class="form-control" type="text" placeholder="카페 이름" name="name">
                                     <i class="icon_search"></i>
@@ -69,8 +69,8 @@
                                     <i class="fa-solid fa-people-group"></i>
                                 </div>
                                 <div class="form-group">
-                                    <select class="wide" name="searchOption">
-                                        <option>옵션 선택</option>
+                                    <select class="wide" name="option">
+                                        <option th:value="''">옵션 선택</option>
                                         <option th:each="option : ${options}"
                                                 th:text="${option.name}" th:value="${option.id}">와이파이</option>
                                     </select>
@@ -165,7 +165,7 @@
                                             <a th:text="${i}" class="page-link" href="#">1</a>
                                         </li>
                                     </th:block>
-                                    <th:block th:if="${i != pagination.params.requestPage}">
+                                    <th:block th:if="${i != pagination.params.requestPage && i > 0}">
                                         <li class="page-item">
                                             <a th:text="${i}" th:href="@{|/cafe/list?page=${i}|}" class="page-link"
                                                href="#">2</a>

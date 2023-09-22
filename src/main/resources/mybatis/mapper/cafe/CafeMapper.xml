@@ -90,7 +90,7 @@
           AND STATUS = 'enabled'
     </select>
 
-    <select id="findByAll" resultType="map">
+    <select id="findByAll" parameterType="PageParamsForCafe" resultType="map">
         SELECT "id",
                "cafeName",
                "siDoName",
@@ -106,7 +106,7 @@
                "minPrice",
                "reviewCount",
                "resCount"
-        FROM(SELECT CEIL(ROWNUM / #{pageParamsForCafe.elementSize}) "request_page",
+        FROM(SELECT CEIL(ROWNUM / #{elementSize}) "request_page",
                     "id",
                     "cafeName",
                     "siDoName",
@@ -168,14 +168,38 @@
                                             from cafe ca
                                             join CAFE_OPTION_LIST col ON col.CAFE_ID = ca.ID
                                             where col.OPTION_ID = #{cafeSearch.option})</if>
-                         <if test="cafeSearch.countPerson != null and cafeSearch.countPerson != ''">AND "maxPerson" &gt;= #{cafeSearch.countPerson}</if>
+                         <if test="cafeSearch.countPerson > 0">AND "maxPerson" &gt;= #{cafeSearch.countPerson}</if>
                     </where>
 
                   ORDER BY REGDATE DESC
                     <if test="cafeSearch.currentX != null and cafeSearch.currentX != '' and cafeSearch.currentY != null and cafeSearch.currentY != ''">
                     , DISTNACE_WGS84(LATITUDE, LONGITUDE, #{cafeSearch.currentY}, #{cafeSearch.currentX}) ASC
                     </if>))
-        WHERE "request_page" = #{pageParamsForCafe.requestPage}
+        WHERE "request_page" = #{requestPage}
+    </select>
+
+    <select id="countByCafeList" parameterType="CafeSearch" resultType="int">
+        SELECT COUNT(caf.ID) "id"
+        FROM CAFE caf
+            LEFT JOIN (SELECT CAFE_ID, MAX(HEAD_COUNT) "maxPerson"
+                        FROM ROOM roo
+                        JOIN CAFE ON CAFE_ID = CAFE.ID
+                        GROUP BY CAFE_ID) b ON b.CAFE_ID = caf.ID
+        <where>
+            STATUS = 'enabled'
+            <if test="name != null and name != ''">AND caf.NAME LIKE '%' || #{name} || '%'</if>
+            <if test="option != null and option != ''">
+                AND caf.ID IN (select ca.id
+                from cafe ca
+                join CAFE_OPTION_LIST col ON col.CAFE_ID = ca.ID
+                where col.OPTION_ID = #{option})</if>
+            <if test="countPerson != null and countPerson >= 0">AND "maxPerson" &gt;= #{countPerson}</if>
+        </where>
+
+        ORDER BY REGDATE DESC
+        <if test="currentX != null and currentX != '' and currentY != null and currentY != ''">
+            , DISTNACE_WGS84(LATITUDE, LONGITUDE, #{currentY}, #{currentX}) ASC
+        </if>
     </select>
 
     <select id="findByBest" resultType="map">

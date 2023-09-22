@@ -45,11 +45,17 @@ public interface CafeService {
      * 카페 전체 리스트 출력
      *
      * @param pageParamsForCafe 페이징
-     * @param cafeSearch 카페 검색
      * @return 카페 전체 리스트
      */
-    public List<Map<String, Object>> getCafeList(PageParamsForCafe pageParamsForCafe,
-                                                 CafeSearch cafeSearch);
+    public List<Map<String, Object>> getCafeList(PageParamsForCafe pageParamsForCafe);
+
+    /**
+     * 카페 리스트 개수 출력
+     *
+     * @param cafeSearch 카페 검색
+     * @return 카페 개수
+     */
+    public int getCountCafeList(CafeSearch cafeSearch);
 
     /**
      * 카페 옵션 리스트 출력

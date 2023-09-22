@@ -101,178 +101,224 @@
 
                             <section id="reviews">
                                 <h2>후기</h2>
-                                <div class="reviews-container">
-                                    <div class="row">
-                                        <div class="col-lg-3">
-                                            <div id="review_summary">
-                                                <strong th:if="${Cafe['cafeRating']} == null">0.0</strong>
-                                                <strong th:unless="${Cafe['cafeRating']} == null"
-                                                        th:text="${#numbers.formatDecimal(Cafe['cafeRating'],1,1)}">5.0</strong>
-                                                <span th:switch="${#numbers.formatInteger(Cafe['cafeRating'],1)}">
+                                <th:block th:if="${Cafe.get('reviewCount') > 0}">
+                                    <div class="reviews-container">
+                                        <div class="row">
+                                            <div class="col-lg-3">
+                                                <div id="review_summary">
+                                                    <strong th:if="${Cafe['cafeRating']} == null">0.0</strong>
+                                                    <strong th:unless="${Cafe['cafeRating']} == null"
+                                                            th:text="${#numbers.formatDecimal(Cafe['cafeRating'],1,1)}">5.0</strong>
+                                                    <span th:switch="${#numbers.formatInteger(Cafe['cafeRating'],1)}">
                                                 <em th:case="5">Superb</em>
                                                 <em th:case="4">VeryGood</em>
                                                 <em th:case="3">Good</em>
                                                 <em th:case="2">Pleasant</em>
                                                 <em th:case="1">Poor</em>
                                                 <em th:case="*">No Rating</em></span>
-                                                <small th:text="|${Cafe['reviewCount']}개의 리뷰 통계|">Based on 4 reviews</small>
+                                                    <small th:text="|${Cafe['reviewCount']}개의 리뷰 통계|">Based on 4
+                                                        reviews</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <div class="row">
+                                                    <div class="col-lg-10 col-9">
+                                                        <div class="progress">
+                                                            <div class="progress-bar" role="progressbar"
+                                                                 th:style="|width:${countReviews['five']}%|"
+                                                                 style="width: 100%"
+                                                                 aria-valuenow="100"
+                                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2 col-3"><small><strong>5 stars</strong></small>
+                                                    </div>
+                                                </div>
+                                                <!-- /row -->
+                                                <div class="row">
+                                                    <div class="col-lg-10 col-9">
+                                                        <div class="progress">
+                                                            <div class="progress-bar" role="progressbar"
+                                                                 th:style="|width:${countReviews['four']}%|"
+                                                                 style="width: 100%"
+                                                                 aria-valuenow="0"
+                                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2 col-3"><small><strong>4 stars</strong></small>
+                                                    </div>
+                                                </div>
+                                                <!-- /row -->
+                                                <div class="row">
+                                                    <div class="col-lg-10 col-9">
+                                                        <div class="progress">
+                                                            <div class="progress-bar" role="progressbar"
+                                                                 th:style="|width:${countReviews['three']}%|"
+                                                                 style="width: 0%"
+                                                                 aria-valuenow="0"
+                                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2 col-3"><small><strong>3 stars</strong></small>
+                                                    </div>
+                                                </div>
+                                                <!-- /row -->
+                                                <div class="row">
+                                                    <div class="col-lg-10 col-9">
+                                                        <div class="progress">
+                                                            <div class="progress-bar" role="progressbar"
+                                                                 th:style="|width:${countReviews['two']}%|"
+                                                                 style="width: 20%"
+                                                                 aria-valuenow="0"
+                                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2 col-3"><small><strong>2 stars</strong></small>
+                                                    </div>
+                                                </div>
+                                                <!-- /row -->
+                                                <div class="row">
+                                                    <div class="col-lg-10 col-9">
+                                                        <div class="progress">
+                                                            <div class="progress-bar" role="progressbar"
+                                                                 th:style="|width:${countReviews['one']}%|"
+                                                                 style="width: 0"
+                                                                 aria-valuenow="0"
+                                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2 col-3"><small><strong>1 stars</strong></small>
+                                                    </div>
+                                                </div>
+                                                <!-- /row -->
                                             </div>
                                         </div>
-                                        <div class="col-lg-9">
-                                            <div class="row">
-                                                <div class="col-lg-10 col-9">
-                                                    <div class="progress">
-                                                        <div class="progress-bar" role="progressbar" th:style="|width:${countReviews['five']}%|" style="width: 100%"
-                                                             aria-valuenow="100"
-                                                             aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2 col-3"><small><strong>5 stars</strong></small>
-                                                </div>
-                                            </div>
-                                            <!-- /row -->
-                                            <div class="row">
-                                                <div class="col-lg-10 col-9">
-                                                    <div class="progress">
-                                                        <div class="progress-bar" role="progressbar" th:style="|width:${countReviews['four']}%|" style="width: 100%"
-                                                             aria-valuenow="0"
-                                                             aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2 col-3"><small><strong>4 stars</strong></small>
-                                                </div>
-                                            </div>
-                                            <!-- /row -->
-                                            <div class="row">
-                                                <div class="col-lg-10 col-9">
-                                                    <div class="progress">
-                                                        <div class="progress-bar" role="progressbar" th:style="|width:${countReviews['three']}%|" style="width: 0%"
-                                                             aria-valuenow="0"
-                                                             aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2 col-3"><small><strong>3 stars</strong></small>
-                                                </div>
-                                            </div>
-                                            <!-- /row -->
-                                            <div class="row">
-                                                <div class="col-lg-10 col-9">
-                                                    <div class="progress">
-                                                        <div class="progress-bar" role="progressbar" th:style="|width:${countReviews['two']}%|" style="width: 20%"
-                                                             aria-valuenow="0"
-                                                             aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2 col-3"><small><strong>2 stars</strong></small>
-                                                </div>
-                                            </div>
-                                            <!-- /row -->
-                                            <div class="row">
-                                                <div class="col-lg-10 col-9">
-                                                    <div class="progress">
-                                                        <div class="progress-bar" role="progressbar" th:style="|width:${countReviews['one']}%|" style="width: 0"
-                                                             aria-valuenow="0"
-                                                             aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2 col-3"><small><strong>1 stars</strong></small>
-                                                </div>
-                                            </div>
-                                            <!-- /row -->
-                                        </div>
+                                        <!-- /row -->
                                     </div>
-                                    <!-- /row -->
-                                </div>
 
-                                <hr>
-
-                                <div class="reviews-container">
-                                    <ul>
-                                        <li th:each="review : ${reviews}">
-                                            <div class="review-box clearfix">
-                                                <figure class="rev-thumb"><img src="img/avatar1.jpg" alt="">
-                                                </figure>
-                                                <div class="rev-content">
-                                                    <div class="rating">
+                                    <hr>
+                                    <div class="reviews-container">
+                                        <ul>
+                                            <li th:each="review : ${reviews}">
+                                                <div class="review-box clearfix">
+                                                    <figure class="rev-thumb"><img src="img/avatar1.jpg" alt="">
+                                                    </figure>
+                                                    <div class="rev-content">
+                                                        <div class="rating">
                                                             <div th:switch="${review['rating']}">
-                                                            <div th:case="5"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i></div>
-                                                            <div th:case="4"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i></div>
-                                                            <div th:case="3"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i></div>
-                                                            <div th:case="2"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></div>
-                                                            <div th:case="*"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i></div>
+                                                                <div th:case="5"><i class="icon_star voted"></i><i
+                                                                        class="icon_star voted"></i><i
+                                                                        class="icon_star voted"></i><i
+                                                                        class="icon_star voted"></i><i
+                                                                        class="icon_star voted"></i></div>
+                                                                <div th:case="4"><i class="icon_star voted"></i><i
+                                                                        class="icon_star voted"></i><i
+                                                                        class="icon_star voted"></i><i
+                                                                        class="icon_star voted"></i><i
+                                                                        class="icon_star"></i></div>
+                                                                <div th:case="3"><i class="icon_star voted"></i><i
+                                                                        class="icon_star voted"></i><i
+                                                                        class="icon_star voted"></i><i
+                                                                        class="icon_star"></i><i class="icon_star"></i>
+                                                                </div>
+                                                                <div th:case="2"><i class="icon_star voted"></i><i
+                                                                        class="icon_star voted"></i><i
+                                                                        class="icon_star"></i><i
+                                                                        class="icon_star"></i><i
+                                                                        class="icon_star"></i></div>
+                                                                <div th:case="*"><i class="icon_star voted"></i><i
+                                                                        class="icon_star voted"></i><i
+                                                                        class="icon_star voted"></i><i
+                                                                        class="icon_star voted"></i><i
+                                                                        class="icon_star"></i></div>
                                                             </div>
-                                                    </div>
-                                                    <div class="rev-info mb-1" th:text="|${review['writerName']} - ${review['writeDate']}|">
-                                                        Guest – April 03, 2016:
-                                                    </div>
-                                                    <div class="rev-info" th:text="|방타입 ${review['roomName']}|">
-                                                        방타입 A1
-                                                    </div>
-                                                    <div class="rev-text">
-                                                        <p th:text="${review['content']}">
-                                                            Sed eget turpis a pede tempor malesuada. Vivamus quis mi at
-                                                            leo
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <th:block th:if="${review['commentContent']} != null">
-                                            <div class="review-box clearfix cafe-reply">
-                                                <figure class="rev-thumb"><img th:src="${Cafe['imagePath']}" src="img/avatar1.jpg" alt="">
-                                                </figure>
-                                                <div class="rev-content">
-                                                    <div class="rev-info" th:text="|host - ${review['commentWriteDate']}|">
-                                                        Host – April 03, 2016:
-                                                    </div>
-                                                    <div class="rev-text">
-                                                        <p th:text="${review['commentContent']}">
-                                                            이젠 스터디카페를 이용해주셔서 감사합니다.
-                                                        </p>
+                                                        </div>
+                                                        <div class="rev-info mb-1"
+                                                             th:text="|${review['writerName']} - ${review['writeDate']}|">
+                                                            Guest – April 03, 2016:
+                                                        </div>
+                                                        <div class="rev-info" th:text="|방타입 ${review['roomName']}|">
+                                                            방타입 A1
+                                                        </div>
+                                                        <div class="rev-text">
+                                                            <p th:text="${review['content']}">
+                                                                Sed eget turpis a pede tempor malesuada. Vivamus quis mi
+                                                                at
+                                                                leo
+                                                            </p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            </th:block>
-                                        </li>
-                                        <!-- /review-box -->
-                                    </ul>
-                                    <!-- /review-box -->
-                                    <div>
-                                        <ul class="pagination h-100 justify-content-center align-items-center">
-                                            <th:block th:if="${pagination.showFirst}">
-                                                <li class="page-item">
-                                                    <a th:href="@{/cafe/{id}(id=${Cafe['id']})?page=1}" class="page-link">처음으로</a>
-                                                </li>
-                                            </th:block>
-                                            <th:block th:if="${pagination.showPrevious}">
-                                                <li class="page-item">
-                                                    <a th:href="@{|/cafe/{id}(id=${Cafe['id']})?page=${pagination.previousStartPage}|}" class="page-link">이전</a>
-                                                </li>
-                                            </th:block>
-                                            <th:block th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
-                                                <th:block th:if="${i == pagination.params.requestPage}">
-                                                    <li class="page-item active">
-                                                        <a th:text="${i}" class="page-link" href="#">1</a>
-                                                    </li>
+                                                <th:block th:if="${review['commentContent']} != null">
+                                                    <div class="review-box clearfix cafe-reply">
+                                                        <figure class="rev-thumb"><img th:src="${Cafe['imagePath']}"
+                                                                                       src="img/avatar1.jpg" alt="">
+                                                        </figure>
+                                                        <div class="rev-content">
+                                                            <div class="rev-info"
+                                                                 th:text="|host - ${review['commentWriteDate']}|">
+                                                                Host – April 03, 2016:
+                                                            </div>
+                                                            <div class="rev-text">
+                                                                <p th:text="${review['commentContent']}">
+                                                                    이젠 스터디카페를 이용해주셔서 감사합니다.
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </th:block>
-                                                <th:block th:if="${i != pagination.params.requestPage}">
-                                                    <li class="page-item">
-                                                        <a th:text="${i}" th:href="@{|/cafe/{id}(id=${Cafe['id']})?page=${i}|}" class="page-link" href="#">2</a>
-                                                    </li>
-                                                </th:block>
-                                            </th:block>
-                                            <th:block th:if="${pagination.showNext}">
-                                                <li class="page-item">
-                                                    <a th:href="@{|/cafe/{id}(id=${Cafe['id']})?page=${pagination.nextStartPage}|}" class="page-link">다음</a>
-                                                </li>
-                                            </th:block>
-                                            <th:block th:if="${pagination.showLast}">
-                                                <li class="page-item">
-                                                    <a th:href="@{/cafe/{id}(id=${Cafe['id']})?page=${pagination.totalPages}}" class="page-link">끝으로</a>
-                                                </li>
-                                            </th:block>
+                                            </li>
+                                            <!-- /review-box -->
                                         </ul>
+                                        <!-- /review-box -->
+                                        <div>
+                                            <ul class="pagination h-100 justify-content-center align-items-center">
+                                                <th:block th:if="${pagination.showFirst}">
+                                                    <li class="page-item">
+                                                        <a th:href="@{/cafe/{id}(id=${Cafe['id']})?page=1}"
+                                                           class="page-link">처음으로</a>
+                                                    </li>
+                                                </th:block>
+                                                <th:block th:if="${pagination.showPrevious}">
+                                                    <li class="page-item">
+                                                        <a th:href="@{/cafe/{id}(id=${Cafe['id']})?page=${pagination.previousStartPage}}"
+                                                           class="page-link">이전</a>
+                                                    </li>
+                                                </th:block>
+                                                <th:block
+                                                        th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
+                                                    <th:block th:if="${i == pagination.params.requestPage}">
+                                                        <li class="page-item active">
+                                                            <a th:text="${i}" class="page-link" href="#">1</a>
+                                                        </li>
+                                                    </th:block>
+                                                    <th:block th:if="${i != pagination.params.requestPage}">
+                                                        <li class="page-item">
+                                                            <a th:text="${i}"
+                                                               th:href="@{/cafe/{id}(id=${Cafe['id']})?page=${i}}"
+                                                               class="page-link" href="#">2</a>
+                                                        </li>
+                                                    </th:block>
+                                                </th:block>
+                                                <th:block th:if="${pagination.showNext}">
+                                                    <li class="page-item">
+                                                        <a th:href="@{/cafe/{id}(id=${Cafe['id']})?page=${pagination.nextStartPage}}"
+                                                           class="page-link">다음</a>
+                                                    </li>
+                                                </th:block>
+                                                <th:block th:if="${pagination.showLast}">
+                                                    <li class="page-item">
+                                                        <a th:href="@{/cafe/{id}(id=${Cafe['id']})?page=${pagination.totalPages}}"
+                                                           class="page-link">끝으로</a>
+                                                    </li>
+                                                </th:block>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
+                                </th:block>
+                                <th:block th:if="${Cafe.get('reviewCount') == null or Cafe.get('reviewCount') == 0}">
+                                    <p>작성된 리뷰가 존재하지 않습니다.</p>
+                                </th:block>
                                 <!-- /review-container -->
                             </section>
                             <!-- /section -->
