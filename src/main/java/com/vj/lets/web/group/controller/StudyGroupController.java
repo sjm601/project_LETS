@@ -92,7 +92,8 @@ public class StudyGroupController {
      */
     @GetMapping("")
     public String studyGroup(@PathParam("page") String page, @PathParam("keyword") String keyword, @PathParam("subject") String subject, @PathParam("siGunGuName") String siGunGuName, Model model) {
-        int count = studyGroupService.getSearchCount(keyword);
+        int count = studyGroupService.getSearchCount(keyword, subject);
+
         int elementSize = 8;
         int pageSize = 5;
 

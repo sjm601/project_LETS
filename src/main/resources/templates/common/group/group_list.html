@@ -193,7 +193,7 @@
                                             <a th:text="${i}" class="page-link" href="#">1</a>
                                         </li>
                                     </th:block>
-                                    <th:block th:if="${i != pagination.params.requestPage}">
+                                    <th:block th:if="${i != pagination.params.requestPage && i > 0}">
                                         <li class="page-item">
                                             <a th:text="${i}" th:href="@{|/group?page=${i}|}" class="page-link" href="#">2</a>
                                         </li>
