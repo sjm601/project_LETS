@@ -101,8 +101,8 @@
                                                     height="533">
                                                 <div class="read_more"><span>Read more</span></div>
                                             </a>
-                                            <small th:if="${allCafe['startTime']} < ${#calendars.format(#calendars.createNow(),'HH')} and ${allCafe['endTime']} > ${#calendars.format(#calendars.createNow(),'HH')}">영업중</small>
-                                            <small th:unless="${allCafe['startTime']} < ${#calendars.format(#calendars.createNow(),'HH')} and ${allCafe['endTime']} > ${#calendars.format(#calendars.createNow(),'HH')}">영업종료</small>
+                                            <small th:if="${allCafe['startTime']} <= ${#calendars.format(#calendars.createNow(),'HH')} and ${allCafe['endTime']} >= ${#calendars.format(#calendars.createNow(),'HH')}">영업중</small>
+                                            <small th:unless="${allCafe['startTime']} <= ${#calendars.format(#calendars.createNow(),'HH')} and ${allCafe['endTime']} >= ${#calendars.format(#calendars.createNow(),'HH')}">영업종료</small>
                                         </figure>
                                         <div class="wrapper">
                                             <h3><a th:href="@{/cafe/{id}(id=${allCafe['id']})}" href="/cafe/"
@@ -290,6 +290,7 @@
 
                 // 인포윈도우를 마커위에 표시합니다
                 infowindow.open(map, marker);
+
 
                 // 지도 중심좌표를 접속위치로 변경합니다
                 map.setCenter(locPosition);

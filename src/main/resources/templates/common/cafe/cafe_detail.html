@@ -240,12 +240,12 @@
                                         <ul class="pagination h-100 justify-content-center align-items-center">
                                             <th:block th:if="${pagination.showFirst}">
                                                 <li class="page-item">
-                                                    <a th:href="@{|/cafe/{id}?page=1(id=${Cafe['id']})|}" class="page-link">처음으로</a>
+                                                    <a th:href="@{/cafe/{id}(id=${Cafe['id']})?page=1}" class="page-link">처음으로</a>
                                                 </li>
                                             </th:block>
                                             <th:block th:if="${pagination.showPrevious}">
                                                 <li class="page-item">
-                                                    <a th:href="@{|/cafe/{id}?page=${pagination.previousStartPage}(id=${Cafe['id']})|}" class="page-link">이전</a>
+                                                    <a th:href="@{|/cafe/{id}(id=${Cafe['id']})?page=${pagination.previousStartPage}|}" class="page-link">이전</a>
                                                 </li>
                                             </th:block>
                                             <th:block th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
@@ -256,13 +256,13 @@
                                                 </th:block>
                                                 <th:block th:if="${i != pagination.params.requestPage}">
                                                     <li class="page-item">
-                                                        <a th:text="${i}" th:href="@{|/cafe/{id}?page=${i}(id=${Cafe['id']})|}" class="page-link" href="#">2</a>
+                                                        <a th:text="${i}" th:href="@{|/cafe/{id}(id=${Cafe['id']})?page=${i}|}" class="page-link" href="#">2</a>
                                                     </li>
                                                 </th:block>
                                             </th:block>
                                             <th:block th:if="${pagination.showNext}">
                                                 <li class="page-item">
-                                                    <a th:href="@{|/cafe/{id}?page=${pagination.nextStartPage}(id=${Cafe['id']})|}" class="page-link">다음</a>
+                                                    <a th:href="@{|/cafe/{id}(id=${Cafe['id']})?page=${pagination.nextStartPage}|}" class="page-link">다음</a>
                                                 </li>
                                             </th:block>
                                             <th:block th:if="${pagination.showLast}">

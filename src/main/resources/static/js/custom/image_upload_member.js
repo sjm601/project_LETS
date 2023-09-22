@@ -43,7 +43,6 @@ realUploads.forEach((realUpload, idx) => {
       img.setAttribute('src', e.target.result);
       img.setAttribute('data-file', file.name);
       img.setAttribute('style', 'max-width: 100%;');
-      li.appendChild(img);
 
       return li;
     }
