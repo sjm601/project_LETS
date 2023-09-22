@@ -120,7 +120,7 @@
                                                     data-bs-toggle="modal"
                                                     style="font-size: 14px; height: 30px;">수정
                                             </button>
-                                            <form th:action="@{/group/{id}/article/delete(id=${studyGroup['ID']})}"
+                                            <form th:action="@{/group/{id}/{articleId}/article/delete(id=${studyGroup['ID']}, articleId=${article['ID']})}"
                                                   th:method="POST">
                                                 <input type="hidden" name="articleId" th:value="${article['ID']}"/>
                                                 <button type="submit" class="btn btn-danger mx-2"
@@ -221,15 +221,14 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
-                                            <form th:action="@{/group/{id}/article/update(id=${studyGroup['ID']})}"
+                                            <form th:action="@{/group/{id}/{articleId}/article/update(id=${studyGroup['ID']}, articleId=${article['ID']})}"
                                                   th:method="post" enctype="multipart/form-data">
                                                 <div class="modal-body">
                                                     <!-- 수정 폼 -->
                                                     <label for="title" class="form-label">제목</label>
                                                     <input type="hidden" th:name="id" th:value="${article['ID']}"/>
                                                     <input th:name="title" th:id="title" class="form-control mb-2"
-                                                           id="title"
-                                                           name="title" type="text" placeholder="제목"/>
+                                                           id="title" name="title" type="text" placeholder="제목"/>
                                                     <label for="content" class="form-label">내용</label>
                                                     <textarea th:id="content" th:name="content"
                                                               class="form-control mb-2"
@@ -241,10 +240,8 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label" for="modifyImage">사진</label>
-                                                        <input th:id="modifyImage" th:name="imagePath" type="file"
-                                                               class="real-upload form-control" accept="image/*"
-                                                               id="modifyImage" enctype="multipart/form-data"
-                                                               name="modifyImage"/>
+                                                        <input type="file" class="real-upload form-control" accept="image/*" id="modifyImage"
+                                                               name="imagePath"/>
                                                     </div>
                                                     <!-- /수정 폼 -->
                                                 </div>
