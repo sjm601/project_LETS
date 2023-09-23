@@ -69,7 +69,7 @@ name.addEventListener('change', () => {
     }
 })
 
-document.querySelector('input.regist_btn').addEventListener('click', event => {
+document.querySelector('form#register_form').addEventListener('submit', event => {
     event.preventDefault();
 
     if (emailCheck && passwordCheck && passwordConfirmCheck && nameCheck) {

@@ -18,30 +18,33 @@
         <ul id="top_menu">
             <th:block th:if="${session.loginMember} == null">
                 <li>
-                    <span>
-                        <a href="#sign-in-dialog" id="sign-in" title="LogIn">
-                            <i class="fa-solid fa-arrow-right-to-bracket fa-2xl me-1"></i>
-                            로그인
-                        </a>
-                    </span>
+                    <a href="#sign-in-dialog" id="sign-in" title="LogIn">
+                        <i class="fa-solid fa-arrow-right-to-bracket fa-2xl me-1"></i>
+                        로그인
+                    </a>
                 </li>
             </th:block>
             <th:block th:if="${session.loginMember} != null">
                 <li>
-                        <span>
-                            <a th:href="@{/mypage}" title="MY PAGE">
-                                <i class="fa-regular fa-circle-user fa-2xl me-1"></i>
-                                내 정보
+                    <a class="dropdown border-0 text-danger" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-regular fa-circle-user fa-2xl me-1"></i>
+                        내 정보
+                    </a>
+                    <ul class="dropdown-menu mt-3 bg-gradient">
+                        <li>
+                            <a class="text-dark dropdown-item pl-4 py-3" th:href="@{/mypage}" href="#">
+                                마이페이지
                             </a>
-                        </span>
-                </li>
-                <li>
-                        <span>
-                            <a href="#sign-in-dialog" id="sign-in" title="LogIn">
-                                <i class="fa-solid fa-arrow-right-from-bracket fa-2xl me-1"></i>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a href="#sign-in-dialog" id="sign-in" class="text-dark dropdown-item pl-4 py-3" title="Logout">
                                 로그아웃
                             </a>
-                        </span>
+                        </li>
+                    </ul>
                 </li>
             </th:block>
         </ul>
