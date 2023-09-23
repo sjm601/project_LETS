@@ -139,7 +139,7 @@
           AND m.TYPE = 'host'
     </select>
 
-    <select id="readCountByReservationId" parameterType="int" resultType="boolean">
+    <select id="readCountByResId" parameterType="int" resultType="boolean">
         SELECT COUNT(rev.ID)
         FROM REVIEW rev
                  JOIN RESERVATION res on res.ID = rev.RESERVATION_ID
@@ -236,24 +236,10 @@
         WHERE ID = #{id}
     </update>
 
-    <select id="callReviewComment" parameterType="int" resultType="string">
-        SELECT rev.CONTENT
-        FROM review rev
-                 JOIN MEMBER m ON rev.MEMBER_ID = m.ID
-                 JOIN RESERVATION res ON res.ID = rev.RESERVATION_ID
-                 JOIN CAFE c ON res.CAFE_ID = c.ID
-                 JOIN ROOM roo ON res.ROOM_ID = roo.ID
-        WHERE rev.STATUS = 'enabled'
-          AND rev.RESERVATION_ID = #{reservationId}
-          AND rev.MEMBER_ID = #{memberId}
-    </select>
-
     <update id="disabled" parameterType="int">
         UPDATE REVIEW
         SET STATUS = 'disabled'
         WHERE ID = #{id}
     </update>
-
-
 
 </mapper>

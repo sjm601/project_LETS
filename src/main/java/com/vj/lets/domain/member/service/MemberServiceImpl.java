@@ -44,7 +44,7 @@ public class MemberServiceImpl implements MemberService {
     /**
      * 회원 가입
      *
-     * @param member 회원 정보
+     * @param member 가입 회원 정보
      */
     @Override
     @Transactional
@@ -58,7 +58,7 @@ public class MemberServiceImpl implements MemberService {
      *
      * @param email    이메일
      * @param password 비밀번호
-     * @return 회원 정보
+     * @return 로그인 한 회원 정보
      */
     @Override
     public Member isMember(String email, String password) {
@@ -66,10 +66,10 @@ public class MemberServiceImpl implements MemberService {
     }
 
     /**
-     * 회원 가입 시 이메일 중복 여부 조회
+     * 이메일 중복 체크 조회 및 구글 로그인 시 회원 조회
      *
      * @param email 이메일
-     * @return 중복 여부
+     * @return 이메일로 조회한 회원 정보
      */
     @Override
     public Member isMemberByEmail(String email) {
@@ -77,9 +77,10 @@ public class MemberServiceImpl implements MemberService {
     }
 
     /**
-     * 전체 회원 리스트 조회
+     * 전체 회원 목록 조회
      *
-     * @return 회원 리스트
+     * @return 전체 회원 목록
+     * @see com.vj.lets.web.dashboard.controller.AdminController
      */
     @Override
     public List<Member> getMemberList() {
@@ -89,8 +90,9 @@ public class MemberServiceImpl implements MemberService {
     /**
      * 특정 회원 정보 조회
      *
-     * @param id 회원 아이디
-     * @return 회원 정보
+     * @param id 회원 ID
+     * @return 조회한 회원 정보
+     * @see com.vj.lets.web.dashboard.controller.MypageController
      */
     @Override
     public Member getMember(int id) {
@@ -100,7 +102,8 @@ public class MemberServiceImpl implements MemberService {
     /**
      * 최근 1년간 월별 신규 회원 수 조회
      *
-     * @return 신규 회원 수 목록
+     * @return 월별 신규 회원 수 목록
+     * @see com.vj.lets.web.dashboard.controller.AdminController
      */
     @Override
     public List<Map<String, Object>> getCountByRegMonth() {
@@ -111,6 +114,7 @@ public class MemberServiceImpl implements MemberService {
      * 현재 가입 된 회원 성별 수 조회
      *
      * @return 회원 성별 수 목록
+     * @see com.vj.lets.web.dashboard.controller.AdminController
      */
     @Override
     public List<Map<String, Object>> getCountByGender() {
@@ -121,6 +125,7 @@ public class MemberServiceImpl implements MemberService {
      * 최근 한 달간 가입한 신규 회원 수 조회
      *
      * @return 신규 회원 수
+     * @see com.vj.lets.web.dashboard.controller.AdminController
      */
     @Override
     public int getCountByLastMonth() {
@@ -132,6 +137,7 @@ public class MemberServiceImpl implements MemberService {
      *
      * @param id 회원 ID
      * @return 체크 용 폼 객체
+     * @see com.vj.lets.web.dashboard.controller.MypageController
      */
     @Override
     public EditForm checkEdit(int id) {

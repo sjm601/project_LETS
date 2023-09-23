@@ -32,8 +32,8 @@ public interface FaqCategoryMapper {
     /**
      * 예약과 관련된 FAQ 카테고리 목록
      *
-     * @author VJ특공대 강소영
      * @return FAQ 카테고리 목록
+     * @author VJ특공대 강소영
      */
     public List<FaqCategory> readByCafeCategory();
 

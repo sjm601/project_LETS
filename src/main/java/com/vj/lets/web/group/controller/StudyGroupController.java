@@ -117,6 +117,7 @@ public class StudyGroupController {
 
         List<Map<String, Object>> studyGroupList = studyGroupService.getStudyList(pageParams);
         List<StudyGroup> newStudyList = studyGroupService.getNewStudyList();
+
         model.addAttribute("pagination", pagination);
         model.addAttribute("studyGroupList", studyGroupList);
         model.addAttribute("newStudyList", newStudyList);
@@ -361,6 +362,7 @@ public class StudyGroupController {
                 .build();
 
         int studyGroupId = studyGroupService.generateStudy(studyGroup, loginMember.getId(), createForm.getSiGunGuName(), createForm.getSiDoName());
+
         return "redirect:/group/" + studyGroupId;
     }
 
@@ -501,6 +503,7 @@ public class StudyGroupController {
     public String create(@ModelAttribute ArticleCreateForm createForm, @PathVariable int id, MultipartFile imagePath, HttpServletRequest request, Model model) throws IOException {
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
+
         if (loginMember != null) {
             int memberId = loginMember.getId();
             createForm.setStudyGroupId(id);
@@ -534,6 +537,7 @@ public class StudyGroupController {
 
             articleService.create(article);
         }
+
         return "redirect:/group/{id}";
     }
 
@@ -553,6 +557,7 @@ public class StudyGroupController {
                          HttpServletResponse response, Model model) {
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
+
         Article targetArticle = articleService.findById(articleId);
         int articleMemberId = targetArticle.getMemberId();
 
@@ -638,6 +643,7 @@ public class StudyGroupController {
                 throw new RuntimeException("오류 메세지");
             }
         }
+
         return "redirect:/group/{id}";
     }
 
@@ -678,8 +684,9 @@ public class StudyGroupController {
     @PostMapping("/{id}/commentDelete")
     public String delete(@PathParam("commentId") int id, @ModelAttribute ArticleComment articleComment, Model model) {
         ArticleComment targetComment = articleCommentService.findById(id);
-        model.addAttribute("articleComment", targetComment);
         articleCommentService.delete(id);
+
+        model.addAttribute("articleComment", targetComment);
         
         return "redirect:/group/{id}";
     }

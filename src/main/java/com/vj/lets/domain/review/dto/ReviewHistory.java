@@ -21,4 +21,5 @@ public class ReviewHistory {
     private String modifyComment;
     private String modifyDate;
     private int reviewId;
+
 }

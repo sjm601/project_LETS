@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +20,13 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
+/**
+ * 구글 로그인 요청 처리 컨트롤러
+ *
+ * @author VJ특공대 김종원
+ * @version 1.0
+ * @since 2023-09-24 (일)
+ */
 @RestController
 @RequiredArgsConstructor
 public class GoogleLoginController {
@@ -43,10 +49,10 @@ public class GoogleLoginController {
 
         String userEmail = null;
         String userName = null;
-        if(emailAddresses != null && !emailAddresses.isEmpty()) {
+        if (emailAddresses != null && !emailAddresses.isEmpty()) {
             userEmail = emailAddresses.get(0).getValue();
         }
-        if(names != null && !names.isEmpty()) {
+        if (names != null && !names.isEmpty()) {
             userName = names.get(0).getDisplayNameLastFirst();
         }
 

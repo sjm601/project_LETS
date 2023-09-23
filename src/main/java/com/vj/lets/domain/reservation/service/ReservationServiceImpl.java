@@ -97,7 +97,7 @@ public class ReservationServiceImpl implements ReservationService {
         List<Map<String, Object>> list = reservationMapper.findByMember(memberId, pageParams);
         for (Map<String, Object> map : list) {
             int reservationId = Integer.parseInt(map.get("id").toString());
-            boolean reviewBoolean = reviewMapper.readCountByReservationId(reservationId);
+            boolean reviewBoolean = reviewMapper.readCountByResId(reservationId);
             map.put("reviewBoolean", reviewBoolean);
             resList.add(map);
         }
@@ -234,7 +234,7 @@ public class ReservationServiceImpl implements ReservationService {
         List<Map<String, Object>> list = reservationMapper.findByHost(cafeId, pageParams);
         for (Map<String, Object> map : list) {
             int reservationId = Integer.parseInt(map.get("id").toString());
-            boolean reviewBoolean = reviewMapper.readCountByReservationId(reservationId);
+            boolean reviewBoolean = reviewMapper.readCountByResId(reservationId);
             map.put("reviewBoolean", reviewBoolean);
             resList.add(map);
         }

@@ -18,16 +18,16 @@ import java.util.List;
 public interface ContactService {
 
     /**
-     * 입점 신청 등록
+     * 신규 입점 신청 등록
      *
      * @param contact 입점 신청 정보
      */
     public void register(Contact contact);
 
     /**
-     * 보류 중인 전체 입점 신청 갯수 조회
+     * 상태로 전체 입점 신청 갯수 조회
      *
-     * @return 입점 신청 갯수
+     * @return 해당 상태의 입점 신청 갯수
      */
     public int getCountContact(String type);
 
@@ -55,16 +55,16 @@ public interface ContactService {
     public List<Contact> checkContact(ContactForm contactForm);
 
     /**
-     * 입점 승인 시 회원 등록, 카페 개설, 입점 신청 상태 정보 수정
+     * 입점 승인 시 회원 등록, 카페 개설 및 입점 신청 상태 정보 수정
      *
-     * @param id 입점 신청 ID
+     * @param id 승인할 입점 신청 ID
      */
     public void approveContact(int id, Member member, Cafe cafe);
 
     /**
-     * 입점 거절 시 상태 정보 수정
+     * 입점 거부 시 상태 정보 수정
      *
-     * @param id 입점 신청 ID
+     * @param id 거부할 입점 신청 ID
      */
     public void refuseContact(int id);
 

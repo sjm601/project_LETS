@@ -36,7 +36,7 @@ public interface ReviewMapper {
      * 카페 ID로 리뷰 목록 조회
      *
      * @param cafeId     카페 ID
-     * @param pageParams 페이징
+     * @param pageParams 페이징 객체
      * @return 리뷰 목록
      */
     public List<Map<String, Object>> readByCafe(@Param("cafeId") int cafeId,
@@ -46,7 +46,7 @@ public interface ReviewMapper {
      * 카페 별 각 리뷰 점수의 개수 통계 조회
      *
      * @param cafeId 카페 ID
-     * @return 별점별 통계 목록
+     * @return 평점별 통계 목록
      */
     public Map<Integer, Object> countByReviewRating(int cafeId);
 
@@ -83,21 +83,7 @@ public interface ReviewMapper {
      * @param reservationId 예약 ID
      * @return 리뷰 유무
      */
-    public boolean readCountByReservationId(int reservationId);
-
-    /**
-     * 리뷰 수정
-     *
-     * @param review 리뷰 정보
-     */
-    public void update(Review review);
-
-    /**
-     * 리뷰 비활성화
-     *
-     * @param id 리뷰 ID
-     */
-    public void disabled(int id);
+    public boolean readCountByResId(int reservationId);
 
     /**
      * 호스트의 카페에 대한 리뷰 갯수 출력
@@ -125,13 +111,17 @@ public interface ReviewMapper {
     public int readTodayReview(int cafeId);
 
     /**
-     * 답변 수정을 위해 답변 호출
+     * 리뷰 수정
      *
-     * @param reservationId 예약 ID
-     * @param memberId      회원 ID
-     * @return 작성한 답변 id, content
+     * @param review 리뷰 정보
      */
-    public String callReviewComment(@Param("reservationId") int reservationId, @Param("memberId") int memberId);
+    public void update(Review review);
 
+    /**
+     * 리뷰 비활성화
+     *
+     * @param id 리뷰 ID
+     */
+    public void disabled(int id);
 
 }

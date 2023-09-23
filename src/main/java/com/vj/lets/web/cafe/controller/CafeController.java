@@ -1,6 +1,5 @@
 package com.vj.lets.web.cafe.controller;
 
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vj.lets.domain.cafe.dto.CafeOption;
@@ -21,7 +20,6 @@ import com.vj.lets.domain.support.dto.FaqCategory;
 import com.vj.lets.domain.support.service.FaqService;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +39,6 @@ import java.util.Map;
 //@RestController
 @RequestMapping("/cafe")
 @RequiredArgsConstructor
-@Slf4j
 public class CafeController {
 
     private final ReservationService reservationService;
@@ -60,7 +57,9 @@ public class CafeController {
     @GetMapping("")
     public String cafeDetail(Model model) {
         List<Map<String, Object>> bestCafe = cafeService.getBestCafe();
+
         model.addAttribute("bestCafe", bestCafe);
+
         return "common/cafe/cafe_main";
     }
 
@@ -77,6 +76,7 @@ public class CafeController {
     public String cafeList(@PathParam("page") String page,
                            @ModelAttribute SearchForm searchForm,
                            Model model) {
+
         CafeSearch cafeSearch = CafeSearch.builder()
                 .name(searchForm.getName())
                 .option(searchForm.getOption())
@@ -88,6 +88,7 @@ public class CafeController {
             cafeSearch.setCurrentX(searchForm.getCurrentX());
             cafeSearch.setCurrentY(searchForm.getCurrentY());
         }
+
         List<FaqCategory> categoryList = faqService.getCafeFaqList();
         List<CafeOption> options = cafeService.getOptionList();
 
@@ -109,10 +110,12 @@ public class CafeController {
 
         PaginationForCafe paginationForCafe = new PaginationForCafe(pageParamsForCafe);
         List<Map<String, Object>> allCafe = cafeService.getCafeList(pageParamsForCafe);
+
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("options", options);
         model.addAttribute("pagination", paginationForCafe);
         model.addAttribute("allCafe", allCafe);
+
         return "common/cafe/cafe_list";
     }
 
@@ -141,7 +144,6 @@ public class CafeController {
         if (cafe.get("reviewCount") != null){
             count = Integer.parseInt(cafe.get("reviewCount").toString());
             //리뷰목록 페이징 처리
-            log.info("count:{}", count);
             int elementSize = 5;
             int pageSize = 5;
 
@@ -169,6 +171,7 @@ public class CafeController {
             model.addAttribute("reviews", reviews);
             model.addAttribute("countReviews", countReviews);
         }
+
         return "common/cafe/cafe_detail";
     }
 
@@ -185,8 +188,9 @@ public class CafeController {
     @ResponseBody
     public  String findRoom(@PathVariable int id, Model model) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
+
         List<Room> roomList = roomService.getSearchCafeRoom(id);
-        log.info("룸 목록:{}",roomList);
+
         return  objectMapper.writeValueAsString(roomList);
     }
 
@@ -204,7 +208,9 @@ public class CafeController {
     public  String findReservedTime(@PathVariable int roomId, Model model, @RequestBody Object bookingDate) throws JsonProcessingException, ParseException {
         ObjectMapper objectMapper = new ObjectMapper();
         String bookDate = bookingDate.toString();
+
         List<Reservation> reservedTime =reservationService.checkDuplicateResTime(roomId, bookDate);
+
         return objectMapper.writeValueAsString(reservedTime);
     }
 
@@ -241,6 +247,7 @@ public class CafeController {
         reservation.setMemberId(loginMember.getId());
         reservation.setHeadCount(headCount);
         reservation.setRoomId(roomId);
+
         reservationService.reserve(reservation);
         int resId = reservationService.getNowRes(loginMember.getId());
 

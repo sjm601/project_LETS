@@ -14,7 +14,6 @@ import com.google.api.services.people.v1.PeopleService;
 import com.google.api.services.people.v1.model.Person;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +24,13 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Collection;
 
+/**
+ * 구글 로그인 서비스 클래스
+ *
+ * @author VJ특공대 김종원
+ * @version 1.0
+ * @since 2023-09-23 (토)
+ */
 @Service
 public class GoogleLoginService {
 

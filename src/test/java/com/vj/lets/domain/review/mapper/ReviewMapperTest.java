@@ -116,11 +116,11 @@ class ReviewMapperTest {
     }
 
     @Test
-    void readCountByReservationIdTest() {
+    void readCountByResIdTest() {
         // given
         int reservationId = 1;
         // when
-        boolean tf = reviewMapper.readCountByReservationId(reservationId);
+        boolean tf = reviewMapper.readCountByResId(reservationId);
         // then
         log.info("리뷰 유무 : {}", tf);
         assertThat(tf).isTrue();

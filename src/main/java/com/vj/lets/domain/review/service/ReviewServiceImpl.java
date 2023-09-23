@@ -28,9 +28,9 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewHistoryMapper reviewHistoryMapper;
 
     /**
-     * 리뷰 등록
+     * 리뷰 신규 등록
      *
-     * @param review 리뷰 정보
+     * @param review 등록 리뷰 정보
      */
     @Override
     @Transactional
@@ -42,7 +42,7 @@ public class ReviewServiceImpl implements ReviewService {
     /**
      * 전체 리뷰 목록 조회
      *
-     * @return 리뷰 목록
+     * @return 전체 리뷰 목록
      */
     @Override
     public List<Map<String, Object>> getReviewList() {
@@ -53,7 +53,8 @@ public class ReviewServiceImpl implements ReviewService {
      * 카페에 등록된 전체 리뷰 목록 조회
      *
      * @param cafeId 카페 ID
-     * @return 리뷰 목록
+     * @return 등록된 리뷰 목록
+     * @see com.vj.lets.web.cafe.controller.CafeController
      */
     @Override
     public List<Map<String, Object>> getReviewListByCafe(int cafeId, PageParams pageParams) {
@@ -65,13 +66,21 @@ public class ReviewServiceImpl implements ReviewService {
      * 카페에 등록한 리뷰 점수별 개수 조회
      *
      * @param cafeId 카페 ID
-     * @return 별점별 통계 목록
+     * @return 평점별 리뷰 개수
+     * @see com.vj.lets.web.cafe.controller.CafeController
      */
     @Override
     public Map<Integer, Object> getCountReviewRatingByCafe(int cafeId) {
         return reviewMapper.countByReviewRating(cafeId);
     }
 
+    /**
+     * 특정 회원이 작성한 리뷰 갯수 조회
+     *
+     * @param memberId 회원 ID
+     * @return 작성한 리뷰 갯수
+     * @see com.vj.lets.web.dashboard.controller.MypageController
+     */
     @Override
     public int getCountReviewByMember(int memberId) {
         return reviewMapper.readCountByMember(memberId);
@@ -81,7 +90,8 @@ public class ReviewServiceImpl implements ReviewService {
      * 특정 회원이 작성한 전체 리뷰 목록 조회
      *
      * @param memberId 회원 ID
-     * @return 리뷰 목록
+     * @return 작성한 리뷰 목록
+     * @see com.vj.lets.web.dashboard.controller.MypageController
      */
     @Override
     public List<Map<String, Object>> getReviewListByMember(int memberId, PageParams pageParams) {
@@ -90,7 +100,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     /**
-     * 리뷰 목록에 호스트 댓글 추가 메소드
+     * 리뷰 목록에 호스트 댓글 추가용 헬퍼 메소드
      *
      * @param guestReviewList 게스트 작성 리뷰 목록
      * @return 호스트 작성 댓글 추가된 리뷰 목록
@@ -113,9 +123,47 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     /**
+     * 호스트의 카페에 대한 리뷰 수 출력
+     *
+     * @param cafeId 카페 ID
+     * @return 리뷰 갯수
+     * @see com.vj.lets.web.dashboard.controller.HostController
+     */
+    @Override
+    public int getCountByHost(int cafeId) {
+        return reviewMapper.readCountByHost(cafeId);
+    }
+
+    /**
+     * 카페 ID로 호스트의 카페 리뷰 목록 조회
+     *
+     * @param cafeId     카페 ID
+     * @param pageParams 페이징 객체
+     * @return 리뷰 목록
+     * @see com.vj.lets.web.dashboard.controller.HostController
+     */
+    @Override
+    public List<Map<String, Object>> getByHost(int cafeId, PageParams pageParams) {
+        List<Map<String, Object>> guestReviewList = reviewMapper.readByHost(cafeId, pageParams);
+        return addMaps(guestReviewList);
+    }
+
+    /**
+     * 오늘 호스트의 카페에 등록된 리뷰를 불러오기 위해 사용
+     *
+     * @param cafeId 카페 ID
+     * @return 오늘 호스트 카페에 등록된 리뷰 수
+     * @see com.vj.lets.web.dashboard.controller.HostController
+     */
+    @Override
+    public int getTodayReview(int cafeId) {
+        return reviewMapper.readTodayReview(cafeId);
+    }
+
+    /**
      * 리뷰 수정
      *
-     * @param review 리뷰 정보
+     * @param review 수정 리뷰 정보
      */
     @Override
     @Transactional
@@ -127,7 +175,8 @@ public class ReviewServiceImpl implements ReviewService {
     /**
      * 리뷰 삭제
      *
-     * @param id 리뷰 ID
+     * @param id 삭제할 리뷰 ID
+     * @see com.vj.lets.web.dashboard.controller.MypageController
      */
     @Override
     @Transactional
@@ -135,38 +184,5 @@ public class ReviewServiceImpl implements ReviewService {
         reviewMapper.disabled(id);
         reviewHistoryMapper.createByUpdate(id, ReviewHistoryComment.DELETE.getComment());
     }
-
-    /**
-     * 리뷰 출력을 위한 호스트 카페에 총 리뷰수 출력
-     * @param cafeId 카페 ID
-     * @return 리뷰의 총 개수
-     */
-    @Override
-    public int getCountByHost(int cafeId) {
-        return reviewMapper.readCountByHost(cafeId);
-    }
-
-    /**
-     * 리뷰 목록 출력
-     * @param cafeId   카페 ID
-     * @param pageParams 페이징 객체
-     * @return 호스트 카페에 대한 고객들의 리뷰 리스트
-     */
-    @Override
-    public List<Map<String, Object>> getByHost(int cafeId, PageParams pageParams) {
-        List<Map<String, Object>> guestReviewList = reviewMapper.readByHost(cafeId, pageParams);
-        return addMaps(guestReviewList);
-    }
-
-    /**
-     * 호스트 해당 카페의 오늘 등록된 리뷰 수 출력 (호스트 대시 보드 사용)
-     * @param cafeId 카페 ID
-     * @return 오늘 등록된 리뷰 수
-     */
-    @Override
-    public int getTodayReview(int cafeId) {
-        return reviewMapper.readTodayReview(cafeId);
-    }
-
 
 }
