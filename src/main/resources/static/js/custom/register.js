@@ -86,7 +86,7 @@ document.querySelector('form#register_form').addEventListener('submit', event =>
             },
             body: JSON.stringify(registerForm),
         }).then(response => {
-            return response.json();
+            return response.text();
         }).then(message => {
             if (message === 'success') {
                 alert("회원가입이 완료되었습니다.");
