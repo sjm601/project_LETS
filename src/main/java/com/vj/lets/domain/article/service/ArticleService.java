@@ -2,6 +2,7 @@ package com.vj.lets.domain.article.service;
 
 
 import com.vj.lets.domain.article.dto.Article;
+import com.vj.lets.domain.article.dto.ArticleUpdateForm;
 import com.vj.lets.domain.group.util.PageParams;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +37,14 @@ public interface ArticleService {
     public void update (Article article);
 
     /**
+     * 게시글 정보 수정 시 수정 정보
+     *
+     * @param articleId 게시글 id
+     * @return 체크 용 폼 객체
+     */
+    public ArticleUpdateForm checkEdit(int articleId);
+
+    /**
      * 게시글 삭제
      * @param articleId : 게시글 번호
      */
@@ -63,6 +72,14 @@ public interface ArticleService {
      * @return : 해당 게시글
      */
     public Article findById(int articleId);
+
+    /**
+     * 게시글 수정을위한 게시글번호로 게시글 찾기
+     * @param articleId : 게시글 ID
+     * @return : 해당 게시글
+     */
+    public ArticleUpdateForm findArticle(int articleId);
+
 
     /**
      * 해당 게시글의 번호로 댓글들 검색

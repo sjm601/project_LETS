@@ -1,11 +1,12 @@
 package com.vj.lets.domain.article.util;
 
 /**
-* 클래스 설명 : ArticleHistoryComment
-* 작성일 : 2023-09-14
-* @author : 이한솔
-*/
-
+ * 게시글 히스토리 코멘트 enum 클래스
+ *
+ * @author VJ특공대 이한솔
+ * @version 1.0
+ * @since 2023-09-13 (수)
+ */
 public enum ArticleHistoryComment {
     CREATE("create"), UPDATE("update"), DELETE("delete");
 

@@ -4,20 +4,35 @@ import com.vj.lets.domain.article.dto.ArticleComment;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
-* 클래스 설명 : ArticleCommentMapper 답글 매퍼 파일
-* 작성일 : 2023-09-14
-* @author : 이한솔
-*/
+ * 게시글 댓글 관련 매퍼 인터페이스
+ *
+ * @author VJ특공대 이한솔
+ * @version 1.0
+ * @since 2023-09-14 (목)
+ */
 
 @Mapper
 public interface ArticleCommentMapper {
-    /** 댓글 생성*/
+    /**
+     * 댓글 생성
+     *
+     * @param articleComment : 댓글
+     */
     public void create (ArticleComment articleComment);
 
-    /** 댓글 삭제*/
+    /**
+     * 댓글 삭제
+     *
+     * @param id : 댓글 아이디
+     */
     public void delete (int id);
 
-    /** id로 해당 댓글 찾기 (수정 ,삭제할 때 필요)*/
+    /**
+     * 댓글 아이디로 해당 댓글 찾기
+     *
+     * @param id : 댓글 아이디
+     * @return : 해당 댓글
+     */
     public ArticleComment findById(int id);
 
 }

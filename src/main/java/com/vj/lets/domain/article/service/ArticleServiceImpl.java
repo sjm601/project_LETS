@@ -1,6 +1,7 @@
 package com.vj.lets.domain.article.service;
 
 import com.vj.lets.domain.article.dto.Article;
+import com.vj.lets.domain.article.dto.ArticleUpdateForm;
 import com.vj.lets.domain.article.mapper.ArticleHistoryMapper;
 import com.vj.lets.domain.article.mapper.ArticleMapper;
 import com.vj.lets.domain.article.util.ArticleHistoryComment;
@@ -57,6 +58,17 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     /**
+     * 게시글 정보 수정 시 수정 정보
+     *
+     * @param articleId 게시글 id
+     * @return 체크 용 폼 객체
+     */
+    @Override
+    public ArticleUpdateForm checkEdit(int articleId) {
+        return articleMapper.readUpdateForm(articleId);
+    }
+
+    /**
      * 게시글 삭제
      * @param articleId : 게시글 번호
      */
@@ -95,6 +107,11 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article findById(int id) {
         return articleMapper.findById(id);
+    }
+
+    @Override
+    public ArticleUpdateForm findArticle(int articleId) {
+        return articleMapper.findArticle(articleId);
     }
 
     /**

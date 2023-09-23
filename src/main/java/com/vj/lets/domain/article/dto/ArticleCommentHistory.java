@@ -3,11 +3,12 @@ package com.vj.lets.domain.article.dto;
 import lombok.*;
 
 /**
-* 클래스 설명 : ArticleCommentHistory DTO
-* 작성일 : 2023-09-011
-* @author : 이한솔
-*/
-
+ * 게시글 댓글 히스토리 객체
+ *
+ * @author VJ특공대 이한솔
+ * @version 1.0
+ * @since 2023-09-08 (금)
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

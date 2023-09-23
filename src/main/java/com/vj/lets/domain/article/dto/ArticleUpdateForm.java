@@ -3,11 +3,12 @@ package com.vj.lets.domain.article.dto;
 import lombok.*;
 
 /**
-* 클래스 설명 : ArticleDTO
-* 작성일 : 2023-09-08
-* @author : 이한솔
-*/
-
+ * 게시글 수정 용 폼 객체
+ *
+ * @author VJ특공대 이한솔
+ * @version 1.0
+ * @since 2023-09-22 (금)
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -15,15 +16,11 @@ import lombok.*;
 @ToString
 @Builder
 public class ArticleUpdateForm {
-    /** 게시글 id*/
-    private int id;
+
     /** 게시글 제목 */
     private String title;
     /** 게시글 내용 */
     private String content;
-    /** 멤버 아이디*/
-    private int memberId;
-    /** 그룹 아이디*/
-    private int groupId;
+
 
 }
