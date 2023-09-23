@@ -21,7 +21,7 @@
                TO_CHAR(GC.REGDATE, 'yyyy-MM-dd') REGDATE,
                M.NAME                            NAME,
                M.GENDER                          GENDER,
-               M.BIRTHDAY                         birthday,
+               M.BIRTHDAY                        BIRTHDAY,
                M.ID                              MEMBERID
         FROM GROUP_CONTACT GC
                  JOIN MEMBER M ON GC.MEMBER_ID = M.ID

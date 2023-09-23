@@ -3,12 +3,10 @@ package com.vj.lets.domain.group.service;
 import com.vj.lets.domain.group.dto.GroupContact;
 import com.vj.lets.domain.group.dto.GroupMemberList;
 import com.vj.lets.domain.group.dto.StudyGroup;
-import com.vj.lets.domain.group.dto.StudyPlan;
 import com.vj.lets.domain.group.mapper.*;
 import com.vj.lets.domain.group.util.PageParams;
 import com.vj.lets.domain.location.mapper.SiGunGuMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,8 +29,7 @@ public class StudyGroupServiceImpl implements StudyGroupService{
     private final GroupHistoryMapper groupHistoryMapper;
     private final GroupContactMapper groupContactMapper;
     private final GroupMemberListMapper groupMemberListMapper;
-    private final StudyPlanMapper studyPlanMapper;
-    private final ParticipationListMapper participationListMapper;
+
 
     /**
      * 스터디 그룹 생성
@@ -324,54 +321,5 @@ public class StudyGroupServiceImpl implements StudyGroupService{
         myStudyListAndPageParams = groupMemberListMapper.findMyGroupListAndPageParams(id, pageParams);
 
         return myStudyListAndPageParams;
-    }
-
-    /**
-     * 스터디 일정 생성
-     *
-     * @param studyPlan 스터디 일정 정보
-     * @param memberId 멤버 아이디
-     */
-    @Override
-    @Transactional
-    public void generateStudyPlan(StudyPlan studyPlan, int memberId) {
-        studyPlanMapper.createStudyPlan(studyPlan);
-        participationListMapper.createParticipationList(memberId);
-    }
-
-    /**
-     * 스터디 일정에 예약 정보 등록
-     * 
-     * @param studyPlanId 스터디 일정 아이디
-     * @param reservationId 예약 아이디
-     */
-    @Override
-    public void registerReservation(int studyPlanId, int reservationId) {
-        studyPlanMapper.updateStudyPlan(studyPlanId, reservationId);
-    }
-
-    /**
-     * 스터디 일정 참여
-     *
-     * @param memberId 멤버 아이디
-     * @param studyPlanId 스터디 일정 아이디
-     */
-    @Override
-    @Transactional
-    public void participateStudyPlan(int memberId, int studyPlanId) {
-        participationListMapper.participateStudy(memberId, studyPlanId);
-        studyPlanMapper.plusCurrentCount(studyPlanId);
-    }
-
-    /**
-     * 스터디 일정 삭제
-     *
-     * @param studyPlanId 스터디 일정 아이디
-     */
-    @Override
-    @Transactional
-    public void removeStudyPlan(int studyPlanId) {
-        participationListMapper.deleteParticipationList(studyPlanId);
-        studyPlanMapper.deleteStudyPlan(studyPlanId);
     }
 }
