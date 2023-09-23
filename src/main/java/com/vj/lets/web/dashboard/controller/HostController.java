@@ -79,7 +79,6 @@ public class HostController {
 
     /**
      * 호스트 대시보드 메인 화면 출력
-     *
      * @param model 모델 객체
      * @return 논리적 뷰 이름
      */
@@ -90,12 +89,12 @@ public class HostController {
         Map<String, Object> cafe = cafeService.getCafeMemberId(loginMember.getId());
         int cafeId = Integer.parseInt(cafe.get("id").toString());
         List<Map<String, Object>> countRes = reservationService.getCountByResMonth(cafeId);
-        model.addAttribute("countRes", countRes);
         List<Map<String, Object>> monthlySales = reservationService.getMonthlySales(cafeId);
-        model.addAttribute("monthlySales", monthlySales);
         int reviewCount = reviewService.getTodayReview(cafeId);
-        model.addAttribute("reviewCount",reviewCount);
         int resCount = reservationService.getTotalRes(cafeId);
+        model.addAttribute("countRes", countRes);
+        model.addAttribute("monthlySales", monthlySales);
+        model.addAttribute("reviewCount",reviewCount);
         model.addAttribute("resCount",resCount);
         return "dashboard/host/host_dashboard";
     }
@@ -320,11 +319,10 @@ public class HostController {
 
     /**
      * 호스트 카페의 예약 리스트 페이지
-
-     * @param page
-     * @param type
-     * @param request 서블릿 리퀘스트 객체
-     * @param model
+     * @param page 페이지
+     * @param type 페이지 요청 타입
+     * @param request 리퀘스트
+     * @param model 모델 객
      * @return 호스트의 카페의 예약 리스트
      */
     @GetMapping("/bookings")
@@ -366,11 +364,11 @@ public class HostController {
 
 
     /**
-     * 호스트 카페에 등록된 리뷰 출력
-     * @param page
-     * @param type
-     * @param request
-     * @param model
+     * 호스트 카페에 등록된 체뷰 출력
+     * @param page 페이지
+     * @param type 페이지 요청 타입
+     * @param request 리퀘스트
+     * @param model 모델 객체
      * @return 호스트 카페에 등록된 리뷰 출력 (guest의 리뷰만 출력됨)
      */
     @GetMapping("/reviews")
@@ -390,7 +388,6 @@ public class HostController {
         }
         int selectPage = Integer.parseInt(page);
         int count = reviewService.getCountByHost(cafeId);
-        log.info("카운트:{}",count);
         PageParams pageParams = PageParams.builder()
                 .elementSize(ELEMENT_SIZE)
                 .pageSize(PAGE_SIZE)
@@ -399,13 +396,8 @@ public class HostController {
                 .type(type)
                 .build();
         Pagination pagination = new Pagination(pageParams);
-
         List<Map<String, Object>> hostReviewList = reviewService.getByHost(cafeId, pageParams);
-        log.info("리뷰리스트:{}",hostReviewList);
-
-
         ReviewForm reviewForm = ReviewForm.builder().build();
-
         model.addAttribute("reviewForm", reviewForm);
         model.addAttribute("hostReviewList", hostReviewList);
         model.addAttribute("pagination", pagination);
@@ -429,8 +421,6 @@ public class HostController {
                 .reservationId(reviewForm.getReservationId())
                 .memberId(loginMember.getId())
                 .build();
-
-        log.info("받은 리뷰 정보:{}",review);
         reviewService.register(review);
 
         return "success";
@@ -451,7 +441,6 @@ public class HostController {
                 .id(reviewForm.getReviewId())
                 .content(reviewForm.getContent())
                 .build();
-
         reviewService.editReview(review);
 
         return "success";
@@ -459,8 +448,8 @@ public class HostController {
 
     /**
      * 호스트 카페의 예약에 대한 종합 데이터 출력
-     * @param request
-     * @param model
+     * @param request 리퀘스트
+     * @param model 모델 객체
      * @return 호스트 카페의 예약에 대한 종합 데이터 (예약 취소 제외)
      */
     @GetMapping("/stats")

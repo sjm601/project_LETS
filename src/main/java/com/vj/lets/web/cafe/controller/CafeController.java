@@ -160,6 +160,7 @@ public class CafeController {
             Pagination pagination = new Pagination(pageParams);
             List<Map<String, Object>> reviews = reviewService.getReviewListByCafe(id, pageParams);
             Map<Integer, Object> countReviews = reviewService.getCountReviewRatingByCafe(id);
+
             model.addAttribute("Cafe", cafe);
             model.addAttribute("options", options);
             model.addAttribute("roomList", roomList);
@@ -184,7 +185,6 @@ public class CafeController {
     @ResponseBody
     public  String findRoom(@PathVariable int id, Model model) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-
         List<Room> roomList = roomService.getSearchCafeRoom(id);
         log.info("룸 목록:{}",roomList);
         return  objectMapper.writeValueAsString(roomList);

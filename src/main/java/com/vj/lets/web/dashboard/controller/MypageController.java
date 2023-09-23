@@ -30,6 +30,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/mypage")
 @RequiredArgsConstructor
+@Slf4j
 public class MypageController {
 
     private final MemberService memberService;
@@ -97,6 +98,7 @@ public class MypageController {
 
         List<Map<String, Object>> reservationList = reservationService.getMemberResList(loginMember.getId(), pageParams);
 
+        log.info("리스트:{}",reservationList);
         ReviewForm reviewForm = ReviewForm.builder().build();
 
         model.addAttribute("reviewForm", reviewForm);

@@ -53,7 +53,7 @@ public class ReservationServiceImpl implements ReservationService {
     /**
      * 예약아이디로 예약 찾기
      *
-     * @param id
+     * @param id 예약 ID
      * @return 해당 예약
      */
     @Override
@@ -126,7 +126,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     /**
      * 예약에 관한 총 데이터 출력 (호스트 대시보드 테이블 페이지에서 사용)
-     * @param cafeId
+     * @param cafeId 카페 ID
      * @return 예약 상태가 cancel 이 아닌 데이터 리스트 출력
      */
     @Override
@@ -157,10 +157,10 @@ public class ReservationServiceImpl implements ReservationService {
 
     /**
      * 예약 중복 방지를 위한 카운트
-     * @param roomId
-     * @param bookingDate
-     * @param startTime
-     * @param endTime
+     * @param roomId 룸 ID
+     * @param bookingDate 예약 일자
+     * @param startTime 시작 시간
+     * @param endTime 종료 시간
      * @return 카운트가 1보다 클 시 중복
      */
     @Override
@@ -170,8 +170,8 @@ public class ReservationServiceImpl implements ReservationService {
 
     /**
      * 예약 중복을 막기 위해 카페 디테일에서 사용
-     * @param roomId
-     * @param bookingDate
+     * @param roomId 룸 ID
+     * @param bookingDate 예약 일자
      * @return 예약 중복 방지를 위한 시작시간, 종료 시간 출력
      */
     @Override
@@ -181,8 +181,8 @@ public class ReservationServiceImpl implements ReservationService {
 
     /**
      * 예약 삭제 (예약 정보 확인  페이지 - 취소 버튼)
-     * @param id
-     * @param memberId
+     * @param id 예약 ID
+     * @param memberId 회원 ID
      */
     @Override
     @Transactional
@@ -192,7 +192,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     /**
      * 호스트의 예약 건수 달마다 출력 ( 호스트 대시보드 그래프에서 사용)
-     * @param cafeId
+     * @param cafeId 카페 ID
      * @return 호스트의 매달 예약 건순
      */
     @Override
@@ -202,7 +202,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     /**
      * 호스트의 월 매출 (호스트 대시보드 그래프에서 사용)
-     * @param cafeId
+     * @param cafeId 카페 ID
      * @return 호스트의 월 매출
      */
     @Override
@@ -212,9 +212,9 @@ public class ReservationServiceImpl implements ReservationService {
 
     /**
      * cafe 아이디로 카페의 총 예약 수 조회
-     * @param cafeId
-     * @param type
-     * @return
+     * @param cafeId  카페 ID
+     * @param type 페이지 요청 타입
+     * @return 카페의 총 예약 수
      */
     @Override
     public int getCountResByHost(int cafeId, String type) {
@@ -243,7 +243,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     /**
      * 호스트 카페의 총 예약 건 수를 가져옴
-     * @param cafeId
+     * @param cafeId 카페 ID
      * @return 호스트 카페의 총 예약 건 수
      */
     @Override
