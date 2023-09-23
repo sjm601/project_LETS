@@ -200,7 +200,7 @@
         FROM (SELECT TO_CHAR(TRUNC(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), -ROWNUM + 12), 'MM'), 'yyyy-MM') "month"
               FROM DUAL CONNECT BY LEVEL &lt;= 12) MONTHS
                  LEFT JOIN RESERVATION ON TO_CHAR(TRUNC(RESERVATION.booking_date, 'MM'), 'yyyy-MM') = MONTHS."month"
-            AND RESERVATION.STATUS = 'complete'
+            AND RESERVATION.STATUS != 'cancel'
             AND RESERVATION.cafe_id = #{cafeId}
         GROUP BY MONTHS."month"
         ORDER BY MONTHS."month"
@@ -211,7 +211,7 @@
         FROM (SELECT TO_CHAR(TRUNC(ADD_MONTHS(SYSDATE, -ROWNUM + 12), 'MM'), 'yyyy-MM') AS "month"
               FROM DUAL CONNECT BY LEVEL &lt;= 12) MONTHS
                  LEFT JOIN RESERVATION res ON TO_CHAR(TRUNC(res.booking_date, 'MM'), 'yyyy-MM') = MONTHS."month"
-            AND res.STATUS = 'complete'
+            AND res.STATUS != 'cancel'
             AND res.cafe_id = #{cafeId}
                  LEFT JOIN ROOM ro ON res.room_id = ro.id
         GROUP BY MONTHS."month"
@@ -288,7 +288,7 @@
         FROM RESERVATION res
                  JOIN MEMBER m ON res.MEMBER_ID = m.ID
                  JOIN CAFE c ON res.CAFE_ID = c.ID
-        WHERE res.status = 'complete'
+        WHERE res.status != 'cancel'
           AND c.ID = #{cafeId}
     </select>
 </mapper>

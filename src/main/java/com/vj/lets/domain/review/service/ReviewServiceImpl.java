@@ -138,7 +138,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     /**
      * 리뷰 출력을 위한 호스트 카페에 총 리뷰수 출력
-     * @param cafeId
+     * @param cafeId 카페 ID
      * @return 리뷰의 총 개수
      */
     @Override
