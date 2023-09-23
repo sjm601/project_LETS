@@ -7,7 +7,7 @@ import lombok.ToString;
 /**
  * 카페 출력을 위한 페이징 처리 계산 클래스
  * 
- * @author 강소영
+ * @author VJ특공대 강소영
  */
 @Setter
 @Getter

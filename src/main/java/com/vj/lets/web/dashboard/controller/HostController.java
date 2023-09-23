@@ -19,11 +19,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +54,30 @@ public class HostController {
     private static final int PAGE_SIZE = 5;
 
     /**
+     * 실제 회원 이미지 경로
+     */
+    @Value("${cafe.imageLocation}")
+    private String imageLocationCafe;
+
+    /**
+     * DB에 입력할 회원 이미지 경로
+     */
+    @Value("${cafe.imageDBPath}")
+    private String imageDBPathCafe;
+
+    /**
+     * 실제 회원 이미지 경로
+     */
+    @Value("${room.imageLocation}")
+    private String imageLocationRoom;
+
+    /**
+     * DB에 입력할 회원 이미지 경로
+     */
+    @Value("${room.imageDBPath}")
+    private String imageDBPathRoom;
+
+    /**
      * 호스트 대시보드 메인 화면 출력
      *
      * @param model 모델 객체
@@ -72,6 +100,14 @@ public class HostController {
         return "dashboard/host/host_dashboard";
     }
 
+    /**
+     * 카페 정보 조회
+     *
+     * @author VJ특공대 강소영
+     * @param request 서블릿 리퀘스트 객체
+     * @param model 모델 객체
+     * @return 논리적 뷰 이름
+     */
     @GetMapping("/cafe")
     public String cafeRegister(HttpServletRequest request, Model model){
         HttpSession session = request.getSession();
@@ -85,6 +121,7 @@ public class HostController {
             model.addAttribute("cafeOptions", cafeOptions);
 
             List<CafeOption> allOption = cafeService.getOptionList();
+
             List<OptionListForm> optionListForms = new ArrayList<>();
             for(CafeOption option : allOption) {
                 OptionListForm optionListForm = OptionListForm.builder()
@@ -100,6 +137,16 @@ public class HostController {
         return "dashboard/host/cafe_register";
     }
 
+    /**
+     * 카페 정보 수정
+     *
+     * @author VJ특공대 강소영
+     * @param cafeEditForm 카페 수정 폼
+     * @param imagePath 화면 이미지
+     * @param request 서블릿 리퀘스트 객체
+     * @param model 모델 객체
+     * @return 논리적 뷰 이름
+     */
     @PostMapping("/cafe/edit")
     public String cafeUpdate(@ModelAttribute CafeEditForm cafeEditForm,
                              MultipartFile imagePath,
@@ -112,7 +159,6 @@ public class HostController {
             log.info("cafeEditForm:{}", cafeEditForm);
             Cafe cafeRe = Cafe.builder()
                     .id(cafeId)
-//                    .imagePath(imagePath)
                     .businessNumber(cafeEditForm.getBusinessNumber())
                     .name(cafeEditForm.getName())
                     .phoneNumber(cafeEditForm.getPhoneNumber())
@@ -124,6 +170,28 @@ public class HostController {
                     .endTime(cafeEditForm.getEndTime())
                     .description(cafeEditForm.getDescription())
                     .build();
+            if (!imagePath.isEmpty()) {
+                // 이미지 폴더에 저장
+                // 업로드 이미지 확장자 가져오기
+                String imageExtension = StringUtils.getFilenameExtension(imagePath.getOriginalFilename());
+                // 업로드 한 이미지 다운로드 받을 위치 설정
+                StringBuilder imageDir = new StringBuilder();
+                imageDir.append(imageLocationCafe).append(cafeId).append(".").append(imageExtension);
+                File uploadDir = new File(imageDir.toString());
+                // 폴더 없으면 생성
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdirs();
+                }
+                try {
+                    imagePath.transferTo(uploadDir);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                StringBuilder imagePathDB = new StringBuilder();
+                imagePathDB.append(imageDBPathCafe).append(cafeId).append(".").append(imageExtension);
+                cafeRe.setImagePath(imagePathDB.toString());
+            }
             String comment = "host";
             String siGunGu = cafeEditForm.getSiGunGuName();
             String siDo = cafeEditForm.getSiDoName();
@@ -132,6 +200,14 @@ public class HostController {
         return "redirect:/host/cafe";
     }
 
+    /**
+     * 룸 리스트 조회
+     *
+     * @author VJ특공대 강소영
+     * @param request 서블릿 리퀘스트 객체
+     * @param model 모델 객체
+     * @return 논리적 뷰 이름
+     */
     @GetMapping("/room")
     public String roomList(HttpServletRequest request, Model model){
         HttpSession session = request.getSession();
@@ -145,6 +221,14 @@ public class HostController {
         return "dashboard/host/room_table";
     }
 
+    /**
+     * 룸 상세정보 조회
+     *
+     * @author VJ특공대 강소영
+     * @param id 룸 ID
+     * @param model 모델 객체
+     * @return 논리적 뷰이름
+     */
     @GetMapping("/room/{id}")
     public String roomDetail(@PathVariable int id, Model model){
         Room room = roomService.getSearchRoom(id);
@@ -154,22 +238,65 @@ public class HostController {
         return "dashboard/host/room_register";
     }
 
+    /**
+     * 룸 정보 수정
+     *
+     * @author VJ특공대 강소영
+     * @param id 룸 ID
+     * @param imagePath 화면 이미지
+     * @param roomForm 룸 변경 정보
+     * @param model 모델 객체
+     * @return 논리적 뷰 이름
+     */
     @PostMapping("/room/{id}/edit")
     public String roomUpdate(@PathVariable String id,
-                             @ModelAttribute Room roomForm, Model model){
+                             MultipartFile imagePath,
+                             @ModelAttribute Room roomForm,
+                             Model model){
         log.info("id값 : {}", id);
         Room editRoom = Room.builder()
-//                .imagePath(roomForm.getImagePath())
                 .id(Integer.parseInt(id))
                 .name(roomForm.getName())
                 .headCount(roomForm.getHeadCount())
                 .price(roomForm.getPrice())
                 .description(roomForm.getDescription())
                 .build();
+        if (!imagePath.isEmpty()) {
+            // 이미지 폴더에 저장
+            // 업로드 이미지 확장자 가져오기
+            String imageExtension = StringUtils.getFilenameExtension(imagePath.getOriginalFilename());
+            // 업로드 한 이미지 다운로드 받을 위치 설정
+            StringBuilder imageDir = new StringBuilder();
+            imageDir.append(imageLocationRoom).append(id).append(".").append(imageExtension);
+            File uploadDir = new File(imageDir.toString());
+            // 폴더 없으면 생성
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs();
+            }
+            try {
+                imagePath.transferTo(uploadDir);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            StringBuilder imagePathDB = new StringBuilder();
+            imagePathDB.append(imageDBPathRoom).append(id).append(".").append(imageExtension);
+            editRoom.setImagePath(imagePathDB.toString());
+        }
+
         roomService.editRoom(editRoom);
         return "redirect:/host/room/{id}";
     }
 
+    /**
+     * 새로운 룸 등록
+     *
+     * @author VJ특공대 강소영
+     * @param roomRegist 룸 등록 객체
+     * @param request 서블릿 리퀘스트 객체
+     * @param model 모댈 객체
+     * @return 논리적 뷰 이름
+     */
     @PostMapping("/room/regist")
     public String roomRegist(@ModelAttribute Room roomRegist,
                              HttpServletRequest request, Model model){
@@ -180,8 +307,6 @@ public class HostController {
             int cafeId = Integer.parseInt(cafe.get("id").toString());
             Room roomNew = Room.builder()
                     .name(roomRegist.getName())
-//                    .imagePath(roomRegist.getImagePath())
-                    .imagePath("/image/roompicture")
                     .headCount(roomRegist.getHeadCount())
                     .price(roomRegist.getPrice())
                     .description(roomRegist.getDescription())
@@ -195,9 +320,10 @@ public class HostController {
 
     /**
      * 호스트 카페의 예약 리스트 페이지
+
      * @param page
      * @param type
-     * @param request
+     * @param request 서블릿 리퀘스트 객체
      * @param model
      * @return 호스트의 카페의 예약 리스트
      */

@@ -31,8 +31,10 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <label>룸 대표사진</label>
-                            <p th:text="${room.imagePath}"></p>
+                            <img th:if="${room.imagePath} == null" src="/upload_image/room/default_room.png"
+                                 style="max-width: 100%" alt="...">
+                            <img th:if="${room.imagePath} != null" th:src="${room.imagePath}"
+                                 src="/upload_image/cafe/default_cafe.png" style="max-width: 100%" alt="...">
                         </div>
                     </div>
                     <!-- /row-->
@@ -75,10 +77,11 @@
                 <div class="small-dialog-header">
                     <h3>룸 수정</h3>
                 </div>
-<!--                <div class="form-group">-->
-<!--                    <label>Your photo</label>-->
-<!--                    <input th:id="imagePath" th:name="imagePath" type="file" name="uploadfile" accept="image/*"><br>-->
-<!--                </div>-->
+                <div class="form-group">
+                    <label>대표 이미지</label>
+                    <input th:id="imagePath" th:name="imagePath" type="file" class="real-upload form-control"
+                           name="imagePath" accept="image/*"><br>
+                </div>
                 <div class="form-group">
                     <label th:for="name">룸이름</label>
                     <input th:id="name" th:name="name" th:value="${room.name}"
