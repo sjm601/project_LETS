@@ -16,6 +16,7 @@ import lombok.*;
 @ToString
 @Builder
 public class Member {
+
     private int id;
     private String email;
     private String name;
@@ -27,6 +28,7 @@ public class Member {
     private String type;
     private String imagePath;
     private String status;
+
 }
 
 

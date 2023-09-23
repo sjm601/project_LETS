@@ -3,7 +3,7 @@ package com.vj.lets.domain.support.dto;
 import lombok.*;
 
 /**
- * FAQ 신규 등록 폼 객체
+ * FAQ 폼 객체
  *
  * @author VJ특공대 김종원
  * @version 1.0

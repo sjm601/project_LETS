@@ -30,7 +30,7 @@ public class FaqServiceImpl implements FaqService {
     /**
      * FAQ 등록
      *
-     * @param faq FAQ 정보
+     * @param faq 등록한 FAQ 정보
      */
     @Override
     @Transactional
@@ -41,7 +41,7 @@ public class FaqServiceImpl implements FaqService {
     /**
      * 전체 FAQ 카테고리 목록 조회
      *
-     * @return FAQ 카테고리 목록
+     * @return 전체 FAQ 카테고리 목록
      */
     @Override
     public List<FaqCategory> getFaqCategoryList() {
@@ -61,7 +61,7 @@ public class FaqServiceImpl implements FaqService {
     /**
      * 전체 FAQ 목록 조회 (관리자용)
      *
-     * @return FAQ 목록
+     * @return 전체 FAQ 목록
      */
     @Override
     public List<Map<String, Object>> getFaqListForAdmin(PageParams pageParams) {
@@ -71,7 +71,7 @@ public class FaqServiceImpl implements FaqService {
     /**
      * 카테고리 별로 정렬하여 전체 FAQ 목록 조회
      *
-     * @return FAQ 목록
+     * @return 정렬한 FAQ 목록
      */
     @Override
     public Map<String, List<Faq>> getFaqList() {
@@ -88,10 +88,11 @@ public class FaqServiceImpl implements FaqService {
     }
 
     /**
-     * 카페와 관련된 FAQ 리스트 검색
+     * 카페와 관련된 FAQ 카테고리 조회
      *
+     * @return FAQ 목록
      * @author VJ특공대 강소영
-     * @return FAQ리스트
+     * @see com.vj.lets.web.cafe.controller.CafeController
      */
     @Override
     public List<FaqCategory> getCafeFaqList() {
@@ -101,7 +102,7 @@ public class FaqServiceImpl implements FaqService {
     /**
      * FAQ 수정
      *
-     * @param faq FAQ 정보
+     * @param faq 수정 FAQ 정보
      */
     @Override
     @Transactional
@@ -112,7 +113,7 @@ public class FaqServiceImpl implements FaqService {
     /**
      * FAQ 삭제
      *
-     * @param id FAQ ID
+     * @param id 삭제할 FAQ ID
      */
     @Override
     @Transactional

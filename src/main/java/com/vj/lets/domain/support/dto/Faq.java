@@ -4,6 +4,7 @@ import lombok.*;
 
 /**
  * FAQ DTO Bean
+ *
  * @author VJ특공대 김종원
  * @version 1.0
  * @since 2023-09-10 (일)

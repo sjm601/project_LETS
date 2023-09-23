@@ -53,7 +53,6 @@ public class AdminController {
         int newContact = contactService.getCountContact(ContactStatus.HOLD.getStatus());
         int newCafe = cafeService.getCountByLastMonth();
 
-
         model.addAttribute("newMember", newMember);
         model.addAttribute("newContact", newContact);
         model.addAttribute("newCafe", newCafe);
@@ -69,15 +68,9 @@ public class AdminController {
      * @return 논리적 뷰 이름
      */
     @GetMapping("/contact")
-    public String contactView(@RequestParam(value = "page", required = false) String page,
-                              @RequestParam(value = "type", required = false) String type,
+    public String contactView(@RequestParam(value = "page", required = false, defaultValue = "1") String page,
+                              @RequestParam(value = "type", required = false, defaultValue = "hold") String type,
                               Model model) {
-        if (page == null || page.isBlank()) {
-            page = "1";
-        }
-        if (type == null || type.isBlank()) {
-            type = ContactStatus.HOLD.getStatus();
-        }
         int selectPage = Integer.parseInt(page);
         int count = contactService.getCountContact(type);
         PageParams pageParams = PageParams.builder()
@@ -188,17 +181,11 @@ public class AdminController {
      * @return 논리적 뷰 이름
      */
     @GetMapping("/faq")
-    public String faqListView(@RequestParam(value = "page", required = false) String page,
-                              @RequestParam(value = "type", required = false) String type,
+    public String faqListView(@RequestParam(value = "page", required = false, defaultValue = "1") String page,
+                              @RequestParam(value = "type", required = false, defaultValue = "all") String type,
                               Model model) {
         List<FaqCategory> categoryList = faqService.getFaqCategoryList();
 
-        if (page == null || page.isBlank()) {
-            page = "1";
-        }
-        if (type == null || type.isBlank()) {
-            type = "all";
-        }
         int selectPage = Integer.parseInt(page);
         int count = faqService.getCountFaq(type);
         PageParams pageParams = PageParams.builder()
@@ -286,15 +273,9 @@ public class AdminController {
      * @return 논리적 뷰 이름
      */
     @GetMapping("/host")
-    public String hostView(@RequestParam(value = "page", required = false) String page,
-                           @RequestParam(value = "type", required = false) String type,
+    public String hostView(@RequestParam(value = "page", required = false, defaultValue = "1") String page,
+                           @RequestParam(value = "type", required = false, defaultValue = "latest") String type,
                            Model model) {
-        if (page == null || page.isBlank()) {
-            page = "1";
-        }
-        if (type == null || type.isBlank()) {
-            type = "latest";
-        }
         int selectPage = Integer.parseInt(page);
         int count = cafeService.getCountCafeForAdmin();
         PageParams pageParams = PageParams.builder()

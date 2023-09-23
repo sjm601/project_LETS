@@ -12,7 +12,6 @@ import com.vj.lets.domain.review.service.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +29,6 @@ import java.util.Map;
 @Controller
 @RequestMapping("/mypage")
 @RequiredArgsConstructor
-@Slf4j
 public class MypageController {
 
     private final MemberService memberService;
@@ -51,6 +49,7 @@ public class MypageController {
     public String mypageMain(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
+
         Member member = memberService.getMember(loginMember.getId());
 
         EditForm editForm = EditForm.builder().build();
@@ -71,19 +70,13 @@ public class MypageController {
      * @return 논리적 뷰 이름
      */
     @GetMapping("/reservation")
-    public String reservationView(@RequestParam(value = "page", required = false) String page,
-                                  @RequestParam(value = "type", required = false) String type,
+    public String reservationView(@RequestParam(value = "page", required = false, defaultValue = "1") String page,
+                                  @RequestParam(value = "type", required = false, defaultValue = "all") String type,
                                   HttpServletRequest request,
                                   Model model) {
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
 
-        if (page == null || page.isBlank()) {
-            page = "1";
-        }
-        if (type == null || type.isBlank()) {
-            type = "all";
-        }
         int selectPage = Integer.parseInt(page);
         int count = reservationService.getCountResByMember(loginMember.getId(), type);
 
@@ -98,7 +91,6 @@ public class MypageController {
 
         List<Map<String, Object>> reservationList = reservationService.getMemberResList(loginMember.getId(), pageParams);
 
-        log.info("리스트:{}",reservationList);
         ReviewForm reviewForm = ReviewForm.builder().build();
 
         model.addAttribute("reviewForm", reviewForm);
@@ -132,7 +124,12 @@ public class MypageController {
      */
     @PostMapping("/reservation")
     @ResponseBody
-    public Object reviewRegist(@SessionAttribute Member loginMember,@RequestBody ReviewForm reviewForm, Model model) {
+    public Object reviewRegist(@RequestBody ReviewForm reviewForm,
+                               HttpServletRequest request,
+                               Model model) {
+        HttpSession session = request.getSession();
+        Member loginMember = (Member) session.getAttribute("loginMember");
+
         Review review = Review.builder()
                 .content(reviewForm.getContent())
                 .rating(reviewForm.getRating())
@@ -155,19 +152,13 @@ public class MypageController {
      * @return 논리적 뷰 이름
      */
     @GetMapping("/review")
-    public String reviewView(@RequestParam(value = "page", required = false) String page,
-                             @RequestParam(value = "type", required = false) String type,
+    public String reviewView(@RequestParam(value = "page", required = false, defaultValue = "1") String page,
+                             @RequestParam(value = "type", required = false, defaultValue = "latest") String type,
                              HttpServletRequest request,
                              Model model) {
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
 
-        if (page == null || page.isBlank()) {
-            page = "1";
-        }
-        if (type == null || type.isBlank()) {
-            type = "latest";
-        }
         int selectPage = Integer.parseInt(page);
         int count = reviewService.getCountReviewByMember(loginMember.getId());
         PageParams pageParams = PageParams.builder()
@@ -200,7 +191,6 @@ public class MypageController {
     @PatchMapping("/review")
     @ResponseBody
     public Object reviewEdit(@RequestBody ReviewForm reviewForm, Model model) {
-
         Review review = Review.builder()
                 .id(reviewForm.getReviewId())
                 .content(reviewForm.getContent())

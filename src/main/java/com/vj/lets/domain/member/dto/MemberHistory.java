@@ -2,7 +2,6 @@ package com.vj.lets.domain.member.dto;
 
 import lombok.*;
 
-
 /**
  * 회원 히스토리 DTO Bean
  *
@@ -17,8 +16,10 @@ import lombok.*;
 @ToString
 @Builder
 public class MemberHistory {
+
     private int id;
     private String modifyComment;
     private String modifyDate;
     private int memberId;
+
 }

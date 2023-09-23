@@ -36,6 +36,7 @@ class FaqCategoryMapperTest {
         // when
         faqCategoryMapper.create(category);
         // then
+        log.info("생성한 FAQ 카테고리 정보 : {}", category);
         assertThat(category).isNotNull();
     }
 
@@ -45,6 +46,17 @@ class FaqCategoryMapperTest {
         // when
         List<FaqCategory> list = faqCategoryMapper.readAll();
         // then
+        log.info("FAQ 카테고리 목록 : {}", list);
+        assertThat(list).isNotNull();
+    }
+
+    @Test
+    void readByCafeCategoryTest() {
+        // given
+        // when
+        List<FaqCategory> list = faqCategoryMapper.readByCafeCategory();
+        // then
+        log.info("카페용 FAQ 카테고리 목록 : {}", list);
         assertThat(list).isNotNull();
     }
 
@@ -60,6 +72,7 @@ class FaqCategoryMapperTest {
         // when
         faqCategoryMapper.update(category);
         // then
+        log.info("FAQ 카테고리 수정 정보 : {}", category);
         assertThat(category).isNotNull();
     }
 
@@ -71,6 +84,7 @@ class FaqCategoryMapperTest {
         // when
         faqCategoryMapper.delete(id);
         // then
+        log.info("삭제 FAQ 카테고리 : {}", id);
         assertThat(id).isNotZero();
     }
 }

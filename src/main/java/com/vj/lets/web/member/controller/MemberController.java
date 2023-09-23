@@ -77,7 +77,6 @@ public class MemberController {
     public Object register(@Validated @RequestBody RegisterForm registerForm,
                            BindingResult bindingResult,
                            Model model) {
-
         if (bindingResult.hasErrors()) {
             return "fail";
         }

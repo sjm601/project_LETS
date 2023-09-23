@@ -3,7 +3,7 @@ package com.vj.lets.domain.review.dto;
 import lombok.*;
 
 /**
- * 리뷰 작성 및 수정 용 폼 객체
+ * 리뷰 폼 객체
  *
  * @author VJ특공대 김종원
  * @version 1.0

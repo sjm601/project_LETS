@@ -39,15 +39,22 @@ class FaqMapperTest {
         // when
         faqMapper.create(faq);
         // then
+        log.info("등록 FAQ 정보 : {}", faq);
         assertThat(faq).isNotNull();
     }
 
     @Test
     void readAllTest() {
         // given
+        PageParams pageParams = PageParams.builder()
+                .elementSize(5)
+                .pageSize(5)
+                .requestPage(1)
+                .build();
         // when
-        List<Map<String, Object>> list = faqMapper.readAll(PageParams.builder().build());
+        List<Map<String, Object>> list = faqMapper.readAll(pageParams);
         // then
+        log.info("전체 FAQ 목록 : {}", list);
         assertThat(list).isNotNull();
     }
 
@@ -58,6 +65,7 @@ class FaqMapperTest {
         // when
         List<Faq> list = faqMapper.readByCategory(1);
         // then
+        log.info("전체 FAQ 카테고리 목록 : {}", list);
         assertThat(list).isNotNull();
     }
 
@@ -74,6 +82,7 @@ class FaqMapperTest {
         // when
         faqMapper.update(faq);
         // then
+        log.info("FAQ 수정 정보 : {}", faq);
         assertThat(faq).isNotNull();
     }
 
@@ -85,6 +94,7 @@ class FaqMapperTest {
         // when
         faqMapper.delete(id);
         // then
+        log.info("삭제 FAQ : {}", id);
         assertThat(id).isNotZero();
     }
 }
