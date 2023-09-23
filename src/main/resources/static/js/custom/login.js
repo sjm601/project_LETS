@@ -1,6 +1,7 @@
 function emailValid(email) {
     return /^[A-Za-z0-9.\-_]+@([A-Za-z0-9-]+\.)+[A-Za-z]{2,6}$/.test(email)
 }
+
 function passwordValid(password) {
     return /^[a-z0-9_-]{4,18}$/.test(password)
 }
@@ -35,9 +36,8 @@ password.addEventListener('change', () => {
     }
 })
 
-document.querySelector('input.login_btn').addEventListener('click', event => {
+document.querySelector('form#login_form').addEventListener('submit', event => {
     event.preventDefault();
-    console.log("1111")
 
     if ((emailCheck || email.value != null) && passwordCheck) {
         fetch('/member/login', {
@@ -85,9 +85,9 @@ document.querySelector('input.login_btn').addEventListener('click', event => {
 
 })
 
-function setCookie(cookieName, value, exdays){
+function setCookie(cookieName, value, exdays) {
     var exdate = new Date();
     exdate.setDate(exdate.getDate() + exdays);
-    var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toUTCString());
+    var cookieValue = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toUTCString());
     document.cookie = cookieName + "=" + cookieValue;
 }
