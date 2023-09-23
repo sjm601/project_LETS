@@ -1,5 +1,6 @@
 package com.vj.lets.domain.support.mapper;
 
+import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.support.dto.Contact;
 import com.vj.lets.domain.support.dto.ContactForm;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,7 @@ class ContactMapperTest {
         Contact contact = Contact.builder()
                 .email("contact1@gmail.com")
                 .name("신청자1")
+                .cafeName("테스트카페")
                 .phoneNumber("010-8888-8888")
                 .address("서울시 노원구")
                 .message("입점 부탁드립니다.")
@@ -41,16 +43,45 @@ class ContactMapperTest {
         // when
         contactMapper.create(contact);
         // then
+        log.info("신규 입점 신청 정보 : {}", contact);
         assertThat(contact).isNotNull();
+    }
+
+    @Test
+    void readCountAllTest() {
+        // given
+        String type = "hold";
+        // when
+        int count = contactMapper.readCountAll(type);
+        // then
+        log.info("입점 신청 수 : {}", count);
+        assertThat(count).isNotZero();
     }
 
     @Test
     void readAllTest() {
         // given
+        PageParams pageParams = PageParams.builder()
+                .elementSize(5)
+                .pageSize(5)
+                .requestPage(1)
+                .build();
         // when
-//        List<Contact> list = contactMapper.readAll();
+        List<Contact> list = contactMapper.readAll(pageParams);
         // then
-//        assertThat(list).isNotNull();
+        log.info("입점 신청 목록 : {}", list);
+        assertThat(list).isNotNull();
+    }
+
+    @Test
+    void readByIdTest() {
+        // given
+        int id = 1;
+        // when
+        Contact contact = contactMapper.readById(id);
+        // then
+        log.info("입점 신청 정보 : {}", contact);
+        assertThat(contact).isNotNull();
     }
 
     @Test
@@ -63,6 +94,7 @@ class ContactMapperTest {
         // when
         List<Contact> contact = contactMapper.readByMailBNumDate(searchContact);
         // then
+        log.info("입점 신청 목록 : {}", contact);
         assertThat(contact).isNotNull();
     }
 
@@ -75,6 +107,7 @@ class ContactMapperTest {
         // when
         contactMapper.update(id, status);
         // then
+        log.info("입점 신청 수정 : {}", id);
         assertThat(id).isNotZero();
     }
 }
