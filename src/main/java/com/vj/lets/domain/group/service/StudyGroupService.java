@@ -1,8 +1,9 @@
 package com.vj.lets.domain.group.service;
 
-import com.vj.lets.domain.group.dto.*;
+import com.vj.lets.domain.group.dto.GroupContact;
+import com.vj.lets.domain.group.dto.GroupMemberList;
+import com.vj.lets.domain.group.dto.StudyGroup;
 import com.vj.lets.domain.group.util.PageParams;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -180,39 +181,4 @@ public interface StudyGroupService {
      * @return 가입한 리스트
      */
     public List<Map<String, Object>> getMyStudyListAndPageParams(int id, PageParams pageParams);
-
-    /**
-     * 스터디 일정 생성
-     * 
-     * @author VJ특공대 이희영
-     * @param studyPlan 스터디 일정 정보
-     * @param memberId 멤버 아이디
-     */
-    public void generateStudyPlan(StudyPlan studyPlan, int memberId);
-
-    /**
-     * 스터이 일정에 예약 정보 등록
-     *
-     * @author VJ특공대 이희영
-     * @param studyPlanId 스터디 일정 아이디
-     * @param reservationId 예약 아이디
-     */
-    public void registerReservation(int studyPlanId, int reservationId);
-
-    /**
-     * 스터디 일정 참여
-     * 
-     * @author VJ특공대 이희영
-     * @param memberId 멤버 아이디
-     * @param studyPlanId 스터디 일정 아이디
-     */
-    public void participateStudyPlan(int memberId, int studyPlanId);
-
-    /**
-     * 스터디 일정 삭제
-     * 
-     * @author VJ특공대 이희영
-     * @param studyPlanId 스터디 일정 아이디
-     */
-    public void removeStudyPlan(int studyPlanId);
 }

@@ -20,7 +20,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,7 +45,6 @@ import java.util.Map;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/group")
-@Slf4j
 public class StudyGroupController {
 
     private final StudyGroupService studyGroupService;
@@ -83,11 +81,13 @@ public class StudyGroupController {
     /**
      * 스터디 전체 리스트 화면 출력
      *
+     * @author VJ특공대 이희영
      * @param page    페이지
      * @param keyword 검색 키워드
-     * @param model   모델 인터페이스
-     * @return 스터디 리스트 화면
-     * @author VJ특공대 이희영
+     * @param subject 검색 주제
+     * @param siGunGuName 시,군,구 이름
+     * @param model   모델 객체
+     * @return 논리적 뷰 이름
      */
     @GetMapping("")
     public String studyGroup(@PathParam("page") String page, @PathParam("keyword") String keyword, @PathParam("subject") String subject, @PathParam("siGunGuName") String siGunGuName, Model model) {
@@ -126,14 +126,14 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 상세보기
      *
-     * @param page        게시글 페이지
-     * @param keyword     게시글 검색 키워드
-     * @param id          스터디 그룹 아이디
-     * @param loginMember 로그인 회원 정보
-     * @param model       모델 인터페이스
-     * @return 스터디 그룹 상세
      * @author VJ특공대 이희영
      * @author VJ특공대 이한솔
+     * @param id          스터디 그룹 아이디
+     * @param page        게시글 페이지
+     * @param keyword     게시글 검색 키워드
+     * @param loginMember 로그인 회원 정보
+     * @param model       모델 객체
+     * @return 논리적 뷰 이름
      */
     @GetMapping("/{id}")
     public String readGroup(@PathVariable int id, @RequestParam(value = "page", required = false) String page, @RequestParam(value = "keyword", required = false) String keyword, @SessionAttribute Member loginMember, Model model) {
@@ -185,13 +185,11 @@ public class StudyGroupController {
         for (Map<String, Object> articleMap : articleList) {
             int articleId = Integer.parseInt(articleMap.get("ID").toString());
             articleIds.add(articleId);
-            log.info("{}", articleIds);
         }
 
         //해당 게시글의 댓글 목록
         List<Map<String, Object>> articleComments = articleService.findComment(articleIds);
         model.addAttribute("commentList", articleComments);
-        log.info("{}", articleComments);
 
         // 최근 게시글 목록
         List<Article> recentArticles = articleService.getRecentArticles(id);
@@ -203,10 +201,10 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 멤버 관리 화면 출력
      *
-     * @param id 스터디 그룹 아이디
-     * @return 스터디 그룹 회원 리스트
-     * @throws JsonProcessingException Json 데이터 예외
      * @author VJ특공대 이희영
+     * @param id 스터디 그룹 아이디
+     * @return 스터디 그룹 멤버 리스트
+     * @throws JsonProcessingException Json 데이터 예외
      */
     @ResponseBody
     @RequestMapping("/groupSetting/{id}")
@@ -221,10 +219,10 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 멤버 탈퇴
      *
+     * @author VJ특공대 이희영
      * @param id       스터디 그룹 아이디
      * @param memberId 회원 아이디
-     * @return 탈퇴 성공 유무
-     * @author VJ특공대 이희영
+     * @return 멤버 탈퇴 성공 유무
      */
     @ResponseBody
     @DeleteMapping("/{id}/{memberId}")
@@ -242,10 +240,10 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 신청 내역 화면 출력
      *
-     * @param id 스터디 그룹 아이디
-     * @return 스터디 그룹 가입 신청 리스트
-     * @throws JsonProcessingException Json 데이터 예외
      * @author VJ특공대 이희영
+     * @param id 스터디 그룹 아이디
+     * @return 스터디 그룹 가입 신청 내역 리스트
+     * @throws JsonProcessingException Json 데이터 예외
      */
     @ResponseBody
     @RequestMapping("/contactSetting/{id}")
@@ -260,10 +258,10 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 가입 신청 승인
      *
+     * @author VJ특공대 이희영
      * @param studyGroupId 스터디 그룹 아이디
      * @param id           회원 아이디
-     * @return 가입 승인 성공 / 실패 메세지
-     * @author VJ특공대 이희영
+     * @return 스터디 그룹 가입 승인 유무
      */
     @ResponseBody
     @PutMapping("/memberContact/{studyGroupId}/{id}")
@@ -281,10 +279,10 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 가입 신청 거절
      *
+     * @author VJ특공대 이희영
      * @param studyGroupId 스터디 그룹 아이디
      * @param id           회원 아이디
-     * @return 가입 거절 성공 / 실패 메세지
-     * @author VJ특공대 이희영
+     * @return 스터디 그룹 가입 승인 거절 유무
      */
     @ResponseBody
     @DeleteMapping("/memberContact/{studyGroupId}/{id}")
@@ -302,9 +300,11 @@ public class StudyGroupController {
     /**
      * 내 스터디 리스트 조회 화면
      *
-     * @param model 모델 인터페이스
-     * @return 가입한 스터디 그룹 리스트
      * @author VJ특공대 이희영
+     * @param page 페이지
+     * @param loginMember 로그인 멤버
+     * @param model 모델 객체
+     * @return 논리적 뷰 이름
      */
     @GetMapping("/mygroup")
     public String myGroup(@PathParam("page") String page, @SessionAttribute Member loginMember, Model model) {
@@ -338,12 +338,13 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 생성
      *
-     * @param loginMember 로그인 회원 정보
-     * @return 스터디 그룹 상세
      * @author VJ특공대 이희영
+     * @param imagePath 이미지
+     * @param loginMember 로그인 회원 정보
+     * @return 논리적 뷰 이름
      */
     @PostMapping("/create")
-    public String createGroup(@ModelAttribute CreateForm createForm, MultipartFile imagePath, @SessionAttribute Member loginMember) throws IOException {
+    public String createGroup(@ModelAttribute CreateForm createForm, MultipartFile imagePath, @SessionAttribute Member loginMember) {
         String selectedSubject = createForm.getSubject();
         String subject = subjectChange(selectedSubject);
 
@@ -361,10 +362,12 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 정보 수정
      *
-     * @param createForm 정보 수정 Form에서 입력된 객체
-     * @param id         스터디 그룹 아이디
-     * @return 스터디 그룹 상세 화면
      * @author VJ특공대 이희영
+     * @param createForm 정보 수정 Form에서 입력된 객체
+     * @param settingImage 이미지
+     * @param id         스터디 그룹 아이디
+     * @return 논리적 뷰 이름
+     * @throws IOException 입출력 예외
      */
     @PostMapping("/update/{id}")
     public String updateGroup(@ModelAttribute CreateForm createForm, MultipartFile settingImage, @PathVariable int id) throws IOException {
@@ -412,9 +415,9 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 삭제
      *
-     * @param id 스터디 그룹 아이디
-     * @return 내 스터디 그룹 리스트 화면
      * @author VJ특공대 이희영
+     * @param id 스터디 그룹 아이디
+     * @return 논리적 뷰 이름
      */
     @PostMapping("/delete/{id}")
     public String deleteGroup(@PathVariable int id) {
@@ -426,10 +429,10 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 가입
      *
+     * @author VJ특공대 이희영
      * @param id          스터디 그룹 아이디
      * @param loginMember 로그인 멤버
-     * @return 스터디 그룹 상세 화면
-     * @author VJ특공대 이희영
+     * @return 스터디 그룹 가입 성공 유무
      */
     @ResponseBody
     @PostMapping("/join/{id}")
@@ -457,9 +460,9 @@ public class StudyGroupController {
     /**
      * 스터디 그룹 생성 및 수정 기능에서 사용할 스터디 그룹 주제 변환 기능
      *
+     * @author VJ특공대 이희영
      * @param selectedSubject Form에서 선택된 스터디 그룹 주제 옵션
      * @return DB에 입력될 스터디 그룹 주제
-     * @author VJ특공대 이희영
      */
     private String subjectChange(String selectedSubject) {
         selectedSubject = switch (selectedSubject) {
@@ -481,11 +484,11 @@ public class StudyGroupController {
     /**
      * 게시글 등록
      *
+     * @author VJ특공대 이한솔
      * @param createForm 게시글 등록 폼 객체
      * @param request    HttpServletRequest 객체
      * @param model      model 인터페이스
      * @return 스터디 그룹 화면
-     * @author VJ특공대 이한솔
      */
     @PostMapping("/{id}/article")
     public String create(@ModelAttribute ArticleCreateForm createForm, @PathVariable int id, MultipartFile imagePath, HttpServletRequest request, Model model) throws IOException {
@@ -494,8 +497,6 @@ public class StudyGroupController {
         if (loginMember != null) {
             int memberId = loginMember.getId(); // Member 객체에서 member_id를 가져옵니다.
             createForm.setStudyGroupId(id);
-            log.info(" 담으려는 아티클 폼 {}", createForm);
-            log.info("이미지 패스ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ{}", imagePath);
 
             Article article = Article.builder()
                     .title(createForm.getTitle())
@@ -503,10 +504,8 @@ public class StudyGroupController {
                     .memberId(memberId)
                     .studyGroupId(createForm.getStudyGroupId())
                     .build();
-            log.info("아티클 객체에 넣어둔 정보 확인 ======{}", article);
             if (imagePath == null) {
                 article.setImagePath(null);
-                log.info("이미지패스 null 일때 {}", article);
             } else if (!imagePath.isEmpty()) {
                 // 이미지 폴더에 저장
                 // 업로드 이미지 확장자 가져오기
@@ -526,10 +525,7 @@ public class StudyGroupController {
                 article.setImagePath(imagePathDB.toString());
             }
 
-            log.info("-----------create 전 아티클 {}", article);
             articleService.create(article);
-            log.info("생성 후 아티클 {}", article);
-
         }
         return "redirect:/group/{id}";
     }
@@ -537,23 +533,19 @@ public class StudyGroupController {
     /**
      * 게시글 삭제
      *
+     * @author VJ특공대 이한솔
      * @param articleId 게시글 아이디
      * @param article   게시글
      * @param model     model 인터페이스
      * @return 스터디 그룹 화면
-     * @author VJ특공대 이한솔
      */
     @PostMapping("/{id}/{articleId}/article/delete")
     public String delete(@PathVariable("articleId") int articleId, @ModelAttribute Article article, HttpServletRequest request,
                          HttpServletResponse response, Model model) {
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
-        log.info("asdasdads{}",articleId);
         Article targetArticle = articleService.findById(articleId);
-        log.info("444444444444444444444444444444: {}", targetArticle);
         int articleMemberId = targetArticle.getMemberId();
-        log.info("333 : {}", articleMemberId);
-        log.info("2222 : {}", loginMember.getId());
 
         if (loginMember.getId() == articleMemberId) {
             articleService.delete(articleId);
@@ -576,21 +568,18 @@ public class StudyGroupController {
     /**
      * 게시글 수정
      *
-     * @param
-     * @param model model 인터페이스
+     * @author VJ특공대 이한솔
+     * @param model   model 인터페이스
      * @param article 아티클 객체
      * @return 스터디 그룹 화면
-     * @author VJ특공대 이한솔
      */
     @PostMapping("/{id}/{articleId}/article/update")
     public String update(@ModelAttribute Article article, HttpServletRequest request, MultipartFile imagePath,
                          HttpServletResponse response, Model model) throws IOException {
-        log.info("시작 ===========================1");
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
 
         Article targetArticle = articleService.findById(article.getId());
-        log.info("{}",targetArticle);
         int articleMemberId = targetArticle.getMemberId();
         if (loginMember.getId() == articleMemberId) {
             if (imagePath == null) {
@@ -633,19 +622,18 @@ public class StudyGroupController {
                 throw new RuntimeException("오류 메세지");
             }
         }
-
         return "redirect:/group/{id}";
     }
 
     /**
      * 게시글 댓글 등록
      *
+     * @author VJ특공대 이한솔
      * @param articleComment 게시글 댓글
      * @param articleId      게시글 아이디
      * @param request        HttpServletRequest 객체
      * @param model          model 인터페이스
      * @return 스터디 그룹 화면
-     * @author VJ특공대 이한솔
      */
     @PostMapping("/{id}/{articleId}/commentCreate")
     public String commentCreate(@ModelAttribute ArticleComment articleComment, @PathVariable int articleId, HttpServletRequest request, Model model) {
@@ -665,18 +653,18 @@ public class StudyGroupController {
     /**
      * 게시글 댓글 삭제
      *
+     * @author VJ특공대 이한솔
      * @param id             댓글 아이디
      * @param articleComment 게시글 댓글
      * @param model          model 인터페이스
      * @return 스터디 그룹 화면
-     * @author VJ특공대 이한솔
      */
     @PostMapping("/{id}/commentDelete")
     public String delete(@PathParam("commentId") int id, @ModelAttribute ArticleComment articleComment, Model model) {
         ArticleComment targetComment = articleCommentService.findById(id);
         model.addAttribute("articleComment", targetComment);
         articleCommentService.delete(id);
-
+        
         return "redirect:/group/{id}";
     }
 }
