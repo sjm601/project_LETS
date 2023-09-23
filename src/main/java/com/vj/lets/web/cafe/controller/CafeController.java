@@ -115,10 +115,10 @@ public class CafeController {
                              @ModelAttribute Reservation reservation,
                              Model model) {
         Map<String, Object> cafe = cafeService.getCafe(id);
-        model.addAttribute("Cafe", cafe);
         List<CafeOption> options = cafeService.getCafeOptionCafeId(id);
-        model.addAttribute("options", options);
         List<Room> roomList = roomService.getSearchCafeRoom(id);
+        model.addAttribute("Cafe", cafe);
+        model.addAttribute("options", options);
         model.addAttribute("roomList", roomList);
         model.addAttribute("errorMessage", "");
 
@@ -144,11 +144,10 @@ public class CafeController {
                     .rowCount(count)
                     .build();
             Pagination pagination = new Pagination(pageParams);
-            model.addAttribute("pagination", pagination);
-
             List<Map<String, Object>> reviews = reviewService.getReviewListByCafe(id, pageParams);
-            model.addAttribute("reviews", reviews);
             Map<Integer, Object> countReviews = reviewService.getCountReviewRatingByCafe(id);
+            model.addAttribute("pagination", pagination);
+            model.addAttribute("reviews", reviews);
             model.addAttribute("countReviews", countReviews);
         }
         return "common/cafe/cafe_detail";
@@ -167,7 +166,6 @@ public class CafeController {
     @ResponseBody
     public  String findRoom(@PathVariable int id, Model model) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-
         List<Room> roomList = roomService.getSearchCafeRoom(id);
         log.info("룸 목록:{}",roomList);
         return  objectMapper.writeValueAsString(roomList);

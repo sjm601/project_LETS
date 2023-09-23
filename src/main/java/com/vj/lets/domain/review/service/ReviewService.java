@@ -79,7 +79,7 @@ public interface ReviewService {
 
     /**
      * 호스트의 카페에 대한 리뷰 수 출력
-     * @param cafeId
+     * @param cafeId 카페ID
      * @return 리뷰 갯수
      */
     public int getCountByHost(int cafeId);
@@ -95,7 +95,7 @@ public interface ReviewService {
 
     /**
      * 오늘 호스트의 카페에 등록된 리뷰를 불러오기 위해 사용
-     * @param cafeId
+     * @param cafeId 카페ID
      * @return 오늘 호스트 카페에 등록된 리뷰 수
      */
     public int getTodayReview(int cafeId);
