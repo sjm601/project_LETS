@@ -121,7 +121,7 @@ group:
   imageLocation: C:/ezen-fullstack/workspace/final_project_lets/src/main/resources/static/assets/upload_image/group/
   imageDBPath: /assets/upload_image/group/
 article:
-  imageLocation: C:/ezen-fullstack/workspace/final_project_lets/src/main/resources/static/upload_image/article/
+  imageLocation: C:/ezen-fullstack/workspace/final_project_lets/src/main/resources/static/assets/upload_image/article/
   imageDBPath: /assets/upload_image/article/
   
   

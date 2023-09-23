@@ -99,20 +99,20 @@ mybatis:
 common:
   uploadPath: C:/ezen-fullstack/workspace/final_project_lets/upload/
 member:
-  imageLocation: C:/ezen-fullstack/workspace/final_project_lets/src/main/resources/static/upload_image/member/
-  imageDBPath: /upload_image/member/
+  imageLocation: C:/ezen-fullstack/workspace/final_project_lets/src/main/resources/static/assets/upload_image/member/
+  imageDBPath: /assets/upload_image/member/
 cafe:
-  imageLocation: C:/ezen-fullstack/workspace/final_project_lets/src/main/resources/static/upload_image/cafe/
-  imageDBPath: /upload_image/cafe/
+  imageLocation: C:/ezen-fullstack/workspace/final_project_lets/src/main/resources/static/assets/upload_image/cafe/
+  imageDBPath: /assets/upload_image/cafe/
 room:
-  imageLocation: C:/ezen-fullstack/workspace/final_project_lets/src/main/resources/static/upload_image/room/
-  imageDBPath: /upload_image/room/
+  imageLocation: C:/ezen-fullstack/workspace/final_project_lets/src/main/resources/static/assets/upload_image/room/
+  imageDBPath: /assets/upload_image/room/
 group:
-  imageLocation: C:/ezen-fullstack/workspace/final_project_lets/src/main/resources/static/upload_image/group/
-  imageDBPath: /upload_image/group/
+  imageLocation: C:/ezen-fullstack/workspace/final_project_lets/src/main/resources/static/assets/upload_image/group/
+  imageDBPath: /assets/upload_image/group/
 article:
-  imageLocation: C:/ezen-fullstack/workspace/final_project_lets/src/main/resources/static/upload_image/article/
-  imageDBPath: /upload_image/article/
+  imageLocation: C:/ezen-fullstack/workspace/final_project_lets/src/main/resources/static/assets/upload_image/article/
+  imageDBPath: /assets/upload_image/article/
   
   
   
