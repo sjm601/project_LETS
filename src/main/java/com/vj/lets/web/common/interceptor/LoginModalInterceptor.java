@@ -17,7 +17,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
  * @since 2023-09-08 (금)
  */
 @Component
-@Slf4j
 public class LoginModalInterceptor implements HandlerInterceptor {
 
     @Override
@@ -25,7 +24,6 @@ public class LoginModalInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         String rememberEmail = null;
         if (session.getAttribute("loginMember") == null) {
-            log.info("========== 로그인 모달 인터셉터 실행 =========");
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
                 for (Cookie cookie : cookies) {

@@ -28,7 +28,7 @@
                ADDRESS,
                MESSAGE,
                BUSINESS_NUMBER,
-               TO_CHAR(CONTACT_DATE, 'yyyy-MM-DD') "contact_date",
+               TO_CHAR(CONTACT_DATE, 'yyyy-MM-dd') "contact_date",
                STATUS
         FROM (SELECT CEIL(ROWNUM / #{elementSize}) "request_page",
                      ID,
@@ -60,13 +60,22 @@
     </select>
 
     <select id="readById" parameterType="int" resultType="Contact">
-        SELECT ID, EMAIL, NAME, CAFE_NAME, BUSINESS_NUMBER, STATUS
+        SELECT ID,
+               EMAIL,
+               NAME,
+               CAFE_NAME,
+               BUSINESS_NUMBER,
+               STATUS
         FROM CONTACT
         WHERE ID = #{id}
     </select>
 
     <select id="readByMailBNumDate" parameterType="ContactForm" resultType="Contact">
-        SELECT ID, EMAIL, NAME, BUSINESS_NUMBER, STATUS
+        SELECT ID,
+               EMAIL,
+               NAME,
+               BUSINESS_NUMBER,
+               STATUS
         FROM CONTACT
         WHERE (EMAIL = #{email} or BUSINESS_NUMBER = #{businessNumber})
           AND (STATUS = 'hold' or STATUS = 'approve')

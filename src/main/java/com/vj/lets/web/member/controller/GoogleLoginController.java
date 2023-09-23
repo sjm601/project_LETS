@@ -23,7 +23,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Slf4j
 public class GoogleLoginController {
 
     private final GoogleLoginService googleLoginService;

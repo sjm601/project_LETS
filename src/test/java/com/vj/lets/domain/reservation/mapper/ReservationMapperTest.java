@@ -51,19 +51,19 @@ class ReservationMapperTest {
         // when
         reservationMapper.create(newReservation);
         // then
-        log.info("예약 완료 : {}",newReservation);
+        log.info("예약 완료 : {}", newReservation);
         assertThat(newReservation).isNotNull();
     }
 
     @Test
     @DisplayName("예약ID로 예약 찾기")
-     void findByIdTest() {
+    void findByIdTest() {
         // given
         int findId = 2;
         // when
         Reservation reservation = reservationMapper.findById(findId);
         // then
-        log.info("예약 검색 완료:{}",reservation);
+        log.info("예약 검색 완료:{}", reservation);
         assertThat(reservation).isNotNull();
     }
 
@@ -84,8 +84,13 @@ class ReservationMapperTest {
     void findByMemberTest() {
         // given
         int memberId = 21;
+        PageParams pageParams = PageParams.builder()
+                .elementSize(2)
+                .pageSize(2)
+                .requestPage(1)
+                .build();
         // when
-        List<Map<String, Object>> memberReservation = reservationMapper.findByMember(memberId, PageParams.builder().build());
+        List<Map<String, Object>> memberReservation = reservationMapper.findByMember(memberId, pageParams);
         // then
         log.info("회원의 예약 목록:{}", memberReservation);
         assertThat(memberReservation).isNotNull();
@@ -132,16 +137,16 @@ class ReservationMapperTest {
         int findId = 2;
         int memberId = 22;
         // when
-        Map<String ,Reservation> reservation = reservationMapper.findResInfo(findId,memberId);
+        Map<String, Reservation> reservation = reservationMapper.findResInfo(findId, memberId);
         // then
-        log.info("예약 검색 완료:{}",reservation);
+        log.info("예약 검색 완료:{}", reservation);
         assertThat(reservation).isNotNull();
     }
 
     @Test
     void findNowResTest() {
         // given
-        int memberId=21;
+        int memberId = 21;
         // when
         int resId = reservationMapper.findNowRes(memberId);
         // then
@@ -154,13 +159,13 @@ class ReservationMapperTest {
     void checkDuplicateReservationTest() {
         // given
         int roomId = 26;
-        String bookDate="23/09/26";
+        String bookDate = "2023-09-26";
         int startTime = 11;
         int endTime = 16;
         // when
-        int result = reservationMapper.checkDuplicateReservation(roomId,bookDate,startTime,endTime);
+        int result = reservationMapper.checkDuplicateReservation(roomId, bookDate, startTime, endTime);
         // then
-        log.info("결과:{}",result);
+        log.info("결과:{}", result);
         assertThat(result).isNotZero();
     }
 
@@ -168,9 +173,9 @@ class ReservationMapperTest {
     void checkDuplicateResTimeTest() {
         // given
         int roomId = 7;
-        String bookDate="2023-09-26";
+        String bookDate = "2023-09-26";
         // when
-        List<Reservation>  result = reservationMapper.checkDuplicateResTime(roomId,bookDate);
+        List<Reservation> result = reservationMapper.checkDuplicateResTime(roomId, bookDate);
 
         // then
 //        log.info("결과:{}",result);
@@ -182,7 +187,7 @@ class ReservationMapperTest {
         // given
         int cafeId = 2;
         // when
-        List<Map<String,Object>> result = reservationMapper.readCountByResMonth(cafeId);
+        List<Map<String, Object>> result = reservationMapper.readCountByResMonth(cafeId);
         // then
         log.info("결과:{}", result);
         assertThat(result).isNotNull();
@@ -191,11 +196,11 @@ class ReservationMapperTest {
     @Test
     void readMonthlySalesTest() {
         // given
-        int cafeId =2;
+        int cafeId = 2;
         // when
-        List<Map<String,Object>> result = reservationMapper.readMonthlySales(cafeId);
+        List<Map<String, Object>> result = reservationMapper.readMonthlySales(cafeId);
         // then
-        log.info("결과:{}",result);
+        log.info("결과:{}", result);
         assertThat(result).isNotNull();
     }
 
@@ -208,7 +213,7 @@ class ReservationMapperTest {
         // when
         reservationMapper.cancel(id);
         // then
-        log.info("취소된 예약:{}",id);
+        log.info("취소된 예약:{}", id);
         assertThat(id).isNotZero();
     }
 
@@ -216,12 +221,12 @@ class ReservationMapperTest {
     @Test
     void readCountByMemberTest() {
         // given
-        int memberId =2;
+        int memberId = 2;
         String type = "all";
         // when
-        int count = reservationMapper.readCountByMember(memberId,type);
+        int count = reservationMapper.readCountByMember(memberId, type);
         // then
-        log.info("카운트:{}",count);
+        log.info("카운트:{}", count);
     }
 
 
@@ -230,32 +235,31 @@ class ReservationMapperTest {
     void deleteTest() {
         // given
         int id = 2;
-        int memberId =22;
+        int memberId = 22;
         // when
-        reservationMapper.delete(id,memberId);
+        reservationMapper.delete(id, memberId);
         // then
         log.info("삭제된 예약 아이디:{}", id);
         assertThat(id).isNotZero();
     }
 
 
-
     @Test
     void readCountByHostTest() {
         // given
-        int cafeId =2;
+        int cafeId = 2;
         String type = "all";
         // when
-        int count = reservationMapper.readCountByHost(cafeId,type);
+        int count = reservationMapper.readCountByHost(cafeId, type);
         // then
-        log.info("카운트:{}",count);
+        log.info("카운트:{}", count);
         assertThat(count).isNotZero();
     }
 
     @Test
     void findByHostTest() {
         // given
-        int cafeId =2;
+        int cafeId = 2;
         int count = reviewMapper.readCountByHost(cafeId);
         PageParams pageParams = PageParams.builder()
                 .elementSize(2)
@@ -264,7 +268,7 @@ class ReservationMapperTest {
                 .rowCount(count)
                 .build();
         // when
-        List<Map<String,Object>> list = reservationMapper.findByHost(cafeId,pageParams);
+        List<Map<String, Object>> list = reservationMapper.findByHost(cafeId, pageParams);
         // then
         log.info("카페 아이디에 따른 예약 목록:{}", list);
         assertThat(list).isNotNull();

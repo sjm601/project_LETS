@@ -6,7 +6,6 @@ import com.vj.lets.domain.review.mapper.ReviewHistoryMapper;
 import com.vj.lets.domain.review.mapper.ReviewMapper;
 import com.vj.lets.domain.review.util.ReviewHistoryComment;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +22,6 @@ import java.util.Map;
  */
 @RequiredArgsConstructor
 @Service
-@Slf4j
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewMapper reviewMapper;
@@ -158,16 +156,6 @@ public class ReviewServiceImpl implements ReviewService {
     public List<Map<String, Object>> getByHost(int cafeId, PageParams pageParams) {
         List<Map<String, Object>> guestReviewList = reviewMapper.readByHost(cafeId, pageParams);
         return addMaps(guestReviewList);
-    }
-
-    /**
-     * 예약 아이디로 리뷰 개수 가져오기
-     * @param reservationId 예약 ID
-     * @return 리뷰 개수
-     */
-    @Override
-    public int getCountByRes(int reservationId) {
-        return reviewMapper.readCountByReview(reservationId);
     }
 
     /**

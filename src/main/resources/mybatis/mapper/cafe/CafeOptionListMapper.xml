@@ -11,13 +11,17 @@
     </insert>
 
     <select id="readAll" resultType="CafeOptionList">
-        SELECT ID, CAFE_ID, OPTION_ID
+        SELECT ID,
+               CAFE_ID,
+               OPTION_ID
         FROM CAFE_OPTION_LIST
         ORDER BY ID ASC
     </select>
 
     <select id="findByOptionListId" parameterType="int" resultType="CafeOptionList">
-        SELECT ID, CAFE_ID, OPTION_ID
+        SELECT ID,
+               CAFE_ID,
+               OPTION_ID
         FROM CAFE_OPTION_LIST
         WHERE ID = #{id}
     </select>

@@ -1,11 +1,9 @@
 package com.vj.lets.domain.member.service;
 
-import com.vj.lets.domain.article.dto.ArticleComment;
 import com.vj.lets.domain.cafe.mapper.CafeHistoryMapper;
 import com.vj.lets.domain.cafe.mapper.CafeMapper;
 import com.vj.lets.domain.cafe.mapper.CafeOptionListMapper;
 import com.vj.lets.domain.group.dto.GroupMemberList;
-import com.vj.lets.domain.group.mapper.GroupContactMapper;
 import com.vj.lets.domain.group.mapper.GroupHistoryMapper;
 import com.vj.lets.domain.group.mapper.GroupMemberListMapper;
 import com.vj.lets.domain.group.mapper.StudyGroupMapper;
@@ -17,7 +15,6 @@ import com.vj.lets.domain.member.mapper.MemberMapper;
 import com.vj.lets.domain.member.util.MemberHistoryComment;
 import com.vj.lets.domain.member.util.MemberType;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +30,6 @@ import java.util.Map;
  */
 @RequiredArgsConstructor
 @Service
-@Slf4j
 public class MemberServiceImpl implements MemberService {
 
     private final MemberMapper memberMapper;

@@ -11,9 +11,16 @@
     </insert>
 
     <select id="findAllGroupMemberList" parameterType="int">
-        SELECT GML.ID ID, GML.POSITION POSITION, M.NAME NAME, M.BIRTHDAY, M.GENDER, GML.STUDY_GROUP_ID STUDYGROUPID, M.ID MEMBERID
+        SELECT GML.ID ID,
+               GML.POSITION POSITION,
+               M.NAME NAME,
+               M.BIRTHDAY,
+               M.GENDER,
+               GML.STUDY_GROUP_ID STUDYGROUPID,
+               M.ID MEMBERID
         FROM GROUP_MEMBER_LIST GML
-            JOIN MEMBER M ON GML.MEMBER_ID = M.ID
+            JOIN MEMBER M
+        ON GML.MEMBER_ID = M.ID
         WHERE GML.STUDY_GROUP_ID = #{studyGroupId} AND M.STATUS = 'enabled'
         ORDER BY GML.POSITION DESC, M.NAME
     </select>
@@ -31,7 +38,10 @@
     </delete>
 
     <select id="isGroupMember" parameterType="GroupMemberList">
-        SELECT ID, POSITION, MEMBER_ID, STUDY_GROUP_ID
+        SELECT ID,
+               POSITION,
+               MEMBER_ID,
+               STUDY_GROUP_ID
         FROM GROUP_MEMBER_LIST
         WHERE MEMBER_ID = #{memberId}
           AND STUDY_GROUP_ID = #{studyGroupId}

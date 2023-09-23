@@ -14,7 +14,7 @@
     <!-- 댓글 삭제 -->
     <update id="delete" parameterType="int">
         UPDATE ARTICLE_COMMENT
-        SET status = 'disabled'
+        SET STATUS = 'disabled'
         WHERE ID = #{id}
     </update>
 

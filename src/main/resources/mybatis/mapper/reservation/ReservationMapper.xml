@@ -7,23 +7,38 @@
 
     <insert id="create" parameterType="Reservation">
         INSERT INTO reservation (id, booking_date, start_time, end_time, head_count, member_id, cafe_id, room_id)
-        VALUES (reservation_id_seq.NEXTVAL, #{bookingDate}, #{startTime}, #{endTime}, #{headCount}, #{memberId}, #{cafeId}, #{roomId})
+        VALUES (reservation_id_seq.NEXTVAL, #{bookingDate}, #{startTime}, #{endTime}, #{headCount}, #{memberId},
+                #{cafeId}, #{roomId})
     </insert>
 
     <update id="cancel" parameterType="int">
         UPDATE RESERVATION
-        SET status = 'cancel'
+        SET STATUS = 'cancel'
         WHERE ID = #{id}
     </update>
 
     <select id="findById" parameterType="int" resultType="Reservation">
-        SELECT ID, TO_CHAR(booking_date, 'yyyy-MM-DD') booking_date, START_TIME, END_TIME, HEAD_COUNT,MEMBER_ID, CAFE_ID, ROOM_ID
+        SELECT ID,
+               TO_CHAR(booking_date, 'yyyy-MM-dd') booking_date,
+               START_TIME,
+               END_TIME,
+               HEAD_COUNT,
+               MEMBER_ID,
+               CAFE_ID,
+               ROOM_ID
         FROM RESERVATION
         WHERE id = #{id}
     </select>
 
     <select id="findByAll" resultType="Reservation">
-        SELECT ID, TO_CHAR(booking_date, 'yyyy-MM-DD') booking_date, START_TIME, END_TIME, HEAD_COUNT,MEMBER_ID, CAFE_ID, ROOM_ID
+        SELECT ID,
+               TO_CHAR(booking_date, 'yyyy-MM-dd') booking_date,
+               START_TIME,
+               END_TIME,
+               HEAD_COUNT,
+               MEMBER_ID,
+               CAFE_ID,
+               ROOM_ID
         FROM RESERVATION
         ORDER BY booking_date DESC
     </select>
@@ -59,23 +74,25 @@
                      "roomName",
                      "paymentType",
                      "payStatus"
-              FROM (SELECT res.ID                                  "id",
-                           TO_CHAR(res.BOOKING_DATE, 'yyyy-MM-DD') "bookingDate",
-                           res.START_TIME                          "startTime",
-                           res.END_TIME                            "endTime",
-                           res.HEAD_COUNT                          "headCount",
-                           res.STATUS                              "reservationStatus",
-                           caf.NAME                                "cafeName",
-                           roo.NAME                                "roomName",
-                           pay.PAYMENT_TYPE                        "paymentType",
-                           pay.PAY_STATUS                          "payStatus"
+              FROM (SELECT res.ID                                   "id",
+                           TO_CHAR(res.BOOKING_DATE, 'yyyy-MM-dd')  "bookingDate",
+                           res.START_TIME                           "startTime",
+                           res.END_TIME                             "endTime",
+                           res.HEAD_COUNT                           "headCount",
+                           res.STATUS                               "reservationStatus",
+                           c.NAME                                   "cafeName",
+                           roo.NAME                                 "roomName",
+                           p.PAYMENT_TYPE                           "paymentType",
+                           p.PAY_STATUS                             "payStatus"
                     FROM RESERVATION res
-                             JOIN ROOM roo ON res.ROOM_ID = roo.ID
-                             JOIN CAFE caf ON res.CAFE_ID = caf.ID
-                             JOIN PAYMENT pay ON res.ID = pay.RESERVATION_ID
+                            JOIN ROOM roo ON res.ROOM_ID = roo.ID
+                            JOIN CAFE c ON res.CAFE_ID = c.ID
+                            JOIN PAYMENT p ON res.ID = p.RESERVATION_ID
                     <where>
                         res.MEMBER_ID = #{memberId}
-                        <if test="pageParams.type != null and pageParams.type != '' and pageParams.type != 'all'">AND res.STATUS = #{pageParams.type}</if>
+                        <if test="pageParams.type != null and pageParams.type != '' and pageParams.type != 'all'">
+                            AND res.STATUS = #{pageParams.type}
+                        </if>
                     </where>
                     ORDER BY BOOKING_DATE DESC))
         WHERE "request_page" = #{pageParams.requestPage}
@@ -83,7 +100,7 @@
 
     <select id="findCafeResList" parameterType="int" resultType="Reservation">
         SELECT ID,
-               TO_CHAR(booking_date, 'yyyy-MM-DD') booking_date,
+               TO_CHAR(booking_date, 'yyyy-MM-dd') booking_date,
                START_TIME,
                END_TIME,
                HEAD_COUNT,
@@ -95,38 +112,58 @@
     </select>
 
     <select id="findCountMonthRes" parameterType="int" resultType="map">
-        SELECT TO_CHAR(BOOKING_DATE, 'YYYY-MM') AS "reservationMonth",
-               COUNT(*)                         AS "totalReservations"
+        SELECT TO_CHAR(BOOKING_DATE, 'yyyy-MM') "reservationMonth",
+               COUNT(*)                         "totalReservations"
         FROM reservation
         WHERE EXTRACT(MONTH FROM BOOKING_DATE) BETWEEN 1 AND 12
           AND cafe_id = #{cafeId}
-        GROUP BY TO_CHAR(BOOKING_DATE, 'YYYY-MM')
-        ORDER BY TO_CHAR(BOOKING_DATE, 'YYYY-MM')
+        GROUP BY TO_CHAR(BOOKING_DATE, 'yyyy-MM')
+        ORDER BY TO_CHAR(BOOKING_DATE, 'yyyy-MM')
     </select>
 
     <select id="findTotalData" parameterType="int" resultType="map">
-        SELECT m.name AS "member_name", ro.name AS "room_name", r.head_count AS "headCount", TO_CHAR(r.BOOKING_DATE, 'YYYY/MM/DD') AS "booking_date", r.start_time AS "startTime", r.end_time AS "endTime", (r.end_time - r.start_time) * ro.price AS "totalPrice"
-        FROM reservation r
-                 JOIN member m ON r.member_id = m.id
-                 JOIN room ro ON r.room_id = ro.id
-        WHERE r.cafe_id = #{cafeId}
-        AND r.status != 'cancel'
-        ORDER BY r.booking_date DESC
+        SELECT m.NAME                                      "member_name",
+               roo.NAME                                    "room_name",
+               res.HEAD_COUNT                              "headCount",
+               TO_CHAR(res.BOOKING_DATE, 'YYYY/MM/DD')     "booking_date",
+               res.START_TIME                              "startTime",
+               res.END_TIME                                "endTime",
+               (res.END_TIME - res.START_TIME) * roo.PRICE "totalPrice"
+        FROM reservation res
+                 JOIN member m ON res.MEMBER_ID = m.ID
+                 JOIN room roo ON res.ROOM_ID = roo.ID
+        WHERE res.CAFE_ID = #{cafeId}
+          AND res.STATUS != 'cancel'
+        ORDER BY res.booking_date DESC
     </select>
 
     <select id="findResInfo" parameterType="int" resultType="map">
-    SELECT ca.name AS "cafe_name",ca.id AS "cafeId", ca.image_path,m.name AS "member_name", ro.name AS "room_name", r.head_count, TO_CHAR(r.BOOKING_DATE, 'YYYY/MM/DD') AS "booking_date", r.start_time, r.end_time, ro.price,(r.end_time - r.start_time) * ro.price AS "totalPrice",r.id, r.member_id AS "memberId"
-    FROM reservation r
-    JOIN member m ON r.member_id = m.id
-    JOIN room ro ON r.room_id = ro.id
-    JOIN cafe ca ON ro.cafe_id = ca.id
-    WHERE r.id = #{id} AND r.member_id = #{memberId}
+        SELECT c.NAME                                      "cafe_name",
+               c.ID                                        "cafeId",
+               c.IMAGE_PATH,
+               m.NAME                                      "member_name",
+               roo.NAME                                    "room_name",
+               res.HEAD_COUNT,
+               TO_CHAR(res.BOOKING_DATE, 'YYYY/MM/DD')     "booking_date",
+               res.START_TIME,
+               res.END_TIME,
+               roo.PRICE,
+               (res.END_TIME - res.START_TIME) * roo.PRICE "totalPrice",
+               res.ID,
+               res.MEMBER_ID                               "memberId"
+        FROM RESERVATION res
+                 JOIN MEMBER m ON res.MEMBER_ID = m.ID
+                 JOIN ROOM roo ON res.ROOM_ID = roo.ID
+                 JOIN CAFE c ON roo.CAFE_ID = c.ID
+        WHERE res.ID = #{id}
+          AND res.MEMBER_ID = #{memberId}
     </select>
 
     <select id="findNowRes" parameterType="int" resultType="int">
         SELECT id
         FROM reservation
-        WHERE member_id =#{memberId} AND ROWNUM=1
+        WHERE member_id = #{memberId}
+          AND ROWNUM = 1
         ORDER BY id DESC
     </select>
 
@@ -134,9 +171,9 @@
         SELECT COUNT(ID)
         FROM reservation
         WHERE ROOM_ID = #{roomId}
-        AND BOOKING_DATE = #{bookingDate}
-        AND ((START_TIME &lt;= #{endTime} AND END_TIME &gt;= #{endTime})
-        OR (START_TIME &lt;= #{startTime} AND END_TIME &gt;= #{startTime})
+          AND TO_CHAR(BOOKING_DATE, 'yyyy-MM-dd') = #{bookingDate}
+          AND ((START_TIME &lt;= #{endTime} AND END_TIME &gt;= #{endTime})
+            OR (START_TIME &lt;= #{startTime} AND END_TIME &gt;= #{startTime})
             OR (START_TIME &gt;= #{startTime} AND END_TIME &lt;= #{endTime}))
     </select>
 
@@ -145,7 +182,8 @@
         SELECT ID, START_TIME, END_TIME
         FROM RESERVATION
         WHERE ROOM_ID = #{roomId}
-        AND TO_CHAR(BOOKING_DATE, 'YYYY-MM-DD') = #{bookingDate} AND STATUS != 'cancel'
+          AND TO_CHAR(BOOKING_DATE, 'yyyy-MM-dd') = #{bookingDate}
+          AND STATUS != 'cancel'
     </select>
 
     <update id="delete">
@@ -157,102 +195,100 @@
     </update>
 
     <select id="readCountByResMonth" parameterType="int" resultType="map">
-    SELECT "month",
-    COUNT(RESERVATION.booking_date) AS "reserveCount"
-    FROM ( SELECT TO_CHAR(TRUNC(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), -ROWNUM + 12), 'MM'), 'YYYY-MM') AS "month"
-    FROM DUAL
-    CONNECT BY LEVEL &lt;= 12 ) MONTHS
-    LEFT JOIN RESERVATION ON TO_CHAR(TRUNC(RESERVATION.booking_date, 'MM'), 'YYYY-MM') = MONTHS."month"
-    AND RESERVATION.STATUS = 'complete'
-    AND RESERVATION.cafe_id = #{cafeId}
-    GROUP BY MONTHS."month"
-    ORDER BY MONTHS."month"
+        SELECT "month",
+               COUNT(RESERVATION.booking_date) "reserveCount"
+        FROM (SELECT TO_CHAR(TRUNC(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), -ROWNUM + 12), 'MM'), 'yyyy-MM') "month"
+              FROM DUAL CONNECT BY LEVEL &lt;= 12) MONTHS
+                 LEFT JOIN RESERVATION ON TO_CHAR(TRUNC(RESERVATION.booking_date, 'MM'), 'yyyy-MM') = MONTHS."month"
+            AND RESERVATION.STATUS = 'complete'
+            AND RESERVATION.cafe_id = #{cafeId}
+        GROUP BY MONTHS."month"
+        ORDER BY MONTHS."month"
     </select>
 
     <select id="readMonthlySales" parameterType="int" resultType="map">
-        SELECT "month",SUM(NVL((res.end_time - res.start_time) * ro.price, 0)) AS "monthlyRevenue"
-        FROM (
-        SELECT TO_CHAR(TRUNC(ADD_MONTHS(SYSDATE, -ROWNUM + 12), 'MM'), 'YYYY-MM') AS "month"
-        FROM DUAL
-        CONNECT BY LEVEL &lt;= 12
-        ) MONTHS
-        LEFT JOIN RESERVATION res ON TO_CHAR(TRUNC(res.booking_date, 'MM'), 'YYYY-MM') = MONTHS."month"
-        AND res.STATUS = 'complete'
-        AND res.cafe_id = #{cafeId}
-        LEFT JOIN ROOM ro ON res.room_id = ro.id
+        SELECT "month", SUM(NVL((res.end_time - res.start_time) * ro.price, 0)) AS "monthlyRevenue"
+        FROM (SELECT TO_CHAR(TRUNC(ADD_MONTHS(SYSDATE, -ROWNUM + 12), 'MM'), 'yyyy-MM') AS "month"
+              FROM DUAL CONNECT BY LEVEL &lt;= 12) MONTHS
+                 LEFT JOIN RESERVATION res ON TO_CHAR(TRUNC(res.booking_date, 'MM'), 'yyyy-MM') = MONTHS."month"
+            AND res.STATUS = 'complete'
+            AND res.cafe_id = #{cafeId}
+                 LEFT JOIN ROOM ro ON res.room_id = ro.id
         GROUP BY MONTHS."month"
         ORDER BY MONTHS."month"
     </select>
 
     <select id="readCountByHost" resultType="int">
-    SELECT COUNT(ID) "count"
-    FROM RESERVATION
-    <where>
-        CAFE_ID = #{cafeId}
-        <if test="type != null and type != '' and type != 'all'">AND STATUS = #{type}</if>
-    </where>
+        SELECT COUNT(ID) "count"
+        FROM RESERVATION
+        <where>
+            CAFE_ID = #{cafeId}
+            <if test="type != null and type != '' and type != 'all'">AND STATUS = #{type}</if>
+        </where>
     </select>
 
     <select id="findByHost" resultType="map">
         SELECT "id",
-        "bookingDate",
-        "startTime",
-        "endTime",
-        "headCount",
-        "reservationStatus",
-        "cafeName",
-        "roomName",
-        "paymentType",
-        "payStatus",
-        "memberName",
-        "phoneNum",
-        "image"
+               "bookingDate",
+               "startTime",
+               "endTime",
+               "headCount",
+               "reservationStatus",
+               "cafeName",
+               "roomName",
+               "paymentType",
+               "payStatus",
+               "memberName",
+               "phoneNum",
+               "image"
         FROM (SELECT CEIL(ROWNUM / #{pageParams.elementSize}) "request_page",
-        "id",
-        "bookingDate",
-        "startTime",
-        "endTime",
-        "headCount",
-        "reservationStatus",
-        "cafeName",
-        "roomName",
-        "paymentType",
-        "payStatus",
-        "memberName",
-        "phoneNum",
-        "image"
-        FROM (SELECT res.ID                                  "id",
-        TO_CHAR(res.BOOKING_DATE, 'yyyy-MM-DD') "bookingDate",
-        res.START_TIME                          "startTime",
-        res.END_TIME                            "endTime",
-        res.HEAD_COUNT                          "headCount",
-        res.STATUS                              "reservationStatus",
-        caf.NAME                                "cafeName",
-        roo.NAME                                "roomName",
-        pay.PAYMENT_TYPE                        "paymentType",
-        pay.PAY_STATUS                          "payStatus",
-        m.NAME                                  "memberName",
-        m.PHONE_NUMBER                          "phoneNum",
-        roo.IMAGE_PATH                          "image"
-        FROM RESERVATION res
-        JOIN ROOM roo ON res.ROOM_ID = roo.ID
-        JOIN CAFE caf ON res.CAFE_ID = caf.ID
-        JOIN PAYMENT pay ON res.ID = pay.RESERVATION_ID
-        JOIN MEMBER m ON res.MEMBER_ID = m.ID
-        <where>
-            res.CAFE_ID = #{cafeId}
-            <if test="pageParams.type != null and pageParams.type != '' and pageParams.type != 'all'">AND res.STATUS = #{pageParams.type}</if>
-        </where>
-        ORDER BY BOOKING_DATE DESC))
+                     "id",
+                     "bookingDate",
+                     "startTime",
+                     "endTime",
+                     "headCount",
+                     "reservationStatus",
+                     "cafeName",
+                     "roomName",
+                     "paymentType",
+                     "payStatus",
+                     "memberName",
+                     "phoneNum",
+                     "image"
+              FROM (SELECT res.ID "id",
+                           TO_CHAR(res.BOOKING_DATE, 'yyyy-MM-dd') "bookingDate",
+                           res.START_TIME "startTime",
+                           res.END_TIME "endTime",
+                           res.HEAD_COUNT "headCount",
+                           res.STATUS "reservationStatus",
+                           c.NAME "cafeName",
+                           roo.NAME "roomName",
+                           p.PAYMENT_TYPE "paymentType",
+                           p.PAY_STATUS "payStatus",
+                           m.NAME "memberName",
+                           m.PHONE_NUMBER "phoneNum",
+                           roo.IMAGE_PATH "image"
+                    FROM RESERVATION res
+                            JOIN ROOM roo ON res.ROOM_ID = roo.ID
+                            JOIN CAFE c ON res.CAFE_ID = c.ID
+                            JOIN PAYMENT p ON res.ID = p.RESERVATION_ID
+                            JOIN MEMBER m ON res.MEMBER_ID = m.ID
+                    <where>
+                        res.CAFE_ID = #{cafeId}
+                        <if test="pageParams.type != null and pageParams.type != '' and pageParams.type != 'all'">AND res.STATUS =
+                            #{pageParams.type}
+                        </if>
+                    </where>
+                    ORDER BY BOOKING_DATE DESC))
         WHERE "request_page" = #{pageParams.requestPage}
     </select>
 
     <select id="readTotalRes" parameterType="int" resultType="int">
         SELECT COUNT(res.status) AS "count"
         FROM RESERVATION res
-                 JOIN MEMBER mem ON res.MEMBER_ID = mem.ID
-                 JOIN CAFE caf ON res.CAFE_ID = caf.ID
+                 JOIN MEMBER m ON res.MEMBER_ID = m.ID
+                 JOIN CAFE c ON res.CAFE_ID = c.ID
         WHERE res.status = 'complete'
-          AND caf.ID = #{cafeId}
+          AND c.ID = #{cafeId}
     </select>
 </mapper>

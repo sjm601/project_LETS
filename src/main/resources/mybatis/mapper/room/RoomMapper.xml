@@ -24,29 +24,50 @@
     </update>
 
     <select id="findByAll" resultType="Room">
-        SELECT ID, NAME, DESCRIPTION, IMAGE_PATH, HEAD_COUNT, PRICE, STATUS, CAFE_ID
-        FROM Room
+        SELECT ID,
+               NAME,
+               DESCRIPTION,
+               IMAGE_PATH,
+               HEAD_COUNT,
+               PRICE,
+               STATUS,
+               CAFE_ID
+        FROM ROOM
         WHERE STATUS = 'enabled'
-        ORDER BY id ASC
+        ORDER BY ID ASC
     </select>
 
     <select id="findByCafe" parameterType="int" resultType="Room">
-        SELECT ID, NAME, DESCRIPTION, IMAGE_PATH, HEAD_COUNT, PRICE, STATUS, CAFE_ID
-        FROM Room
+        SELECT ID,
+               NAME,
+               DESCRIPTION,
+               IMAGE_PATH,
+               HEAD_COUNT,
+               PRICE,
+               STATUS,
+               CAFE_ID
+        FROM ROOM
         WHERE CAFE_ID = #{id}
-        ORDER BY id ASC
+        ORDER BY ID ASC
     </select>
 
     <select id="findById" parameterType="int" resultType="Room">
-        SELECT ID, NAME, DESCRIPTION, IMAGE_PATH, HEAD_COUNT, PRICE, STATUS, CAFE_ID
-        FROM Room
+        SELECT ID,
+               NAME,
+               DESCRIPTION,
+               IMAGE_PATH,
+               HEAD_COUNT,
+               PRICE,
+               STATUS,
+               CAFE_ID
+        FROM ROOM
         WHERE ID = #{id}
     </select>
 
 
     <update id="delete" parameterType="int">
-        UPDATE Room
-        SET status = 'disabled'
+        UPDATE ROOM
+        SET STATUS = 'disabled'
         WHERE ID = #{id}
     </update>
 

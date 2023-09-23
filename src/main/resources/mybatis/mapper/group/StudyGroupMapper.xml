@@ -118,7 +118,10 @@
     </update>
 
     <select id="findNewStudyList" resultType="StudyGroup">
-        SELECT ID, NAME, REGDATE, IMAGEPATH
+        SELECT ID,
+               NAME,
+               REGDATE,
+               IMAGEPATH
         FROM (SELECT ID, NAME, REGDATE, IMAGE_PATH IMAGEPATH
                 FROM STUDY_GROUP
                 WHERE STATUS = 'enabled'

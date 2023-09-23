@@ -30,37 +30,66 @@ import java.util.Map;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/support")
-@Slf4j
 public class SupportController {
 
     private final FaqService faqService;
     private final ContactService contactService;
 
+    /**
+     * 고객 지원 화면 출력
+     *
+     * @param model 모델 객체
+     * @return 논리적 뷰 이름
+     */
     @GetMapping("/help")
     public String help(Model model) {
         List<FaqCategory> categoryList = faqService.getFaqCategoryList();
+
         model.addAttribute("categoryList", categoryList);
+
         return "common/support/help";
     }
 
+    /**
+     * FAQ 화면 출력
+     *
+     * @param model 모델 객체
+     * @return 논리적 뷰 이름
+     */
     @GetMapping("/faq")
     public String faqList(Model model) {
         List<FaqCategory> categoryList = faqService.getFaqCategoryList();
-        model.addAttribute("categoryList", categoryList);
-
         Map<String, List<Faq>> faqListMap = faqService.getFaqList();
+
+        model.addAttribute("categoryList", categoryList);
         model.addAttribute("faqListMap", faqListMap);
 
         return "common/support/faq";
     }
 
+    /**
+     * 입점 신청 화면 출력
+     *
+     * @param model 모델 객체
+     * @return 논리적 뷰 이름
+     */
     @GetMapping("/contact")
     public String contactView(Model model) {
         ContactForm contactForm = ContactForm.builder().build();
+
         model.addAttribute("contactForm", contactForm);
+
         return "common/support/contact";
     }
 
+    /**
+     * 입점 신청 기능
+     *
+     * @param contactForm 입점 신청 폼
+     * @param response    서블릿 리스폰스 객체
+     * @param model       모델 객체
+     * @return 논리적 뷰 이름
+     */
     @PostMapping("/contact")
     public String contactRegister(@ModelAttribute ContactForm contactForm, HttpServletResponse response, Model model) {
         List<Contact> checkContact = contactService.checkContact(contactForm);

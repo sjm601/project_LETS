@@ -6,7 +6,9 @@
 <mapper namespace="com.vj.lets.domain.location.mapper.SiGunGuMapper">
 
     <select id="getSiGunGu" parameterType="String">
-        SELECT ID, NAME, SI_DO_ID
+        SELECT ID,
+               NAME,
+               SI_DO_ID
         FROM SI_GUN_GU
         WHERE NAME = #{siGunGuName}
     </select>
@@ -14,8 +16,8 @@
     <select id="getSiGunGuDo" resultType="int">
         SELECT sgg.ID
         FROM SI_GUN_GU sgg
-            JOIN SI_DO sd ON sgg.SI_DO_ID = sd.ID
+                 JOIN SI_DO sd ON sgg.SI_DO_ID = sd.ID
         WHERE sgg.NAME = #{siGunGuName}
-            AND sd.NAME LIKE '%' || #{siDoName} || '%'
+          AND sd.NAME LIKE '%' || #{siDoName} || '%'
     </select>
 </mapper>

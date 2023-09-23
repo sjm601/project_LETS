@@ -11,37 +11,63 @@
     </insert>
 
     <select id="readAll" resultType="Member">
-        SELECT ID, EMAIL, NAME, PHONE_NUMBER, BIRTHDAY, GENDER, TYPE, TO_CHAR(regdate, 'yyyy-MM-DD') regdate, IMAGE_PATH
+        SELECT ID,
+               EMAIL,
+               NAME,
+               PHONE_NUMBER,
+               BIRTHDAY,
+               GENDER,
+               TYPE,
+               TO_CHAR(regdate, 'yyyy-MM-dd') regdate,
+               IMAGE_PATH
         FROM MEMBER
         ORDER BY regdate DESC
     </select>
 
     <select id="readByEmail" parameterType="string" resultType="Member">
-        select ID, EMAIL, NAME, TYPE, IMAGE_PATH
+        select ID,
+               EMAIL,
+               NAME,
+               TYPE,
+               IMAGE_PATH
         from MEMBER
-        where EMAIL = #{email} AND STATUS = 'enabled'
+        where EMAIL = #{email}
+          AND STATUS = 'enabled'
     </select>
 
     <select id="readByEmailAndPassword" resultType="Member">
-        select ID, EMAIL, NAME, TYPE, IMAGE_PATH
+        select ID,
+               EMAIL,
+               NAME,
+               TYPE,
+               IMAGE_PATH
         from MEMBER
-        where EMAIL = #{email} AND PASSWORD = #{password} AND STATUS = 'enabled'
+        where EMAIL = #{email}
+          AND PASSWORD = #{password}
+          AND STATUS = 'enabled'
     </select>
 
     <select id="readById" parameterType="int" resultType="Member">
-        SELECT ID, EMAIL, NAME, PHONE_NUMBER, BIRTHDAY, GENDER, TYPE, TO_CHAR(regdate, 'yyyy-MM-DD HH24:MI:SS') regdate, IMAGE_PATH
+        SELECT ID,
+               EMAIL,
+               NAME,
+               PHONE_NUMBER,
+               BIRTHDAY,
+               GENDER,
+               TYPE,
+               TO_CHAR(regdate, 'yyyy-MM-dd HH24:MI:SS') regdate,
+               IMAGE_PATH
         FROM MEMBER
         WHERE id = #{id}
     </select>
 
     <select id="readCountByRegMonth" resultType="map">
         SELECT "month",
-                COUNT(regdate) "memberCount"
-        FROM ( SELECT TO_CHAR(TRUNC(ADD_MONTHS(SYSDATE, -ROWNUM + 1), 'MM'), 'YYYY-MM') "month"
-               FROM DUAL
-               CONNECT BY LEVEL &lt;= 12)
-            LEFT JOIN MEMBER ON TO_CHAR(TRUNC(regdate, 'MM'), 'YYYY-MM') = "month"
-                 AND MEMBER.TYPE = 'guest' AND MEMBER.STATUS = 'enabled'
+               COUNT(regdate) "memberCount"
+        FROM (SELECT TO_CHAR(TRUNC(ADD_MONTHS(SYSDATE, -ROWNUM + 1), 'MM'), 'YYYY-MM') "month"
+              FROM DUAL CONNECT BY LEVEL &lt;= 12)
+                 LEFT JOIN MEMBER ON TO_CHAR(TRUNC(regdate, 'MM'), 'YYYY-MM') = "month"
+            AND MEMBER.TYPE = 'guest' AND MEMBER.STATUS = 'enabled'
         GROUP BY "month"
         ORDER BY "month"
     </select>
@@ -49,14 +75,15 @@
     <select id="readCountByGender" resultType="map">
         SELECT GENDER "gender", COUNT(*) "count"
         FROM MEMBER
-        WHERE STATUS = 'enabled' AND MEMBER.TYPE = 'guest'
+        WHERE STATUS = 'enabled'
+          AND MEMBER.TYPE = 'guest'
         GROUP BY GENDER
     </select>
 
     <select id="readCountByLastMonth" resultType="int">
         SELECT COUNT(ID)
         FROM MEMBER
-        WHERE REGDATE between TO_DATE(ADD_MONTHS(SYSDATE, -1)) and SYSDATE
+        WHERE REGDATE BETWEEN TO_DATE(ADD_MONTHS(SYSDATE, -1)) AND SYSDATE
     </select>
 
     <update id="update" parameterType="Member">
@@ -73,7 +100,11 @@
     </update>
 
     <select id="readUpdateForm" parameterType="int" resultType="EditForm">
-        SELECT NAME, PHONE_NUMBER, BIRTHDAY, GENDER, IMAGE_PATH
+        SELECT NAME,
+               PHONE_NUMBER,
+               BIRTHDAY,
+               GENDER,
+               IMAGE_PATH
         FROM MEMBER
         WHERE id = #{id}
     </select>

@@ -23,7 +23,8 @@
     </insert>
 
     <delete id="deleteParticipationList" parameterType="int">
-        DELETE PARTICIPATION_LIST
+        DELETE
+        FROM PARTICIPATION_LIST
         WHERE ID = #{studyPlanId}
     </delete>
 </mapper>
