@@ -9,16 +9,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
-* 클래스 설명 : ArticleComment 서비스 구현체
-* 작성일 : 2023-09-08
-* @author : 이한솔
-*/
+ * 댓글 관련 비즈니스 로직 처리 및 트랜잭션 관리 서비스 구현체
+ *
+ * @author VJ특공대 이한솔
+ * @version 1.0
+ * @since 2023-09-08 (금)
+ */
 @Service
 @RequiredArgsConstructor
 public class ArticleCommentServiceImpl implements ArticleCommentService {
     private final ArticleCommentMapper articleCommentMapper;
     private final ArticleCommentHistoryMapper articleCommentHistoryMapper;
 
+    /**
+     * 댓글 생성
+     *
+     * @param articleComment 댓글
+     */
     @Override
     @Transactional
     public void create(ArticleComment articleComment) {
@@ -26,6 +33,11 @@ public class ArticleCommentServiceImpl implements ArticleCommentService {
         articleCommentHistoryMapper.create();
     }
 
+    /**
+     * 댓글 삭제
+     *
+     * @param id : 댓글 아이디
+     */
     @Override
     @Transactional
     public void delete(int id) {
@@ -33,6 +45,11 @@ public class ArticleCommentServiceImpl implements ArticleCommentService {
         articleCommentHistoryMapper.createByUpdate(id, ArticleCommentHistoryComment.DELETE.getComment());
     }
 
+    /**
+     * 댓글 아이디로 해당 댓글 찾기
+     *
+     * @param id : 댓글 아이디
+     */
     @Override
     public ArticleComment findById(int id) {
         return articleCommentMapper.findById(id);

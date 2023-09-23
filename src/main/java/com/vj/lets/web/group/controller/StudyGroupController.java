@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vj.lets.domain.article.dto.Article;
 import com.vj.lets.domain.article.dto.ArticleComment;
 import com.vj.lets.domain.article.dto.ArticleCreateForm;
+import com.vj.lets.domain.article.dto.ArticleUpdateForm;
 import com.vj.lets.domain.article.service.ArticleCommentService;
 import com.vj.lets.domain.article.service.ArticleService;
 import com.vj.lets.domain.group.dto.*;
@@ -194,6 +195,11 @@ public class StudyGroupController {
         // 최근 게시글 목록
         List<Article> recentArticles = articleService.getRecentArticles(id);
         model.addAttribute("recentArticleList", recentArticles);
+
+        //게시글 수정시 입력 폼 받아오기
+        Article article = Article.builder().build();
+        log.info("asdasd -- - - - -- : {}",article);
+        model.addAttribute("UpdateFormArticle", article);
 
         return "common/group/mygroup";
     }
@@ -486,6 +492,8 @@ public class StudyGroupController {
      *
      * @author VJ특공대 이한솔
      * @param createForm 게시글 등록 폼 객체
+     * @param id         현 게시글이 쓰여있는 그룹의 아이디
+     * @param imagePath  입력된 이미지 패스
      * @param request    HttpServletRequest 객체
      * @param model      model 인터페이스
      * @return 스터디 그룹 화면
@@ -495,7 +503,7 @@ public class StudyGroupController {
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
         if (loginMember != null) {
-            int memberId = loginMember.getId(); // Member 객체에서 member_id를 가져옵니다.
+            int memberId = loginMember.getId();
             createForm.setStudyGroupId(id);
 
             Article article = Article.builder()
@@ -537,6 +545,8 @@ public class StudyGroupController {
      * @param articleId 게시글 아이디
      * @param article   게시글
      * @param model     model 인터페이스
+     * @param request   HttpServletRequest 객체
+     * @param response  HttpServletResponse 객체
      * @return 스터디 그룹 화면
      */
     @PostMapping("/{id}/{articleId}/article/delete")
@@ -568,26 +578,35 @@ public class StudyGroupController {
     /**
      * 게시글 수정
      *
+     * @param
+     * @param model             model 인터페이스
+     * @param articleUpdateForm 게시글 수정 객체
+     * @param articleId         게시글 아이디
+     * @param response          HttpServletResponse 객체
+     * @param request           HttpServletRequest 객체
+     * @param imagePath         입력받은 이미지 패스
+     * @return                  스터디 그룹 화면
      * @author VJ특공대 이한솔
-     * @param model   model 인터페이스
-     * @param article 아티클 객체
-     * @return 스터디 그룹 화면
      */
     @PostMapping("/{id}/{articleId}/article/update")
-    public String update(@ModelAttribute Article article, HttpServletRequest request, MultipartFile imagePath,
+    public String update(@ModelAttribute ArticleUpdateForm articleUpdateForm,
+                         @PathVariable("articleId")int articleId,
+                         HttpServletRequest request, MultipartFile imagePath,
                          HttpServletResponse response, Model model) throws IOException {
+
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
 
-        Article targetArticle = articleService.findById(article.getId());
+        Article targetArticle = articleService.findById(articleId);
+        targetArticle.setTitle(articleUpdateForm.getTitle());
+        targetArticle.setContent(articleUpdateForm.getContent());
+
         int articleMemberId = targetArticle.getMemberId();
+
         if (loginMember.getId() == articleMemberId) {
-            if (imagePath == null) {
 
-                model.addAttribute("targetArticle", article);
-                articleService.update(article);
-                model.addAttribute("article", article);
-
+            if (!imagePath.isEmpty()) {
+                targetArticle.setImagePath(null);
             } else if (!imagePath.isEmpty()) {
                 // 이미지 폴더에 저장
                 // 업로드 이미지 확장자 가져오기
@@ -604,12 +623,10 @@ public class StudyGroupController {
 
                 StringBuilder imagePathDB = new StringBuilder();
                 imagePathDB.append(articleImageDBPath).append(loginMember.getId()).append(".").append(imageExtension);
-                article.setImagePath(imagePathDB.toString());
-
-                model.addAttribute("targetArticle", article);
-                articleService.update(article);
-                model.addAttribute("article", article);
+                targetArticle.setImagePath(imagePathDB.toString());
             }
+                articleService.update(targetArticle);
+
         } else {
 
             try {
