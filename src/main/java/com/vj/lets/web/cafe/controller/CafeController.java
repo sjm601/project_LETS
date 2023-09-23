@@ -50,6 +50,13 @@ public class CafeController {
     private final ReviewService reviewService;
     private final FaqService faqService;
 
+    /**
+     * 카페 메인 화면 출력
+     *
+     * @author VJ특공대 강소영
+     * @param model 모델 객체
+     * @return 논리적 뷰 이름
+     */
     @GetMapping("")
     public String cafeDetail(Model model) {
         List<Map<String, Object>> bestCafe = cafeService.getBestCafe();
@@ -57,27 +64,32 @@ public class CafeController {
         return "common/cafe/cafe_main";
     }
 
+    /**
+     * 카페 전체 리스트 출력
+     *
+     * @author VJ특공대 강소영
+     * @param page 페이지
+     * @param searchForm 검색
+     * @param model 모델 객체
+     * @return 논리적 뷰 이름
+     */
     @GetMapping("/list")
     public String cafeList(@PathParam("page") String page,
                            @ModelAttribute SearchForm searchForm,
                            Model model) {
-        log.info("searchForm:{}", searchForm);
         CafeSearch cafeSearch = CafeSearch.builder()
                 .name(searchForm.getName())
                 .option(searchForm.getOption())
-                .currentX(searchForm.getCurrentX())
-                .currentY(searchForm.getCurrentY())
                 .build();
         if (searchForm.getCountPerson() != null && !searchForm.getCountPerson().isEmpty()) {
             cafeSearch.setCountPerson(Integer.parseInt(searchForm.getCountPerson()));
         }
-
-        log.info("cafeSearch:{}", cafeSearch);
-
+        if (searchForm.getCurrentX() != 0 && searchForm.getCurrentY() != 0) {
+            cafeSearch.setCurrentX(searchForm.getCurrentX());
+            cafeSearch.setCurrentY(searchForm.getCurrentY());
+        }
         List<FaqCategory> categoryList = faqService.getCafeFaqList();
-        model.addAttribute("categoryList", categoryList);
         List<CafeOption> options = cafeService.getOptionList();
-        model.addAttribute("options", options);
 
         int elementSize = 8;
         int pageSize = 5;
@@ -86,13 +98,7 @@ public class CafeController {
         if (page == null || page.isEmpty()){
             page = "1";
         }
-
         int selectPage = Integer.parseInt(page);
-
-//        if (cafeSearch.getCountPerson() == null){
-//            cafeSearch.setCountPerson(0);
-//        }
-
         PageParamsForCafe pageParamsForCafe = PageParamsForCafe.builder()
                 .elementSize(elementSize)
                 .pageSize(pageSize)
@@ -100,15 +106,27 @@ public class CafeController {
                 .rowCount(rowCount)
                 .cafeSearch(cafeSearch)
                 .build();
-        PaginationForCafe paginationForCafe = new PaginationForCafe(pageParamsForCafe);
-        model.addAttribute("pagination", paginationForCafe);
 
+        PaginationForCafe paginationForCafe = new PaginationForCafe(pageParamsForCafe);
         List<Map<String, Object>> allCafe = cafeService.getCafeList(pageParamsForCafe);
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("options", options);
+        model.addAttribute("pagination", paginationForCafe);
         model.addAttribute("allCafe", allCafe);
         return "common/cafe/cafe_list";
     }
 
-
+    /**
+     * 카페 상세 페이지
+     *
+     * @author VJ특공대 강소영
+     * @author VJ특공대 박상훈
+     * @param id 카페 ID
+     * @param page 페이지
+     * @param reservation 예약 객체
+     * @param model 모델 객체
+     * @return 논리적 뷰 이름
+     */
     @GetMapping("/{id}")
     public String viewDetail(@PathVariable int id,
                              @PathParam("page") String page,
@@ -117,10 +135,6 @@ public class CafeController {
         Map<String, Object> cafe = cafeService.getCafe(id);
         List<CafeOption> options = cafeService.getCafeOptionCafeId(id);
         List<Room> roomList = roomService.getSearchCafeRoom(id);
-        model.addAttribute("Cafe", cafe);
-        model.addAttribute("options", options);
-        model.addAttribute("roomList", roomList);
-        model.addAttribute("errorMessage", "");
 
         int count = 0;
 
@@ -146,6 +160,11 @@ public class CafeController {
             Pagination pagination = new Pagination(pageParams);
             List<Map<String, Object>> reviews = reviewService.getReviewListByCafe(id, pageParams);
             Map<Integer, Object> countReviews = reviewService.getCountReviewRatingByCafe(id);
+
+            model.addAttribute("Cafe", cafe);
+            model.addAttribute("options", options);
+            model.addAttribute("roomList", roomList);
+            model.addAttribute("errorMessage", "");
             model.addAttribute("pagination", pagination);
             model.addAttribute("reviews", reviews);
             model.addAttribute("countReviews", countReviews);
