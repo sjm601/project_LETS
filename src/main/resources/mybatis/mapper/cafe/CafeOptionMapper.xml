@@ -21,18 +21,25 @@
     </update>
 
     <select id="readAll" resultType="CafeOption">
-        SELECT ID, NAME, IMAGE_PATH, DESCRIPTION
+        SELECT ID,
+               NAME,
+               IMAGE_PATH,
+               DESCRIPTION
         FROM CAFE_OPTION
     </select>
 
     <select id="findByOptionId" parameterType="int" resultType="CafeOption">
-        SELECT ID, NAME, IMAGE_PATH, DESCRIPTION
+        SELECT ID,
+               NAME,
+               IMAGE_PATH,
+               DESCRIPTION
         FROM CAFE_OPTION
         WHERE ID = #{id}
     </select>
 
     <delete id="delete" parameterType="int">
-        DELETE FROM CAFE_OPTION
+        DELETE
+        FROM CAFE_OPTION
         WHERE id = #{id}
     </delete>
 

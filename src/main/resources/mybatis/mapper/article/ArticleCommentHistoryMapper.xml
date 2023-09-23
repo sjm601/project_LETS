@@ -12,7 +12,7 @@
 
     <insert id="createByUpdate">
         INSERT INTO ARTICLE_COMMENT_HISTORY(ID, MODIFY_COMMENT, ARTICLE_COMMENT_ID)
-        VALUES(ARTICLE_HISTORY_ID_SEQ.NEXTVAL, #{comment}, #{articleCommentId})
+        VALUES (ARTICLE_HISTORY_ID_SEQ.NEXTVAL, #{comment}, #{articleCommentId})
     </insert>
 
 </mapper>

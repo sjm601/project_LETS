@@ -5,12 +5,11 @@ import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.util.MemberType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * 메인 인덱스 페이지 요청 컨트롤러
@@ -21,7 +20,6 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/")
-@Slf4j
 public class HomeController {
 
 
@@ -35,7 +33,6 @@ public class HomeController {
     @GetMapping("")
     public String home(@CookieValue(value = "remember", required = false) String rememberEmail,
                        HttpServletRequest request, Model model) {
-
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
 

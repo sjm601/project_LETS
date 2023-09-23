@@ -10,7 +10,7 @@
         INSERT INTO article(ID,
                             TITLE,
                             CONTENT,
-                            IMAGE_PATH ,
+                            IMAGE_PATH,
                             STUDY_GROUP_ID,
                             MEMBER_ID)
         VALUES (ARTICLE_ID_SEQ.NEXTVAL, #{title}, #{content}, #{imagePath, jdbcType=NULL}, #{studyGroupId}, #{memberId})
@@ -20,9 +20,9 @@
     <update id="update" parameterType="Article">
         UPDATE Article
         <set>
-            <if test="title != null or title != ''"> title = #{title},</if>
-            <if test="content != null or content != ''"> content = #{content},</if>
-            <if test="content != null or content != ''"> image_path = #{imagePath}</if>
+            <if test="title != null or title != ''">title = #{title},</if>
+            <if test="content != null or content != ''">content = #{content},</if>
+            <if test="content != null or content != ''">image_path = #{imagePath}</if>
         </set>
         WHERE ID = #{id}
     </update>
@@ -42,114 +42,98 @@
         JOIN STUDY_GROUP sg ON a.STUDY_GROUP_ID = sg.ID
         <where>
             a.STATUS = 'enabled' AND a.STUDY_GROUP_ID = #{groupId}
-        <if test="keyword != null">
-            AND (
-            m.name LIKE '%' || #{keyword} || '%'
-            OR a.title LIKE '%' || #{keyword} || '%'
-            OR a.content LIKE '%' || #{keyword} || '%'
-            )
-        </if>
+            <if test="keyword != null">
+                AND (
+                m.name LIKE '%' || #{keyword} || '%'
+                OR a.title LIKE '%' || #{keyword} || '%'
+                OR a.content LIKE '%' || #{keyword} || '%'
+                )
+            </if>
         </where>
     </select>
 
     <!-- 게시글 목록 (페이징 처리 및 검색값 , 댓글 포함) -->
     <select id="findByPage" resultType="map">
-        SELECT
-        id,
-        title,
-        content,
-        writer,
-        regdate,
-        image_path
-        FROM (
-        SELECT
-        id,
-        CEIL(rownum / #{pageParams.elementSize}) request_page,
-        title,
-        content,
-        writer,
-        regdate,
-        image_path
-        FROM (
-        SELECT
-        a.id AS id,
-        a.title AS title,
-        a.content AS content,
-        m.name AS writer,
-        TO_CHAR(a.regdate, 'YYYY-MM-DD HH24:MI') AS regdate,
-        a.image_path AS image_path
-        FROM article a
-            JOIN member m ON a.member_id = m.id
-        <where>
-        a.status = 'enabled' AND a.STUDY_GROUP_ID = #{groupId}
-            <if test="pageParams.keyword != null">AND m.name LIKE '%' || #{pageParams.keyword} || '%'</if>
-            <if test="pageParams.keyword != null">OR a.title LIKE '%' || #{pageParams.keyword} || '%'</if>
-            <if test="pageParams.keyword != null">OR a.content LIKE '%' || #{pageParams.keyword} || '%'</if>
-        </where>
-        ORDER BY a.regdate DESC
-        )
-        )
+        SELECT id,
+               title,
+               content,
+               writer,
+               regdate,
+               image_path
+        FROM (SELECT id,
+                     CEIL(ROWNUM / #{pageParams.elementSize}) request_page,
+                     title,
+                     content,
+                     writer,
+                     regdate,
+                     image_path
+              FROM (SELECT a.ID                                     id,
+                           a.TITLE                                  title,
+                           a.CONTENT                                content,
+                           m.NAME                                   writer,
+                           TO_CHAR(a.REGDATE, 'yyyy-MM-dd HH24:MI') regdate,
+                           a.IMAGE_PATH                             image_path
+                    FROM ARTICLE a
+                            JOIN MEMBER m ON a.MEMBER_ID = m.ID
+                    <where>
+                        a.STATUS = 'enabled' AND a.STUDY_GROUP_ID = #{groupId}
+                        <if test="pageParams.keyword != null">AND m.NAME LIKE '%' || #{pageParams.keyword} || '%'</if>
+                        <if test="pageParams.keyword != null">OR a.TITLE LIKE '%' || #{pageParams.keyword} || '%'</if>
+                        <if test="pageParams.keyword != null">OR a.CONTENT LIKE '%' || #{pageParams.keyword} || '%'</if>
+                    </where>
+                    ORDER BY a.REGDATE DESC))
         WHERE request_page = #{pageParams.requestPage}
     </select>
 
-
     <!-- 게시글 찾기 -->
     <select id="findById" parameterType="int" resultType="Article">
-        SELECT
-            ID,
-            title,
-            content,
-            TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') AS regdate,
-            IMAGE_PATH,
-            STATUS,
-            MEMBER_ID,
-            STUDY_GROUP_ID
-        FROM
-            article
-        WHERE
-            id = #{id}
+        SELECT ID,
+               title,
+               content,
+               TO_CHAR(regdate, 'yyyy-MM-dd HH24:MI') regdate,
+               IMAGE_PATH,
+               STATUS,
+               MEMBER_ID,
+               STUDY_GROUP_ID
+        FROM ARTICLE
+        WHERE ID = #{id}
     </select>
 
     <!--해당 게시글의 댓글 찾기-->
     <select id="findComment" resultType="map">
-        SELECT ac.id,
-        ac.content,
-        TO_CHAR(ac.regdate, 'YYYY-MM-DD HH24:MI') AS commentRegDate,
-        m.NAME AS commentWriter,
-        a.ID AS articleId
-        FROM article_comment ac
-        JOIN article a ON a.id = ac.article_id
-        JOIN member m ON m.id = ac.MEMBER_ID
+        SELECT ac.ID,
+               ac.CONTENT,
+               TO_CHAR(ac.REGDATE, 'yyyy-MM-dd HH24:MI') commentRegDate,
+               m.NAME commentWriter,
+               a.ID articleId
+        FROM ARTICLE_COMMENT ac
+                JOIN ARTICLE a ON a.ID = ac.ARTICLE_ID
+                JOIN MEMBER m ON m.ID = ac.MEMBER_ID
         <where>
-            ac.STATUS='enabled'
+            ac.STATUS = 'enabled'
             <if test="list != null and list.size() > 0">
-                AND a.id IN
+                AND a.ID IN
                 <foreach collection="list" item="articleId" open="(" close=")" separator=",">
                     #{articleId}
                 </foreach>
             </if>
         </where>
-        ORDER BY ac.regdate ASC
+        ORDER BY ac.REGDATE ASC
     </select>
 
     <select id="getRecentArticles" resultType="Article">
-        SELECT
-        id,
-        title,
-        image_path,
-        regdate
-        FROM (
-        SELECT
-        id,
-        title,
-        image_path,
-        TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') AS regdate
-        FROM article
-        WHERE STUDY_GROUP_ID = #{groupId}
-        ORDER BY regdate DESC
-        )
-        WHERE <![CDATA[ ROWNUM <= 3 ]]>
+        SELECT ID,
+               TITLE,
+               IMAGE_PATH,
+               regdate
+        FROM (SELECT ID,
+                     TITLE,
+                     IMAGE_PATH,
+                     TO_CHAR(REGDATE, 'yyyy-MM-dd HH24:MI') regdate
+              FROM ARTICLE
+              WHERE STUDY_GROUP_ID = #{groupId}
+              ORDER BY REGDATE DESC)
+        WHERE <![CDATA[ ROWNUM <= 3]]>
     </select>
-
 
 </mapper>

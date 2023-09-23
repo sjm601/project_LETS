@@ -26,7 +26,6 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @Service
-@Slf4j
 public class GoogleLoginService {
 
     private static final String CALLBACK_URI = "http://localhost/member/callback";
@@ -59,15 +58,11 @@ public class GoogleLoginService {
     }
 
     public GoogleTokenResponse getToken(String code) throws Exception {
-        log.info("==============================={}", googleJson);
         InputStream in = new FileInputStream(googleJson);
-        log.info("==============================={}", in);
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
-        log.info("==============================={}", clientSecrets);
         GoogleAuthorizationCodeFlow flow =
                 new GoogleAuthorizationCodeFlow.Builder(httpTransport, JSON_FACTORY, clientSecrets, SCOPES).build();
-        log.info("==============================={}", flow);
         return flow.newTokenRequest(code).setRedirectUri(CALLBACK_URI).execute();
     }
 

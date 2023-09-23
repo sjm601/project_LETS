@@ -5,9 +5,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 페이징 처리 계산 클래스
+ * 카페 출력을 위한 페이징 처리 계산 클래스
  * 
- * @author 김종원
+ * @author 강소영
  */
 @Setter
 @Getter

@@ -4,9 +4,9 @@ import com.vj.lets.domain.cafe.dto.CafeSearch;
 import lombok.*;
 
 /**
- * 페이징 정보 클래스
+ * 카페 출력을 위한 페이징 정보 클래스
  *
- * @author 김종원
+ * @author 강소영
  */
 @NoArgsConstructor
 @AllArgsConstructor

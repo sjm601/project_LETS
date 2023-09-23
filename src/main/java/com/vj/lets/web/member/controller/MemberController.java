@@ -1,13 +1,15 @@
 package com.vj.lets.web.member.controller;
 
-import com.vj.lets.domain.member.dto.*;
+import com.vj.lets.domain.member.dto.EditForm;
+import com.vj.lets.domain.member.dto.LoginForm;
+import com.vj.lets.domain.member.dto.Member;
+import com.vj.lets.domain.member.dto.RegisterForm;
 import com.vj.lets.domain.member.service.MemberService;
 import com.vj.lets.domain.member.util.MemberType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
 
 /**
  * 회원 관련 요청 컨트롤러
@@ -32,7 +33,6 @@ import java.util.Map;
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
-@Slf4j
 public class MemberController {
 
     private final MemberService memberService;
@@ -57,8 +57,8 @@ public class MemberController {
      */
     @GetMapping("/register")
     public String registerView(Model model) {
-
         RegisterForm registerForm = RegisterForm.builder().build();
+
         model.addAttribute("registerForm", registerForm);
 
         return "common/member/register";
@@ -124,7 +124,7 @@ public class MemberController {
      * 로그인 기능
      *
      * @param loginForm     로그인 폼 객체
-     * @param bindingResult 리절트 객체
+     * @param bindingResult 바인딩 리절트 객체
      * @param request       서블릿 리퀘스트 객체
      * @param model         모델 객체
      * @return 실행 후 반환 값
@@ -134,6 +134,7 @@ public class MemberController {
     public String login(@Validated @RequestBody LoginForm loginForm,
                         BindingResult bindingResult,
                         HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
 
         if (bindingResult.hasErrors()) {
             return "fail";
@@ -145,7 +146,6 @@ public class MemberController {
             return "fail";
         }
 
-        HttpSession session = request.getSession();
         session.setAttribute("loginMember", loginMember);
 
         return "success";
@@ -162,17 +162,20 @@ public class MemberController {
     public String googleLogin(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("googleMember");
+
         session.setAttribute("loginMember", loginMember);
+
         return "redirect:/";
     }
 
     /**
      * 회원 정보 수정 기능
      *
-     * @param editForm 회원 정보 수정 폼 객체
-     * @param request  서블릿 리퀘스트 객체
-     * @param response 서블릿 리스폰스 객체
-     * @param model    모델 객체
+     * @param editForm  회원 정보 수정 폼 객체
+     * @param imagePath 회원 이미지
+     * @param request   서블릿 리퀘스트 객체
+     * @param response  서블릿 리스폰스 객체
+     * @param model     모델 객체
      * @return 논리적 뷰 이름
      */
     @PostMapping("/edit")
@@ -180,7 +183,6 @@ public class MemberController {
                        MultipartFile imagePath,
                        HttpServletRequest request, HttpServletResponse response,
                        Model model) throws IOException {
-
         HttpSession session = request.getSession();
         Member loginMember = (Member) session.getAttribute("loginMember");
 
@@ -231,17 +233,15 @@ public class MemberController {
             }
         }
 
-        String redirectURI = (String) session.getAttribute("redirectURI");
-        String uri = redirectURI == null ? "/" : redirectURI;
-
-        return "redirect:" + uri;
+        return "redirect:/mypage";
     }
 
     /**
      * 회원 탈퇴
      *
-     * @param request 서블릿 리퀘스트 객체
-     * @param model   모델 객체
+     * @param password 회원 비밀번호
+     * @param request  서블릿 리퀘스트 객체
+     * @param model    모델 객체
      * @return 실행 후 반환 값
      */
     @DeleteMapping("/delete")

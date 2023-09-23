@@ -44,7 +44,10 @@
 
 
     <select id="readByCategory" parameterType="int" resultType="Faq">
-        SELECT ID, TITLE, CONTENT, CATEGORY_ID
+        SELECT ID,
+               TITLE,
+               CONTENT,
+               CATEGORY_ID
         FROM FAQ
         WHERE CATEGORY_ID = #{categoryId}
     </select>
@@ -60,7 +63,8 @@
     </update>
 
     <delete id="delete" parameterType="int">
-        DELETE FROM FAQ
+        DELETE
+        FROM FAQ
         WHERE ID = #{id}
     </delete>
 

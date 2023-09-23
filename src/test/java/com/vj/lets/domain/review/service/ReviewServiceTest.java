@@ -3,7 +3,6 @@ package com.vj.lets.domain.review.service;
 import com.vj.lets.domain.common.web.PageParams;
 import com.vj.lets.domain.review.dto.Review;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -129,16 +128,6 @@ class ReviewServiceTest {
     }
 
     @Test
-    void getCountByResTest() {
-        // given
-        int resId = 2;
-        // when
-        int count = reviewService.getCountByRes(resId);
-        // then
-        log.info("예약 아이디에 대한 리뷰 갯수 :{}", count);
-    }
-
-    @Test
     void getTodayReviewTest() {
         // given
         int cafeId = 2;
@@ -147,7 +136,6 @@ class ReviewServiceTest {
         // then
         log.info("오늘 등록된 리뷰 수 :{}", count);
     }
-
 
     @Test
     void getCountByHostTest() {

@@ -155,44 +155,6 @@ class ReviewMapperTest {
     }
 
     @Test
-    void readCountByHostTest() {
-        // given
-        int cafeId = 1;
-        // when
-        int count = reviewMapper.readCountByHost(cafeId);
-        // then
-        log.info("리뷰 갯수 : {}", count);
-        assertThat(count).isNotZero();
-    }
-
-    @Test
-    void readByHostTest() {
-        // given
-        int cafeId = 1;
-        PageParams pageParams = PageParams.builder()
-                .elementSize(5)
-                .pageSize(5)
-                .requestPage(1)
-                .build();
-        // when
-        List<Map<String, Object>> list = reviewMapper.readByHost(cafeId, pageParams);
-        // then
-        log.info("리뷰 목록 : {}", list);
-        assertThat(list).isNotNull();
-    }
-
-    @Test
-    void readCountByReviewTest() {
-        // given
-        int resId = 2;
-        // when
-        int count = reviewMapper.readCountByReview(resId);
-        // then
-        log.info("예약 아이디에 대한 리뷰 갯수 :{}", count);
-        assertThat(count).isNotZero();
-    }
-
-    @Test
     void readTodayReviewTest() {
         // given
         int cafeId = 2;
@@ -200,13 +162,14 @@ class ReviewMapperTest {
         int count = reviewMapper.readTodayReview(cafeId);
         // then
         log.info("오늘 등록된 리뷰 수 :{}", count);
+        assertThat(count).isNotZero();
     }
 
 
     @Test
     void readCountByHostTest() {
         // given
-        int cafeId =2;
+        int cafeId = 2;
         // when
         int count = reviewMapper.readCountByHost(cafeId);
         // then
@@ -217,7 +180,7 @@ class ReviewMapperTest {
     @Test
     void readByHostTest() {
         // given
-        int cafeId =2;
+        int cafeId = 2;
         int count = reviewMapper.readCountByHost(cafeId);
         PageParams pageParams = PageParams.builder()
                 .elementSize(2)
@@ -226,9 +189,9 @@ class ReviewMapperTest {
                 .rowCount(count)
                 .build();
         // when
-        List<Map<String,Object>> list = reviewMapper.readByHost(cafeId,pageParams);
+        List<Map<String, Object>> list = reviewMapper.readByHost(cafeId, pageParams);
         // then
-        log.info("카페 아이디로 카페 리뷰 조회 및 출력:{}",list);
+        log.info("카페 아이디로 카페 리뷰 조회 및 출력:{}", list);
         assertThat(list).isNotNull();
     }
 }
