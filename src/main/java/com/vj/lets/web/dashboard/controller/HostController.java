@@ -342,7 +342,6 @@ public class HostController {
         }
         int selectPage = Integer.parseInt(page);
         int count = reservationService.getCountResByHost(cafeId, type);
-        log.info("============={}", count);
         PageParams pageParams = PageParams.builder()
                 .elementSize(ELEMENT_SIZE)
                 .pageSize(PAGE_SIZE)
@@ -354,7 +353,6 @@ public class HostController {
         Pagination pagination = new Pagination(pageParams);
 
         List<Map<String, Object>> hostReservationList = reservationService.getHostResList(cafeId, pageParams);
-        log.info("============={}", hostReservationList);
 
         model.addAttribute("hostReservationList", hostReservationList);
         model.addAttribute("pagination", pagination);

@@ -74,7 +74,7 @@
 
                                 <!-- reservation status is use -->
                                 <th:block
-                                        th:if="${{review.get('reviewCount') < 2}}">
+                                        th:if="${review.get('reviewCount') < 2}">
                                     <p class="inline-popups">
                                         <a th:href="|#modal_review_${index.count}|" href="#modal_review"
                                            data-effect="mfp-zoom-in" class="btn_1 gray">
@@ -104,7 +104,7 @@
                                 </th:block>
 
                                 <th:block
-                                        th:if="${{review.get('reviewCount') == 2}}">
+                                        th:if="${review.get('reviewCount') == 2}">
                                     <div data-effect="mfp-zoom-in" class="btn_999 gray">리뷰 답변 완료</div>
                                     <p class="inline-popups">
 
