@@ -132,11 +132,12 @@ public class MypageController {
      */
     @PostMapping("/reservation")
     @ResponseBody
-    public Object reviewRegist(@RequestBody ReviewForm reviewForm, Model model) {
+    public Object reviewRegist(@SessionAttribute Member loginMember,@RequestBody ReviewForm reviewForm, Model model) {
         Review review = Review.builder()
                 .content(reviewForm.getContent())
                 .rating(reviewForm.getRating())
                 .reservationId(reviewForm.getReservationId())
+                .memberId(loginMember.getId())
                 .build();
 
         reviewService.register(review);

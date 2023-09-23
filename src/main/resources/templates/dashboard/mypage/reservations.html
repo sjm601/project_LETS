@@ -115,8 +115,7 @@
                                 </th:block>
 
                                 <!-- reservation status is use -->
-                                <th:block
-                                    th:if="${reservation.get('reservationStatus') == 'use' && reservation.get('reviewBoolean') == 'false'}">
+                                <th:block th:if="${reservation.get('reservationStatus') == 'use' && reservation.get('reviewBoolean') == false}">
                                     <p class="inline-popups">
                                         <a th:href="|#modal_review_${index.count}|" href="#modal_review"
                                            data-effect="mfp-zoom-in" class="btn_1 gray">
@@ -159,7 +158,7 @@
                                 </th:block>
 
                                 <th:block
-                                    th:if="${reservation.get('reservationStatus') == 'use' && reservation.get('reviewBoolean') == 'true'}">
+                                    th:if="${{reservation.get('reservationStatus') == 'use' && reservation.get('reviewBoolean') == true}}">
                                     <div data-effect="mfp-zoom-in" class="btn_999 gray">리뷰 작성 완료</div>
                                 </th:block>
 

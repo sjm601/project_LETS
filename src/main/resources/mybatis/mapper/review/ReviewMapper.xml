@@ -224,7 +224,7 @@
         WHERE rev.STATUS = 'enabled'
           AND c.ID = #{cafeId}
           AND m.TYPE = 'guest'
-          AND TO_CHAR(WRITE_DATE, 'yyyy-MM-dd') = TO_CHAR(SYSDATE)
+          AND TO_CHAR(WRITE_DATE, 'YY/MM/dd') = TO_CHAR(SYSDATE)
     </select>
 
     <update id="update" parameterType="Review">

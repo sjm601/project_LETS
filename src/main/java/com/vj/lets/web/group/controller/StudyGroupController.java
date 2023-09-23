@@ -198,7 +198,6 @@ public class StudyGroupController {
 
         //게시글 수정시 입력 폼 받아오기
         Article article = Article.builder().build();
-        log.info("asdasd -- - - - -- : {}",article);
         model.addAttribute("UpdateFormArticle", article);
 
         return "common/group/mygroup";
