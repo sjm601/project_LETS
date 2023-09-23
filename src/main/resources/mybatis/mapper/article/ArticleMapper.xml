@@ -22,7 +22,7 @@
         <set>
             <if test="title != null or title != ''">title = #{title},</if>
             <if test="content != null or content != ''">content = #{content},</if>
-            <if test="content != null or content != ''">image_path = #{imagePath}</if>
+            <if test="content != null or content != ''">image_path = #{imagePath, jdbcType=NULL}</if>
         </set>
         WHERE ID = #{id}
     </update>
@@ -121,6 +121,7 @@
         ORDER BY ac.REGDATE ASC
     </select>
 
+    <!-- 최근 게시물 찾기-->
     <select id="getRecentArticles" resultType="Article">
         SELECT ID,
                TITLE,
@@ -135,5 +136,15 @@
               ORDER BY REGDATE DESC)
         WHERE <![CDATA[ ROWNUM <= 3]]>
     </select>
+
+    <!-- 게시글 수정 시 수정 폼 찾기 -->
+    <select id="readUpdateForm" parameterType="int" resultType="ArticleUpdateForm">
+        SELECT title,
+               content,
+               IMAGE_PATH
+        FROM ARTICLE
+        WHERE id = #{id}
+    </select>
+
 
 </mapper>
