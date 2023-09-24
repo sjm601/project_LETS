@@ -60,7 +60,8 @@ Lets는 Let's Easy Together Study의 약자로 스터디 카페 예약 서비스
 <br />
 
 ### 👨‍💻👩‍💻 멤버 구성
-<table style="text-align: center">
+<div style="text-align: center">
+<table>
     <tr>
         <td>이희영</td>
         <td>강소영</td>
@@ -83,6 +84,7 @@ Lets는 Let's Easy Together Study의 약자로 스터디 카페 예약 서비스
         <td><a href="https://github.com/lhansol1996">@hansol</a></td>
     </tr>
 </table>
+</div>
 
 <br />
 
