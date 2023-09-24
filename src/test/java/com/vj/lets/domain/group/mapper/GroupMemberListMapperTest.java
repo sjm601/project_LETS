@@ -96,6 +96,20 @@ class GroupMemberListMapperTest {
 
     @Test
     @Transactional
+    void removeAllMemberTest() {
+        // given
+        int studyGroupId = 1;
+
+        // when
+        List<Map<String, Object>> groupMemberList = groupMemberListMapper.findAllGroupMemberList(studyGroupId);
+        groupMemberListMapper.removeAllMember(studyGroupId);
+
+        // then
+        log.info("멤버 리스트 전체 삭제");
+    }
+
+    @Test
+    @Transactional
     void isGroupMemberTest() {
         // given
         int id = 32;
