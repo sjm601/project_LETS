@@ -7,7 +7,7 @@
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
         <meta name="description" content="LETS - My Page">
-        <title>LETS - My Page</title>
+        <title>LETS - 마이페이지 - 예약</title>
 
         <link href="/dashboard/vendor/animate.min.css" rel="stylesheet">
         <link href="/dashboard/vendor/magnific-popup.css" rel="stylesheet">
@@ -20,9 +20,9 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="/dashboard/member/mypage.html">My page</a>
+                        <a th:href="@{/mypage}" href="/dashboard/member/mypage.html">마이페이지</a>
                     </li>
-                    <li class="breadcrumb-item active">Bookings list</li>
+                    <li class="breadcrumb-item active">예약 확인</li>
                 </ol>
                 <div class="box_general">
                     <div class="header_box">

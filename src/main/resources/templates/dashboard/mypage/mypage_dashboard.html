@@ -7,7 +7,7 @@
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
         <meta name="description" content="LETS - My Page">
-        <title>LETS - My Page</title>
+        <title>LETS - 마이페이지 - 회원 정보</title>
 
         <link href="/dashboard/vendor/animate.min.css" rel="stylesheet">
         <link href="/dashboard/vendor/magnific-popup.css" rel="stylesheet">
@@ -20,9 +20,9 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a th:href="@{/mypage}" href="/member_mypage/index.html">My page</a>
+                        <a th:href="@{/mypage}" href="/member_mypage/index.html">마이페이지</a>
                     </li>
-                    <li class="breadcrumb-item active">My page</li>
+                    <li class="breadcrumb-item active">나의 정보</li>
                 </ol>
                 <div class="box_general padding_bottom">
                     <div class="header_box version_2">
@@ -31,10 +31,10 @@
                     <div class="row justify-content-around">
                         <div class="col-md-4 align-self-center">
                             <div class="text-center">
-                                <img th:if="${member.imagePath} == null" src="/upload_image/member/default_others.png"
+                                <img th:if="${member.imagePath} == null" src="/assets/upload_image/member/default_others.png"
                                      style="max-width: 100%" alt="...">
                                 <img th:if="${member.imagePath} != null" th:src="${member.imagePath}"
-                                     src="/upload_image/member/default_others.png" style="max-width: 100%" alt="...">
+                                     src="/assets/upload_image/member/default_others.png" style="max-width: 100%" alt="...">
                             </div>
                         </div>
                         <div class="col-md-6 add_top_30">

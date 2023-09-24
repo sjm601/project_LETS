@@ -7,7 +7,7 @@
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
         <meta name="description" content="LETS - Host Dashboard">
-        <title>LETS - Host Dashboard</title>
+        <title>LETS - 호스트 대시보드 - 카페 정보</title>
 
         <link href="/dashboard/vendor/dropzone.css" rel="stylesheet">
         <link href="/dashboard/vendor/animate.min.css" rel="stylesheet">
@@ -21,7 +21,7 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="/host">대시보드</a>
+                        <a th:href="@{/host}" href="/dashboard/host/host_dashboard.html">대시보드</a>
                     </li>
                     <li class="breadcrumb-item active">카페 정보</li>
                 </ol>
