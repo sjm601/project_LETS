@@ -78,15 +78,15 @@
                                 <li>
                                     <div class="score"><span>
                                         <em th:switch="${#numbers.formatInteger(bestCafe['cafeRating'],1)}">
-                                            <em th:case="5">Superb</em>
-                                            <em th:case="4">VeryGood</em>
-                                            <em th:case="3">Good</em>
-                                            <em th:case="2">Pleasant</em>
-                                            <em th:case="1">Poor</em>
-                                            <em th:case="*">No Rating</em>
+                                            <em th:case="5">완벽한</em>
+                                            <em th:case="4">매우 좋은</em>
+                                            <em th:case="3">좋은</em>
+                                            <em th:case="2">나쁘지 않은</em>
+                                            <em th:case="1">별로인</em>
+                                            <em th:case="*">평가 없음</em>
                                         </em>
-                                        <em th:if="${bestCafe['reviewCount']} != null" th:text="${bestCafe['reviewCount']}+' Reviews'">30 Reviews</em>
-                                        <em th:if="${bestCafe['reviewCount']} == null">0 Reviews</em></span>
+                                        <em th:if="${bestCafe['reviewCount']} != null" th:text="|${bestCafe['reviewCount']} 개 리뷰|">30 Reviews</em>
+                                        <em th:if="${bestCafe['reviewCount']} == null">리뷰 없음</em></span>
                                         <strong th:if="${bestCafe['cafeRating']} == null">0.0</strong>
                                         <strong th:unless="${bestCafe['cafeRating']} == null" th:text="${#numbers.formatDecimal(bestCafe['cafeRating'],1,1)}">5.0</strong>
                                     </div>
