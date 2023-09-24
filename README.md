@@ -60,12 +60,29 @@ Lets는 Let's Easy Together Study의 약자로 스터디 카페 예약 서비스
 <br />
 
 ### 👨‍💻👩‍💻 멤버 구성
-<div style="text-align: center">
-
-| **이희영**                                                                                                                                                                                 |                                                                                          **강소영**                                                                                          |                                                                                         **김종원**                                                                                         |                                                                                       **박상훈**                                                                                       | **이한솔**                                                                                                                                                                                 |
-|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <img src="https://github.com/Ezen-Lets/final_project_lets/assets/139057065/b17ad1a2-5d7d-40cc-a85f-6d70a0a81965" height=150 width=150> <br/> [@heeyeong](https://github.com/heeyeong91) | <img src="https://github.com/Ezen-Lets/final_project_lets/assets/139057065/347e0274-5b59-4752-81e3-c1ec4742cd1d" height=150 width=150> <br/> [@soyeong](https://github.com/soyeong-elena) | <img src="https://github.com/Ezen-Lets/final_project_lets/assets/139057065/6336ee0a-3c73-41dc-95f2-2ffcabe7eafe" height=150 width=150> <br/> [@jongwon](https://github.com/911kimjonga) | <img src="https://github.com/Ezen-Lets/final_project_lets/assets/139057065/689724d3-cfdb-426b-8bc4-2cb2326d7b55" height=150 width=150> <br/> [@sanghoon](https://github.com/sjm601) | <img src="https://github.com/Ezen-Lets/final_project_lets/assets/139057065/4759e791-f616-4329-8370-c672996cb9d4" height=150 width=150> <br/>  [@hansol](https://github.com/lhansol1996) |
-</div>
+<table style="text-align: center">
+    <tr>
+        <td>이희영</td>
+        <td>강소영</td>
+        <td>김종원</td>
+        <td>박상훈</td>
+        <td>이한솔</td>
+    </tr>
+    <tr>
+        <td><img src="https://github.com/Ezen-Lets/final_project_lets/assets/139057065/b17ad1a2-5d7d-40cc-a85f-6d70a0a81965" height=150 width=150></td>
+        <td><img src="https://github.com/Ezen-Lets/final_project_lets/assets/139057065/347e0274-5b59-4752-81e3-c1ec4742cd1d" height=150 width=150></td>
+        <td><img src="https://github.com/Ezen-Lets/final_project_lets/assets/139057065/6336ee0a-3c73-41dc-95f2-2ffcabe7eafe" height=150 width=150></td>
+        <td><img src="https://github.com/Ezen-Lets/final_project_lets/assets/139057065/689724d3-cfdb-426b-8bc4-2cb2326d7b55" height=150 width=150></td>
+        <td><img src="https://github.com/Ezen-Lets/final_project_lets/assets/139057065/4759e791-f616-4329-8370-c672996cb9d4" height=150 width=150></td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/heeyeong91">@heeyeong</a></td>
+        <td><a href="https://github.com/soyeong-elena">@soyeong</a></td>
+        <td><a href="https://github.com/911kimjonga">@jongwon</a></td>
+        <td><a href="https://github.com/sjm601">@sanghoon</a></td>
+        <td><a href="https://github.com/lhansol1996">@hansol</a></td>
+    </tr>
+</table>
 
 <br />
 
