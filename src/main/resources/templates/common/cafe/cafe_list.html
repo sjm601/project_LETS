@@ -16,7 +16,7 @@
             <section class="hero_in restaurants">
                 <div class="wrapper">
                     <div class="container">
-                        <h1 class="fadeInUp"><span></span>Study Cafe List</h1>
+                        <h1 class="fadeInUp"><span></span>스터디 카페</h1>
                     </div>
                 </div>
             </section>
@@ -112,8 +112,8 @@
                                             <p th:unless="${allCafe['detailAddress']} == null"
                                                th:text="${allCafe['siDoName']}+' '+${allCafe['siGunGuName']}+' '+${allCafe['roadAddress']}+' '+${allCafe['detailAddress']}">
                                                 서울특별시 노원구 동일로 500</p>
-                                            <span class="price">최소 <strong th:text="${allCafe['minPrice']}">50,000<i
-                                                    class="fa-solid fa-won-sign"></i></strong>원 /1hour</span>
+                                            <span class="price">최소 <strong th:text="${#numbers.formatInteger(allCafe['minPrice'], 3, 'COMMA')}">50,000<i
+                                                    class="fa-solid fa-won-sign"></i></strong>원 /시간당</span>
                                         </div>
                                         <ul>
                                             <li><i class="icon_clock_alt"></i> <strong
@@ -122,16 +122,16 @@
                                             <li>
                                                 <div class="score"><span>
                                         <em th:switch="${#numbers.formatInteger(allCafe['cafeRating'],1)}">
-                                            <em th:case="5">Superb</em>
-                                            <em th:case="4">VeryGood</em>
-                                            <em th:case="3">Good</em>
-                                            <em th:case="2">Pleasant</em>
-                                            <em th:case="1">Poor</em>
-                                            <em th:case="*">No Rating</em>
+                                            <em th:case="5">완벽한</em>
+                                            <em th:case="4">매우 좋은</em>
+                                            <em th:case="3">좋은</em>
+                                            <em th:case="2">나쁘지 않은</em>
+                                            <em th:case="1">별로인</em>
+                                            <em th:case="*">평가 없음</em>
                                         </em>
                                         <em th:if="${allCafe['reviewCount']} != null"
-                                            th:text="${allCafe['reviewCount']}+' Reviews'">30 Reviews</em>
-                                        <em th:if="${allCafe['reviewCount']} == null">0 Reviews</em></span>
+                                            th:text="|${allCafe['reviewCount']} 개 리뷰|">30 Reviews</em>
+                                        <em th:if="${allCafe['reviewCount']} == null">리뷰 없음</em></span>
                                                     <strong th:if="${allCafe['cafeRating']} == null">0.0</strong>
                                                     <strong th:unless="${allCafe['cafeRating']} == null"
                                                             th:text="${#numbers.formatDecimal(allCafe['cafeRating'],1,1)}">5.0</strong>

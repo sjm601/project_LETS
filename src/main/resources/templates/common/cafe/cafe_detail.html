@@ -330,7 +330,7 @@
                             <form th:action="@{'/cafe/' + ${id}}" action="#" th:method="post">
                                 <div class="box_detail booking">
                                     <div class="price">
-                                        <span><span id="selectedRoomPrice">Price</span><small> per 1hour</small></span>
+                                        <span><span id="selectedRoomPrice">가격</span><small> /시간당</small></span>
                                         <div class="score"><span
                                                 th:switch="${#numbers.formatInteger(Cafe['cafeRating'],1)}">
                                             <em th:case="5">Superb</em>
@@ -356,10 +356,10 @@
                                     </div>
 
                                     <div class="panel-dropdown">
-                                        <a href="#">Guests <span class="qtyTotal">1</span></a>
+                                        <a href="#">인원 수 <span class="qtyTotal">1</span></a>
                                         <div class="panel-dropdown-content right">
                                             <div class="qtyButtons">
-                                                <label>Guests</label>
+                                                <label>인원 수</label>
                                                 <input type="number" id="headCount" name="headCount" value="1"
                                                        onchange="updateQtyTotal()">
                                             </div>
@@ -378,7 +378,7 @@
                                     <div class="form-group clearfix">
                                         <div class="custom-select-form">
                                             <select class="wide" name="startTime" id="startTimeSelect">
-                                                <option>시작시간</option>
+                                                <option>시작 시간</option>
                                                 <option th:each="hour : ${#numbers.sequence(Cafe.startTime, Cafe.endTime - 1)}"
                                                         th:value="${hour}"
                                                         th:text="${#strings.concat(hour, ':00')}"></option>
@@ -389,7 +389,7 @@
                                     <div class="form-group clearfix">
                                         <div class="custom-select-form">
                                             <select class="wide" name="endTime" id="endTimeSelect">
-                                                <option>종료시간</option>
+                                                <option>종료 시간</option>
                                                 <option th:each="hour : ${#numbers.sequence(Cafe.startTime +1, Cafe.endTime)}"
                                                         th:value="${hour}"
                                                         th:text="${#strings.concat(hour, ':00')}"
@@ -400,17 +400,17 @@
 
 
                                     <div class="price text-end">
-                                        <strong class="me-2">Total</strong><small><span
+                                        <strong class="me-2">총</strong><small><span
                                             id="calculateRoomPrice">시간 당 가격</span><i
                                             class="fa-solid fa-xmark me-1 ms-1"></i><span id="calculateTime"></span>시간<i
                                             class="fa-solid fa-equals me-2 ms-1"></i></small>
-                                        <strong class="price-text"><span id="totalPrice">Total Price</span><i
+                                        <strong class="price-text"><span id="totalPrice">결제 가격</span><i
                                                 class="fa-solid fa-won-sign ms-1"></i></strong>
                                     </div>
-                                    <button type="submit" class=" add_top_30 btn_1 full-width purchase">Book now
+                                    <button type="submit" class=" add_top_30 btn_1 full-width purchase">바로 예약
                                     </button>
 
-                                    <div class="text-center"><small>No money charged in this step</small></div>
+                                    <div class="text-center"><small>다음 과정에서 예약 확인 후 결제가 이루어 집니다.</small></div>
                                 </div>
                             </form>
                         </aside>
