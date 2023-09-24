@@ -52,6 +52,14 @@ public interface GroupMemberListMapper {
     public void removeMember(@Param("id") int id, @Param("studyGroupId") int studyGroupId);
 
     /**
+     * 스터디 그룹 삭제 시 멤버 리스트 전체 삭제
+     *
+     * @author VJ특공대 이희영
+     * @param studyGroupId 스터디 그룹 아이디
+     */
+    public void removeAllMember(int studyGroupId);
+
+    /**
      * 스터디 그룹에 가입된 회원인지 조회
      *
      * @param memberId     회원 ID

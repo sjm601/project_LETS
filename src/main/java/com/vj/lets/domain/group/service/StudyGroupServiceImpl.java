@@ -115,6 +115,8 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     public void removeStudy(int id) {
         // 스터디 그룹 정보 삭제 -> DB에 정보는 남기고 상태를 disabled로 변경
         studyGroupMapper.deleteStudy(id);
+        // 스터디 그룹 멤버 리스트 삭제
+        groupMemberListMapper.removeAllMember(id);
         // 스터디 그룹 히스토리 추가
         groupHistoryMapper.deleteGroupHistory(id);
     }
