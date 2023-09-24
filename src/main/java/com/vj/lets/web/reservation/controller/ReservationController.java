@@ -8,7 +8,6 @@ import com.vj.lets.domain.reservation.service.ReservationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,14 +17,13 @@ import java.util.Map;
 /**
  * 예약, 결제 컨트롤러
  *
- * @author 박상훈
+ * @author VJ특공대 박상훈
  * @version 1.0
  * @since 2023-09-11 (월)
  */
 @Controller
 @RequestMapping("/reservation")
 @RequiredArgsConstructor
-@Slf4j
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -37,8 +35,7 @@ public class ReservationController {
      * @param id      예약 아이디
      * @param request 리퀘스트
      * @param model   모델 객체
-     * @return 일치하는 예약이 없거나 결제가 완료된 상태인 경우 카페 리스트로 리다이렉트
-     * @return 데이터 있을지 예약 정보를 확인하고 결제로 넘어가기 위한 페이지 출력
+     * @return 일치하는 예약이 없거나 결제가 완료된 상태인 경우 카페 리스트로 리다이렉트, 데이터 있을지 예약 정보를 확인하고 결제로 넘어가기 위한 페이지 출력
      */
     @GetMapping("/{id}")
     public String resCart(@PathVariable int id, HttpServletRequest request, Model model) {

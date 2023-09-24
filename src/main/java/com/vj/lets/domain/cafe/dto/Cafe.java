@@ -3,7 +3,7 @@ package com.vj.lets.domain.cafe.dto;
 import lombok.*;
 
 /**
- *Cafe dto
+ * 카페 DTO
  *
  * @author VJ특공대 강소영
  * @version 1.0
@@ -16,6 +16,7 @@ import lombok.*;
 @ToString
 @Builder
 public class Cafe {
+
     private int id;
     private String email;
     private String name;
@@ -33,4 +34,5 @@ public class Cafe {
     private String status;
     private int siGunGuId;
     private int memberId;
+
 }

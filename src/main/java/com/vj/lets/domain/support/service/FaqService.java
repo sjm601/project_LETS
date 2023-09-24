@@ -33,13 +33,15 @@ public interface FaqService {
     /**
      * 전체 FAQ 수 조회
      *
-     * @return 전체 FAQ 갯수
+     * @param type FAQ 타입
+     * @return 해당 타입 FAQ 갯수
      */
     public int getCountFaq(String type);
 
     /**
      * 전체 FAQ 목록 조회 (관리자용)
      *
+     * @param pageParams 페이징 정보
      * @return 전체 FAQ 목록
      */
     public List<Map<String, Object>> getFaqListForAdmin(PageParams pageParams);

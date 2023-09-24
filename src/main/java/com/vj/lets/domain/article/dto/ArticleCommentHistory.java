@@ -16,16 +16,26 @@ import lombok.*;
 @ToString
 @Builder
 public class ArticleCommentHistory {
-    /** 게시글 댓글 히스토리 번호*/
+
+    /**
+     * 게시글 댓글 히스토리 번호
+     */
     private int id;
-    /** 댓글 히스토리 변경내용 */
+
+    /**
+     * 댓글 히스토리 변경내용
+     */
     private String modifyComment;
-    /** 댓글 히스토리 변경일자*/
+
+    /**
+     * 댓글 히스토리 변경일자
+     */
     private String modifyDate;
-    /** 게시글 댓글번호(참조)*/
+
+    /**
+     * 게시글 댓글번호(참조)
+     */
     private int articleCommentId;
-
-
 
 
 }

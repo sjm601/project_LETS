@@ -16,20 +16,36 @@ import lombok.*;
 @ToString
 @Builder
 public class ArticleComment {
-    /** 게시글 댓글 번호*/
+
+    /**
+     * 게시글 댓글 번호
+     */
     private int id;
-    /** 댓글 내용 */
+
+    /**
+     * 댓글 내용
+     */
     private String content;
-    /** 댓글 작성일자*/
+
+    /**
+     * 댓글 작성일자
+     */
     private String regdate;
-    /** 댓글 상태*/
+
+    /**
+     * 댓글 상태
+     */
     private String status;
-    /** 회원번호 (참조)*/
+
+    /**
+     * 회원번호 (참조)
+     */
     private int memberId;
-    /** 게시글 번호(참조)*/
+
+    /**
+     * 게시글 번호(참조)
+     */
     private int articleId;
-
-
 
 
 }

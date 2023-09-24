@@ -30,4 +30,5 @@ public class PageParamsForCafe {
 
     //카페 검색
     private CafeSearch cafeSearch;
+
 }

@@ -16,21 +16,22 @@ import java.util.Map;
  * @version 1.0
  * @since 2023-09-08 (금)
  */
-
 @Mapper
 public interface ArticleMapper {
+
     /**
      * 게시글 등록
-     * @param article : 게시글
+     *
+     * @param article 게시글
      */
-    public void create (Article article);
+    public void create(Article article);
 
     /**
      * 게시글 수정
      *
-     * @param article : 게시글
+     * @param article 게시글
      */
-    public void update (Article article);
+    public void update(Article article);
 
     /**
      * 게시글 정보 수정 시 수정 정보
@@ -43,64 +44,66 @@ public interface ArticleMapper {
     /**
      * 게시글 삭제
      *
-     * @param id : 게시글 번호
+     * @param id 게시글 번호
      */
-    public void delete (int id);
+    public void delete(int id);
 
     /**
      * 게시글 검색
-     * @param keyword : 검색어
      *
-     * @return : 검색된 게시글 목록
+     * @param keyword 검색어
+     * @return 검색된 게시글 목록
      */
-    public Article search (@Param("keyword") String keyword);
+    public Article search(@Param("keyword") String keyword);
 
 
     /**
-     * 게시글 목록 (검색값 , 페이지처리 포함)
+     * 게시글 목록 (검색값 , 페이징 정보 처리 포함)
      *
-     * @param pageParams : 페이지
-     * @return : 페이징 처리된 게시글 목록들
+     * @param pageParams 페이징 정보
+     * @param groupId    스터디 그룹 ID
+     * @return 페이징 처리된 게시글 목록들
      */
-    public List<Map<String, Object>> findByPage (@Param("pageParams") PageParams pageParams, @Param("groupId")int groupId);
+    public List<Map<String, Object>> findByPage(@Param("pageParams") PageParams pageParams, @Param("groupId") int groupId);
 
     /**
-     * 페이지 처리(검색 값 포함)에 필요한 게시글의 갯수
+     * 페이징 정보 처리(검색 값 포함)에 필요한 게시글의 갯수
      *
-     * @param keyword : 검색어
-     * @return : 검색된 게시글 갯수
+     * @param keyword 검색어
+     * @param groupId 스터디 그룹 ID
+     * @return 검색된 게시글 갯수
      */
-    public int getCountAll(@Param("keyword") String keyword, @Param("groupId")int groupId);
+    public int getCountAll(@Param("keyword") String keyword, @Param("groupId") int groupId);
 
     /**
      * 게시글 번호로 해당 게시글 찾기 (삭제, 수정 시 필요)
      *
-     * @param id : 게시글 번호
-     * @return : 해당 게시글
+     * @param id 게시글 번호
+     * @return 해당 게시글
      */
     public Article findById(int id);
 
     /**
      * 해당 게시글의 번호로 댓글들 검색
      *
-     * @param articleIds : 해당 페이지에 나오는 게시글 번호들
-     * @return : 댓글 목록
+     * @param articleIds 해당 페이징 정보에 나오는 게시글 번호들
+     * @return 댓글 목록
      */
-    public List<Map<String, Object>> findComment (List<Integer> articleIds);
+    public List<Map<String, Object>> findComment(List<Integer> articleIds);
 
     /**
      * 최근 게시글 목록 검색
      *
-     * @param id : 그룹 아이디
-     * @return  : 최근 게시글
+     * @param id 그룹 ID
+     * @return 최근 게시글
      */
-    public List<Article> getRecentArticles (@Param("groupId")int id);
+    public List<Article> getRecentArticles(@Param("groupId") int id);
 
     /**
      * 게시글 수정을 위한 게시글 번호로 게시글 찾기
      *
-     * @param articleId : 게시글 ID
-     * @return : 해당 게시글
+     * @param articleId 게시글 ID
+     * @return 해당 게시글
      */
     public ArticleUpdateForm findArticle(int articleId);
 

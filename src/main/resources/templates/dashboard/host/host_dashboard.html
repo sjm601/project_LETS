@@ -7,7 +7,7 @@
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
         <meta name="description" content="LETS - Host Dashboard">
-        <title>LETS - Host Dashboard</title>
+        <title>LETS - 호스트 대시보드 - 대시보드</title>
     </th:block>
 
     <th:block th:fragment="content">
@@ -17,9 +17,9 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="/dashboard/host/host_dashboard.html">대시보드</a>
+                        <a th:href="@{/host}" href="/dashboard/host/host_dashboard.html">대시보드</a>
                     </li>
-                    <li class="breadcrumb-item active">My Dashboard</li>
+                    <li class="breadcrumb-item active">대시보드</li>
                 </ol>
                 <!-- Icon Cards-->
                 <div class="row">

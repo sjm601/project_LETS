@@ -27,6 +27,7 @@ public interface FaqMapper {
     /**
      * 전체 FAQ 수 조회
      *
+     * @param type 검색 타입
      * @return 전체 FAQ 갯수
      */
     public int readCountAll(String type);
@@ -34,6 +35,7 @@ public interface FaqMapper {
     /**
      * 전체 FAQ 목록 조회
      *
+     * @param pageParams 페이징 정보
      * @return FAQ 목록
      */
     public List<Map<String, Object>> readAll(PageParams pageParams);

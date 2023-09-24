@@ -7,7 +7,7 @@
     <th:block th:fragment="head">
         <meta name="description" content="LETS - Let's Easy Together Study">
         <meta name="author" content="VJCommando">
-        <title>LETS - Let's Easy Together Study</title>
+        <title>LETS - Let Everyone to Study</title>
     </th:block>
 
     <th:block th:fragment="content">
@@ -15,18 +15,16 @@
             <section class="hero_single cat_hover version_2">
                 <div class="wrapper">
                     <div class="container">
-                        <h3>Perfect studying experiences</h3>
-                        <p>Make and Find Studying</p>
+                        <h3>Let Everyone to Study</h3>
+                        <p>모두 함께 스터디 하자</p>
                         <div class="cat_nav_hover">
                             <ul>
                                 <li>
                                     <div class="container-item active">
                                         <a href="/cafe/list">
                                             <figure><img src="img/hover-cat-bars-thumb.jpg" alt=""></figure>
-                                            <h2>Find Study Cafe</h2></a>
+                                            <h2>스터디 카페 찾기</h2></a>
                                         <div class="image-bg">
-                                            <video src="video/drink.mp4" loop autoplay playsinline webkit-playsinline
-                                                   muted></video>
                                         </div>
                                     </div>
                                 </li>
@@ -34,10 +32,8 @@
                                     <div class="container-item">
                                         <a href="/group">
                                             <figure><img src="img/hover-cat-tours-thumb.jpg" alt=""></figure>
-                                            <h2>Find Study Group</h2></a>
+                                            <h2>스터디 그룹 찾기</h2></a>
                                         <div class="image-bg">
-                                            <video src="video/venice.mp4" loop autoplay playsinline webkit-playsinline
-                                                   muted></video>
                                         </div>
                                     </div>
                                 </li>
@@ -51,8 +47,8 @@
             <div class="container container-custom margin_80_0">
                 <div class="main_title_2">
                     <span><em></em></span>
-                    <h2>Our Popular Cafes</h2>
-                    <p>This is a list of the most popular cafes right now.</p>
+                    <h2>가장 인기있는 스터디 카페</h2>
+                    <p>가장 인기있는 카페를 만나보실 수 있습니다.</p>
                 </div>
                 <div id="reccomended" class="owl-carousel owl-theme" data-cue="zoomIn">
                     <div class="item" th:each="bestCafe : ${bestCafe}">
@@ -73,8 +69,8 @@
                                     서울특별시 노원구 동일로 500</p>
                                 <p th:unless="${bestCafe['detailAddress']} != null" th:text="${bestCafe['siDoName']}+' '+${bestCafe['siGunGuName']}+' '+${bestCafe['roadAddress']}+' '+${bestCafe['detailAddress']}">
                                     서울특별시 노원구 동일로 500</p>
-                                <span class="price">최소 <strong th:text="${bestCafe['minPrice']}">50,000<i
-                                    class="fa-solid fa-won-sign"></i></strong>원 /1hour</span>
+                                <span class="price">최소 <strong th:text="${#numbers.formatInteger(bestCafe['minPrice'], 3, 'COMMA')}">50,000<i
+                                    class="fa-solid fa-won-sign"></i></strong>원 /시간당</span>
                             </div>
                             <ul>
                                 <li><i class="icon_clock_alt"></i> <strong th:text="${bestCafe['startTime']}+'시 ~ '+${bestCafe['endTime']}+'시'">
@@ -82,15 +78,15 @@
                                 <li>
                                     <div class="score"><span>
                                         <em th:switch="${#numbers.formatInteger(bestCafe['cafeRating'],1)}">
-                                            <em th:case="5">Superb</em>
-                                            <em th:case="4">VeryGood</em>
-                                            <em th:case="3">Good</em>
-                                            <em th:case="2">Pleasant</em>
-                                            <em th:case="1">Poor</em>
-                                            <em th:case="*">No Rating</em>
+                                            <em th:case="5">완벽한</em>
+                                            <em th:case="4">매우 좋은</em>
+                                            <em th:case="3">좋은</em>
+                                            <em th:case="2">나쁘지 않은</em>
+                                            <em th:case="1">별로인</em>
+                                            <em th:case="*">평가 없음</em>
                                         </em>
-                                        <em th:if="${bestCafe['reviewCount']} != null" th:text="${bestCafe['reviewCount']}+' Reviews'">30 Reviews</em>
-                                        <em th:if="${bestCafe['reviewCount']} == null">0 Reviews</em></span>
+                                        <em th:if="${bestCafe['reviewCount']} != null" th:text="|${bestCafe['reviewCount']} 개 리뷰|">30 Reviews</em>
+                                        <em th:if="${bestCafe['reviewCount']} == null">리뷰 없음</em></span>
                                         <strong th:if="${bestCafe['cafeRating']} == null">0.0</strong>
                                         <strong th:unless="${bestCafe['cafeRating']} == null" th:text="${#numbers.formatDecimal(bestCafe['cafeRating'],1,1)}">5.0</strong>
                                     </div>
@@ -101,7 +97,7 @@
                     <!-- /item -->
                 </div>
                 <!-- /carousel -->
-                <p class="btn_home_align"><a href="/cafe/list" class="btn_1 rounded">View all Cafes</a></p>
+                <p class="btn_home_align"><a href="/cafe/list" class="btn_1 rounded">모든 카페 만나보기</a></p>
                 <hr class="large">
             </div>
             <!-- /container -->
@@ -111,9 +107,9 @@
                     <div class="wrapper d-flex align-items-center opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.3)">
                         <div>
                             <!-- <small>Study Group</small> -->
-                            <h3>Your Perfect<br>Study Experience</h3>
-                            <p>Find and Make Study Group</p>
-                            <a href="/group" class="btn_1">See Details</a>
+                            <h3>당신의 완벽한<br>스터디 경험은 이곳에서</h3>
+                            <p>원하는 스터디 그룹을 찾고 만약 없다면 직접 만들어 보세요</p>
+                            <a href="/group" class="btn_1">스터디 그룹 보기</a>
                         </div>
                     </div>
                     <!-- /wrapper -->

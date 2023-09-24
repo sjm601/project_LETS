@@ -30,33 +30,38 @@ public interface CafeMapper {
     public void create(Cafe cafe);
 
     /**
-     * 카페정보 업데이트
+     * 카페 정보 업데이트
+     *
+     * @param cafe 카페 정보
      */
     public void update(Cafe cafe);
 
     /**
-     * id로 카페 조회
+     * 카페 ID로 카페 조회
+     *
+     * @param id 카페 ID
+     * @return 카페 정보
      */
     public Map<String, Object> findById(int id);
 
     /**
-     * 멤버 id로 카페 검색
+     * 멤버 ID로 카페 검색
      *
-     * @param id 멤버 아이디
-     * @return cafe
+     * @param id 멤버 ID
+     * @return 카페 정보
      */
     public Map<String, Object> findByMemberId(int id);
 
     /**
-     * 카페 전체리스트 출력
+     * 카페 전체목록 출력
      *
      * @param pageParamsForCafe 페이지
-     * @return 카페 전체 리스트
+     * @return 카페 전체 목록
      */
     public List<Map<String, Object>> findByAll(PageParamsForCafe pageParamsForCafe);
 
     /**
-     * 카페 리스트 개수 출력
+     * 카페 목록 개수 출력
      *
      * @param cafeSearch 카페 검색
      * @return 카페 개수
@@ -65,12 +70,18 @@ public interface CafeMapper {
 
     /**
      * 누적 예약이 가장 많은 카페 6개 출력
+     *
+     * @return 출력 카페 목록
      */
     public List<Map<String, Object>> findByBest();
 
 
     /**
      * 카패 검색 결과 출력
+     *
+     * @param cafeSearch        카페 검색 객체
+     * @param pageParamsForCafe 페이징 정보
+     * @return 검색 결과 목록
      */
     public List<Map<String, Object>> findBySearch(@Param("cafeSearch") CafeSearch cafeSearch,
                                                   @Param("pageParamsForCafe") PageParamsForCafe pageParamsForCafe);
@@ -86,7 +97,7 @@ public interface CafeMapper {
     /**
      * 전체 카페 목록 조회 (관리자용)
      *
-     * @param pageParams 페이징 객체
+     * @param pageParams 페이징 정보
      * @return 카페 목록
      * @see com.vj.lets.web.dashboard.controller.AdminController
      */
@@ -109,7 +120,9 @@ public interface CafeMapper {
     public int readCountByLastMonth();
 
     /**
-     * 카페삭제
+     * 카페 삭제
+     *
+     * @param id 카페 ID
      */
     public void delete(int id);
 }

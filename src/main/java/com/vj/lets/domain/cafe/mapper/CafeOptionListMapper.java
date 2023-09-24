@@ -18,45 +18,46 @@ import java.util.List;
 public interface CafeOptionListMapper {
 
     /**
-     * 카페 옵션리스트 생성
+     * 카페 옵션 목록 생성
      *
-     * @param cafeOptionList 카페옵션리스트 정보
+     * @param cafeOptionList 카페 옵션 목록 정보
      */
     public void create(CafeOptionList cafeOptionList);
 
     /**
-     * 카페 옵션리스트 전체 목록 조회
+     * 카페 옵션 목록 전체 목록 조회
      *
-     * @return 카페 옵션리스트 목록
+     * @return 카페 옵션 목록 목록
      */
     public List<CafeOptionList> readAll();
 
     /**
-     * 카페 옵션리스트 아이디로 검색
+     * 카페 옵션 목록 ID로 검색
      *
-     * @param listId 옵션 리스트ID
-     * @return 카페 옵션 리스트
+     * @param listId 옵션 목록 ID
+     * @return 카페 옵션 목록
      */
     public CafeOptionList findByOptionListId(int listId);
 
     /**
-     * 카페 id로 옵션리스트 조회
+     * 카페 ID로 옵션 목록 조회
      *
-     * @param cafeId 카페 아이디
-     * @return 카페 옵션리스트 목록
+     * @param cafeId 카페 ID
+     * @return 카페 옵션 목록 목록
      */
     public List<CafeOption> findByOptionCafeId(int cafeId);
 
     /**
-     * 카페아이디로 옵션 체크여부
+     * 카페 ID로 옵션 체크 여부
      *
-     * @param cafeId 카페 아이디
-     * @param optionId 옵션 아이디
-     * @return 체크여부
+     * @param cafeId   카페 ID
+     * @param optionId 옵션 ID
+     * @return 체크 여부
      */
     public boolean findByOptionCheckCafeId(@Param("cafeId") int cafeId, @Param("optionId") int optionId);
+
     /**
-     * 카페 옵션리스트 삭제
+     * 카페 옵션 목록 삭제
      *
      * @param cafeId 카페 ID
      */

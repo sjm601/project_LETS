@@ -3,7 +3,7 @@ package com.vj.lets.domain.room.mapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * Room History 테이블 관련 명세
+ * 카페 룸 히스토리 관련 매퍼 명세
  *
  * @author VJ특공대 강소영
  * @version 1.0

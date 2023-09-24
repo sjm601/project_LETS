@@ -18,14 +18,14 @@ public interface CafeOptionMapper {
     /**
      * 카페 옵션 생성
      *
-     * @param cafeOption 카페옵션 정보
+     * @param cafeOption 카페 옵션 정보
      */
     public void create(CafeOption cafeOption);
 
     /**
      * 카페 옵션 수정
      *
-     * @param  cafeOption 카페 옵션 정보
+     * @param cafeOption 카페 옵션 정보
      */
     public void update(CafeOption cafeOption);
 
@@ -37,10 +37,10 @@ public interface CafeOptionMapper {
     public List<CafeOption> readAll();
 
     /**
-     * id로 옵션조회
+     * 옵션 ID로 옵션 조회
      *
-     * @param id 옵션아이디
-     * @return 카페옵션 객체
+     * @param id 옵션 아이디
+     * @return 카페 옵션 객체
      */
     public CafeOption findByOptionId(int id);
 

@@ -10,19 +10,19 @@ import org.apache.ibatis.annotations.Param;
  * @version 1.0
  * @since 2023-09-09 (토)
  */
-
 @Mapper
 public interface ArticleHistoryMapper {
+
     /**
      * 게시글 히스토리 등록
      */
-    public void create ();
+    public void create();
 
     /**
      * 게시글 수정으로 인한 히스토리 업데이트
      *
-     * @param articleId : 게시글 번호
-     * @param  comment : 변경 정보
+     * @param articleId 게시글 번호
+     * @param comment   변경 정보
      */
     public void createByUpdate(@Param("articleId") int articleId, @Param("comment") String comment);
 

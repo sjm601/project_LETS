@@ -3,7 +3,7 @@ package com.vj.lets.domain.group.dto;
 import lombok.*;
 
 /**
- * 스터디 멤버 리스트 빈
+ * 스터디 멤버 리스트 Bean
  *
  * @author 이희영
  * @version 1.0
@@ -16,8 +16,10 @@ import lombok.*;
 @ToString
 @Builder
 public class GroupMemberList {
+
     private int id;
     private String position;
     private int memberId;
     private int studyGroupId;
+
 }

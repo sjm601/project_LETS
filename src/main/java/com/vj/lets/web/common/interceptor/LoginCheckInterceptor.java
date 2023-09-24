@@ -3,6 +3,7 @@ package com.vj.lets.web.common.interceptor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
  * @version 1.0
  * @since 2023-09-22 (금)
  */
+@Component
 public class LoginCheckInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -23,4 +25,5 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 
         return true;
     }
+
 }

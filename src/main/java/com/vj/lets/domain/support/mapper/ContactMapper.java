@@ -35,6 +35,7 @@ public interface ContactMapper {
     /**
      * 전체 입점 신청 목록 조회
      *
+     * @param pageParams 페이징 정보
      * @return 입점 신청 목록
      */
     public List<Contact> readAll(PageParams pageParams);

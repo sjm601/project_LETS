@@ -17,9 +17,14 @@ import lombok.*;
 @Builder
 public class ArticleUpdateForm {
 
-    /** 게시글 제목 */
+    /**
+     * 게시글 제목
+     */
     private String title;
-    /** 게시글 내용 */
+
+    /**
+     * 게시글 내용
+     */
     private String content;
 
 

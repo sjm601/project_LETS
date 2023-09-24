@@ -47,6 +47,7 @@ public class ContactServiceImpl implements ContactService {
     /**
      * 상태로 전체 입점 신청 갯수 조회
      *
+     * @param type 입점 신청 상태
      * @return 해당 상태의 입점 신청 갯수
      */
     @Override
@@ -57,6 +58,7 @@ public class ContactServiceImpl implements ContactService {
     /**
      * 전체 입점 신청 목록 조회
      *
+     * @param pageParams 페이징 정보
      * @return 입점 신청 목록
      */
     @Override
@@ -89,7 +91,9 @@ public class ContactServiceImpl implements ContactService {
     /**
      * 입점 승인 시 회원 등록, 카페 개설 및 입점 신청 상태 정보 수정
      *
-     * @param id 승인할 입점 신청 ID
+     * @param id     승인할 입점 신청 ID
+     * @param member 회원 가입 정보
+     * @param cafe   카페 생성 정보
      */
     @Override
     @Transactional

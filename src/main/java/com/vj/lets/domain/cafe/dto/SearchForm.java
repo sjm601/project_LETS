@@ -3,7 +3,7 @@ package com.vj.lets.domain.cafe.dto;
 import lombok.*;
 
 /**
- * Cafe 검색을 위한 dto
+ * 카페 검색 폼 객체
  *
  * @author VJ특공대 강소영
  * @version 1.0
@@ -16,9 +16,11 @@ import lombok.*;
 @ToString
 @Builder
 public class SearchForm {
+
     String name;
     String countPerson;
     String option;
     double currentX;
     double currentY;
+
 }

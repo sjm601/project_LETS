@@ -50,9 +50,9 @@ public class CafeController {
     /**
      * 카페 메인 화면 출력
      *
-     * @author VJ특공대 강소영
      * @param model 모델 객체
      * @return 논리적 뷰 이름
+     * @author VJ특공대 강소영
      */
     @GetMapping("")
     public String cafeDetail(Model model) {
@@ -66,11 +66,11 @@ public class CafeController {
     /**
      * 카페 전체 리스트 출력
      *
-     * @author VJ특공대 강소영
-     * @param page 페이지
+     * @param page       페이지
      * @param searchForm 검색
-     * @param model 모델 객체
+     * @param model      모델 객체
      * @return 논리적 뷰 이름
+     * @author VJ특공대 강소영
      */
     @GetMapping("/list")
     public String cafeList(@PathParam("page") String page,
@@ -96,7 +96,7 @@ public class CafeController {
         int pageSize = 5;
         int rowCount = cafeService.getCountCafeList(cafeSearch);
 
-        if (page == null || page.isEmpty()){
+        if (page == null || page.isEmpty()) {
             page = "1";
         }
         int selectPage = Integer.parseInt(page);
@@ -122,13 +122,13 @@ public class CafeController {
     /**
      * 카페 상세 페이지
      *
+     * @param id          카페 ID
+     * @param page        페이지
+     * @param reservation 예약 객체
+     * @param model       모델 객체
+     * @return 논리적 뷰 이름
      * @author VJ특공대 강소영
      * @author VJ특공대 박상훈
-     * @param id 카페 ID
-     * @param page 페이지
-     * @param reservation 예약 객체
-     * @param model 모델 객체
-     * @return 논리적 뷰 이름
      */
     @GetMapping("/{id}")
     public String viewDetail(@PathVariable int id,
@@ -141,13 +141,13 @@ public class CafeController {
 
         int count = 0;
 
-        if (cafe.get("reviewCount") != null){
+        if (cafe.get("reviewCount") != null) {
             count = Integer.parseInt(cafe.get("reviewCount").toString());
             //리뷰목록 페이징 처리
             int elementSize = 5;
             int pageSize = 5;
 
-            if (page == null || page.isEmpty()){
+            if (page == null || page.isEmpty()) {
                 page = "1";
             }
 
@@ -175,58 +175,61 @@ public class CafeController {
         return "common/cafe/cafe_detail";
     }
 
-    
+
     /**
      * 방 정보 및 가격, 예약 가능 시간 동적 출력
-     * @param id
-     * @param model
-     * @author VJ특공대 박상훈
+     *
+     * @param id    방 ID
+     * @param model 모델 객체
      * @return json으로 변환된 룸 리스트
-     * @throws JsonProcessingException
+     * @throws JsonProcessingException Json 처리 예외
+     * @author VJ특공대 박상훈
      */
     @RequestMapping("/selectDate/{id}")
     @ResponseBody
-    public  String findRoom(@PathVariable int id, Model model) throws JsonProcessingException {
+    public String findRoom(@PathVariable int id, Model model) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         List<Room> roomList = roomService.getSearchCafeRoom(id);
 
-        return  objectMapper.writeValueAsString(roomList);
+        return objectMapper.writeValueAsString(roomList);
     }
 
     /**
      * 중복예약을 막기 위해 패치로 중복 시간 제외
-     * @param roomId
-     * @param model
-     * @param bookingDate
+     *
+     * @param roomId      룸 ID
+     * @param model       모델 객체
+     * @param bookingDate 예약 날짜
      * @return JSON에 반환된 이미 예약된 시간
-     * @throws JsonProcessingException
-     * @throws ParseException
+     * @throws JsonProcessingException Json 처리 예외
+     * @throws ParseException          파싱 예외
      */
     @PostMapping("/selectRoom/{roomId}")
     @ResponseBody
-    public  String findReservedTime(@PathVariable int roomId, Model model, @RequestBody Object bookingDate) throws JsonProcessingException, ParseException {
+    public String findReservedTime(@PathVariable int roomId, Model model, @RequestBody Object bookingDate) throws JsonProcessingException, ParseException {
         ObjectMapper objectMapper = new ObjectMapper();
         String bookDate = bookingDate.toString();
 
-        List<Reservation> reservedTime =reservationService.checkDuplicateResTime(roomId, bookDate);
+        List<Reservation> reservedTime = reservationService.checkDuplicateResTime(roomId, bookDate);
 
         return objectMapper.writeValueAsString(reservedTime);
     }
 
     /**
      * 예약 생성하기
-     * @param id 카페 아이디
+     *
+     * @param id          카페 아이디
      * @param bookingDate 예약 날짜
-     * @param headCount 예약 총원
-     * @param startTime 시작 시간
-     * @param endTime 종료 시간
-     * @param roomId 룸 아이디
-     * @param reservation
-     * @param loginMember
-     * @param model
-     * @author VJ 특공대 박상훈
+     * @param headCount   예약 총원
+     * @param startTime   시작 시간
+     * @param endTime     종료 시간
+     * @param roomId      룸 아이디
+     * @param reservation 예약 정보
+     * @param loginMember 로그인 회원 정보
+     * @param model       모델 객체
      * @return 예약 ~결제 페이지
+     * @author VJ 특공대 박상훈
      */
     @PostMapping("/{id}")
     public String bookCafe(@PathVariable("id") int id,

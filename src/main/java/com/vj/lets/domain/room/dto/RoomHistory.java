@@ -3,7 +3,7 @@ package com.vj.lets.domain.room.dto;
 import lombok.*;
 
 /**
- * Room History dto
+ * 카페 룸 히스토리 DTO
  *
  * @author VJ특공대 강소영
  * @version 1.0
@@ -16,8 +16,10 @@ import lombok.*;
 @ToString
 @Builder
 public class RoomHistory {
+
     private int id;
     private String modifyComment;
     private String modifyDate;
     private int roomId;
+
 }
