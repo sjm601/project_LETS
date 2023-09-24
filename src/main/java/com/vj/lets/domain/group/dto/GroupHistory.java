@@ -3,7 +3,7 @@ package com.vj.lets.domain.group.dto;
 import lombok.*;
 
 /**
- * 스터디 그룹 히스토리 빈
+ * 스터디 그룹 히스토리 Bean
  *
  * @author 이희영
  * @version 1.0
@@ -16,8 +16,10 @@ import lombok.*;
 @ToString
 @Builder
 public class GroupHistory {
+
     private int id;
     private String modifyComment;
     private String modifyDate;
     private int studyGroupId;
+
 }

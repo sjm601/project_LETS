@@ -3,7 +3,7 @@ package com.vj.lets.domain.reservation.util;
 import lombok.Getter;
 
 /**
- * 예약 히스토리 이넘 클래스
+ * 예약 히스토리 enum 클래스
  *
  * @author VJ특공대 김종원
  * @version 1.0

@@ -5,7 +5,7 @@ import lombok.*;
 import java.util.List;
 
 /**
- *Cafe Edit dto
+ * 카페 정보 수정 폼 객체
  *
  * @author VJ특공대 강소영
  * @version 1.0
@@ -18,6 +18,7 @@ import java.util.List;
 @ToString
 @Builder
 public class CafeEditForm {
+
     private int id;
     private String email;
     private String name;
@@ -36,4 +37,5 @@ public class CafeEditForm {
     private String status;
     private int memberId;
     private List<Integer> options;
+
 }

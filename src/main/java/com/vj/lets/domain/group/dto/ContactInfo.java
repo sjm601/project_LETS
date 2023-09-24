@@ -3,7 +3,7 @@ package com.vj.lets.domain.group.dto;
 import lombok.*;
 
 /**
- * 그룹 가입 신청 정보 빈
+ * 그룹 가입 신청 정보 Bean
  *
  * @author 이희영
  * @version 1.0
@@ -22,4 +22,5 @@ public class ContactInfo {
     private String gender;
     private String birthday;
     private int studyGroupId;
+    
 }

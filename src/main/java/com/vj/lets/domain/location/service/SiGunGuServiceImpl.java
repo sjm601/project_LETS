@@ -21,9 +21,9 @@ public class SiGunGuServiceImpl implements SiGunGuService {
     /**
      * 시,군,구 조회
      *
-     * @author VJ특공대 이희영
      * @param siGunGuName 시,군,구 이름
      * @return 조회된 시,군,구 정보
+     * @author VJ특공대 이희영
      */
     @Override
     public SiGunGu findById(String siGunGuName) {

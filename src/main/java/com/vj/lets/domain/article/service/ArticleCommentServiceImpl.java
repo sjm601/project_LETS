@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class ArticleCommentServiceImpl implements ArticleCommentService {
+
     private final ArticleCommentMapper articleCommentMapper;
     private final ArticleCommentHistoryMapper articleCommentHistoryMapper;
 
@@ -36,7 +37,7 @@ public class ArticleCommentServiceImpl implements ArticleCommentService {
     /**
      * 댓글 삭제
      *
-     * @param id : 댓글 아이디
+     * @param id 댓글 ID
      */
     @Override
     @Transactional
@@ -46,9 +47,10 @@ public class ArticleCommentServiceImpl implements ArticleCommentService {
     }
 
     /**
-     * 댓글 아이디로 해당 댓글 찾기
+     * 댓글 번호로 해당 댓글 찾기
      *
-     * @param id : 댓글 아이디
+     * @param id 댓글 ID
+     * @return 댓글
      */
     @Override
     public ArticleComment findById(int id) {

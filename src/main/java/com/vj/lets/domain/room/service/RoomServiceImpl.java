@@ -26,7 +26,7 @@ public class RoomServiceImpl implements RoomService{
     /**
      * 룸 등록
      *
-     * @param room 룸
+     * @param room 룸 정보
      */
     @Override
     @Transactional
@@ -38,7 +38,7 @@ public class RoomServiceImpl implements RoomService{
     /**
      * 룸 정보 업데이트
      *
-     * @param room 룸
+     * @param room 룸 정보
      */
     @Override
     @Transactional
@@ -48,9 +48,9 @@ public class RoomServiceImpl implements RoomService{
     }
 
     /**
-     * 룸 전체 리스트 출력
+     * 룸 전체 목록 출력
      *
-     * @return 룸 전체 리스트
+     * @return 룸 전체 목록
      */
     @Override
     public List<Room> getRoomList() {
@@ -58,10 +58,10 @@ public class RoomServiceImpl implements RoomService{
     }
 
     /**
-     * 카페 id로 룸 리스트 검색
+     * 카페 ID로 룸 목록 검색
      *
      * @param id 카페 ID
-     * @return 룸 리스트
+     * @return 룸 목록
      */
     @Override
     public List<Room> getSearchCafeRoom(int id) {
@@ -69,10 +69,10 @@ public class RoomServiceImpl implements RoomService{
     }
 
     /**
-     * 룸 id로 검색
+     * 룸 ID로 검색
      *
      * @param id 룸 ID
-     * @return 검색된 룸
+     * @return 검색된 룸 정보
      */
     @Override
     public Room getSearchRoom(int id) {

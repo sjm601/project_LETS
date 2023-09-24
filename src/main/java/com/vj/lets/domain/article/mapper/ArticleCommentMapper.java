@@ -10,28 +10,28 @@ import org.apache.ibatis.annotations.Mapper;
  * @version 1.0
  * @since 2023-09-14 (목)
  */
-
 @Mapper
 public interface ArticleCommentMapper {
+
     /**
      * 댓글 생성
      *
-     * @param articleComment : 댓글
+     * @param articleComment 댓글
      */
-    public void create (ArticleComment articleComment);
+    public void create(ArticleComment articleComment);
 
     /**
      * 댓글 삭제
      *
-     * @param id : 댓글 아이디
+     * @param id 댓글 ID
      */
-    public void delete (int id);
+    public void delete(int id);
 
     /**
-     * 댓글 아이디로 해당 댓글 찾기
+     * 댓글 ID로 해당 댓글 찾기
      *
-     * @param id : 댓글 아이디
-     * @return : 해당 댓글
+     * @param id 댓글 ID
+     * @return 해당 댓글
      */
     public ArticleComment findById(int id);
 

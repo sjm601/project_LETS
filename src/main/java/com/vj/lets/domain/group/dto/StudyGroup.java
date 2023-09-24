@@ -3,7 +3,7 @@ package com.vj.lets.domain.group.dto;
 import lombok.*;
 
 /**
- * 스터디 그룹 빈
+ * 스터디 그룹 Bean
  *
  * @author 이희영
  * @version 1.0
@@ -16,6 +16,7 @@ import lombok.*;
 @ToString
 @Builder
 public class StudyGroup {
+
     private int id;
     private String name;
     private int totalCount;
@@ -25,4 +26,5 @@ public class StudyGroup {
     private String subject;
     private String status;
     private int siGunGuId;
+
 }

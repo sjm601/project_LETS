@@ -1,6 +1,5 @@
 package com.vj.lets.domain.article.service;
 
-
 import com.vj.lets.domain.article.dto.ArticleComment;
 
 /**
@@ -14,21 +13,22 @@ public interface ArticleCommentService {
     /**
      * 댓글 생성
      *
-     * @param articleComment : 댓글 
+     * @param articleComment 댓글
      */
-    public void create (ArticleComment articleComment);
+    public void create(ArticleComment articleComment);
 
     /**
      * 댓글 삭제
      *
-     * @param id : 댓글 아이디
+     * @param id 댓글 ID
      */
-    public void delete (int id);
+    public void delete(int id);
 
     /**
      * 댓글 번호로 해당 댓글 찾기
      *
-     * @param id : 댓글 아이디
+     * @param id 댓글 ID
+     * @return 댓글
      */
     public ArticleComment findById(int id);
 

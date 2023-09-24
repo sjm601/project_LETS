@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 /**
- * Room 테이블 관련 명세
+ * 카페 룸 관련 매퍼 명세
  *
  * @author VJ특공대 강소영
  * @version 1.0
@@ -18,38 +18,37 @@ public interface RoomMapper {
     /**
      * 룸 생성
      *
-     * @param room 룸
+     * @param room 룸 정보
      */
     public void create(Room room);
 
     /**
      * 룸 정보 업데이트
      *
-     * @param room 룸
-     * @return 등록된 룸
+     * @param room 룸 정보
      */
     public void update(Room room);
 
     /**
      * 룸 전체 조회
      *
-     * @return 룸 리스트
+     * @return 룸 목록
      */
     public List<Room> findByAll();
 
     /**
-     * 카페 id로 룸 조회
+     * 카페 ID로 룸 조회
      *
-     * @param id 카페 id
-     * @return 룸 리스트
+     * @param id 카페 ID
+     * @return 룸 목록
      */
     public List<Room> findByCafe(int id);
 
     /**
-     * 룸 id로 룸 조회
+     * 룸 ID로 룸 조회
      *
-     * @param id 룸 id
-     * @return 룸
+     * @param id 룸 ID
+     * @return 룸 정보
      */
     public Room findById(int id);
 
@@ -57,7 +56,7 @@ public interface RoomMapper {
     /**
      * 룸 삭제
      *
-     * @param id 룸 id
+     * @param id 룸 ID
      */
     public void delete(int id);
 }

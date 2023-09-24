@@ -40,7 +40,7 @@ public class CafeServiceImpl implements CafeService{
     /**
      * 카페 옵션 등록
      *
-     * @param cafeOptionLists 카페 옵션 리스트
+     * @param cafeOptionLists 카페 옵션 목록
      */
     @Override
     @Transactional
@@ -63,7 +63,7 @@ public class CafeServiceImpl implements CafeService{
     /**
      * 카페 옵션 삭제
      *
-     * @param optionId 카페옵션 ID
+     * @param optionId 카페 옵션 ID
      */
     @Override
     public void optionDelete(int optionId) {
@@ -71,24 +71,31 @@ public class CafeServiceImpl implements CafeService{
     }
 
     /**
-     * 카페 전체 리스트 출력
+     * 카페 전체 목록 출력
      *
-     * @return 카페 전체 리스트
+     * @param pageParamsForCafe 페이징 정보
+     * @return 카페 전체 목록
      */
     @Override
     public List<Map<String, Object>> getCafeList(PageParamsForCafe pageParamsForCafe) {
         return cafeMapper.findByAll(pageParamsForCafe);
     }
 
+    /**
+     * 카페 목록 개수 출력
+     *
+     * @param cafeSearch 카페 검색
+     * @return 카페 개수
+     */
     @Override
     public int getCountCafeList(CafeSearch cafeSearch) {
         return cafeMapper.countByCafeList(cafeSearch);
     }
 
     /**
-     * 카페 옵션 리스트 출력
+     * 카페 옵션 목록 출력
      *
-     * @return 카페 옵션 전체 리스트
+     * @return 카페 옵션 전체 목록
      */
     @Override
     public List<CafeOption> getOptionList() {
@@ -96,7 +103,7 @@ public class CafeServiceImpl implements CafeService{
     }
 
     /**
-     * id로 카페 검색
+     * 카페 ID로 카페 검색
      *
      * @param id 카페 ID
      * @return 카페 검색 결과
@@ -107,10 +114,10 @@ public class CafeServiceImpl implements CafeService{
     }
 
     /**
-     * memberID로 카페 검색
+     * 회원 ID로 카페 검색
      *
-     * @param id memberId
-     * @return 카페 검색결과
+     * @param id 회원 ID
+     * @return 카페 검색 결과
      */
     @Override
     public Map<String, Object> getCafeMemberId(int id) {
@@ -118,10 +125,10 @@ public class CafeServiceImpl implements CafeService{
     }
 
     /**
-     * 카페 id로 옵션리스트 검색
+     * 카페 ID로 옵션 목록 검색
      *
-     * @param id 카페 id
-     * @return 옵션리스트
+     * @param id 카페 ID
+     * @return 옵션 목록
      */
     @Override
     public List<CafeOption> getCafeOptionCafeId(int id) {
@@ -131,7 +138,7 @@ public class CafeServiceImpl implements CafeService{
     /**
      * 예약이 많은 카페 6개 검색
      *
-     * @return 카페 리스트 6개
+     * @return 카페 목록 6개
      */
     @Override
     public List<Map<String, Object>> getBestCafe(){
@@ -141,7 +148,8 @@ public class CafeServiceImpl implements CafeService{
     /**
      * 카페 검색
      *
-     * @param cafeSearch 카페 검색값
+     * @param cafeSearch        카페 검색값
+     * @param pageParamsForCafe 페이징 정보
      * @return 카페 검색 결과
      */
     @Override
@@ -163,6 +171,7 @@ public class CafeServiceImpl implements CafeService{
     /**
      * 관리자 용 전체 카페 목록 조회
      *
+     * @param pageParams 페이징 정보
      * @return 카페 목록
      * @see com.vj.lets.web.dashboard.controller.AdminController
      */
@@ -196,10 +205,12 @@ public class CafeServiceImpl implements CafeService{
     /**
      * 카페 정보 수정
      *
-     * @param cafeId    카페 아이디
+     * @param cafeId    카페 ID
+     * @param siGunGu   시군구 이름
+     * @param siDo      시도 이름
      * @param cafe      카페 정보
      * @param comment   수정 사유
-     * @param optionIds 수정한 옵션 리스트
+     * @param optionIds 수정한 옵션 목록
      */
     @Override
     @Transactional
@@ -228,9 +239,9 @@ public class CafeServiceImpl implements CafeService{
     /**
      * 카페 옵션 여부 체크
      *
-     * @param cafeId   카페아이디
-     * @param optionId 옵션아이디
-     * @return 옵션여부체크
+     * @param cafeId   카페 ID
+     * @param optionId 옵션 ID
+     * @return 옵션 여부 체크
      */
     @Override
     public boolean cafeOptionCheck(int cafeId, int optionId) {

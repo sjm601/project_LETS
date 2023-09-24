@@ -3,7 +3,7 @@ package com.vj.lets.domain.cafe.dto;
 import lombok.*;
 
 /**
- * Cafe Option List Form dto
+ * 카페 옵션 리스트 폼 객체
  *
  * @author VJ특공대 강소영
  * @version 1.0
@@ -16,8 +16,10 @@ import lombok.*;
 @ToString
 @Builder
 public class OptionListForm {
+
     private int optionId;
     private String imagePath;
     private String optionName;
     private boolean optionCheck;
+
 }

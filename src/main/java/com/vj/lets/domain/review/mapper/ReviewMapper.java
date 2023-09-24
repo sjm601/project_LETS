@@ -36,7 +36,7 @@ public interface ReviewMapper {
      * 카페 ID로 리뷰 목록 조회
      *
      * @param cafeId     카페 ID
-     * @param pageParams 페이징 객체
+     * @param pageParams 페이징 정보
      * @return 리뷰 목록
      */
     public List<Map<String, Object>> readByCafe(@Param("cafeId") int cafeId,
@@ -63,7 +63,7 @@ public interface ReviewMapper {
      * 회원 ID로 리뷰 목록 조회
      *
      * @param memberId   회원 ID
-     * @param pageParams 페이징 객체
+     * @param pageParams 페이징 정보
      * @return 리뷰 목록
      * @see com.vj.lets.web.dashboard.controller.MypageController
      */
@@ -97,7 +97,7 @@ public interface ReviewMapper {
      * 카페 ID로 호스트의 카페 리뷰 목록 조회
      *
      * @param cafeId     카페 ID
-     * @param pageParams 페이징 객체
+     * @param pageParams 페이징 정보
      * @return 리뷰 목록
      */
     public List<Map<String, Object>> readByHost(@Param("cafeId") int cafeId, @Param("pageParams") PageParams pageParams);

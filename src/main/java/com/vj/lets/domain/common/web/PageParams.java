@@ -32,4 +32,5 @@ public class PageParams {
 
     // 검색 키워드
     private String keyword;
+
 }

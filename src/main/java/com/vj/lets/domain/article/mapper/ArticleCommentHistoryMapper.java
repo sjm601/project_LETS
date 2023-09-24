@@ -10,20 +10,19 @@ import org.apache.ibatis.annotations.Param;
  * @version 1.0
  * @since 2023-09-14 (목)
  */
-
 @Mapper
 public interface ArticleCommentHistoryMapper {
+
     /**
      * 댓글 히스토리 생성
-     *
      */
-    public void create ();
+    public void create();
 
     /**
      * 댓글 정보 수정(삭제) 시 히스토리 생성
      *
-     * @param articleCommentId : 댓글 아이디
-     * @param comment  변경 정보
+     * @param articleCommentId 댓글 ID
+     * @param comment          변경 정보
      */
     public void createByUpdate(@Param("articleCommentId") int articleCommentId, @Param("comment") String comment);
 

@@ -16,11 +16,20 @@ import lombok.*;
 @ToString
 @Builder
 public class ArticleCreateForm {
-    /** 게시글 제목 */
+
+    /**
+     * 게시글 제목
+     */
     private String title;
-    /** 게시글 내용 */
+
+    /**
+     * 게시글 내용
+     */
     private String content;
-    /** 그룹 아이디 */
+
+    /**
+     * 그룹 아이디
+     */
     private int studyGroupId;
 
 }

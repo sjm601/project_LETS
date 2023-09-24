@@ -3,8 +3,8 @@ package com.vj.lets.domain.group.util;
 import lombok.*;
 
 /**
- * 페이지 파람
- * 
+ * 스터디 그룹 전용 페이징 객체
+ *
  * @author VJ특공대 이희영
  * @version 1.0
  * @since 2023-09-20 (수)
@@ -37,7 +37,7 @@ public class PageParams {
 
     // 검색 시,군,구 이름
     private String siGunGuName;
-    
+
     // 검색 주제
     private String subject;
 

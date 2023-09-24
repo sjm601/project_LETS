@@ -1,14 +1,12 @@
 package com.vj.lets.web.common.interceptor;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 인터셉터 등록 자바 설정 클래스 구현
@@ -19,7 +17,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @since 2023-09-08 (금)
  */
 @Configuration
-//@EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
     public final List<String> loginEssential = Arrays.asList("/**");
@@ -37,7 +34,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/assets/**").addResourceLocations("classpath:/static/assets/");
     }
 
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 로그인 체크 인터셉터 등록
@@ -52,6 +48,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns(loginEssential)
                 .addPathPatterns(loginModalNotEssential);
     }
+
 }
 
 

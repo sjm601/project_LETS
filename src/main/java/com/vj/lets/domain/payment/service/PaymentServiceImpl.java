@@ -7,8 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 결제 서비스 Impl
- * @author 박상훈
+ * 결제 서비스 구현체
+ *
+ * @author VJ특공대 박상훈
  * @version 1.0
  * @since 2023-09-21 (목)
  */
@@ -20,7 +21,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     /**
      * 결제 등록
-     * @param payment
+     *
+     * @param payment 결제 정보
      */
     @Override
     @Transactional
@@ -30,7 +32,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     /**
      * 이미 결제 시도를 했는지 체크
-     * @param reservationId
+     *
+     * @param reservationId 예약 ID
      * @return 시도 횟수 1 or 0 (페이지 접근 막기 위해)
      */
     @Override

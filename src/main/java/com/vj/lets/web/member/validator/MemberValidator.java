@@ -15,6 +15,7 @@ import org.springframework.validation.Validator;
  */
 @Component
 public class MemberValidator implements Validator {
+
     @Override
     public boolean supports(Class<?> clazz) {
         return RegisterForm.class.isAssignableFrom(clazz);

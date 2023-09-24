@@ -33,7 +33,8 @@ public interface ReviewService {
     /**
      * 카페에 등록된 전체 리뷰 목록 조회
      *
-     * @param cafeId 카페 ID
+     * @param cafeId     카페 ID
+     * @param pageParams 페이징 정보
      * @return 등록된 리뷰 목록
      * @see com.vj.lets.web.cafe.controller.CafeController
      */
@@ -60,7 +61,8 @@ public interface ReviewService {
     /**
      * 특정 회원이 작성한 전체 리뷰 목록 조회
      *
-     * @param memberId 회원 ID
+     * @param memberId   회원 ID
+     * @param pageParams 페이징 정보
      * @return 작성한 리뷰 목록
      * @see com.vj.lets.web.dashboard.controller.MypageController
      */
@@ -79,7 +81,7 @@ public interface ReviewService {
      * 카페 ID로 호스트의 카페 리뷰 목록 조회
      *
      * @param cafeId     카페 ID
-     * @param pageParams 페이징 객체
+     * @param pageParams 페이징 정보
      * @return 리뷰 목록
      * @see com.vj.lets.web.dashboard.controller.HostController
      */

@@ -4,8 +4,10 @@ import lombok.*;
 
 /**
  * 결제 DTO
- * 작성일 (2023-09-10)
- * @author 박상훈
+ *
+ * @author VJ특공대 박상훈
+ * @version 1.0
+ * @since 2023-09-10 (일)
  */
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,6 +16,7 @@ import lombok.*;
 @ToString
 @Builder
 public class Payment {
+
     private int id;
     private String paymentDate;
     private String payStatus;
@@ -22,4 +25,5 @@ public class Payment {
     private String payPhoneNumber;
     private String paymentType;
     private int reservationId;
+
 }

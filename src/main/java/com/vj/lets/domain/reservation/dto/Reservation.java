@@ -4,8 +4,10 @@ import lombok.*;
 
 /**
  * 예약 DTO
- * 작성일 (2023-09-07)
- * @author 박상훈
+ *
+ * @author VJ특공대 박상훈
+ * @version 1.0
+ * @since 2023-09-07 (목)
  */
 @NoArgsConstructor
 @AllArgsConstructor

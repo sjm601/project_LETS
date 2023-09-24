@@ -3,7 +3,7 @@ package com.vj.lets.domain.room.dto;
 import lombok.*;
 
 /**
- * Room dto
+ * 카페 룸 DTO
  *
  * @author VJ특공대 강소영
  * @version 1.0
@@ -16,6 +16,7 @@ import lombok.*;
 @ToString
 @Builder
 public class Room {
+
     private int id;
     private String name;
     private String description;
@@ -24,4 +25,5 @@ public class Room {
     private int price;
     private String status;
     private int cafeId;
+
 }
