@@ -142,6 +142,7 @@
                c.ID                                        "cafeId",
                c.IMAGE_PATH,
                m.NAME                                      "member_name",
+               m.EMAIL                                     "email",
                roo.NAME                                    "room_name",
                res.HEAD_COUNT,
                TO_CHAR(res.BOOKING_DATE, 'YYYY/MM/DD')     "booking_date",
