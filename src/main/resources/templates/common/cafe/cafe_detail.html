@@ -425,7 +425,7 @@
     </th:block>
 
     <th:block th:fragment="scripts">
-        <script>
+        <script th:inline="javascript">
             const id = [[${Cafe['id']}]];
             const startTime = [[${Cafe['startTime']}]];
             const endTime = [[${Cafe['endTime']}]];
