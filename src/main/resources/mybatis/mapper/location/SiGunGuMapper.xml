@@ -20,4 +20,5 @@
         WHERE sgg.NAME = #{siGunGuName}
           AND sd.NAME LIKE '%' || #{siDoName} || '%'
     </select>
+
 </mapper>

@@ -77,10 +77,12 @@
                SG.IMAGE_PATH    IMAGEPATH,
                SG.SUBJECT       SUBJECT,
                SGG.NAME         SIGUNGUNAME,
+               SD.NAME          SIDONAME,
                M.NAME           MEMBERNAME
         FROM STUDY_GROUP SG
                  JOIN GROUP_MEMBER_LIST GML ON SG.ID = GML.STUDY_GROUP_ID
                  JOIN SI_GUN_GU SGG ON SG.SI_GUN_GU_ID = SGG.ID
+                 JOIN SI_DO SD ON SGG.SI_DO_ID = SD.ID
                  JOIN MEMBER M ON M.ID = GML.MEMBER_ID
         WHERE SG.ID = #{id}
           AND GML.POSITION = '팀장'

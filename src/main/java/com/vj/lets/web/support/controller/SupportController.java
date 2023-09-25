@@ -91,9 +91,9 @@ public class SupportController {
      */
     @PostMapping("/contact")
     public String contactRegister(@ModelAttribute ContactForm contactForm, HttpServletResponse response, Model model) {
-        List<Contact> checkContact = contactService.checkContact(contactForm);
+        List<Contact>checkContact = contactService.checkContact(contactForm);
 
-        if (checkContact == null) {
+        if (checkContact == null || checkContact.isEmpty()) {
             Contact regiContact = Contact.builder()
                     .email(contactForm.getEmail())
                     .name(contactForm.getName())
