@@ -56,12 +56,9 @@
                                                     명
                                                 </div>
                                             </li>
-                                            <!-- 스터디 팀원이나 가입 전 회원은 팀장, 팀장은 멤버 초대 노출 -->
+                                            <!-- 스터디 팀원이나 가입 전 회원은 팀장 노출 -->
                                             <li th:if="${groupMember == null || groupMember.position == '팀원'}">
                                                 <div>팀장 : <span th:text="${studyGroup['MEMBERNAME']}">이희영</span></div>
-                                            </li>
-                                            <li th:if="${groupMember != null && groupMember.position == '팀장'}">
-                                                <div><span>멤버 초대</span></div>
                                             </li>
                                         </ul>
                                     </div>

@@ -119,11 +119,14 @@ function groupContactAddRow(data, i) {
     const tr = document.createElement('tr');
     const today = new Date();
     let birthday = `${data[i].BIRTHDAY}`;
-    let dayCount = today.getTime() - birthday;
+    birthday = new Date(birthday);
+    let dayCount = today.getTime() - birthday.getTime();
     let age = 0;
 
     if (data[i].BIRTHDAY !== undefined) {
         age = Math.floor(dayCount / (1000 * 60 * 60 * 24 * 365));
+    } else {
+        age = '알수없음';
     }
 
     tbodyContactList.appendChild(tr);

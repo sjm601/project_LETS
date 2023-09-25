@@ -41,19 +41,26 @@
                         <div class="col-lg-8">
                             <section id="description">
                                 <h2>운영시간
-                                    <strong th:if="${Cafe['startTime']} <= ${#calendars.format(#calendars.createNow(),'HH')} and ${Cafe['endTime']} > ${#calendars.format(#calendars.createNow(),'HH')}" class="point-blue ms-1 mt-0">영업중</strong>
-                                    <strong th:unless="${Cafe['startTime']} <= ${#calendars.format(#calendars.createNow(),'HH')} and ${Cafe['endTime']} > ${#calendars.format(#calendars.createNow(),'HH')}" class="point-blue ms-1 mt-0">영업종료</strong>
+                                    <strong th:if="${Cafe['startTime']} <= ${#calendars.format(#calendars.createNow(),'HH')} and ${Cafe['endTime']} > ${#calendars.format(#calendars.createNow(),'HH')}"
+                                            class="point-blue ms-1 mt-0">영업중</strong>
+                                    <strong th:unless="${Cafe['startTime']} <= ${#calendars.format(#calendars.createNow(),'HH')} and ${Cafe['endTime']} > ${#calendars.format(#calendars.createNow(),'HH')}"
+                                            class="point-blue ms-1 mt-0">영업종료</strong>
                                 </h2>
                                 <p th:text="|${Cafe['startTime']}시 ~ ${Cafe['endTime']}시|">12:00 ~ 22:00</p>
                                 <h2>위치</h2>
-                                <p th:if="${Cafe['detailAddress']} != null" th:text="|${Cafe['siDoName']} ${Cafe['siGunGuName']} ${Cafe['roadAddress']} ${Cafe['detailAddress']}|">서울시 노원구 동일로 300 4층</p>
-                                <p th:unless="${Cafe['detailAddress']} != null" th:text="|${Cafe['siDoName']} ${Cafe['siGunGuName']} ${Cafe['roadAddress']}|">서울시 노원구 동일로 300</p>
+                                <p th:if="${Cafe['detailAddress']} != null"
+                                   th:text="|${Cafe['siDoName']} ${Cafe['siGunGuName']} ${Cafe['roadAddress']} ${Cafe['detailAddress']}|">
+                                    서울시 노원구 동일로 300 4층</p>
+                                <p th:unless="${Cafe['detailAddress']} != null"
+                                   th:text="|${Cafe['siDoName']} ${Cafe['siGunGuName']} ${Cafe['roadAddress']}|">서울시 노원구
+                                    동일로 300</p>
                                 <h2>소개</h2>
                                 <p th:text="${Cafe['description']}">Per consequat </p>
                                 <ul class="none">
                                     <div class="row">
                                         <li th:each="cafeOption : ${options}" class="col-lg-6">
-                                            <i th:class="|${cafeOption.imagePath} me-2|" class="fa-regular fa-eye me-2"></i>
+                                            <i th:class="|${cafeOption.imagePath} me-2|"
+                                               class="fa-regular fa-eye me-2"></i>
                                             <em th:text="${cafeOption.name}"></em>
                                         </li>
                                     </div>
@@ -64,10 +71,12 @@
                                     <h3 class="mb-3">방 종류</h3>
                                     <div class="pictures_grid magnific-gallery clearfix" th:each="room : ${roomList}">
                                         <div class="d-flex">
-                                            <figure class="mb-2 me-lg-3"><a th:href="@{${room.imagePath}}" href="img/detail_gallery/detail_1.jpg"
+                                            <figure class="mb-2 me-lg-3"><a th:href="@{${room.imagePath}}"
+                                                                            href="img/detail_gallery/detail_1.jpg"
                                                                             title="Photo title"
                                                                             data-effect="mfp-zoom-in"><img
-                                                    th:src="${room.imagePath}" src="img/detail_gallery/detail_1.jpg" alt=""></a></figure>
+                                                    th:src="${room.imagePath}" src="img/detail_gallery/detail_1.jpg"
+                                                    alt=""></a></figure>
                                             <div class="row mb-3 mt-lg-3">
                                                 <div class="col-lg-12">
                                                     <ul class="bullets">
@@ -88,7 +97,8 @@
                                             </div>
                                         </div>
                                         <!-- /row -->
-                                        <p th:text="${room.description}">Per consequat adolescens ex, cu nibh commune</p>
+                                        <p th:text="${room.description}">Per consequat adolescens ex, cu nibh
+                                            commune</p>
                                     </div>
                                     <!-- /room-option -->
                                 </div>
@@ -195,64 +205,69 @@
                                         </div>
                                         <!-- /row -->
                                     </div>
-
                                     <hr>
                                     <div class="reviews-container">
                                         <ul>
-                                            <li th:each="review : ${reviews}">
-                                                <div class="review-box clearfix">
-                                                    <figure class="rev-thumb"><img src="img/avatar1.jpg" alt="">
-                                                    </figure>
-                                                    <div class="rev-content">
-                                                        <div class="rating">
-                                                            <div th:switch="${review['rating']}">
-                                                                <div th:case="5"><i class="icon_star voted"></i><i
-                                                                        class="icon_star voted"></i><i
-                                                                        class="icon_star voted"></i><i
-                                                                        class="icon_star voted"></i><i
-                                                                        class="icon_star voted"></i></div>
-                                                                <div th:case="4"><i class="icon_star voted"></i><i
-                                                                        class="icon_star voted"></i><i
-                                                                        class="icon_star voted"></i><i
-                                                                        class="icon_star voted"></i><i
-                                                                        class="icon_star"></i></div>
-                                                                <div th:case="3"><i class="icon_star voted"></i><i
-                                                                        class="icon_star voted"></i><i
-                                                                        class="icon_star voted"></i><i
-                                                                        class="icon_star"></i><i class="icon_star"></i>
+                                            <li th:each="review : ${reviews}" class="shadow pb-3 mb-3">
+                                                <div class="review-box clearfix ps-0">
+                                                    <div class="d-flex">
+                                                        <figure class="m-3"><img th:src="${review['writerImagePath']}"
+                                                                                 src="img/avatar1.jpg" alt=""
+                                                                                 style="width: 75px; height: 75px; border-radius: 50%;">
+                                                        </figure>
+                                                        <div class="rev-content w-100">
+                                                            <div class="rating">
+                                                                <div th:switch="${review['rating']}">
+                                                                    <div th:case="5"><i class="icon_star voted"></i><i
+                                                                            class="icon_star voted"></i><i
+                                                                            class="icon_star voted"></i><i
+                                                                            class="icon_star voted"></i><i
+                                                                            class="icon_star voted"></i></div>
+                                                                    <div th:case="4"><i class="icon_star voted"></i><i
+                                                                            class="icon_star voted"></i><i
+                                                                            class="icon_star voted"></i><i
+                                                                            class="icon_star voted"></i><i
+                                                                            class="icon_star"></i></div>
+                                                                    <div th:case="3"><i class="icon_star voted"></i><i
+                                                                            class="icon_star voted"></i><i
+                                                                            class="icon_star voted"></i><i
+                                                                            class="icon_star"></i><i
+                                                                            class="icon_star"></i>
+                                                                    </div>
+                                                                    <div th:case="2"><i class="icon_star voted"></i><i
+                                                                            class="icon_star voted"></i><i
+                                                                            class="icon_star"></i><i
+                                                                            class="icon_star"></i><i
+                                                                            class="icon_star"></i></div>
+                                                                    <div th:case="*"><i class="icon_star voted"></i><i
+                                                                            class="icon_star voted"></i><i
+                                                                            class="icon_star voted"></i><i
+                                                                            class="icon_star voted"></i><i
+                                                                            class="icon_star"></i></div>
                                                                 </div>
-                                                                <div th:case="2"><i class="icon_star voted"></i><i
-                                                                        class="icon_star voted"></i><i
-                                                                        class="icon_star"></i><i
-                                                                        class="icon_star"></i><i
-                                                                        class="icon_star"></i></div>
-                                                                <div th:case="*"><i class="icon_star voted"></i><i
-                                                                        class="icon_star voted"></i><i
-                                                                        class="icon_star voted"></i><i
-                                                                        class="icon_star voted"></i><i
-                                                                        class="icon_star"></i></div>
                                                             </div>
-                                                        </div>
-                                                        <div class="rev-info mb-1"
-                                                             th:text="|${review['writerName']} - ${review['writeDate']}|">
-                                                            Guest – April 03, 2016:
-                                                        </div>
-                                                        <div class="rev-info" th:text="|방타입 ${review['roomName']}|">
-                                                            방타입 A1
-                                                        </div>
-                                                        <div class="rev-text">
-                                                            <p th:text="${review['content']}">
-                                                                Sed eget turpis a pede tempor malesuada. Vivamus quis mi
-                                                                at
-                                                                leo
-                                                            </p>
+                                                            <div class="rev-info mb-1"
+                                                                 th:text="|${review['writerName']} - ${review['writeDate']}|">
+                                                                Guest – April 03, 2016:
+                                                            </div>
+                                                            <div class="rev-info" th:text="|방타입 ${review['roomName']}|">
+                                                                방타입 A1
+                                                            </div>
+                                                            <div class="rev-text">
+                                                                <p th:text="${review['content']}">
+                                                                    Sed eget turpis a pede tempor malesuada. Vivamus
+                                                                    quis mi
+                                                                    at
+                                                                    leo
+                                                                </p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <th:block th:if="${review['commentContent']} != null">
                                                     <div class="review-box clearfix cafe-reply">
                                                         <figure class="rev-thumb"><img th:src="${Cafe['imagePath']}"
-                                                                                       src="img/avatar1.jpg" alt="">
+                                                                                       src="img/avatar1.jpg" alt="" style="width: 75px; height: 75px; border-radius: 50%;">
                                                         </figure>
                                                         <div class="rev-content">
                                                             <div class="rev-info"
@@ -339,7 +354,6 @@
                                             <em th:case="2">Pleasant</em>
                                             <em th:case="1">Poor</em>
                                             <em th:case="*">No Rating</em>
-
                                             <em th:if="${Cafe['reviewCount']} != null"
                                                 th:text="${Cafe['reviewCount']}+' Reviews'">30 Reviews</em>
                                             <em th:if="${Cafe['reviewCount']} == null">0 Reviews</em>
@@ -374,7 +388,6 @@
                                         </div>
                                     </div>
 
-
                                     <div class="form-group clearfix">
                                         <div class="custom-select-form">
                                             <select class="wide" name="startTime" id="startTimeSelect">
@@ -398,7 +411,6 @@
                                         </div>
                                     </div>
 
-
                                     <div class="price text-end">
                                         <strong class="me-2">총</strong><small><span
                                             id="calculateRoomPrice">시간 당 가격</span><i
@@ -407,8 +419,8 @@
                                         <strong class="price-text"><span id="totalPrice">결제 가격</span><i
                                                 class="fa-solid fa-won-sign ms-1"></i></strong>
                                     </div>
-                                    <button type="submit" class=" add_top_30 btn_1 full-width purchase">바로 예약
-                                    </button>
+
+                                    <button type="submit" class=" add_top_30 btn_1 full-width purchase">바로 예약</button>
 
                                     <div class="text-center"><small>다음 과정에서 예약 확인 후 결제가 이루어 집니다.</small></div>
                                 </div>
@@ -445,7 +457,8 @@
             let selectDate = "";
         </script>
         <!-- Map -->
-        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=665c870d0cd68fefbb228c9c40d58cf1"></script>
+        <script type="text/javascript"
+                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=665c870d0cd68fefbb228c9c40d58cf1"></script>
         <script th:inline="javascript">
             var name = [[${Cafe['name']}]];
             var lat = [[${Cafe['latitude']}]];
@@ -470,7 +483,7 @@
             // 마커 이미지의 이미지 주소입니다
             var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
-            for (var i = 0; i < positions.length; i ++) {
+            for (var i = 0; i < positions.length; i++) {
 
                 // 마커 이미지의 이미지 크기 입니다
                 var imageSize = new kakao.maps.Size(24, 35);
@@ -482,8 +495,8 @@
                 var marker = new kakao.maps.Marker({
                     map: map, // 마커를 표시할 지도
                     position: positions[i].latlng, // 마커를 표시할 위치
-                    title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-                    image : markerImage // 마커 이미지
+                    title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                    image: markerImage // 마커 이미지
                 });
             }
         </script>

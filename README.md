@@ -60,14 +60,14 @@ Lets는 Let's Easy Together Study의 약자로 스터디 카페 예약 서비스
 <br />
 
 ### 👨‍💻👩‍💻 멤버 구성
-<div style="text-align: center">
+<div align="center">
 <table>
     <tr>
-        <td>이희영</td>
-        <td>강소영</td>
-        <td>김종원</td>
-        <td>박상훈</td>
-        <td>이한솔</td>
+        <td align="center">이희영</td>
+        <td align="center">강소영</td>
+        <td align="center">김종원</td>
+        <td align="center">박상훈</td>
+        <td align="center">이한솔</td>
     </tr>
     <tr>
         <td><img src="https://github.com/Ezen-Lets/final_project_lets/assets/139057065/b17ad1a2-5d7d-40cc-a85f-6d70a0a81965" height=150 width=150></td>
@@ -77,11 +77,11 @@ Lets는 Let's Easy Together Study의 약자로 스터디 카페 예약 서비스
         <td><img src="https://github.com/Ezen-Lets/final_project_lets/assets/139057065/4759e791-f616-4329-8370-c672996cb9d4" height=150 width=150></td>
     </tr>
     <tr>
-        <td><a href="https://github.com/heeyeong91">@heeyeong</a></td>
-        <td><a href="https://github.com/soyeong-elena">@soyeong</a></td>
-        <td><a href="https://github.com/911kimjonga">@jongwon</a></td>
-        <td><a href="https://github.com/sjm601">@sanghoon</a></td>
-        <td><a href="https://github.com/lhansol1996">@hansol</a></td>
+        <td align="center"><a href="https://github.com/heeyeong91">@heeyeong</a></td>
+        <td align="center"><a href="https://github.com/soyeong-elena">@soyeong</a></td>
+        <td align="center"><a href="https://github.com/911kimjonga">@jongwon</a></td>
+        <td align="center"><a href="https://github.com/sjm601">@sanghoon</a></td>
+        <td align="center"><a href="https://github.com/lhansol1996">@hansol</a></td>
     </tr>
 </table>
 </div>
