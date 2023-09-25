@@ -22,7 +22,7 @@
         <set>
             <if test="title != null or title != ''">title = #{title},</if>
             <if test="content != null or content != ''">content = #{content},</if>
-            <if test="content != null or content != ''">image_path = #{imagePath, jdbcType=NULL}</if>
+            <if test="imagePath != null or imagePath != ''">image_path = #{imagePath}</if>
         </set>
         WHERE ID = #{id}
     </update>
@@ -58,19 +58,22 @@
                title,
                content,
                writer,
+               member_image_path MEMBERIMAGEPATH,
                regdate,
-               image_path
+               image_path IMAGEPATH
         FROM (SELECT id,
                      CEIL(ROWNUM / #{pageParams.elementSize}) request_page,
                      title,
                      content,
                      writer,
+                     member_image_path,
                      regdate,
                      image_path
               FROM (SELECT a.ID                                     id,
                            a.TITLE                                  title,
                            a.CONTENT                                content,
                            m.NAME                                   writer,
+                           m.IMAGE_PATH                             member_image_path,
                            TO_CHAR(a.REGDATE, 'yyyy-MM-dd HH24:MI') regdate,
                            a.IMAGE_PATH                             image_path
                     FROM ARTICLE a

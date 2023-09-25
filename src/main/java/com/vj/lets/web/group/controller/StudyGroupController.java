@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +34,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 스터디 그룹 컨트롤러
@@ -45,6 +47,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/group")
 @RequiredArgsConstructor
+@Slf4j
 public class StudyGroupController {
 
     private final StudyGroupService studyGroupService;
@@ -521,7 +524,12 @@ public class StudyGroupController {
                 String imageExtension = StringUtils.getFilenameExtension(imagePath.getOriginalFilename());
                 // 업로드 한 이미지 다운로드 받을 위치 설정
                 StringBuilder imageDir = new StringBuilder();
-                imageDir.append(articleImageLocation).append(loginMember.getId()).append(".").append(imageExtension);
+                UUID uuid = UUID.randomUUID();
+                StringBuilder stb = new StringBuilder();
+                stb.append(loginMember.getId()).append("_").append(uuid);
+                String uuidImagePath = stb.toString();
+                imageDir.append(articleImageLocation).append(uuidImagePath).append(".").append(imageExtension);
+
                 File uploadDir = new File(imageDir.toString());
                 // 폴더 없으면 생성
                 if (!uploadDir.exists()) {
@@ -530,7 +538,7 @@ public class StudyGroupController {
                 imagePath.transferTo(uploadDir);
 
                 StringBuilder imagePathDB = new StringBuilder();
-                imagePathDB.append(articleImageDBPath).append(loginMember.getId()).append(".").append(imageExtension);
+                imagePathDB.append(articleImageDBPath).append(uuidImagePath).append(".").append(imageExtension);
                 article.setImagePath(imagePathDB.toString());
             }
 
@@ -608,15 +616,20 @@ public class StudyGroupController {
 
         if (loginMember.getId() == articleMemberId) {
 
-            if (!imagePath.isEmpty()) {
-                targetArticle.setImagePath(null);
+            if (imagePath.isEmpty()) {
+                targetArticle.setImagePath("");
             } else if (!imagePath.isEmpty()) {
                 // 이미지 폴더에 저장
                 // 업로드 이미지 확장자 가져오기
                 String imageExtension = StringUtils.getFilenameExtension(imagePath.getOriginalFilename());
                 // 업로드 한 이미지 다운로드 받을 위치 설정
                 StringBuilder imageDir = new StringBuilder();
-                imageDir.append(articleImageLocation).append(loginMember.getId()).append(".").append(imageExtension);
+                UUID uuid = UUID.randomUUID();
+                StringBuilder stb = new StringBuilder();
+                stb.append(loginMember.getId()).append("_").append(uuid);
+                String uuidImagePath = stb.toString();
+                imageDir.append(articleImageLocation).append(uuidImagePath).append(".").append(imageExtension);
+                log.info("타겟 {}", imageDir);
                 File uploadDir = new File(imageDir.toString());
                 // 폴더 없으면 생성
                 if (!uploadDir.exists()) {
@@ -625,8 +638,10 @@ public class StudyGroupController {
                 imagePath.transferTo(uploadDir);
 
                 StringBuilder imagePathDB = new StringBuilder();
-                imagePathDB.append(articleImageDBPath).append(loginMember.getId()).append(".").append(imageExtension);
+                imagePathDB.append(articleImageDBPath).append(uuidImagePath).append(".").append(imageExtension);
+                log.info("타겟 {}", imagePathDB);
                 targetArticle.setImagePath(imagePathDB.toString());
+                log.info("타겟 {}", targetArticle);
             }
             articleService.update(targetArticle);
 

@@ -107,7 +107,7 @@
                                     <div class="d-flex mb-5 justify-content-between">
                                         <div class="d-flex">
                                             <div>
-                                                <img class="rounded-5" src="/img/avatar1.jpg" alt="">
+                                                <img th:src="${article['MEMBERIMAGEPATH']}" class="rounded-5" src="/img/avatar1.jpg" alt="" style="width: 50px; height: 50px; border-radius: 50%;">
                                             </div>
                                             <div class="ms-3 my-auto">
                                                 <h6 th:text="${article['WRITER']}">이희영</h6>
