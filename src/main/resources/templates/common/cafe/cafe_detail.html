@@ -17,7 +17,7 @@
     <th:block th:fragment="content">
         <!-- main -->
         <main>
-            <section class="hero_in restaurants_detail">
+            <section class="hero_in restaurants_detail" th:style="'background-image: url('+ ${Cafe['imagePath']} +')'">
                 <div class="wrapper">
                     <div class="container">
                         <h1 class="fadeInUp" th:text="${Cafe['name']}">EZEN Study Cafe</h1>
@@ -267,7 +267,7 @@
                                                 <th:block th:if="${review['commentContent']} != null">
                                                     <div class="review-box clearfix cafe-reply">
                                                         <figure class="rev-thumb"><img th:src="${Cafe['imagePath']}"
-                                                                                       src="img/avatar1.jpg" alt="" style="width: 75px; height: 75px; border-radius: 50%;">
+                                                                                       src="img/avatar1.jpg" alt="">
                                                         </figure>
                                                         <div class="rev-content">
                                                             <div class="rev-info"
@@ -458,7 +458,7 @@
         </script>
         <!-- Map -->
         <script type="text/javascript"
-                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=665c870d0cd68fefbb228c9c40d58cf1"></script>
+                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2f504f2f474c5702e355f69efa5bd75c"></script>
         <script th:inline="javascript">
             var name = [[${Cafe['name']}]];
             var lat = [[${Cafe['latitude']}]];
