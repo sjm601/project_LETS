@@ -22,7 +22,7 @@ public class ContactForm {
     String phoneNumber;
     String cafeName;
     String address;
-    int businessNumber;
+    long businessNumber;
     String message;
 
 }

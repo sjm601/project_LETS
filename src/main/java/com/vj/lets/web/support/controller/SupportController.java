@@ -93,7 +93,7 @@ public class SupportController {
     public String contactRegister(@ModelAttribute ContactForm contactForm, HttpServletResponse response, Model model) {
         List<Contact> checkContact = contactService.checkContact(contactForm);
 
-        if (checkContact == null) {
+        if (checkContact == null || checkContact.isEmpty()) {
             Contact regiContact = Contact.builder()
                     .email(contactForm.getEmail())
                     .name(contactForm.getName())

@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <th:block
-    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+        th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
 
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
@@ -41,47 +41,45 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                        <img th:if="${cafe.imagePath} == null" src="/upload_image/cafe/default_cafe.png"
-                             style="max-width: 100%" alt="...">
-                        <img th:if="${cafe.imagePath} != null" th:src="${cafe.imagePath}"
-                             src="/upload_image/cafe/default_cafe.png" style="max-width: 100%" alt="...">
+                            <img th:if="${cafe.get('imagePath')} == null" src="/upload_image/cafe/default_cafe.png"
+                                 style="max-width: 100%" alt="...">
+                            <img th:if="${cafe.get('imagePath')} != null" th:src="${cafe.imagePath}"
+                                 src="/upload_image/cafe/default_cafe.png" style="max-width: 100%" alt="...">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <label>스터디 카페 이름</label>
-                            <p th:text="${cafe.get('name')}"></p>
-                        </div>
-                        <div class="col-md-6">
                             <label>카페 전화번호</label>
-                            <p th:text="${cafe.get('phoneNumber')}"></p>
+                            <p th:if="${cafe.get('phoneNumber')}" th:text="${cafe.get('phoneNumber')}"></p>
                         </div>
                         <div class="col-md-6">
                             <label>운영시작시간</label>
-                            <p th:text="|${cafe.get('startTime')}시|"></p>
+                            <p th:if="${cafe.get('startTime')}" th:text="|${cafe.get('startTime')}시|"></p>
                         </div>
                         <div class="col-md-6">
                             <label>운영종료시간</label>
-                            <p th:text="|${cafe.get('endTime')}시|"></p>
+                            <p th:if="${cafe.get('endTime')}" th:text="|${cafe.get('endTime')}시|"></p>
                         </div>
                         <div class="col-md-6">
                             <label>카페 주소</label>
-                            <p th:if="${cafe.get('detailAddress')} != null" th:text="|${cafe.get('siDoName')} ${cafe.get('siGunGuName')} ${cafe.get('roadAddress')} ${cafe.get('detailAddress')}|"></p>
-                            <p th:unless="${cafe.get('detailAddress')} != null" th:text="|${cafe.get('siDoName')} ${cafe.get('siGunGuName')} ${cafe.get('roadAddress')}|"></p>
+                            <p th:if="${cafe.get('detailAddress')} != null"
+                               th:text="|${cafe.get('siDoName')} ${cafe.get('siGunGuName')} ${cafe.get('roadAddress')} ${cafe.get('detailAddress')}|"></p>
+                            <p th:unless="${cafe.get('detailAddress')} != null"
+                               th:text="|${cafe.get('siDoName')} ${cafe.get('siGunGuName')} ${cafe.get('roadAddress')}|"></p>
                         </div>
                     </div>
-                    <!-- /row-->
                     <div class="row">
                         <div class="col-md-12">
                             <label>카페 설명</label>
-                            <p th:text="${cafe.get('description')}"></p>
+                            <p th:if="${cafe.get('description')}" th:text="${cafe.get('description')}"></p>
                         </div>
                     </div>
+                    <!-- /row-->
                     <!-- /row-->
                     <div class="row">
                         <div class="col-md-12">
                             <label>카페 옵션</label>
-                            <ul class="list-unstyled">
+                            <ul th:if="${cafeOptions}" class="list-unstyled">
                                 <li th:each="cafeOption:${cafeOptions}">
                                     <th:block><i th:class="|${cafeOption.imagePath} mr-2|"></i></th:block>
                                     <th:block th:text="${cafeOption.name}"></th:block>
@@ -126,7 +124,6 @@
                 <div class="form-group">
                     <label th:for="address">주소</label>
                     <input type="text" class="form-control" id="address_kakao_all"
-                           th:value="|${cafe.get('siDoName')} ${cafe.get('siGunGuName')} ${cafe.get('roadAddress')}|"
                            placeholder="주소"/>
                     <button type="button" class="form-control btn_1 gray mt-2" id="address_kakao_btn"
                             name="address">주소검색
@@ -134,26 +131,32 @@
                 </div>
                 <div class="form-group">
                     <label th:for="phoneNumber">상세주소</label>
-                    <input type="text" class="form-control" name="detailAddress"  th:value="${cafe.get('detailAddress')}" placeholder="상세 주소"/>
+                    <input type="text" class="form-control" name="detailAddress" th:value="${cafe.get('detailAddress')}"
+                           placeholder="상세 주소"/>
                 </div>
                 <div class="form-group">
-                    <input type="hidden" class="form-control" id="address_kakao_do" name="siDoName" th:value="${cafe.get('siDoName')}"
+                    <input type="hidden" class="form-control" id="address_kakao_do" name="siDoName"
+                           th:value="${cafe.get('siDoName')}"
                            placeholder="ex. 서울특별시 또는 도(강원특별자치도)">
                 </div>
                 <div class="form-group">
-                    <input type="hidden" class="form-control" id="address_kakao_gun" name="siGunGuName" th:value="${cafe.get('siGunGuName')}"
+                    <input type="hidden" class="form-control" id="address_kakao_gun" name="siGunGuName"
+                           th:value="${cafe.get('siGunGuName')}"
                            placeholder="ex. 구(서초구) 또는 군(구례군)">
                 </div>
                 <div class="form-group">
-                    <input type="hidden" class="form-control" id="address_kakao_detail" name="roadAddress" th:value="${cafe.get('roadAddress')}"
+                    <input type="hidden" class="form-control" id="address_kakao_detail" name="roadAddress"
+                           th:value="${cafe.get('roadAddress')}"
                            placeholder="ex. 도로명 주소">
                 </div>
                 <div class="form-group">
-                    <input type="hidden" class="form-control" id="lat" name="latitude" th:value="${cafe.get('latitude')}"
+                    <input type="hidden" class="form-control" id="lat" name="latitude"
+                           th:value="${cafe.get('latitude')}"
                            placeholder="위도">
                 </div>
                 <div class="form-group">
-                    <input type="hidden" class="form-control" id="lng" name="longitude" th:value="${cafe.get('longitude')}"
+                    <input type="hidden" class="form-control" id="lng" name="longitude"
+                           th:value="${cafe.get('longitude')}"
                            placeholder="경도">
                 </div>
                 <div class="form-group">
@@ -217,7 +220,8 @@
         <script src="/dashboard/vendor/dropzone.min.js"></script>
         <!--카카오 지도 검색 api-->
         <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=665c870d0cd68fefbb228c9c40d58cf1&libraries=services"></script>
+        <script type="text/javascript"
+                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=665c870d0cd68fefbb228c9c40d58cf1&libraries=services"></script>
         <script th:inline="javascript">
             var geocoder = new kakao.maps.services.Geocoder();
             window.onload = function () {
@@ -244,7 +248,7 @@
                 });
             }
             <!-- 카카오 지도 api 요청 -->
-            var callback = function(result, status) {
+            var callback = function (result, status) {
                 if (status === kakao.maps.services.Status.OK) {
                     // console.log(result[0].x);
                     // console.log(result[0].y);

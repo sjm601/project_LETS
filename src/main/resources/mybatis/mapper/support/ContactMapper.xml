@@ -55,7 +55,7 @@
                     <where>
                         <if test="type != null and type != ''">STATUS = #{type}</if>
                     </where>
-                    ORDER BY CONTACT_DATE))
+                    ORDER BY CONTACT_DATE DESC))
         WHERE "request_page" = #{requestPage}
     </select>
 
