@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <th:block
-    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+        th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
 
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
@@ -17,7 +17,7 @@
         <!-- Content -->
         <div class="content-wrapper">
             <div class="container-fluid">
-                <!-- Breadcrumbs-->
+                <!-- Breadcrumbs -->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a href="admin_dashboard.html">대시보드</a>
@@ -116,7 +116,8 @@
                                                     <th:block th:text="${contact.address}">서울시 노원구</th:block>
                                                 </li>
                                                 <li><strong>사업자 등록번호</strong>
-                                                    <th:block th:text="${contact.businessNumber}">000-00-000000</th:block>
+                                                    <th:block th:text="${contact.businessNumber}">000-00-000000
+                                                    </th:block>
                                                 </li>
                                                 <li><strong>입점 신청 날짜</strong>
                                                     <th:block th:text="${contact.contactDate}">2023-01-01</th:block>
@@ -164,16 +165,17 @@
                         </ul>
                     </div>
                 </div>
-                <!-- /box_general-->
+                <!-- /box_general -->
                 <nav aria-label="...">
                     <ul class="pagination pagination-sm add_bottom_30">
                         <li class="page-item">
                             <a th:if="${pagination.showPrevious}"
-                               th:href="@{|?page=${pagination.previousStartPage}&type=${pagination.params.type}|}" class="page-link" href="#"
+                               th:href="@{|?page=${pagination.previousStartPage}&type=${pagination.params.type}|}"
+                               class="page-link" href="#"
                                tabindex="-1"><i class="fa-solid fa-angles-left" style="color: #000000;"></i></a>
                         </li>
                         <th:block
-                            th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
+                                th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
                             <li th:if="${i == pagination.params.requestPage}" class="page-item active">
                                 <a th:text="${i}" class="page-link">1</a>
                             </li>
@@ -186,15 +188,16 @@
                         <li class="page-item">
                             <a th:if="${pagination.showNext}"
                                th:href="@{|?page=${pagination.nextStartPage}&type=${pagination.params.type}|}"
-                               class="page-link" href="#"><i class="fa-solid fa-angles-right" style="color: #000000;"></i></a>
+                               class="page-link" href="#"><i class="fa-solid fa-angles-right"
+                                                             style="color: #000000;"></i></a>
                         </li>
                     </ul>
                 </nav>
-                <!-- /pagination-->
+                <!-- /pagination -->
             </div>
-            <!-- /container-fluid-->
+            <!-- /container-fluid -->
         </div>
-        <!-- /container-wrapper-->
+        <!-- /container-wrapper -->
         <!-- /Content -->
     </th:block>
 

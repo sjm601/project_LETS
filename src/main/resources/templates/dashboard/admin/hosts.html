@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <th:block
-    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+        th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
 
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
@@ -14,7 +14,7 @@
         <!-- Content -->
         <div class="content-wrapper">
             <div class="container-fluid">
-                <!-- Breadcrumbs-->
+                <!-- Breadcrumbs -->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a href="admin_dashboard.html">대시보드</a>
@@ -27,8 +27,10 @@
                         <div class="filter">
                             <div class="styled-select short">
                                 <select name="type" id="orderType">
-                                    <option th:selected="${pagination.params.type == 'latest'}" value="latest">최근 순</option>
-                                    <option th:selected="${pagination.params.type == 'oldest'}" value="oldest">오래된 순</option>
+                                    <option th:selected="${pagination.params.type == 'latest'}" value="latest">최근 순
+                                    </option>
+                                    <option th:selected="${pagination.params.type == 'oldest'}" value="oldest">오래된 순
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -44,7 +46,7 @@
                                     </li>
                                     <li><strong>주소</strong>
                                         <th:block
-                                            th:text="|${cafe.get('siDoName')} ${cafe.get('siGunGuName')} ${cafe.get('roadAddress')} ${cafe.get('detailAddress')}|">
+                                                th:text="|${cafe.get('siDoName')} ${cafe.get('siGunGuName')} ${cafe.get('roadAddress')} ${cafe.get('detailAddress')}|">
                                             가나다라카페
                                         </th:block>
                                     </li>
@@ -69,16 +71,17 @@
                         </ul>
                     </div>
                 </div>
-                <!-- /box_general-->
+                <!-- /box_general -->
                 <nav aria-label="...">
                     <ul class="pagination pagination-sm add_bottom_30">
                         <li class="page-item">
                             <a th:if="${pagination.showPrevious}"
-                               th:href="@{|?page=${pagination.previousStartPage}&type=${pagination.params.type}|}" class="page-link" href="#"
+                               th:href="@{|?page=${pagination.previousStartPage}&type=${pagination.params.type}|}"
+                               class="page-link" href="#"
                                tabindex="-1"><i class="fa-solid fa-angles-left" style="color: #000000;"></i></a>
                         </li>
                         <th:block
-                            th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
+                                th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
                             <li th:if="${i == pagination.params.requestPage}" class="page-item active">
                                 <a th:text="${i}" class="page-link">1</a>
                             </li>
@@ -91,22 +94,23 @@
                         <li class="page-item">
                             <a th:if="${pagination.showNext}"
                                th:href="@{|?page=${pagination.nextStartPage}&type=${pagination.params.type}|}"
-                               class="page-link" href="#"><i class="fa-solid fa-angles-right" style="color: #000000;"></i></a>
+                               class="page-link" href="#"><i class="fa-solid fa-angles-right"
+                                                             style="color: #000000;"></i></a>
                         </li>
                     </ul>
                 </nav>
-                <!-- /pagination-->
+                <!-- /pagination -->
             </div>
-            <!-- /container-fluid-->
+            <!-- /container-fluid -->
         </div>
-        <!-- /container-wrapper-->
+        <!-- /container-wrapper -->
         <!-- /Content -->
     </th:block>
 
     <th:block th:fragment="scripts">
         <script th:inline="javascript">
             document.querySelector('#orderType').addEventListener('change', (event) => {
-                location.href=`?type=${event.target.value}`;
+                location.href = `?type=${event.target.value}`;
             })
         </script>
     </th:block>

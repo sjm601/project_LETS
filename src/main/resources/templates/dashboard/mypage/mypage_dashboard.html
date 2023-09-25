@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
 <th:block
-    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+        th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
 
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
@@ -17,7 +17,7 @@
         <!-- Content -->
         <div class="content-wrapper">
             <div class="container-fluid">
-                <!-- Breadcrumbs-->
+                <!-- Breadcrumbs -->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a th:href="@{/mypage}" href="/member_mypage/index.html">마이페이지</a>
@@ -31,10 +31,12 @@
                     <div class="row justify-content-around">
                         <div class="col-md-4 align-self-center">
                             <div class="text-center">
-                                <img th:if="${member.imagePath} == null" src="/assets/upload_image/member/default_others.png"
+                                <img th:if="${member.imagePath} == null"
+                                     src="/assets/upload_image/member/default_others.png"
                                      style="max-width: 100%" alt="...">
                                 <img th:if="${member.imagePath} != null" th:src="${member.imagePath}"
-                                     src="/assets/upload_image/member/default_others.png" style="max-width: 100%" alt="...">
+                                     src="/assets/upload_image/member/default_others.png" style="max-width: 100%"
+                                     alt="...">
                             </div>
                         </div>
                         <div class="col-md-6 add_top_30">
@@ -44,7 +46,7 @@
                                     <h6 th:text="${member.email}"></h6>
                                 </div>
                             </div>
-                            <!-- /row-->
+                            <!-- /row -->
                             <div class="row">
                                 <div class="col-md-12 my-2">
                                     <label>이름</label>
@@ -74,7 +76,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- /box_general-->
+                <!-- /box_general -->
                 <div class="d-flex flex-row-reverse inline-popups">
                     <a href="#modal_delete" class="btn_1 medium mx-1">탈퇴</a>
                     <a href="#modal_edit" class="btn_1 medium mx-1">수정</a>
@@ -161,8 +163,6 @@
                 회원 탈퇴
             </button>
         </div>
-
-
     </th:block>
 
     <th:block th:fragment="scripts">

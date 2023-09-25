@@ -18,7 +18,7 @@
         <!-- Content -->
         <div class="content-wrapper">
             <div class="container-fluid">
-                <!-- Breadcrumbs-->
+                <!-- Breadcrumbs -->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a th:href="@{/host}" href="/dashboard/host/host_dashboard.html">대시보드</a>
@@ -74,8 +74,8 @@
                             <p th:if="${cafe.get('description')}" th:text="${cafe.get('description')}"></p>
                         </div>
                     </div>
-                    <!-- /row-->
-                    <!-- /row-->
+                    <!-- /row -->
+                    <!-- /row -->
                     <div class="row">
                         <div class="col-md-12">
                             <label>카페 옵션</label>
@@ -87,12 +87,12 @@
                             </ul>
                         </div>
                     </div>
-                    <!-- /row-->
+                    <!-- /row -->
                 </div>
-                <!-- /box_general-->
+                <!-- /box_general -->
 
             </div>
-            <!-- /box_general-->
+            <!-- /box_general -->
             <div class="d-flex flex-row-reverse inline-popups">
                 <a href="#modal-delete" class="btn_1 medium mx-1">탈퇴</a>
                 <a href="#modal-edit" class="btn_1 medium mx-1">수정</a>
@@ -218,7 +218,7 @@
     <th:block th:fragment="scripts">
         <!-- Custom scripts for this page -->
         <script src="/dashboard/vendor/dropzone.min.js"></script>
-        <!--카카오 지도 검색 api-->
+        <!-- 카카오 지도 검색 API -->
         <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script type="text/javascript"
                 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=665c870d0cd68fefbb228c9c40d58cf1&libraries=services"></script>
@@ -247,11 +247,9 @@
                     }).open();
                 });
             }
-            <!-- 카카오 지도 api 요청 -->
+            <!-- 카카오 지도 API 요청 -->
             var callback = function (result, status) {
                 if (status === kakao.maps.services.Status.OK) {
-                    // console.log(result[0].x);
-                    // console.log(result[0].y);
                     document.querySelector('#lat').value = result[0].y;
                     document.querySelector('#lng').value = result[0].x;
                 }

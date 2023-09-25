@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <th:block
-    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+        th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
 
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
@@ -18,7 +18,7 @@
         <!-- Content -->
         <div class="content-wrapper">
             <div class="container-fluid">
-                <!-- Breadcrumbs-->
+                <!-- Breadcrumbs -->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a th:href="@{/host}" href="/dashboard/host/host_dashboard.html">대시보드</a>
@@ -37,7 +37,7 @@
                                  src="/upload_image/cafe/default_cafe.png" style="max-width: 100%" alt="...">
                         </div>
                     </div>
-                    <!-- /row-->
+                    <!-- /row -->
                     <div class="row">
                         <div class="col-md-6">
                             <label>룸 이름</label>
@@ -52,17 +52,16 @@
                             <p th:text="${#numbers.formatInteger(room.price, 3, 'COMMA') + '원'}"></p>
                         </div>
                     </div>
-                    <!-- /row-->
+                    <!-- /row -->
                     <div class="row">
                         <div class="col-md-12">
                             <label>룸 상세설명</label>
                             <p th:text="${room.description}"></p>
                         </div>
                     </div>
-                    <!-- /row-->
+                    <!-- /row -->
                 </div>
-                <!-- /box_general-->
-                <!-- /box_general-->
+                <!-- /box_general -->
                 <div class="d-flex flex-row-reverse inline-popups">
                     <a href="#modal-delete" class="btn_1 medium mx-1">삭제</a>
                     <a href="#modal-edit" class="btn_1 medium mx-1">수정</a>
@@ -73,7 +72,8 @@
         <!-- /.container-wrapper -->
         <!-- Edit to room popup -->
         <div id="modal-edit" class="white-popup mfp-with-anim mfp-hide">
-            <form th:action="@{/host/room/{id}/edit(id=${room.id})}" th:object="${roomForm}" th:method="post" enctype="multipart/form-data">
+            <form th:action="@{/host/room/{id}/edit(id=${room.id})}" th:object="${roomForm}" th:method="post"
+                  enctype="multipart/form-data">
                 <div class="small-dialog-header">
                     <h3>룸 수정</h3>
                 </div>
@@ -124,9 +124,6 @@
                 룸 삭제
             </button>
         </div>
-
-
-
         <!-- /Content -->
     </th:block>
 

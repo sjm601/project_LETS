@@ -1,27 +1,25 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-<th:block th:replace="~{/common/layout/common_layout_V2 :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+<th:block
+        th:replace="~{/common/layout/common_layout_V2 :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
 
-  <th:block th:fragment="head">
-    <!--/* 아래 author의 content 부분에 현재 문서 작성자 이름으로 */-->
-    <meta name="author" content="VJCommando">
-    <!--/* 아래 description의 content 부분에 현재 문서 설명 */-->
-    <meta name="description" content="LETS - Let's Easy Together Study">
-    <!--/* 아래 타이틀은 현재 문서 타이틀(위의 설명과 동일하게) */-->
-    <title>LETS - Let Everyone to Study</title>
-  </th:block>
+    <th:block th:fragment="head">
+        <meta name="author" content="VJCommando">
+        <meta name="description" content="LETS - Let's Easy Together Study">
+        <title>LETS - Let Everyone to Study</title>
+    </th:block>
 
-  <th:block th:fragment="content">
-    <main>
-      <div style="margin: 0; padding: 0">
-        <img style="width: 100vw; height: 100vh;" class="img-fluid" src="/images/main.jpg" alt="...">
-      </div>
-    </main>
-  </th:block>
+    <th:block th:fragment="content">
+        <main>
+            <div style="margin: 0; padding: 0">
+                <img style="width: 100vw; height: 100vh;" class="img-fluid" src="/images/main.jpg" alt="...">
+            </div>
+        </main>
+    </th:block>
 
-  <th:block th:fragment="scripts">
-  </th:block>
+    <th:block th:fragment="scripts">
+    </th:block>
 
 </th:block>
 

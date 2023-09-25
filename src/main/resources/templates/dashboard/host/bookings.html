@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <th:block
-    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+        th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
 
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
@@ -17,7 +17,7 @@
         <!-- Content -->
         <div class="content-wrapper">
             <div class="container-fluid">
-                <!-- Breadcrumbs-->
+                <!-- Breadcrumbs -->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a th:href="@{/host}" href="/dashboard/host/host_dashboard.html">대시보드</a>
@@ -44,9 +44,9 @@
                     <div class="list_general">
                         <ul>
                             <li th:each="reservation, index : ${hostReservationList}" class="reservations">
-                                <figure>  <img th:if="${reservation.get('image') == null}"
-                                               src="/dashboard/img/item_1.jpg"
-                                               alt="">
+                                <figure><img th:if="${reservation.get('image') == null}"
+                                             src="/dashboard/img/item_1.jpg"
+                                             alt="">
                                     <img th:if="${reservation.get('image') != null}"
                                          th:src="|${reservation.get('image')}|"
                                          src="/dashboard/img/item_1.jpg"
@@ -96,7 +96,7 @@
                         </ul>
                     </div>
                 </div>
-                <!-- /box_general-->
+                <!-- /box_general -->
                 <nav aria-label="...">
                     <ul class="pagination pagination-sm add_bottom_30">
                         <li class="page-item">
@@ -123,11 +123,11 @@
                         </li>
                     </ul>
                 </nav>
-                <!-- /pagination-->
+                <!-- /pagination -->
             </div>
-            <!-- /container-fluid-->
+            <!-- /container-fluid -->
         </div>
-        <!-- /container-wrapper-->
+        <!-- /container-wrapper -->
         <!-- /Content -->
     </th:block>
 

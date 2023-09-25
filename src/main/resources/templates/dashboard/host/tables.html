@@ -14,14 +14,14 @@
         <!-- Content -->
         <div class="content-wrapper">
             <div class="container-fluid">
-                <!-- Breadcrumbs-->
+                <!-- Breadcrumbs -->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a th:href="@{/host}" href="/dashboard/host/host_dashboard.html">대시보드</a>
                     </li>
                     <li class="breadcrumb-item active">예약 목록</li>
                 </ol>
-                <!-- Example DataTables Card-->
+                <!-- Example DataTables Card -->
                 <div class="card mb-3">
                     <div class="card-header">
                         <i class="fa fa-table"></i> 예약 전체 데이터
@@ -55,8 +55,12 @@
                                     <td th:text="${reserve.room_name}">A1</td>
                                     <td th:text="${reserve.headCount}">1</td>
                                     <td th:text="${reserve.booking_date}">2011/04/25</td>
-                                    <td th:text="${#strings.concat(reserve.startTime, ':00')+'~'+#strings.concat(reserve.endTime, ':00')}">11:00~13:00</td>
-                                    <td th:text="${#numbers.formatInteger(reserve.totalPrice, 3, 'COMMA') + '원'}">30,000원</td>
+                                    <td th:text="${#strings.concat(reserve.startTime, ':00')+'~'+#strings.concat(reserve.endTime, ':00')}">
+                                        11:00~13:00
+                                    </td>
+                                    <td th:text="${#numbers.formatInteger(reserve.totalPrice, 3, 'COMMA') + '원'}">
+                                        30,000원
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -64,11 +68,11 @@
                     </div>
                     <div class="card-footer small text-muted"></div>
                 </div>
-                <!-- /tables-->
+                <!-- /tables -->
             </div>
-            <!-- /container-fluid-->
+            <!-- /container-fluid -->
         </div>
-        <!-- /container-wrapper-->
+        <!-- /container-wrapper -->
         <!-- /Content -->
     </th:block>
 

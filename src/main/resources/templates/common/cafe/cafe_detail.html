@@ -11,7 +11,6 @@
 
         <link href="/css/custom/cafe_detail_custom.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
     </th:block>
 
     <th:block th:fragment="content">
@@ -24,8 +23,7 @@
                     </div>
                 </div>
             </section>
-            <!--/hero_in-->
-
+            <!-- /hero_in -->
             <div class="bg_color_1">
                 <nav class="secondary_nav sticky_horizontal">
                     <div class="container">
@@ -108,7 +106,6 @@
                                 <!-- End Map -->
                             </section>
                             <!-- /section -->
-
                             <section id="reviews">
                                 <h2>후기</h2>
                                 <th:block th:if="${Cafe.get('reviewCount') > 0}">
@@ -340,7 +337,6 @@
                             <hr>
                         </div>
                         <!-- /col -->
-
                         <aside class="col-lg-4" id="sidebar">
                             <form th:action="@{'/cafe/' + ${id}}" action="#" th:method="post">
                                 <div class="box_detail booking">
@@ -368,7 +364,6 @@
                                                placeholder="When..">
                                         <i class="icon_calendar"></i>
                                     </div>
-
                                     <div class="panel-dropdown">
                                         <a href="#">인원 수 <span class="qtyTotal">1</span></a>
                                         <div class="panel-dropdown-content right">
@@ -379,7 +374,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="form-group clearfix">
                                         <div class="custom-select-form">
                                             <select id="roomName" class="wide" name="roomId">
@@ -387,7 +381,6 @@
                                             </select>
                                         </div>
                                     </div>
-
                                     <div class="form-group clearfix">
                                         <div class="custom-select-form">
                                             <select class="wide" name="startTime" id="startTimeSelect">
@@ -398,19 +391,17 @@
                                             </select>
                                         </div>
                                     </div>
-
                                     <div class="form-group clearfix">
                                         <div class="custom-select-form">
                                             <select class="wide" name="endTime" id="endTimeSelect">
                                                 <option>종료 시간</option>
                                                 <option th:each="hour : ${#numbers.sequence(Cafe.startTime +1, Cafe.endTime)}"
                                                         th:value="${hour}"
-                                                        th:text="${#strings.concat(hour, ':00')}"
-                                                ></option>
+                                                        th:text="${#strings.concat(hour, ':00')}">
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
-
                                     <div class="price text-end">
                                         <strong class="me-2">총</strong><small><span
                                             id="calculateRoomPrice">시간 당 가격</span><i
@@ -419,9 +410,7 @@
                                         <strong class="price-text"><span id="totalPrice">결제 가격</span><i
                                                 class="fa-solid fa-won-sign ms-1"></i></strong>
                                     </div>
-
                                     <button type="submit" class=" add_top_30 btn_1 full-width purchase">바로 예약</button>
-
                                     <div class="text-center"><small>다음 과정에서 예약 확인 후 결제가 이루어 집니다.</small></div>
                                 </div>
                             </form>
@@ -433,7 +422,7 @@
             </div>
             <!-- /bg_color_1 -->
         </main>
-        <!--/main-->
+        <!-- /main -->
     </th:block>
 
     <th:block th:fragment="scripts">

@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <th:block
-    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+        th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
 
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
@@ -14,14 +14,14 @@
         <!-- Content -->
         <div class="content-wrapper">
             <div class="container-fluid">
-                <!-- Breadcrumbs-->
+                <!-- Breadcrumbs -->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a th:href="@{/host}" href="/dashboard/host/host_dashboard.html">대시보드</a>
                     </li>
                     <li class="breadcrumb-item active">차트 정보</li>
                 </ol>
-                <!-- Area Chart Example-->
+                <!-- Area Chart Example -->
                 <div class="card mb-3">
                     <div class="card-header">
                         <i class="fa fa-area-chart"></i> Area Chart Example
@@ -32,7 +32,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-8">
-                        <!-- Example Bar Chart Card-->
+                        <!-- Example Bar Chart Card -->
                         <div class="card mb-3">
                             <div class="card-header">
                                 <i class="fa fa-bar-chart"></i> Bar Chart Example
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <!-- Example Pie Chart Card-->
+                        <!-- Example Pie Chart Card -->
                         <div class="card mb-3">
                             <div class="card-header">
                                 <i class="fa fa-pie-chart"></i> Pie Chart Example
@@ -55,9 +55,9 @@
                     </div>
                 </div>
             </div>
-            <!-- /container-fluid-->
+            <!-- /container-fluid -->
         </div>
-        <!-- /container-wrapper-->
+        <!-- /container-wrapper -->
         <!-- /Content -->
     </th:block>
 

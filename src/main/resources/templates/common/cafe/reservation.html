@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <th:block
-    th:replace="~{/common/layout/common_layout_V2 :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+        th:replace="~{/common/layout/common_layout_V2 :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
 
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </div>
-            <!--/hero_in-->
+            <!-- /hero_in -->
 
             <div class="bg_color_1">
                 <div class="container margin_60_35">
@@ -78,7 +78,8 @@
                                     <tr>
                                         <td>
                                             <div class="thumb_cart">
-                                                <img th:href="${reservation['image_path']}" src="img/thumb_cart_1.jpg" alt="Image">
+                                                <img th:href="${reservation['image_path']}" src="img/thumb_cart_1.jpg"
+                                                     alt="Image">
                                             </div>
                                             <span th:text="${reservation['cafe_name']}" class="item_cart">Persius delenit has cu</span>
                                         </td>
@@ -91,14 +92,16 @@
                                         <td th:text="${reservation['HEAD_COUNT']}" class="cart_align">
                                             1
                                         </td>
-                                        <td data-th-text="${#numbers.formatInteger(reservation['PRICE'], 3, 'COMMA') + '원'}" class="cart_align">
+                                        <td data-th-text="${#numbers.formatInteger(reservation['PRICE'], 3, 'COMMA') + '원'}"
+                                            class="cart_align">
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
                                 <div class="cart-options clearfix">
                                     <div class="float-end fix_mobile">
-                                        <a th:href="@{/reservation/cancle/{id} (id=${reservation.ID})}" id="deleteList" class="btn_1 outline">예약 취소
+                                        <a th:href="@{/reservation/cancle/{id} (id=${reservation.ID})}" id="deleteList"
+                                           class="btn_1 outline">예약 취소
                                         </a>
                                     </div>
                                 </div>
@@ -110,9 +113,12 @@
                         <aside class="col-lg-4" id="sidebar">
                             <div class="box_detail">
                                 <div id="total_cart">
-                                    Total <span data-th-text="${#numbers.formatInteger(reservation['totalPrice'], 3, 'COMMA') + '원'}"class="float-end"></span>
+                                    Total <span
+                                        data-th-text="${#numbers.formatInteger(reservation['totalPrice'], 3, 'COMMA') + '원'}"
+                                        class="float-end"></span>
                                 </div>
-                                <a th:href="@{/reservation/{id}/payment (id=${reservation.ID})}" href="payment.html" class="btn_1 full-width purchase">결제</a>
+                                <a th:href="@{/reservation/{id}/payment (id=${reservation.ID})}" href="payment.html"
+                                   class="btn_1 full-width purchase">결제</a>
                                 <div class="text-center"><small>버튼을 클릭하면 결제 페이지로 이동합니다.</small>
                                 </div>
                             </div>
@@ -125,7 +131,7 @@
             </div>
             <!-- /bg_color_1 -->
         </main>
-        <!--/main-->
+        <!-- /main -->
     </th:block>
 
     <th:block th:fragment="scripts">

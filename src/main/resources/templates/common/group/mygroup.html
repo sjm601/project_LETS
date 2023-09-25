@@ -86,10 +86,11 @@
                                 <ul th:each="recentArticle : ${recentArticleList}" class="comments-list">
                                     <li>
                                         <div class="alignleft">
-                                           <img th:src="${recentArticle.imagePath}" src="/img/blog-5.jpg" alt="#">
+                                            <img th:src="${recentArticle.imagePath}" src="/img/blog-5.jpg" alt="#">
                                         </div>
                                         <small th:text="${recentArticle.regdate}">게시글 날짜</small>
-                                        <h3><a th:href="@{/group/{id}(id=${studyGroup['ID']})}" title="" th:text="${recentArticle.title}">제목...</a></h3>
+                                        <h3><a th:href="@{/group/{id}(id=${studyGroup['ID']})}" title=""
+                                               th:text="${recentArticle.title}">제목...</a></h3>
                                     </li>
                                 </ul>
                             </th:block>
@@ -104,7 +105,9 @@
                                     <div class="d-flex mb-5 justify-content-between">
                                         <div class="d-flex">
                                             <div>
-                                                <img th:src="${article['MEMBERIMAGEPATH']}" class="rounded-5" src="/img/avatar1.jpg" alt="" style="width: 50px; height: 50px; border-radius: 50%;">
+                                                <img th:src="${article['MEMBERIMAGEPATH']}" class="rounded-5"
+                                                     src="/img/avatar1.jpg" alt=""
+                                                     style="width: 50px; height: 50px; border-radius: 50%;">
                                             </div>
                                             <div class="ms-3 my-auto">
                                                 <h6 th:text="${article['WRITER']}">이희영</h6>
@@ -129,7 +132,8 @@
                                     <h1 class="mb-3" th:text="${article['TITLE']}">주식 스터디</h1>
                                     <div class="postmeta">
                                         <!-- 추후 수정 필요함 %%이미지 패스 관련%%% -->
-                                        <div><img th:src="${article['IMAGEPATH']}" alt="" class="img-fluid" src="img/blog-single.jpg"></div>
+                                        <div><img th:src="${article['IMAGEPATH']}" alt="" class="img-fluid"
+                                                  src="img/blog-single.jpg"></div>
                                     </div>
                                     <!-- /post meta -->
                                     <div class="post-content">
@@ -161,7 +165,8 @@
                                                                                     <span th:text="${comment['COMMENTWRITER']}">Anna Smith</span><span>|</span>
                                                                                     <span th:text="${comment['COMMENTREGDATE']}"> 2023-09-06</span><span>|</span>
                                                                                     <div th:class="ms-2"
-                                                                                         th:text="${comment['CONTENT']}">음
+                                                                                         th:text="${comment['CONTENT']}">
+                                                                                        음
                                                                                     </div>
                                                                                     <form th:action="@{/group/{id}/commentDelete(id=${studyGroup['ID']})}"
                                                                                           th:method="post">
@@ -185,7 +190,7 @@
                                                     </th:block>
                                                 </div>
                                             </div>
-                                            <!--/댓글 collaspe-->
+                                            <!-- /댓글 collaspe -->
                                         </div>
                                         <h5>댓글 작성</h5>
                                         <form th:action="@{/group/{id}/{articleId}/commentCreate(id=${studyGroup['ID']}, articleId=${article['ID']})}"
@@ -222,22 +227,27 @@
                                                   th:method="post" enctype="multipart/form-data">
                                                 <div class="modal-body">
                                                     <!-- 수정 폼 -->
-                                                    <input type="hidden" th:name="articleId" th:value="${article['ID']}"/>
+                                                    <input type="hidden" th:name="articleId"
+                                                           th:value="${article['ID']}"/>
 
                                                     <label for="title" class="form-label">제목</label>
                                                     <input th:name="title" th:id="title" class="form-control mb-2"
-                                                           id="title" name="title" type="text" th:value="${UpdateFormArticle.title}" required/>
+                                                           id="title" name="title" type="text"
+                                                           th:value="${UpdateFormArticle.title}" required/>
                                                     <label for="content" class="form-label">내용</label>
                                                     <textarea th:id="content" th:name="content"
                                                               class="form-control mb-2"
                                                               name="content" id="content" cols="30" rows="10"
-                                                              style="height: 100px;" th:value="${UpdateFormArticle.content}" required>내용</textarea>
+                                                              style="height: 100px;"
+                                                              th:value="${UpdateFormArticle.content}"
+                                                              required>내용</textarea>
                                                     <div class="mb-3">
                                                         <ul class="image-preview"></ul>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label" for="modifyImage">사진</label>
-                                                        <input type="file" class="real-upload form-control" accept="image/*" id="modifyImage"
+                                                        <input type="file" class="real-upload form-control"
+                                                               accept="image/*" id="modifyImage"
                                                                name="imagePath"/>
                                                     </div>
                                                     <!-- /수정 폼 -->
@@ -259,7 +269,7 @@
 
                             <!--게시글 페이징 처리-->
                             <div>
-                                <ul class ="pagination h-100 justify-content-center align-items-center"
+                                <ul class="pagination h-100 justify-content-center align-items-center"
                                     th:if="${articleList != null}">
 
                                     <th:block th:if="${pagination.showFirst}">
@@ -303,7 +313,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <!--/col-->
+                        <!-- /col -->
                     </div>
                     <!-- /row -->
                 </div>
@@ -311,7 +321,7 @@
             </div>
             <!-- /container -->
         </main>
-        <!--/main-->
+        <!-- /main -->
 
         <!-- 게시글 작성 모달 -->
         <div class="modal fade modal-dialog-scrollable" id="writeModal" tabindex="-1"
@@ -386,7 +396,8 @@
                             <div class="mb-2">
                                 <label th:for="birthday">생년월일</label>
                                 <input th:id="birthday" th:name="birthday" th:value="${member.birthday}"
-                                       th:min="1900-01-01" th:max="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}"
+                                       th:min="1900-01-01"
+                                       th:max="${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}"
                                        type="date" class="form-control" required>
                             </div>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
@@ -513,7 +524,8 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="address">스터디 대표 주소</label>
-                                                <input th:hidden="true" th:value="${studyGroup['SIDONAME']}" class="form-control sidoInputs" name="siDoName" type="text" />
+                                                <input th:hidden="true" th:value="${studyGroup['SIDONAME']}"
+                                                       class="form-control sidoInputs" name="siDoName" type="text"/>
                                                 <input th:value="${studyGroup['SIGUNGUNAME']}" class="form-control"
                                                        id="address" name="siGunGuName" type="text"
                                                        placeholder="클릭하여 주소 입력하세요" readonly/>

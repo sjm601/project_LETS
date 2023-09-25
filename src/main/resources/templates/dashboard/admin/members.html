@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <th:block
-    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+        th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
 
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
@@ -14,14 +14,14 @@
         <!-- Content -->
         <div class="content-wrapper">
             <div class="container-fluid">
-                <!-- Breadcrumbs-->
+                <!-- Breadcrumbs -->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a href="admin_dashboard.html">대시보드</a>
                     </li>
                     <li class="breadcrumb-item active">회원 목록</li>
                 </ol>
-                <!-- Example DataTables Card-->
+                <!-- Example DataTables Card -->
                 <div class="card mb-3">
                     <div class="card-header">
                         <i class="fa fa-table"></i> 회원 목록
@@ -57,11 +57,11 @@
                         </div>
                     </div>
                 </div>
-                <!-- /tables-->
+                <!-- /tables -->
             </div>
-            <!-- /container-fluid-->
+            <!-- /container-fluid -->
         </div>
-        <!-- /container-wrapper-->
+        <!-- /container-wrapper -->
         <!-- /Content -->
     </th:block>
 

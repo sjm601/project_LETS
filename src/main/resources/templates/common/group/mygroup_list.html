@@ -53,7 +53,9 @@
                                             <figure>
                                                 <a th:href="@{/group/{id}(id=${myStudy.STUDYGROUPID})}"
                                                    href="blog-post_내스터디.html">
-                                                    <img th:src="${myStudy['IMAGEPATH']} != null ? ${myStudy['IMAGEPATH']} : '/assets/upload_image/group/default.png'" src="/img/restaurant_1.jpg" class="img-fluid" alt="" width="800"
+                                                    <img th:src="${myStudy['IMAGEPATH']} != null ? ${myStudy['IMAGEPATH']} : '/assets/upload_image/group/default.png'"
+                                                         src="/img/restaurant_1.jpg" class="img-fluid" alt=""
+                                                         width="800"
                                                          height="533">
                                                     <div class="read_more"><span>열기</span></div>
                                                 </a>
@@ -96,10 +98,12 @@
                                 </th:block>
                                 <th:block th:if="${pagination.showPrevious}">
                                     <li class="page-item">
-                                        <a th:href="@{|/group/mygroup?page=${pagination.previousStartPage}|}" class="page-link">이전</a>
+                                        <a th:href="@{|/group/mygroup?page=${pagination.previousStartPage}|}"
+                                           class="page-link">이전</a>
                                     </li>
                                 </th:block>
-                                <th:block th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
+                                <th:block
+                                        th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
                                     <th:block th:if="${i == pagination.params.requestPage}">
                                         <li class="page-item active">
                                             <a th:text="${i}" class="page-link" href="#">1</a>
@@ -107,18 +111,21 @@
                                     </th:block>
                                     <th:block th:if="${i != pagination.params.requestPage && i > 0}">
                                         <li class="page-item">
-                                            <a th:text="${i}" th:href="@{|/group/mygroup?page=${i}|}" class="page-link" href="#">2</a>
+                                            <a th:text="${i}" th:href="@{|/group/mygroup?page=${i}|}" class="page-link"
+                                               href="#">2</a>
                                         </li>
                                     </th:block>
                                 </th:block>
                                 <th:block th:if="${pagination.showNext}">
                                     <li class="page-item">
-                                        <a th:href="@{|/group/mygroup?page=${pagination.nextStartPage}|}" class="page-link">다음</a>
+                                        <a th:href="@{|/group/mygroup?page=${pagination.nextStartPage}|}"
+                                           class="page-link">다음</a>
                                     </li>
                                 </th:block>
                                 <th:block th:if="${pagination.showLast}">
                                     <li class="page-item">
-                                        <a th:href="@{|/group/mygroup?page=${pagination.totalPages}|}" class="page-link">끝으로</a>
+                                        <a th:href="@{|/group/mygroup?page=${pagination.totalPages}|}"
+                                           class="page-link">끝으로</a>
                                     </li>
                                 </th:block>
                             </ul>
@@ -177,9 +184,9 @@
                             </div>
                             <div class="mb-5">
                                 <label class="form-label" for="address">스터디 대표 주소(시, 군, 구)</label>
-                                <input th:hidden="true" class="form-control sidoInputs" name="siDoName" type="text" />
+                                <input th:hidden="true" class="form-control sidoInputs" name="siDoName" type="text"/>
                                 <input class="form-control sigunguInputs" id="address" name="siGunGuName" type="text"
-                                       placeholder="클릭하여 주소 입력하세요" readonly />
+                                       placeholder="클릭하여 주소 입력하세요" readonly/>
                             </div>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                             <button type="submit" class="btn btn-primary">생성</button>

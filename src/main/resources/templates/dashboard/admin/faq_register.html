@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <th:block
-    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+        th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
 
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
@@ -15,7 +15,7 @@
         <div class="content-wrapper">
             <form th:action="@{/admin/faq/register}" th:method="post" th:object="${faqForm}">
                 <div class="container-fluid">
-                    <!-- Breadcrumbs-->
+                    <!-- Breadcrumbs -->
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="admin_dashboard.html">대시보드</a>
@@ -47,7 +47,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- /row-->
+                        <!-- /row -->
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -57,10 +57,9 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- /row-->
+                        <!-- /row -->
                     </div>
-                    <!-- /box_general-->
-
+                    <!-- /box_general -->
                     <p>
                         <button class="btn_1 medium">Save</button>
                     </p>

@@ -17,7 +17,7 @@
         <!-- Content -->
         <div class="content-wrapper">
             <div class="container-fluid">
-                <!-- Breadcrumbs-->
+                <!-- Breadcrumbs -->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a th:href="@{/host}" href="/dashboard/host/host_dashboard.html">대시보드</a>
@@ -39,16 +39,16 @@
                         </div>
                     </div>
                     <div class="list_general reviews">
-
                         <ul>
                             <li th:each="review, index : ${hostReviewList}" class="reviews"
                                 th:if="${review.get('memberType') == 'guest'}">
                                 <span th:text="${review.get('writeDate')}">June 15 2017</span>
                                 <span class="rating">
                                     <i th:each="num : ${#numbers.sequence(1, #strings.toString(review.get('rating')))}"
-                                       class="fa fa-fw fa-star yellow"></i><i th:if="${review.get('rating') < 5}"
-                                                                              th:each="num : ${#numbers.sequence(4, #strings.toString(review.get('rating')))}"
-                                                                              class="fa fa-fw fa-star"></i>
+                                       class="fa fa-fw fa-star yellow"></i>
+                                    <i th:if="${review.get('rating') < 5}"
+                                       th:each="num : ${#numbers.sequence(4, #strings.toString(review.get('rating')))}"
+                                       class="fa fa-fw fa-star"></i>
                                 </span>
                                 <figure>
                                     <img th:if="${review.get('guestProfile') == null}"
@@ -71,7 +71,6 @@
                                     </small>
                                 </h4>
                                 <p th:text="${review.get('content')}">리뷰 콘텐츠</p>
-
                                 <!-- reservation status is use -->
                                 <th:block
                                         th:if="${review.get('reviewCount') < 2}">
@@ -102,7 +101,6 @@
                                         </div>
                                     </div>
                                 </th:block>
-
                                 <th:block
                                         th:if="${review.get('reviewCount') == 2}">
                                     <div data-effect="mfp-zoom-in" class="btn_999 gray">리뷰 답변 완료</div>
@@ -114,7 +112,6 @@
                                             답글 수정
                                         </a>
                                     </p>
-
                                     <!-- Edit to review popup -->
                                     <div th:id="|modal_edit_${index.count}|" id="modal_edit"
                                          class="white-popup mfp-with-anim mfp-hide modal_edit">
@@ -138,7 +135,7 @@
 
                     </div>
                 </div>
-                <!-- /box_general-->
+                <!-- /box_general -->
                 <nav aria-label="...">
                     <ul class="pagination pagination-sm add_bottom_30">
                         <li class="page-item">
@@ -165,11 +162,11 @@
                         </li>
                     </ul>
                 </nav>
-                <!-- /pagination-->
+                <!-- /pagination -->
             </div>
-            <!-- /container-fluid-->
+            <!-- /container-fluid -->
         </div>
-        <!-- /container-wrapper-->
+        <!-- /container-wrapper -->
         <!-- /Content -->
     </th:block>
 

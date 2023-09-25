@@ -20,7 +20,7 @@
                     </div>
                 </div>
             </section>
-            <!--/hero_in-->
+            <!-- /hero_in -->
 
             <div class="filters_listing sticky_horizontal">
                 <div class="container">
@@ -59,7 +59,8 @@
                                     <select class="wide" name="option">
                                         <option th:value="''">옵션 선택</option>
                                         <option th:each="option : ${options}"
-                                                th:text="${option.name}" th:value="${option.id}">와이파이</option>
+                                                th:text="${option.name}" th:value="${option.id}">와이파이
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -87,7 +88,8 @@
                                                     height="533">
                                                 <div class="read_more"><span>Read more</span></div>
                                             </a>
-                                            <small th:if="${allCafe['startTime']} <= ${#calendars.format(#calendars.createNow(),'HH')} and ${allCafe['endTime']} > ${#calendars.format(#calendars.createNow(),'HH')}" class="bg-success">영업중</small>
+                                            <small th:if="${allCafe['startTime']} <= ${#calendars.format(#calendars.createNow(),'HH')} and ${allCafe['endTime']} > ${#calendars.format(#calendars.createNow(),'HH')}"
+                                                   class="bg-success">영업중</small>
                                             <small th:unless="${allCafe['startTime']} <= ${#calendars.format(#calendars.createNow(),'HH')} and ${allCafe['endTime']} > ${#calendars.format(#calendars.createNow(),'HH')}">영업종료</small>
                                         </figure>
                                         <div class="wrapper">
@@ -99,7 +101,8 @@
                                             <p th:unless="${allCafe['detailAddress']} == null"
                                                th:text="${allCafe['siDoName']}+' '+${allCafe['siGunGuName']}+' '+${allCafe['roadAddress']}+' '+${allCafe['detailAddress']}">
                                                 서울특별시 노원구 동일로 500</p>
-                                            <span class="price">최소 <strong th:text="${#numbers.formatInteger(allCafe['minPrice'], 3, 'COMMA')}">50,000<i
+                                            <span class="price">최소 <strong
+                                                    th:text="${#numbers.formatInteger(allCafe['minPrice'], 3, 'COMMA')}">50,000<i
                                                     class="fa-solid fa-won-sign"></i></strong>원 /시간당</span>
                                         </div>
                                         <ul>
@@ -161,7 +164,8 @@
                                 </th:block>
                                 <th:block th:if="${pagination.showNext}">
                                     <li class="page-item">
-                                        <a th:href="@{/cafe/list?page=${pagination.nextStartPage}}" class="page-link">다음</a>
+                                        <a th:href="@{/cafe/list?page=${pagination.nextStartPage}}"
+                                           class="page-link">다음</a>
                                     </li>
                                 </th:block>
                                 <th:block th:if="${pagination.showLast}">
@@ -197,7 +201,7 @@
             </div>
             <!-- /bg_color_1 -->
         </main>
-        <!--/main-->
+        <!-- /main -->
     </th:block>
 
     <th:block th:fragment="scripts">

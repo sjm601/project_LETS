@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <th:block
-    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+        th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
 
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
@@ -17,7 +17,7 @@
         <!-- Content -->
         <div class="content-wrapper">
             <div class="container-fluid">
-                <!-- Breadcrumbs-->
+                <!-- Breadcrumbs -->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a th:href="@{/mypage}" href="/dashboard/member/mypage.html">마이페이지</a>
@@ -59,7 +59,7 @@
                                     </li>
                                     <li><strong>예약 시간</strong>
                                         <th:block
-                                            th:text="|${reservation.get('startTime')}시 - ${reservation.get('endTime')}시|"></th:block>
+                                                th:text="|${reservation.get('startTime')}시 - ${reservation.get('endTime')}시|"></th:block>
                                     </li>
                                     <li><strong>예약 인원수</strong>
                                         <th:block th:text="${reservation.get('headCount')}"></th:block>
@@ -82,7 +82,6 @@
                                         )
                                     </li>
                                 </ul>
-
                                 <!-- reservation status is complete -->
                                 <th:block th:if="${reservation.get('reservationStatus') == 'complete'}">
                                     <ul class="buttons inline-popups">
@@ -113,9 +112,9 @@
                                         </div>
                                     </div>
                                 </th:block>
-
                                 <!-- reservation status is use -->
-                                <th:block th:if="${reservation.get('reservationStatus') == 'use' && reservation.get('reviewBoolean') == false}">
+                                <th:block
+                                        th:if="${reservation.get('reservationStatus') == 'use' && reservation.get('reviewBoolean') == false}">
                                     <p class="inline-popups">
                                         <a th:href="|#modal_review_${index.count}|" href="#modal_review"
                                            data-effect="mfp-zoom-in" class="btn_1 gray">
@@ -156,26 +155,25 @@
                                         </div>
                                     </div>
                                 </th:block>
-
                                 <th:block
-                                    th:if="${{reservation.get('reservationStatus') == 'use' && reservation.get('reviewBoolean') == true}}">
+                                        th:if="${{reservation.get('reservationStatus') == 'use' && reservation.get('reviewBoolean') == true}}">
                                     <div data-effect="mfp-zoom-in" class="btn_999 gray">리뷰 작성 완료</div>
                                 </th:block>
-
                             </li>
                         </ul>
                     </div>
                 </div>
-                <!-- /box_general-->
+                <!-- /box_general -->
                 <nav aria-label="...">
                     <ul class="pagination pagination-sm add_bottom_30">
                         <li class="page-item">
                             <a th:if="${pagination.showPrevious}"
-                               th:href="@{|?page=${pagination.previousStartPage}&type=${pagination.params.type}|}" class="page-link" href="#"
+                               th:href="@{|?page=${pagination.previousStartPage}&type=${pagination.params.type}|}"
+                               class="page-link" href="#"
                                tabindex="-1"><i class="fa-solid fa-angles-left" style="color: #000000;"></i></a>
                         </li>
                         <th:block
-                            th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
+                                th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
                             <li th:if="${i == pagination.params.requestPage}" class="page-item active">
                                 <a th:text="${i}" class="page-link">1</a>
                             </li>
@@ -188,15 +186,16 @@
                         <li class="page-item">
                             <a th:if="${pagination.showNext}"
                                th:href="@{|?page=${pagination.nextStartPage}&type=${pagination.params.type}|}"
-                               class="page-link" href="#"><i class="fa-solid fa-angles-right" style="color: #000000;"></i></a>
+                               class="page-link" href="#"><i class="fa-solid fa-angles-right"
+                                                             style="color: #000000;"></i></a>
                         </li>
                     </ul>
                 </nav>
-                <!-- /pagination-->
+                <!-- /pagination -->
             </div>
-            <!-- /container-fluid-->
+            <!-- /container-fluid -->
         </div>
-        <!-- /container-wrapper-->
+        <!-- /container-wrapper -->
         <!-- /Content -->
     </th:block>
 

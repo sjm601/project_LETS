@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <th:block
-    th:replace="~{/common/layout/common_layout_V2 :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+        th:replace="~{/common/layout/common_layout_V2 :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
 
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </section>
-            <!--/hero_in-->
+            <!-- /hero_in -->
 
             <div class="bg_color_1">
                 <div class="container margin_80_55">
@@ -31,44 +31,53 @@
                             <h4 class="text-center">입점 신청</h4>
                             <p class="text-center">입점 신청을 하시려면 아래에 정보를 입력하여 보내주세요.</p>
                             <div id="contact">
-                                <form th:action="@{/support/contact}" th:object="${contactForm}" method="post" action="#" id="contactform" autocomplete="off">
+                                <form th:action="@{/support/contact}" th:object="${contactForm}" method="post"
+                                      action="#" id="contactform" autocomplete="off">
                                     <div class="row justify-content-center align-self-center">
                                         <div class="col-md-8">
                                             <div class="form-group">
                                                 <label>이메일</label>
-                                                <input th:field="*{email}" class="form-control" type="email" placeholder="가입하고자 하는 이메일" required>
+                                                <input th:field="*{email}" class="form-control" type="email"
+                                                       placeholder="가입하고자 하는 이메일" required>
                                                 <i class="fas fa-solid fa-envelope"></i>
                                             </div>
                                             <div class="form-group">
                                                 <label>이름</label>
-                                                <input th:field="*{name}" class="form-control" type="text" placeholder="사업자 이름" required>
+                                                <input th:field="*{name}" class="form-control" type="text"
+                                                       placeholder="사업자 이름" required>
                                                 <i class="fa-solid fa-user"></i>
                                             </div>
                                             <div class="form-group">
                                                 <label>전화번호</label>
-                                                <input th:field="*{phoneNumber}" class="form-control" type="text" placeholder="000-0000-000" required>
+                                                <input th:field="*{phoneNumber}" class="form-control" type="text"
+                                                       placeholder="000-0000-000" required>
                                                 <i class="fa-solid fa-phone"></i>
                                             </div>
                                             <div class="form-group">
                                                 <label>카페명</label>
-                                                <input th:field="*{cafeName}" class="form-control" type="text" placeholder="카페 이름" required>
+                                                <input th:field="*{cafeName}" class="form-control" type="text"
+                                                       placeholder="카페 이름" required>
                                                 <i class="fa-solid fa-store"></i>
                                             </div>
                                             <div class="form-group">
                                                 <label>카페 주소</label>
-                                                <input th:field="*{address}" class="form-control" type="text" placeholder="카페 주소" required>
+                                                <input th:field="*{address}" class="form-control" type="text"
+                                                       placeholder="카페 주소" required>
                                                 <i class="fa-solid fa-location-dot"></i>
                                             </div>
                                             <div class="form-group">
                                                 <label>사업자 등록번호</label>
-                                                <input th:field="*{businessNumber}" class="form-control" type="number" placeholder="1000000000" min="1000000000" max="9999999999" required>
+                                                <input th:field="*{businessNumber}" class="form-control" type="number"
+                                                       placeholder="1000000000" min="1000000000" max="9999999999"
+                                                       required>
                                                 <i class="fa-solid fa-hashtag"></i>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>요청 메세지</label>
-                                        <textarea th:field="*{message}" class="form-control" id="message_contact" name="message_contact"
+                                        <textarea th:field="*{message}" class="form-control" id="message_contact"
+                                                  name="message_contact"
                                                   style="height:250px;" placeholder="요청 메세지" required></textarea>
                                     </div>
                                     <p class="add_top_30"><input type="submit" value="입점신청" class="btn_1 rounded"
@@ -83,7 +92,7 @@
 
             <!-- /bg_color_1 -->
         </main>
-        <!--/main-->
+        <!-- /main -->
     </th:block>
 
     <th:block th:fragment="scripts">

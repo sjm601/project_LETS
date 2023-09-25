@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <th:block
-    th:replace="~{/common/layout/common_layout_V2 :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+        th:replace="~{/common/layout/common_layout_V2 :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
 
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
@@ -45,8 +45,9 @@
                     </div>
                 </div>
             </div>
-            <!--/hero_in-->
-            <form th:action="@{'/reservation/' + ${reservation.ID} + '/payment'}" action="javascript:void(0);" class="needs-validation" novalidate method="post" name="payForm">
+            <!-- /hero_in -->
+            <form th:action="@{'/reservation/' + ${reservation.ID} + '/payment'}" action="javascript:void(0);"
+                  class="needs-validation" novalidate method="post" name="payForm">
                 <div class="bg_color_1">
                     <div class="container margin_60_35">
                         <div class="row">
@@ -64,7 +65,8 @@
                                                 <div class="form-group">
                                                     <label for="name_booking">이름</label>
                                                     <input type="text" class="form-control" id="name_booking"
-                                                           name="name_booking" th:value="${reservation['member_name']}" required>
+                                                           name="name_booking" th:value="${reservation['member_name']}"
+                                                           required>
                                                     <div class="invalid-feedback">이름을 정확히 입력하여 주세요...</div>
                                                 </div>
                                             </div>
@@ -74,7 +76,8 @@
                                                 <div class="form-group">
                                                     <label for="email_booking">이메일</label>
                                                     <input type="email" id="email_booking" name="email_booking"
-                                                           class="form-control" th:value="${reservation['email']}" required>
+                                                           class="form-control" th:value="${reservation['email']}"
+                                                           required>
                                                     <div class="invalid-feedback">이메일을 정확히 입력하여 주세요...</div>
                                                 </div>
                                             </div>
@@ -95,7 +98,8 @@
                                     <!--End step -->
                                     <div id="policy" class="mt-5">
                                         <h5>예약 및 결제 세부 정책</h5>
-                                        <p class="nomargin">예약 및 결제에 대한 세부 사항은 <a th:href="@{/support/help}" href="#0">이 페이지에서 확인 가능</a> 합니다.<br>
+                                        <p class="nomargin">예약 및 결제에 대한 세부 사항은 <a th:href="@{/support/help}" href="#0">이
+                                            페이지에서 확인 가능</a> 합니다.<br>
                                             보다 더한 질문이나 요청은 FAQ 페이지를 참고 바랍니다.</p>
                                     </div>
                                 </div>
@@ -105,7 +109,9 @@
                             <aside class="col-lg-4" id="sidebar">
                                 <div class="box_detail">
                                     <div id="total_cart">
-                                        Total <span data-th-text="${#numbers.formatInteger(reservation.totalPrice, 3, 'COMMA') + '원'}" class="float-end">79,000</span>
+                                        Total <span
+                                            data-th-text="${#numbers.formatInteger(reservation.totalPrice, 3, 'COMMA') + '원'}"
+                                            class="float-end">79,000</span>
                                     </div>
                                     <ul class="cart_details">
                                         <li>예약일 <span th:text="${reservation['booking_date']}">2023-09-04</span></li>
@@ -129,14 +135,14 @@
             </form>
             <!-- /bg_color_1 -->
         </main>
-        <!--/main-->
+        <!-- /main -->
     </th:block>
 
     <th:block th:fragment="scripts">
 
         <!--iamport 라이브러리-->
         <!-- jQuery -->
-        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
         <!-- iamport.payment.js -->
         <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 
@@ -250,7 +256,7 @@
                             pg: 'html5_inicis', // 여기에 사용할 PG사 정보를 넣어주세요
                             pay_method: 'card',
                             merchant_uid: 'IMP' + merchantUid,
-                            name: cafeName+'    '+'룸'+ roomName ,
+                            name: cafeName + '    ' + '룸' + roomName,
                             amount: 100,
                             buyer_email: email_booking,
                             buyer_name: name_booking,
@@ -293,7 +299,7 @@
                                     }
                                 });
 
-                                const url =  '/reservation/' + reservationId + '/payment';
+                                const url = '/reservation/' + reservationId + '/payment';
 
                                 fetch(url, {
                                     method: 'DELETE',
@@ -305,7 +311,7 @@
                                     return response.text();
                                 }).then(message => {
                                     if (message === 'success') {
-                                        location.href = '/cafe/'+ cafeID;
+                                        location.href = '/cafe/' + cafeID;
                                     } else if (message === 'fail') {
                                     }
                                 }).catch(error => {

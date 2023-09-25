@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <th:block
-    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+        th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
 
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
@@ -17,14 +17,14 @@
         <!-- Content -->
         <div class="content-wrapper">
             <div class="container-fluid">
-                <!-- Breadcrumbs-->
+                <!-- Breadcrumbs -->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a th:href="@{/host}" href="/dashboard/host/host_dashboard.html">대시보드</a>
                     </li>
                     <li class="breadcrumb-item active">룸 목록</li>
                 </ol>
-                <!-- Example DataTables Card-->
+                <!-- Example DataTables Card -->
                 <div class="card mb-3">
                     <div class="card-header">
                         <i class="fa fa-table"></i> 룸 목록
@@ -58,14 +58,15 @@
                         </div>
                     </div>
                 </div>
-                <!-- /tables-->
+                <!-- /tables -->
             </div>
-            <!-- /container-fluid-->
+            <!-- /container-fluid -->
         </div>
-        <!-- /container-wrapper-->
+        <!-- /container-wrapper -->
         <!-- Edit to room popup -->
         <div id="modal-regist" class="white-popup mfp-with-anim mfp-hide">
-            <form th:action="@{/host/room/regist}" th:object="${roomRegist}" th:method="post" enctype="multipart/form-data">
+            <form th:action="@{/host/room/regist}" th:object="${roomRegist}" th:method="post"
+                  enctype="multipart/form-data">
                 <div class="small-dialog-header">
                     <h3>룸 수정</h3>
                 </div>
@@ -95,10 +96,6 @@
                 </button>
             </form>
         </div>
-
-
-
-
         <!-- /Content -->
     </th:block>
 

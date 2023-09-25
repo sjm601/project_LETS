@@ -26,7 +26,8 @@
             </th:block>
             <th:block th:if="${session.loginMember} != null">
                 <li>
-                    <a class="dropdown border-0 text-danger" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="dropdown border-0 text-danger" type="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
                         <i class="fa-regular fa-circle-user fa-2xl me-1"></i>
                         내 정보
                     </a>
@@ -40,7 +41,8 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li>
-                            <a href="#sign-in-dialog" id="sign-in" class="text-dark dropdown-item pl-4 py-3" title="Logout">
+                            <a href="#sign-in-dialog" id="sign-in" class="text-dark dropdown-item pl-4 py-3"
+                               title="Logout">
                                 로그아웃
                             </a>
                         </li>
@@ -58,15 +60,19 @@
         <nav id="menu" class="main-menu">
             <ul>
                 <li><span><a th:href="@{/}" href="#" style="text-shadow: 2px 2px 4px gray;">홈</a></span></li>
-                <li><span><a th:href="@{/cafe}" href="/cafe-list.html" style="text-shadow: 2px 2px 4px gray;">스터디 카페</a></span></li>
+                <li><span><a th:href="@{/cafe}" href="/cafe-list.html" style="text-shadow: 2px 2px 4px gray;">스터디 카페</a></span>
+                </li>
                 <li><span><a href="#0" style="text-shadow: 2px 2px 4px gray;">스터디 그룹</a></span>
                     <ul>
-                        <li><a th:href="@{/group/mygroup}" href="#" style="text-shadow: 2px 2px 4px gray;">나의 스터디</a></li>
+                        <li><a th:href="@{/group/mygroup}" href="#" style="text-shadow: 2px 2px 4px gray;">나의 스터디</a>
+                        </li>
                         <li><a th:href="@{/group}" href="#" style="text-shadow: 2px 2px 4px gray;">모든 스터디</a></li>
                     </ul>
                 </li>
-                <li><span><a th:href="@{/support/contact}" href="/contact" style="text-shadow: 2px 2px 4px gray;">입점 문의</a></span></li>
-                <li><span><a th:href="@{/support/help}" href="/help.html" style="text-shadow: 2px 2px 4px gray;">고객 지원</a></span></li>
+                <li><span><a th:href="@{/support/contact}" href="/contact"
+                             style="text-shadow: 2px 2px 4px gray;">입점 문의</a></span></li>
+                <li><span><a th:href="@{/support/help}" href="/help.html"
+                             style="text-shadow: 2px 2px 4px gray;">고객 지원</a></span></li>
             </ul>
         </nav>
     </header>

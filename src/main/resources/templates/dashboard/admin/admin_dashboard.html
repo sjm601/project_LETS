@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <th:block
-    th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
+        th:replace="~{/dashboard/layout/dashboard_layout :: setContent(~{this :: head} ,~{this :: content}, ~{this :: scripts})}">
 
     <th:block th:fragment="head">
         <meta name="author" content="VJCommando">
@@ -14,14 +14,14 @@
         <!-- Content -->
         <div class="content-wrapper">
             <div class="container-fluid">
-                <!-- Breadcrumbs-->
+                <!-- Breadcrumbs -->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a href="admin_dashboard.html">대시보드</a>
                     </li>
                     <li class="breadcrumb-item active">대시보드</li>
                 </ol>
-                <!-- Icon Cards-->
+                <!-- Icon Cards -->
                 <div class="row">
                     <div class="col-xl-4 col-sm-12 mb-3">
                         <div class="card dashboard text-white bg-primary o-hidden h-100">
@@ -30,7 +30,10 @@
                                     <i class="fa fa-fw fa-user"></i>
                                 </div>
                                 <div class="mr-5">
-                                    <h5><th:block th:text="${newMember}">26</th:block> 신규 회원!</h5>
+                                    <h5>
+                                        <th:block th:text="${newMember}">26</th:block>
+                                        신규 회원!
+                                    </h5>
                                 </div>
                             </div>
                             <a th:href="@{/admin/member}" class="card-footer text-white clearfix small z-1"
@@ -47,7 +50,10 @@
                                     <i class="fa fa-fw fa-list"></i>
                                 </div>
                                 <div class="mr-5">
-                                    <h5><th:block th:text="${newContact}">10</th:block> 신규 신청!</h5>
+                                    <h5>
+                                        <th:block th:text="${newContact}">10</th:block>
+                                        신규 신청!
+                                    </h5>
                                 </div>
                             </div>
                             <a th:href="@{/admin/contact}" class="card-footer text-white clearfix small z-1"
@@ -64,7 +70,10 @@
                                     <i class="fa fa-fw fa-building"></i>
                                 </div>
                                 <div class="mr-5">
-                                    <h5><th:block th:text="${newCafe}">10</th:block> 신규 입점!</h5>
+                                    <h5>
+                                        <th:block th:text="${newCafe}">10</th:block>
+                                        신규 입점!
+                                    </h5>
                                 </div>
                             </div>
                             <a th:href="@{/admin/host}" class="card-footer text-white clearfix small z-1"
