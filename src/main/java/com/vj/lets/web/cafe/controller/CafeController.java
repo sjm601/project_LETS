@@ -163,14 +163,15 @@ public class CafeController {
             List<Map<String, Object>> reviews = reviewService.getReviewListByCafe(id, pageParams);
             Map<Integer, Object> countReviews = reviewService.getCountReviewRatingByCafe(id);
 
-            model.addAttribute("Cafe", cafe);
-            model.addAttribute("options", options);
-            model.addAttribute("roomList", roomList);
-            model.addAttribute("errorMessage", "");
             model.addAttribute("pagination", pagination);
             model.addAttribute("reviews", reviews);
             model.addAttribute("countReviews", countReviews);
         }
+
+        model.addAttribute("Cafe", cafe);
+        model.addAttribute("options", options);
+        model.addAttribute("roomList", roomList);
+        model.addAttribute("errorMessage", "");
 
         return "common/cafe/cafe_detail";
     }
