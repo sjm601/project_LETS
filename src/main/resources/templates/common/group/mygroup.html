@@ -333,7 +333,7 @@
                             <label for="title" class="form-label">제목</label>
                             <input type="text" class="form-control" name="title" placeholder="Enter Title" required>
                             <label for="content" class="form-label">내용</label>
-                            <textarea class="form-control mb-2" name="content" cols="30" rows="10"
+                            <textarea class="form-control mb-2" name="content" cols="30" rows="50"
                                       placeholder="내용" required></textarea>
                             <div class="mb-3">
                                 <ul class="image-preview"></ul>
@@ -516,6 +516,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="address">스터디 대표 주소</label>
+                                                <input th:hidden="true" th:value="${studyGroup['SIDONAME']}" class="form-control sidoInputs" name="siDoName" type="text" />
                                                 <input th:value="${studyGroup['SIGUNGUNAME']}" class="form-control"
                                                        id="address" name="siGunGuName" type="text"
                                                        placeholder="클릭하여 주소 입력하세요" readonly/>

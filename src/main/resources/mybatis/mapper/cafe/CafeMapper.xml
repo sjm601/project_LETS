@@ -199,7 +199,7 @@
             <if test="countPerson != null and countPerson >= 0">AND "maxPerson" &gt;= #{countPerson}</if>
         </where>
         ORDER BY REGDATE DESC
-            <if test="currentX != null and currentX != '' and currentY != null and currentY != ''">
+            <if test="currentX != null and currentX != '' and currentY != null and currentY != '' and currentX > 0 and currentY > 0">
                 , DISTNACE_WGS84(LATITUDE, LONGITUDE, #{currentY}, #{currentX}) ASC
             </if>
     </select>

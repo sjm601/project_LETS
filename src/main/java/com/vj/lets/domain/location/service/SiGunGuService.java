@@ -19,4 +19,14 @@ public interface SiGunGuService {
      * @author VJ특공대 이희영
      */
     public SiGunGu findById(String siGunGuName);
+
+    /**
+     * 이름으로 시군구 ID 조회
+     *
+     * @param siGunGuName 시군구 이름
+     * @param siDoName    시도 이름
+     * @return 시군구 ID
+     * @author VJ특공대 강소영
+     */
+    public int getSiGunGuDo(String siGunGuName, String siDoName);
 }

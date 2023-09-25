@@ -12,7 +12,6 @@ import com.vj.lets.domain.group.dto.*;
 import com.vj.lets.domain.group.service.StudyGroupService;
 import com.vj.lets.domain.group.util.PageParams;
 import com.vj.lets.domain.group.util.Pagination;
-import com.vj.lets.domain.location.dto.SiGunGu;
 import com.vj.lets.domain.location.service.SiGunGuService;
 import com.vj.lets.domain.member.dto.Member;
 import com.vj.lets.domain.member.service.MemberService;
@@ -144,6 +143,7 @@ public class StudyGroupController {
         List<Map<String, Object>> contactList = null;
 
         Map<String, Object> studyGroup = studyGroupService.viewStudy(id);
+
         if (studyGroupService.isGroupMember(loginMember.getId(), id) != null) {
             groupMember = studyGroupService.isGroupMember(loginMember.getId(), id);
         }
@@ -378,8 +378,7 @@ public class StudyGroupController {
      */
     @PostMapping("/update/{id}")
     public String updateGroup(@ModelAttribute CreateForm createForm, MultipartFile settingImage, @PathVariable int id) throws IOException {
-        String siGunGuName = createForm.getSiGunGuName();
-        SiGunGu siGunGu = siGunGuService.findById(siGunGuName);
+        int siGunGuId = siGunGuService.getSiGunGuDo(createForm.getSiGunGuName(), createForm.getSiDoName());
 
         String selectedSubject = createForm.getSubject();
         String subject = subjectChange(selectedSubject);
@@ -389,7 +388,7 @@ public class StudyGroupController {
                 .name(createForm.getName())
                 .totalCount(createForm.getTotalCount())
                 .subject(subject)
-                .siGunGuId(siGunGu.getId())
+                .siGunGuId(siGunGuId)
                 .build();
 
         if (!settingImage.isEmpty()) {
