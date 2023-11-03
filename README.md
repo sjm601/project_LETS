@@ -50,7 +50,7 @@
 <br />
 
 ### 🎤 소개 
-Lets는 Let's Easy Together Study의 약자로 스터디 카페 예약 서비스와 스터디 그룹 커뮤니티를 제공합니다.
+Lets는 Let Everyone To Study의 약자로 스터디 카페 예약 서비스와 스터디 그룹 커뮤니티를 제공합니다.
 
 <br />
 
